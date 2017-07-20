@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	
+	<persistence-unit name="agendafinanceiraPU" transaction-type="JTA">
+		<description>Forge Persistence Unit</description>
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:jboss/datasources/agendafinanceiraDS</jta-data-source>
+		
+		<class>br.com.futura.agendafinanceira.models.Conta</class>
+		<class>br.com.futura.agendafinanceira.models.Contato</class>
+		<class>br.com.futura.agendafinanceira.models.Fornecedor</class>
+		<class>br.com.futura.agendafinanceira.models.Operacao</class>
+		<class>br.com.futura.agendafinanceira.models.Pgto</class>
+		<class>br.com.futura.agendafinanceira.models.PgtosParcela</class>
+		<class>br.com.futura.agendafinanceira.models.PgtosQuitacao</class>
+		<class>br.com.futura.agendafinanceira.models.Setor</class>
+		<class>br.com.futura.agendafinanceira.models.Usuario</class>
+		<class>br.com.futura.agendafinanceira.models.UsuarioOperacao</class>
+		
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		
+		<properties>
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.transaction.flush_before_completion" value="true" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+		</properties>
+	</persistence-unit>
+</persistence>

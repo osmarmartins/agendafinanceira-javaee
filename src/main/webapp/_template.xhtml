@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+<h:head/>	
+
+<h:body>
+	<div id="cabecalho">
+		<h:panelGrid columns="2">
+			<h:graphicImage library="img" name="logo.png"/>
+			<h:form rendered="#{usuarioLogado != null}" style="position:absolute; right:10px;">
+			    <p:themeSwitcher id="basic" style="width:165px" value="#{temaBean.tema}">
+			    	<f:selectItems value="#{temaBean.temas}" var="tema" itemLabel="#{tema}" itemValue="#{tema}"/>
+			    	<f:ajax/>
+			    </p:themeSwitcher>
+			</h:form>
+		</h:panelGrid>
+	    
+	    <p:growl id="messages" showDetail="true" autoUpdate="true"/>
+		
+		<h:form rendered="#{usuarioLogado != null}">
+		    <p:menuButton value="Menu">
+		        <p:menuitem value="Livros" action="livro?faces-redirect=true" icon="fa fa-fw fa-edit" />
+		        <p:menuitem value="Autores" action="autor?faces-redirect=true" icon="fa fa-fw fa-edit" />
+		        <p:menuitem value="Vendas" action="vendas?faces-redirect=true" icon="fa fa-fw fa-image" />
+		        <p:separator />
+		        <p:menuitem value="Logout" action="#{loginBean.efetuarLogout}" icon="fa fa-fw fa-sign-out" />
+		    </p:menuButton>
+		</h:form>		
+		
+		<h1>
+			<ui:insert name="titulo"/>
+		</h1>
+	</div>
+	
+	<div id="conteudo">
+		<ui:insert name="conteudo"/>
+	</div>
+	
+	<div id="rodape">
+		<hr/>
+		<center>
+			Copyrigth 2017
+			<br/>
+			<ui:insert name="pagina"/>
+			<br/>
+			<h:outputText value="#{sessionScope['usuarioLogado'].email}"/>
+		</center> 
+	</div>
+
+</h:body>
+</html>
