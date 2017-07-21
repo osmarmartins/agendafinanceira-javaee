@@ -64,7 +64,7 @@
 	</repositories>
 
 	<build>
-		<finalName>agendafinanceira</finalName>
+		<finalName>agendafinanceira-javaee</finalName>
 	</build>
 
 </project>

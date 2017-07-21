@@ -9,15 +9,13 @@
 		<jta-data-source>java:jboss/datasources/agendafinanceiraDS</jta-data-source>
 		
 		<class>br.com.futura.agendafinanceira.models.Conta</class>
-		<class>br.com.futura.agendafinanceira.models.Contato</class>
-		<class>br.com.futura.agendafinanceira.models.Fornecedor</class>
-		<class>br.com.futura.agendafinanceira.models.Operacao</class>
-		<class>br.com.futura.agendafinanceira.models.Pgto</class>
-		<class>br.com.futura.agendafinanceira.models.PgtosParcela</class>
-		<class>br.com.futura.agendafinanceira.models.PgtosQuitacao</class>
 		<class>br.com.futura.agendafinanceira.models.Setor</class>
+		<class>br.com.futura.agendafinanceira.models.Fornecedor</class>
 		<class>br.com.futura.agendafinanceira.models.Usuario</class>
-		<class>br.com.futura.agendafinanceira.models.UsuarioOperacao</class>
+		<class>br.com.futura.agendafinanceira.models.Contato</class>
+		<class>br.com.futura.agendafinanceira.models.Pagamento</class>
+		<class>br.com.futura.agendafinanceira.models.PagamentoParcela</class>
+		<class>br.com.futura.agendafinanceira.models.PagamentoQuitacao</class>
 		
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		

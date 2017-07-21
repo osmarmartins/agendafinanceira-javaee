@@ -1,111 +1,111 @@
 package br.com.futura.agendafinanceira.models;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
-/**
- * The persistent class for the fornecedores database table.
- * 
- */
+import org.hibernate.validator.constraints.NotBlank;
+
+import br.com.futura.agendafinanceira.models.enums.Ativo;
+import br.com.futura.agendafinanceira.models.enums.TipoPessoa;
+
 @Entity
-@Table(name="fornecedores")
-@NamedQuery(name="Fornecedore.findAll", query="SELECT f FROM Fornecedor f")
+@Table(name = "fornecedor")
 public class Fornecedor implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_fornecedor")
-	private int idFornecedor;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_fornecedor")
+	private Long idFornecedor;
 
-	private byte ativo;
-
-	private Timestamp atualizacao;
-
-	@Column(name="cpf_cnpj")
-	private String cpfCnpj;
-
-	@Column(name="nome_fantasia")
+	@Column(name = "nome_fantasia")
+	@NotBlank(message = "Nome/Nome fantasia fantasia não informado.")
 	private String nomeFantasia;
 
-	@Column(name="pf_pj")
-	private byte pfPj;
-
-	@Column(name="razao_social")
+	@Column(name = "razao_social")
+	@NotBlank(message = "Razão social não informada.")
 	private String razaoSocial;
 
-	//bi-directional many-to-one association to Contato
-	@OneToMany(mappedBy="fornecedore")
+	@Enumerated
+	@Column(name = "pf_pj")
+	@NotNull(message = "Informe o tipo de pessoa PF/PJ.")
+	private TipoPessoa tipo;
+
+	@Column(name = "cpf_cnpj")
+	private String documento;
+
+	@Enumerated
+	@NotNull(message = "Informe se o fornecedor está ativo ou não.")
+	private Ativo ativo;
+
+	@OneToMany(mappedBy = "fornecedor")
 	private List<Contato> contatos;
 
-	//bi-directional many-to-one association to Pgto
-	@OneToMany(mappedBy="fornecedore")
-	private List<Pgto> pgtos;
-
-	public Fornecedor() {
+	public Boolean isPossuiContatos() {
+		return contatos.size() > 0;
 	}
 
-	public int getIdFornecedor() {
-		return this.idFornecedor;
+	public Long getIdFornecedor() {
+		return idFornecedor;
 	}
 
-	public void setIdFornecedor(int idFornecedor) {
+	public void setIdFornecedor(Long idFornecedor) {
 		this.idFornecedor = idFornecedor;
 	}
 
-	public byte getAtivo() {
-		return this.ativo;
-	}
-
-	public void setAtivo(byte ativo) {
-		this.ativo = ativo;
-	}
-
-	public Timestamp getAtualizacao() {
-		return this.atualizacao;
-	}
-
-	public void setAtualizacao(Timestamp atualizacao) {
-		this.atualizacao = atualizacao;
-	}
-
-	public String getCpfCnpj() {
-		return this.cpfCnpj;
-	}
-
-	public void setCpfCnpj(String cpfCnpj) {
-		this.cpfCnpj = cpfCnpj;
-	}
-
 	public String getNomeFantasia() {
-		return this.nomeFantasia;
+		return nomeFantasia;
 	}
 
 	public void setNomeFantasia(String nomeFantasia) {
 		this.nomeFantasia = nomeFantasia;
 	}
 
-	public byte getPfPj() {
-		return this.pfPj;
-	}
-
-	public void setPfPj(byte pfPj) {
-		this.pfPj = pfPj;
-	}
-
 	public String getRazaoSocial() {
-		return this.razaoSocial;
+		return razaoSocial;
 	}
 
 	public void setRazaoSocial(String razaoSocial) {
 		this.razaoSocial = razaoSocial;
 	}
 
+	public TipoPessoa getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoPessoa tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
+
+	public Ativo getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Ativo ativo) {
+		this.ativo = ativo;
+	}
+
 	public List<Contato> getContatos() {
-		return this.contatos;
+		return contatos;
 	}
 
 	public void setContatos(List<Contato> contatos) {
@@ -114,45 +114,23 @@ public class Fornecedor implements Serializable {
 
 	public Contato addContato(Contato contato) {
 		getContatos().add(contato);
-		contato.setFornecedore(this);
+		contato.setFornecedor(this);
 
 		return contato;
 	}
 
-	public Contato removeContato(Contato contato) {
-		getContatos().remove(contato);
-		contato.setFornecedore(null);
-
-		return contato;
-	}
-
-	public List<Pgto> getPgtos() {
-		return this.pgtos;
-	}
-
-	public void setPgtos(List<Pgto> pgtos) {
-		this.pgtos = pgtos;
-	}
-
-	public Pgto addPgto(Pgto pgto) {
-		getPgtos().add(pgto);
-		pgto.setFornecedore(this);
-
-		return pgto;
-	}
-
-	public Pgto removePgto(Pgto pgto) {
-		getPgtos().remove(pgto);
-		pgto.setFornecedore(null);
-
-		return pgto;
-	}
+	// public Contato removeContato(Contato contato) {
+	// getContatos().remove(contato);
+	// contato.setFornecedor(null);
+	//
+	// return contato;
+	// }
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + idFornecedor;
+		result = prime * result + ((idFornecedor == null) ? 0 : idFornecedor.hashCode());
 		return result;
 	}
 
@@ -165,9 +143,18 @@ public class Fornecedor implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Fornecedor other = (Fornecedor) obj;
-		if (idFornecedor != other.idFornecedor)
+		if (idFornecedor == null) {
+			if (other.idFornecedor != null)
+				return false;
+		} else if (!idFornecedor.equals(other.idFornecedor))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "FornecedorModel [idFornecedor=" + idFornecedor + ", nomeFantasia=" + nomeFantasia + ", razaoSocial="
+				+ razaoSocial + ", tipo=" + tipo + ", documento=" + documento + ", ativo=" + ativo + "]";
 	}
 
 }

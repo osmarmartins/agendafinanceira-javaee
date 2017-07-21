@@ -36,7 +36,6 @@ public class SetorBean implements Serializable {
 		this.setor = setor;
 	}
 
-	@PostConstruct
 	public List<Setor> getSetores() {
 		return setores;
 	}
