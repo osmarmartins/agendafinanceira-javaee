@@ -11,8 +11,7 @@
 	<ui:define name="navegacao">
 		<p:breadCrumb>
 		    <p:menuitem value="Dashboard" url="/" />
-		    <p:menuitem value="Cadastros" url="#" />
-		    <p:menuitem value="Setores" url="#" />
+		    <p:menuitem value="Setores" url="/setor.xhtml" />
 		</p:breadCrumb>			
 	
 	</ui:define>
@@ -23,56 +22,38 @@
 
 	<ui:define name="conteudo">
 		
-		<p:messages globalOnly="true"/>
-		
 		<div class="ui-g">	
 			<div class="ui-g-12">
 				<h:form>
-					<p:dataTable>
-						<h:column>
+<!-- 		
+					<p:messages globalOnly="true"/>
+-->		
+					<p:dataTable value="#{setorBean.setores}" var="setor" id="tabelaSetores" rows="10" paginator="true">
+						<p:column sortBy="#{setor.idSetor}">
 							<f:facet name="header">ID</f:facet>
-							<h:outputText value="0"/>
-						</h:column>
-						<h:column>
+							<h:outputText value="#{setor.idSetor}"/>
+						</p:column>
+						
+						<p:column sortBy="#{setor.descricao}">
 							<f:facet name="header">Descrição</f:facet>
-							<h:outputText value="0"/>
-						</h:column>
-						<h:column>
+							<h:outputText value="#{setor.descricao}"/>
+						</p:column>
+						
+						<p:column sortBy="#{setor.status}">
 							<f:facet name="header">Status</f:facet>
-							<h:outputText value="0"/>
-						</h:column>
-						<h:column>
-							<h:commandLink value="Alterar"/>
-						</h:column>
-						<h:column>
-							<h:commandLink value="Excluir"/>
-						</h:column>
+							<h:outputText value="#{setor.ativo}"/>
+						</p:column>
+						
+						<p:column>
+							<p:commandLink value="Alterar"/>
+						</p:column>
+						
+						<p:column>
+							<p:commandLink value="Excluir"/>
+						</p:column>
 					</p:dataTable>
 				</h:form>
 			</div>
-
-			<div class="ui-g-4"></div>
-			<div class="ui-g-4">
-				<h:form id="formLogin">
-					<p:fieldset legend="Acesso ao Sistema">
-						<h:panelGrid columns="3">
-							<p:outputLabel value="Email:" for="email"/>
-							<p:inputText id="email" value="#{loginBean.usuario.email}" required="true">
-								<f:attribute name="type" value="email"/>
-							</p:inputText>
-						 	<p:message for="email" id="messageEmail" />
-							 
-							<p:outputLabel value="Senha:" for="senha"/>
-							<p:password id="senha" value="#{loginBean.usuario.senha}" required="true" feedback="true" />
-							<p:message for="senha" id="messageSenha" />
-							
-							<p:outputLabel/>
-							<p:commandButton value="Login" action="#{loginBean.efetuarLogin}" process="@form" update="@form" />
-						</h:panelGrid>
-					</p:fieldset>
-				</h:form>
-			</div>
-			<div class="ui-g-4"></div>
 			
 		</div>
 	</ui:define>

@@ -14,86 +14,89 @@
 
 <h:body>
 <div class="container ui-g">
-<div class="ui-g-12">
-	<header id="cabecalho">
-	
-		<div class="ui-g">
-			<div class="ui-g-1">
-				<h:graphicImage library="img" name="AppLogo.jpg" class="logo"/>
-			</div>
-			<div class="ui-g-11">
-				<h:form>
-					<p:menubar>
-						<p:submenu label="Cadastros" icon="ui-icon-document">
-							<p:menuitem value="Setor" url="#" />
-							<p:menuitem value="Conta" url="#" />
-							<p:menuitem value="Fornecedor" url="#" />
-							<p:menuitem value="Usuário" url="#" />
-							<p:separator />
-							<p:menuitem value="Logout" url="#" />
-						</p:submenu>
-			
-						<p:submenu label="Operações" icon="ui-icon-pencil">
-							<p:menuitem value="Contas a Pagar" url="#"
-								icon="ui-icon-arrowreturnthick-1-w" />
-							<p:menuitem value="Baixa de Contas a Pagar" url="#"
-								icon="ui-icon-arrowreturnthick-1-e" />
-						</p:submenu>
-			
-						<p:submenu label="Relatórios" icon="ui-icon-help">
-							<p:menuitem value="Contents" url="#" />
-							<p:submenu label="Search" icon="ui-icon-search">
-								<p:submenu label="Text">
-									<p:menuitem value="Workspace" url="#" />
-								</p:submenu>
-								<p:menuitem value="File" url="#" />
+	<div class="ui-g-12">
+
+		<header id="cabecalho">
+			<div class="ui-g">
+				<div class="ui-g-1">
+					<h:graphicImage library="img" name="AppLogo.jpg" class="logo"/>
+				</div>
+				<div class="ui-g-11">
+					<h:form>
+						<p:menubar>
+							<p:submenu label="Cadastros" icon="ui-icon-document">
+								<p:menuitem value="Setor" url="/setor.xhtml" />
+								<p:menuitem value="Conta" url="#" />
+								<p:menuitem value="Fornecedor" url="#" />
+								<p:menuitem value="Usuário" url="#" />
+								<p:separator />
+								<p:menuitem value="Logout" url="#" />
 							</p:submenu>
-						</p:submenu>
-			
-						<f:facet name="options">
-							<h:panelGrid columns="3">
-								<p:outputLabel value="Tema:"/>
-								<p:themeSwitcher id="basic" value="#{temaBean.tema}">
-									<f:selectItem itemLabel="Selecione..." itemValue="afterdark" />
-									<f:selectItems value="#{temaBean.temas}" var="tema" itemLabel="#{tema}" itemValue="#{tema}" />
-									<f:ajax />
-								</p:themeSwitcher>
-								<p:commandButton type="button" value="Logout" icon="ui-icon-extlink"/>
-							</h:panelGrid>
-						</f:facet>
-					</p:menubar>
-				</h:form>
+				
+							<p:submenu label="Operações" icon="ui-icon-pencil">
+								<p:menuitem value="Contas a Pagar" url="#"
+									icon="ui-icon-arrowreturnthick-1-w" />
+								<p:menuitem value="Baixa de Contas a Pagar" url="#"
+									icon="ui-icon-arrowreturnthick-1-e" />
+							</p:submenu>
+				
+							<p:submenu label="Relatórios" icon="ui-icon-help">
+								<p:menuitem value="Contents" url="#" />
+								<p:submenu label="Search" icon="ui-icon-search">
+									<p:submenu label="Text">
+										<p:menuitem value="Workspace" url="#" />
+									</p:submenu>
+									<p:menuitem value="File" url="#" />
+								</p:submenu>
+							</p:submenu>
+				
+							<f:facet name="options">
+								<h:panelGrid columns="3">
+									<p:outputLabel value="Tema:"/>
+									<p:themeSwitcher id="basic" value="#{temaBean.tema}">
+										<f:selectItem itemLabel="Selecione..." itemValue="afterdark" />
+										<f:selectItems value="#{temaBean.temas}" var="tema" itemLabel="#{tema}" itemValue="#{tema}" />
+										<f:ajax />
+									</p:themeSwitcher>
+									<p:commandButton type="button" value="Logout" icon="ui-icon-extlink"/>
+								</h:panelGrid>
+							</f:facet>
+						</p:menubar>
+					</h:form>
+				</div>
 			</div>
+
+	
+			<nav>
+				<h4>
+					<ui:insert name="navegacao">
+						<p:breadCrumb>
+						    <p:menuitem value="Dashboard" url="/" />
+						</p:breadCrumb>			
+					</ui:insert>
+				</h4>
+			</nav>
+			
+			
+			<h1>
+				<ui:insert name="titulo">Agenda Financeira</ui:insert>
+			</h1>
+		</header>
+	
+		<br/>
+	
+		<div id="conteudo">
+			<ui:insert name="conteudo">Nenhuma informação</ui:insert>
 		</div>
-
-		<h4>
-			<ui:insert name="navegacao">
-				<p:breadCrumb>
-				    <p:menuitem value="Dashboard" url="/" />
-				</p:breadCrumb>			
+	
+		<footer class="rodape">
+			<p:separator/>
+			<ui:insert name="rodape">
+				Desenvolvido por: Osmar de Oliveira Martins Filho
 			</ui:insert>
-		</h4>
-		
-		
-		<h1>
-			<ui:insert name="titulo">Agenda Financeira</ui:insert>
-		</h1>
-	</header>
-
-	<br/>
-
-	<div id="conteudo">
-		<ui:insert name="conteudo">Nenhuma informação</ui:insert>
+		</footer>
+	
 	</div>
-
-	<footer class="rodape">
-		<p:separator/>
-		<ui:insert name="rodape">
-			Desenvolvido por: Osmar de Oliveira Martins Filho
-		</ui:insert>
-	</footer>
-
-</div>
 </div>	
 </h:body>
 

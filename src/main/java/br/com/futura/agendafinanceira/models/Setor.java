@@ -28,10 +28,16 @@ public class Setor implements Serializable {
 	private String descricao;
 
 	//bi-directional many-to-one association to Pgto
-	@OneToMany(mappedBy="setore")
+	@OneToMany(mappedBy="setores")
 	private List<Pgto> pgtos;
 
 	public Setor() {
+	}
+	
+	public Setor(int idSetor, String descricao, byte ativo){
+		this.idSetor = idSetor;
+		this.descricao = descricao;
+		this.ativo = ativo;
 	}
 
 	public int getIdSetor() {
@@ -109,5 +115,12 @@ public class Setor implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Setor [idSetor=" + idSetor + ", ativo=" + ativo + ", descricao=" + descricao + "]";
+	}
+	
+	
 
 }

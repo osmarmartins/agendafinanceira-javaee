@@ -26,9 +26,14 @@ h1 {
 
 .rodape {
 	position: absolute;
-	bottom: 10px;
+	bottom: 25px;
 	width: 79vw;
 	font-size: 0.8em;
 	text-align: center;
-	line-height: 0;
+	line-height: 10px;
+}
+
+.grafico {
+	height: 200px;
+	text-align: center;
 }

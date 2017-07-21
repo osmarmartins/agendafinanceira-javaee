@@ -52,7 +52,7 @@ public class Pgto implements Serializable {
 	//bi-directional many-to-one association to Setore
 	@ManyToOne
 	@JoinColumn(name="id_setor")
-	private Setor setore;
+	private Setor setores;
 
 	//bi-directional many-to-one association to PgtosParcela
 	@OneToMany(mappedBy="pgto")
@@ -141,12 +141,12 @@ public class Pgto implements Serializable {
 		this.fornecedore = fornecedore;
 	}
 
-	public Setor getSetore() {
-		return this.setore;
+	public Setor getSetores() {
+		return this.setores;
 	}
 
-	public void setSetore(Setor setore) {
-		this.setore = setore;
+	public void setSetore(Setor setores) {
+		this.setores = setores;
 	}
 
 	public List<PgtosParcela> getPgtosParcelas() {
