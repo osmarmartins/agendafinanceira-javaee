@@ -28,8 +28,22 @@
 <!-- 		
 					<p:messages globalOnly="true"/>
 -->		
-					<p:dataTable value="#{setorBean.setores}" var="setor" id="tabelaSetores" rows="10" paginator="true">
-						<p:column sortBy="#{setor.idSetor}">
+					<p:toolbar>
+						<f:facet name="left">
+							<p:commandButton value="Novo" icon="fa fa-plus"/>
+						</f:facet>
+						
+						<f:facet name="right">
+							<p:inputText placeholder="Pesquisar por..." size="30"/>
+							<p:commandButton value="Pesquisar" icon="fa fa-search"/>
+						</f:facet>
+					</p:toolbar>
+
+					<p:dataTable value="#{setorBean.setores}" 
+						var="setor" id="tabelaSetores" emptyMessage="Nenhum registro encontrado" 
+						rows="10" paginator="true" paginatorPosition="bottom">
+						
+						<p:column sortBy="#{setor.idSetor}" width="5%">
 							<f:facet name="header">ID</f:facet>
 							<h:outputText value="#{setor.idSetor}"/>
 						</p:column>
@@ -39,18 +53,17 @@
 							<h:outputText value="#{setor.descricao}"/>
 						</p:column>
 						
-						<p:column sortBy="#{setor.status}">
-							<f:facet name="header">Status</f:facet>
+						<p:column sortBy="#{setor.ativo}" width="10%">
+							<f:facet name="header">Situação</f:facet>
 							<h:outputText value="#{setor.ativo}"/>
 						</p:column>
 						
-						<p:column>
-							<p:commandLink value="Alterar"/>
+						<p:column width="7%">
+							<f:facet name="header">Operações</f:facet>
+							<p:commandButton title="Alterar" icon="fa fa-pencil"/>
+							<p:commandButton title="Excluir" icon="fa fa-trash"/>
 						</p:column>
 						
-						<p:column>
-							<p:commandLink value="Excluir"/>
-						</p:column>
 					</p:dataTable>
 				</h:form>
 			</div>

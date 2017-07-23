@@ -24,7 +24,7 @@
 				<div class="ui-g-11">
 					<h:form>
 						<p:menubar>
-							<p:submenu label="Cadastros" icon="ui-icon-document">
+							<p:submenu label="Cadastros" icon="fa fa-file-o">
 								<p:menuitem value="Setor" url="/setor.xhtml" />
 								<p:menuitem value="Conta" url="#" />
 								<p:menuitem value="Fornecedor" url="#" />
@@ -33,14 +33,12 @@
 								<p:menuitem value="Logout" url="#" />
 							</p:submenu>
 				
-							<p:submenu label="Operações" icon="ui-icon-pencil">
-								<p:menuitem value="Contas a Pagar" url="#"
-									icon="ui-icon-arrowreturnthick-1-w" />
-								<p:menuitem value="Baixa de Contas a Pagar" url="#"
-									icon="ui-icon-arrowreturnthick-1-e" />
+							<p:submenu label="Operações" icon="fa fa-list-ul">
+								<p:menuitem value="Contas a Pagar" url="#" icon="fa fa-square-o" />
+								<p:menuitem value="Baixa (Pgto)" url="#" icon="fa fa-check-square-o" />
 							</p:submenu>
 				
-							<p:submenu label="Relatórios" icon="ui-icon-help">
+							<p:submenu label="Relatórios" icon="fa fa-print">
 								<p:menuitem value="Contents" url="#" />
 								<p:submenu label="Search" icon="ui-icon-search">
 									<p:submenu label="Text">
@@ -58,7 +56,7 @@
 										<f:selectItems value="#{temaBean.temas}" var="tema" itemLabel="#{tema}" itemValue="#{tema}" />
 										<f:ajax />
 									</p:themeSwitcher>
-									<p:commandButton type="button" value="Logout" icon="ui-icon-extlink"/>
+									<p:commandButton type="button" value="Logout" icon="fa fa-unlock-alt"/>
 								</h:panelGrid>
 							</f:facet>
 						</p:menubar>
