@@ -18,10 +18,10 @@ public class SetorBean implements Serializable {
 
 	private Setor setor;
 
+	private List<Setor> setores = new ArrayList<Setor>();
+
 	@Inject
 	private SetorDao setorDao;
-
-	private List<Setor> setores = new ArrayList<Setor>();
 
 	@PostConstruct
 	private void init() {

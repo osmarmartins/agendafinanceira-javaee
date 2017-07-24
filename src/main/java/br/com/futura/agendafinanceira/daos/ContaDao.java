@@ -5,15 +5,14 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import br.com.futura.agendafinanceira.models.Setor;
+import br.com.futura.agendafinanceira.models.Conta;
 
-public class SetorDao {
+public class ContaDao {
 	
 	@PersistenceContext
 	private EntityManager manager;
-	
-	public List<Setor> listarSetores(){
-		return manager.createQuery("SELECT s FROM Setor s", Setor.class).getResultList();
-	}
 
+	public List<Conta> listarContas(){	
+		return manager.createQuery("SELECT c FROM Conta c", Conta.class).getResultList();
+	}
 }
