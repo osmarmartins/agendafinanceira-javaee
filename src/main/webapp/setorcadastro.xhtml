@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="resources/template/layout.xhtml">
+
+	<ui:define name="navegacao">
+		<p:breadCrumb>
+		    <p:menuitem value="Dashboard" url="/" />
+		    <p:menuitem value="Setores" url="/setor.xhtml" />
+		    <p:menuitem value="Setores" url="/setorcadastro.xhtml" />
+		</p:breadCrumb>			
+	
+	</ui:define>
+	
+	<ui:define name="titulo">
+		<label>Cadastro de Setores</label>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		
+		<div class="ui-g">	
+			<div class="ui-g-12">
+				<h:form>
+<!-- 				
+					<p:messages globalOnly="true"/>
+-->
+					<p:toolbar>
+						<f:facet name="left">
+							<p:button value="Novo" outcome="/setorcadastro.xhtml"/>
+						</f:facet>
+						
+						<f:facet name="right">
+							<p:button value="Voltar" outcome="/setor.xhtml"/>
+						</f:facet>
+					</p:toolbar>
+					
+					<p:panelGrid columns="3">
+						<p:outputLabel value="ID" for="id"/>
+						<p:inputText id="id" value="#{setorCadastroBean.setor.idSetor}" readonly="true" />
+						<p:spacer/>
+					
+						<p:outputLabel value="Descrição" for="descricao"/>
+						<p:inputText id="descricao" value="#{setorCadastroBean.setor.descricao}" />
+						<p:message for="descricao"/>
+					
+				        <p:outputLabel value="Ativo" for="ativo"/>
+				        <p:selectBooleanButton id="ativo" 
+				        	value="#{setorCadastroBean.setor.ativo}"
+				        	onLabel="Sim" offLabel="Não" style="width:60px" />
+				        <p:message for="ativo"/>
+				        
+					</p:panelGrid>
+
+			        <p:commandButton value="Salvar" actionListener="#{setorCadastroBean.salvar}"/>
+					
+
+				</h:form>
+			</div>
+			
+		</div>
+	</ui:define>
+
+	<ui:define name="pagina">Setores</ui:define>
+</ui:composition>
+
+</html>

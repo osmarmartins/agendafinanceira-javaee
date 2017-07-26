@@ -3,6 +3,8 @@ package br.com.futura.agendafinanceira.models;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 
 import java.sql.Timestamp;
@@ -29,6 +31,7 @@ public class Setor implements Serializable {
 
 	private Timestamp atualizacao;
 
+	@NotBlank(message="Informe um valor para o campo")
 	private String descricao;
 
 	@Version
