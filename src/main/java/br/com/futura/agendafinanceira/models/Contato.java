@@ -1,32 +1,38 @@
 package br.com.futura.agendafinanceira.models;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Version;
 
 import br.com.futura.agendafinanceira.models.enums.Ativo;
-
-import java.sql.Timestamp;
-
 
 /**
  * The persistent class for the contato database table.
  * 
  */
 @Entity
-@Table(name="contato")
-@NamedQuery(name="Contato.findAll", query="SELECT c FROM Contato c")
+@Table(name = "contato")
+@NamedQuery(name = "Contato.findAll", query = "SELECT c FROM Contato c")
 public class Contato implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_contato")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_contato")
 	private int idContato;
 
 	@Enumerated
 	private Ativo ativo;
-
-	private Timestamp atualizacao;
 
 	private String bairro;
 
@@ -57,9 +63,9 @@ public class Contato implements Serializable {
 	@Version
 	private int versao;
 
-	//bi-directional many-to-one association to Fornecedor
+	// bi-directional many-to-one association to Fornecedor
 	@ManyToOne
-	@JoinColumn(name="id_fornecedor")
+	@JoinColumn(name = "id_fornecedor")
 	private Fornecedor fornecedor;
 
 	public Contato() {
@@ -79,14 +85,6 @@ public class Contato implements Serializable {
 
 	public void setAtivo(Ativo ativo) {
 		this.ativo = ativo;
-	}
-
-	public Timestamp getAtualizacao() {
-		return this.atualizacao;
-	}
-
-	public void setAtualizacao(Timestamp atualizacao) {
-		this.atualizacao = atualizacao;
 	}
 
 	public String getBairro() {

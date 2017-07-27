@@ -1,27 +1,32 @@
 package br.com.futura.agendafinanceira.models;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  * The persistent class for the operacao database table.
  * 
  */
 @Entity
-@Table(name="operacao")
-@NamedQuery(name="Operacao.findAll", query="SELECT o FROM Operacao o")
+@Table(name = "operacao")
+@NamedQuery(name = "Operacao.findAll", query = "SELECT o FROM Operacao o")
 public class Operacao implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_operacao")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_operacao")
 	private int idOperacao;
-
-	private Timestamp atualizacao;
 
 	private String classificacao;
 
@@ -30,8 +35,8 @@ public class Operacao implements Serializable {
 	@Version
 	private int versao;
 
-	//bi-directional many-to-one association to UsuarioOperacao
-	@OneToMany(mappedBy="operacao")
+	// bi-directional many-to-one association to UsuarioOperacao
+	@OneToMany(mappedBy = "operacao")
 	private List<UsuarioOperacao> usuarioOperacaos;
 
 	public Operacao() {
@@ -43,14 +48,6 @@ public class Operacao implements Serializable {
 
 	public void setIdOperacao(int idOperacao) {
 		this.idOperacao = idOperacao;
-	}
-
-	public Timestamp getAtualizacao() {
-		return this.atualizacao;
-	}
-
-	public void setAtualizacao(Timestamp atualizacao) {
-		this.atualizacao = atualizacao;
 	}
 
 	public String getClassificacao() {

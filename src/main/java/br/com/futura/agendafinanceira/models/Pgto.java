@@ -1,32 +1,41 @@
 package br.com.futura.agendafinanceira.models;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import br.com.futura.agendafinanceira.models.enums.SituacaoPagamento;
-
 import java.math.BigDecimal;
 import java.util.Date;
-import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Version;
+
+import br.com.futura.agendafinanceira.models.enums.SituacaoPagamento;
 
 /**
  * The persistent class for the pgto database table.
  * 
  */
 @Entity
-@Table(name="pgto")
-@NamedQuery(name="Pgto.findAll", query="SELECT p FROM Pgto p")
+@Table(name = "pgto")
+@NamedQuery(name = "Pgto.findAll", query = "SELECT p FROM Pgto p")
 public class Pgto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_pgto")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_pgto")
 	private int idPgto;
-
-	private Timestamp atualizacao;
 
 	private String documento;
 
@@ -40,29 +49,29 @@ public class Pgto implements Serializable {
 
 	private BigDecimal total;
 
-	@Column(name="total_pg")
+	@Column(name = "total_pg")
 	private BigDecimal totalPg;
 
 	@Version
 	private int versao;
 
-	//bi-directional many-to-one association to Conta
+	// bi-directional many-to-one association to Conta
 	@ManyToOne
-	@JoinColumn(name="id_conta")
+	@JoinColumn(name = "id_conta")
 	private Conta conta;
 
-	//bi-directional many-to-one association to Fornecedor
+	// bi-directional many-to-one association to Fornecedor
 	@ManyToOne
-	@JoinColumn(name="id_fornecedor")
+	@JoinColumn(name = "id_fornecedor")
 	private Fornecedor fornecedor;
 
-	//bi-directional many-to-one association to Setor
+	// bi-directional many-to-one association to Setor
 	@ManyToOne
-	@JoinColumn(name="id_setor")
+	@JoinColumn(name = "id_setor")
 	private Setor setor;
 
-	//bi-directional many-to-one association to PgtoParcela
-	@OneToMany(mappedBy="pgto")
+	// bi-directional many-to-one association to PgtoParcela
+	@OneToMany(mappedBy = "pgto")
 	private List<PgtoParcela> pgtoParcelas;
 
 	public Pgto() {
@@ -74,14 +83,6 @@ public class Pgto implements Serializable {
 
 	public void setIdPgto(int idPgto) {
 		this.idPgto = idPgto;
-	}
-
-	public Timestamp getAtualizacao() {
-		return this.atualizacao;
-	}
-
-	public void setAtualizacao(Timestamp atualizacao) {
-		this.atualizacao = atualizacao;
 	}
 
 	public String getDocumento() {

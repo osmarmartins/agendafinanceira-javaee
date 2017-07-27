@@ -1,41 +1,46 @@
 package br.com.futura.agendafinanceira.models;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import br.com.futura.agendafinanceira.models.enums.Ativo;
-
-import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Version;
+
+import br.com.futura.agendafinanceira.models.enums.Ativo;
 
 /**
  * The persistent class for the conta database table.
  * 
  */
 @Entity
-@Table(name="conta")
-@NamedQuery(name="Conta.findAll", query="SELECT c FROM Conta c")
+@Table(name = "conta")
+@NamedQuery(name = "Conta.findAll", query = "SELECT c FROM Conta c")
 public class Conta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_conta")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_conta")
 	private int idConta;
 
 	@Enumerated
 	private Ativo ativo;
-
-	private Timestamp atualizacao;
 
 	private String descricao;
 
 	@Version
 	private int versao;
 
-	//bi-directional many-to-one association to Pgto
-	@OneToMany(mappedBy="conta")
+	// bi-directional many-to-one association to Pgto
+	@OneToMany(mappedBy = "conta")
 	private List<Pgto> pgtos;
 
 	public Conta() {
@@ -55,14 +60,6 @@ public class Conta implements Serializable {
 
 	public void setAtivo(Ativo ativo) {
 		this.ativo = ativo;
-	}
-
-	public Timestamp getAtualizacao() {
-		return this.atualizacao;
-	}
-
-	public void setAtualizacao(Timestamp atualizacao) {
-		this.atualizacao = atualizacao;
 	}
 
 	public String getDescricao() {

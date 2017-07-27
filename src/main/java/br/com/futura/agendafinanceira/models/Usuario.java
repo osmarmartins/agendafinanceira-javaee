@@ -1,28 +1,35 @@
 package br.com.futura.agendafinanceira.models;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Version;
 
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.models.enums.TipoUsuario;
-
-import java.sql.Timestamp;
-import java.util.List;
-
 
 /**
  * The persistent class for the usuario database table.
  * 
  */
 @Entity
-@Table(name="usuario")
-@NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u")
+@Table(name = "usuario")
+@NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_usuario")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_usuario")
 	private int idUsuario;
 
 	@Enumerated
@@ -30,9 +37,6 @@ public class Usuario implements Serializable {
 
 	@Enumerated
 	private Ativo ativo;
-
-	@Column(name="atualizado_data")
-	private Timestamp atualizadoData;
 
 	private String email;
 
@@ -45,8 +49,8 @@ public class Usuario implements Serializable {
 	@Version
 	private int versao;
 
-	//bi-directional many-to-one association to UsuarioOperacao
-	@OneToMany(mappedBy="usuario")
+	// bi-directional many-to-one association to UsuarioOperacao
+	@OneToMany(mappedBy = "usuario")
 	private List<UsuarioOperacao> usuarioOperacaos;
 
 	public Usuario() {
@@ -74,14 +78,6 @@ public class Usuario implements Serializable {
 
 	public void setAtivo(Ativo ativo) {
 		this.ativo = ativo;
-	}
-
-	public Timestamp getAtualizadoData() {
-		return this.atualizadoData;
-	}
-
-	public void setAtualizadoData(Timestamp atualizadoData) {
-		this.atualizadoData = atualizadoData;
 	}
 
 	public String getEmail() {

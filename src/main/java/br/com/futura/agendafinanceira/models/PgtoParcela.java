@@ -1,37 +1,46 @@
 package br.com.futura.agendafinanceira.models;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import br.com.futura.agendafinanceira.models.enums.SituacaoParcela;
-
 import java.math.BigDecimal;
 import java.util.Date;
-import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Version;
+
+import br.com.futura.agendafinanceira.models.enums.SituacaoParcela;
 
 /**
  * The persistent class for the pgto_parcela database table.
  * 
  */
 @Entity
-@Table(name="pgto_parcela")
-@NamedQuery(name="PgtoParcela.findAll", query="SELECT p FROM PgtoParcela p")
+@Table(name = "pgto_parcela")
+@NamedQuery(name = "PgtoParcela.findAll", query = "SELECT p FROM PgtoParcela p")
 public class PgtoParcela implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_pgto_parcela")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_pgto_parcela")
 	private int idPgtoParcela;
-
-	private Timestamp atualizacao;
 
 	private BigDecimal desconto;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="dt_vcto")
+	@Column(name = "dt_vcto")
 	private Date dtVcto;
 
 	private BigDecimal juros;
@@ -50,13 +59,13 @@ public class PgtoParcela implements Serializable {
 	@Version
 	private int versao;
 
-	//bi-directional many-to-one association to Pgto
+	// bi-directional many-to-one association to Pgto
 	@ManyToOne
-	@JoinColumn(name="id_pgto")
+	@JoinColumn(name = "id_pgto")
 	private Pgto pgto;
 
-	//bi-directional many-to-one association to PgtoQuitacao
-	@OneToMany(mappedBy="pgtoParcela")
+	// bi-directional many-to-one association to PgtoQuitacao
+	@OneToMany(mappedBy = "pgtoParcela")
 	private List<PgtoQuitacao> pgtoQuitacaos;
 
 	public PgtoParcela() {
@@ -68,14 +77,6 @@ public class PgtoParcela implements Serializable {
 
 	public void setIdPgtoParcela(int idPgtoParcela) {
 		this.idPgtoParcela = idPgtoParcela;
-	}
-
-	public Timestamp getAtualizacao() {
-		return this.atualizacao;
-	}
-
-	public void setAtualizacao(Timestamp atualizacao) {
-		this.atualizacao = atualizacao;
 	}
 
 	public BigDecimal getDesconto() {
