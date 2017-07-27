@@ -10,35 +10,32 @@ import br.com.futura.agendafinanceira.models.enums.Ativo;
 import java.sql.Timestamp;
 import java.util.List;
 
-
 /**
  * The persistent class for the setor database table.
  * 
  */
 @Entity
-@Table(name="setor")
-@NamedQuery(name="Setor.findAll", query="SELECT s FROM Setor s")
+@Table(name = "setor")
+@NamedQuery(name = "Setor.findAll", query = "SELECT s FROM Setor s")
 public class Setor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_setor")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_setor")
 	private int idSetor;
 
 	@Enumerated
 	private Ativo ativo;
 
-	private Timestamp atualizacao;
-
-	@NotBlank(message="Informe um valor para o campo")
+	@NotBlank(message = "Informe um valor para o campo")
 	private String descricao;
 
 	@Version
 	private int versao;
 
-	//bi-directional many-to-one association to Pgto
-	@OneToMany(mappedBy="setor")
+	// bi-directional many-to-one association to Pgto
+	@OneToMany(mappedBy = "setor")
 	private List<Pgto> pgtos;
 
 	public Setor() {
@@ -58,14 +55,6 @@ public class Setor implements Serializable {
 
 	public void setAtivo(Ativo ativo) {
 		this.ativo = ativo;
-	}
-
-	public Timestamp getAtualizacao() {
-		return this.atualizacao;
-	}
-
-	public void setAtualizacao(Timestamp atualizacao) {
-		this.atualizacao = atualizacao;
 	}
 
 	public String getDescricao() {
@@ -104,6 +93,11 @@ public class Setor implements Serializable {
 		pgto.setSetor(null);
 
 		return pgto;
+	}
+
+	@Override
+	public String toString() {
+		return "Setor [idSetor=" + idSetor + ", ativo=" + ativo + ", descricao=" + descricao + "]";
 	}
 
 }

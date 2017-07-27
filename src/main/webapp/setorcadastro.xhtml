@@ -12,7 +12,7 @@
 		<p:breadCrumb>
 		    <p:menuitem value="Dashboard" url="/" />
 		    <p:menuitem value="Setores" url="/setor.xhtml" />
-		    <p:menuitem value="Setores" url="/setorcadastro.xhtml" />
+		    <p:menuitem value="Cadastro" url="/setorcadastro.xhtml" />
 		</p:breadCrumb>			
 	
 	</ui:define>
@@ -26,9 +26,8 @@
 		<div class="ui-g">	
 			<div class="ui-g-12">
 				<h:form>
-<!-- 				
 					<p:messages globalOnly="true"/>
--->
+
 					<p:toolbar>
 						<f:facet name="left">
 							<p:button value="Novo" outcome="/setorcadastro.xhtml"/>
@@ -42,7 +41,7 @@
 					<p:panelGrid columns="3">
 						<p:outputLabel value="ID" for="id"/>
 						<p:inputText id="id" value="#{setorCadastroBean.setor.idSetor}" readonly="true" />
-						<p:spacer/>
+						<p:message for="id"/>
 					
 						<p:outputLabel value="Descrição" for="descricao"/>
 						<p:inputText id="descricao" value="#{setorCadastroBean.setor.descricao}" />
@@ -50,15 +49,14 @@
 					
 				        <p:outputLabel value="Ativo" for="ativo"/>
 				        <p:selectBooleanButton id="ativo" 
-				        	value="#{setorCadastroBean.setor.ativo}"
+				        	value="#{setorCadastroBean.status}"
 				        	onLabel="Sim" offLabel="Não" style="width:60px" />
 				        <p:message for="ativo"/>
-				        
+
 					</p:panelGrid>
 
-			        <p:commandButton value="Salvar" actionListener="#{setorCadastroBean.salvar}"/>
+			        <p:commandButton value="Salvar" actionListener="#{setorCadastroBean.salvar}" update="@form"/>
 					
-
 				</h:form>
 			</div>
 			
