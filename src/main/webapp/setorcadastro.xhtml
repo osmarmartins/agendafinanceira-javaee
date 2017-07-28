@@ -25,26 +25,27 @@
 		
 		<div class="ui-g">	
 			<div class="ui-g-12">
+
 				<h:form>
-					<p:messages globalOnly="true"/>
+					<p:messages globalOnly="true" closable="true"/>
+					
+					<p:focus context="@form" />
 
 					<p:toolbar>
 						<f:facet name="left">
-							<p:button value="Novo" outcome="/setorcadastro.xhtml"/>
-						</f:facet>
-						
-						<f:facet name="right">
 							<p:button value="Voltar" outcome="/setor.xhtml"/>
+							<p:spacer style="width: 10px;"/>
+					        <p:commandButton value="Salvar" actionListener="#{setorCadastroBean.salvar}" update="@form"/>
 						</f:facet>
 					</p:toolbar>
 					
-					<p:panelGrid columns="3">
+					<p:panelGrid columns="3" styleClass="painel" columnClasses="rotulo, campo, mensagem">
 						<p:outputLabel value="ID" for="id"/>
-						<p:inputText id="id" value="#{setorCadastroBean.setor.idSetor}" readonly="true" />
+						<p:inputText id="id" value="#{setorCadastroBean.setor.idSetor}" disabled="true" style="width: 20%"/>
 						<p:message for="id"/>
 					
 						<p:outputLabel value="Descrição" for="descricao"/>
-						<p:inputText id="descricao" value="#{setorCadastroBean.setor.descricao}" />
+						<p:inputText id="descricao" value="#{setorCadastroBean.setor.descricao}" style="width: 95%"/>
 						<p:message for="descricao"/>
 					
 				        <p:outputLabel value="Ativo" for="ativo"/>
@@ -54,12 +55,9 @@
 				        <p:message for="ativo"/>
 
 					</p:panelGrid>
-
-			        <p:commandButton value="Salvar" actionListener="#{setorCadastroBean.salvar}" update="@form"/>
-					
 				</h:form>
+
 			</div>
-			
 		</div>
 	</ui:define>
 

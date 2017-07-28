@@ -24,13 +24,11 @@
 		
 		<div class="ui-g">	
 			<div class="ui-g-12">
-				<h:form>
-<!-- 		
+				<h:form id="form">
 					<p:messages globalOnly="true"/>
--->		
+
 					<p:toolbar>
 						<f:facet name="left">
-							<!-- p:commandButton value="Novo" icon="fa fa-plus"/ -->
 							<p:button value="Novo" outcome="/setorcadastro.xhtml"/>
 						</f:facet>
 						
@@ -61,8 +59,8 @@
 						
 						<p:column width="15%">
 							<f:facet name="header">Operações</f:facet>
-							<p:commandButton title="Alterar" icon="fa fa-pencil"/>
-							<p:commandButton title="Excluir" icon="fa fa-trash"/>
+							<p:commandButton title="Alterar" icon="fa fa-pencil" action="#{setorBean.alterar(setor)}"/>
+							<p:commandButton title="Excluir" icon="fa fa-trash" action="#{setorBean.excluir(setor)}"/>
 						</p:column>
 						
 					</p:dataTable>

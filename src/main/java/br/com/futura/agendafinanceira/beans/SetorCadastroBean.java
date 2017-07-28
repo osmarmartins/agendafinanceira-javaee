@@ -2,12 +2,13 @@ package br.com.futura.agendafinanceira.beans;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
-import javax.faces.event.ActionEvent;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 
 import br.com.futura.agendafinanceira.daos.SetorDao;
 import br.com.futura.agendafinanceira.models.Setor;
 import br.com.futura.agendafinanceira.models.enums.Ativo;
+import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Model
 public class SetorCadastroBean {
@@ -16,6 +17,9 @@ public class SetorCadastroBean {
 	
 	@Inject
 	private SetorDao setorDao;
+	
+	@Inject
+	private MessagesHelper messagesHelper;
 
 	private boolean status;
 
@@ -26,9 +30,10 @@ public class SetorCadastroBean {
 		this.setor.setAtivo(Ativo.ATIVO);
 	}
 
-	public void salvar(ActionEvent event) {
-		setorDao.salvar(setor);
+	public void salvar() {
 		System.out.println("Salvar setor: " + this.setor.toString());
+		setorDao.salvar(setor);
+		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso!"));
 		init();
 	}
 

@@ -28,6 +28,14 @@ public class SetorBean implements Serializable {
 		this.setores = setorDao.listarSetores();
 	}
 
+	public void alterar(Setor setor){
+		System.out.println("ALTERAR setor: " + setor.toString());
+	}
+	
+	public void excluir(Setor setor){
+		System.out.println("EXCLUIR setor: " + setor.toString());
+	}
+	
 	public Setor getSetor() {
 		return setor;
 	}

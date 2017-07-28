@@ -37,3 +37,20 @@ h1 {
 	height: 200px;
 	text-align: center;
 }
+
+.painel{
+	width: 100%;
+}
+
+.rotulo {
+	width: 10%;
+	text-align: right;
+}
+
+.campo {
+	width: 35%;
+}
+
+.mensagem {
+	width: 55%;
+}
