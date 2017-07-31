@@ -6,10 +6,12 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 
 import br.com.futura.agendafinanceira.daos.SetorDao;
 import br.com.futura.agendafinanceira.models.Setor;
+import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Model
 public class SetorBean implements Serializable {
@@ -17,8 +19,11 @@ public class SetorBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Setor setor;
-
+	
 	private List<Setor> setores = new ArrayList<Setor>();
+	
+	@Inject
+	private MessagesHelper messagesHelper;
 
 	@Inject
 	private SetorDao setorDao;
@@ -28,12 +33,15 @@ public class SetorBean implements Serializable {
 		this.setores = setorDao.listarSetores();
 	}
 
-	public void alterar(Setor setor){
-		System.out.println("ALTERAR setor: " + setor.toString());
+	public String alterar(Setor setor){
+		return "/setorcadastro?faces-redirect=true&setor="+setor.getIdSetor();
 	}
 	
-	public void excluir(Setor setor){
-		System.out.println("EXCLUIR setor: " + setor.toString());
+	public String excluir(Setor setor){
+		setorDao.excluir(setor);
+		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
+//		return "/setor?faces-redirect=true";
+		return "/setorcadastro?faces-redirect=true&setor=1";
 	}
 	
 	public Setor getSetor() {

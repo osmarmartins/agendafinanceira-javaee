@@ -31,13 +31,16 @@ public class SetorCadastroBean {
 	}
 
 	public void salvar() {
-		System.out.println("Salvar setor: " + this.setor.toString());
 		setorDao.salvar(setor);
 		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso!"));
 		init();
 	}
 
 	public Setor getSetor() {
+		if (setor == null){
+			init();
+		}
+		this.setStatus(this.setor.getAtivo().equals(Ativo.ATIVO));
 		return this.setor;
 	}
 

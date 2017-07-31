@@ -19,8 +19,20 @@ public class SetorDao {
 
 	@Transactional
 	public void salvar(Setor setor) {
-		manager.persist(setor);
-		
+		if (setor.getIdSetor() != null){
+			manager.merge(setor);
+		}else{
+			manager.persist(setor);
+		}
+	}
+	
+	@Transactional
+	public void excluir(Setor setor){
+		manager.remove(manager.getReference(Setor.class, setor.getIdSetor()));
+	}
+
+	public Setor findById(Integer idSetor) {
+		return manager.find(Setor.class, idSetor);
 	}
 
 }

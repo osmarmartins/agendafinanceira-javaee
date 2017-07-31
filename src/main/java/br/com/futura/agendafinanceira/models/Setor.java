@@ -31,7 +31,7 @@ public class Setor implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_setor")
-	private int idSetor;
+	private Integer idSetor;
 
 	@Enumerated
 	private Ativo ativo;
@@ -40,7 +40,7 @@ public class Setor implements Serializable {
 	private String descricao;
 
 	@Version
-	private int versao;
+	private Integer versao;
 
 	// bi-directional many-to-one association to Pgto
 	@OneToMany(mappedBy = "setor")
@@ -49,11 +49,11 @@ public class Setor implements Serializable {
 	public Setor() {
 	}
 
-	public int getIdSetor() {
+	public Integer getIdSetor() {
 		return this.idSetor;
 	}
 
-	public void setIdSetor(int idSetor) {
+	public void setIdSetor(Integer idSetor) {
 		this.idSetor = idSetor;
 	}
 
@@ -73,11 +73,11 @@ public class Setor implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public int getVersao() {
+	public Integer getVersao() {
 		return this.versao;
 	}
 
-	public void setVersao(int versao) {
+	public void setVersao(Integer versao) {
 		this.versao = versao;
 	}
 

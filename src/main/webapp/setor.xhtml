@@ -13,7 +13,6 @@
 		    <p:menuitem value="Dashboard" url="/" />
 		    <p:menuitem value="Setores" url="/setor.xhtml" />
 		</p:breadCrumb>			
-	
 	</ui:define>
 	
 	<ui:define name="titulo">
@@ -25,7 +24,7 @@
 		<div class="ui-g">	
 			<div class="ui-g-12">
 				<h:form id="form">
-					<p:messages globalOnly="true"/>
+					<p:messages globalOnly="true" closable="true"/>
 
 					<p:toolbar>
 						<f:facet name="left">
@@ -60,10 +59,18 @@
 						<p:column width="15%">
 							<f:facet name="header">Operações</f:facet>
 							<p:commandButton title="Alterar" icon="fa fa-pencil" action="#{setorBean.alterar(setor)}"/>
-							<p:commandButton title="Excluir" icon="fa fa-trash" action="#{setorBean.excluir(setor)}"/>
+							
+							<p:commandButton title="Excluir" icon="fa fa-trash" actionListener="#{setorBean.excluir(setor)}" update="@form">
+								<p:confirm header="Confirma exclusão" message="Confirma a excusão de '#{setor.descricao}'" icon="ui-icon-alert" />							
+							</p:commandButton>
 						</p:column>
 						
 					</p:dataTable>
+
+				    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+				        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+				    </p:confirmDialog>					
 				</h:form>
 			</div>
 			
