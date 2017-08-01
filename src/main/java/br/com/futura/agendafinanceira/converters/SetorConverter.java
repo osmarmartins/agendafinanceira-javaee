@@ -18,7 +18,7 @@ public class SetorConverter implements Converter {
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value != null && value.trim().length() > 0) {
-			return setorDao.findById(Integer.valueOf(value));
+			return setorDao.pesquisarPorId(Integer.valueOf(value));
 		}
 		return null;
 	}

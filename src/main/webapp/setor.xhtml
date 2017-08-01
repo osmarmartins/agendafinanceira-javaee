@@ -24,7 +24,7 @@
 		<div class="ui-g">	
 			<div class="ui-g-12">
 				<h:form id="form">
-					<p:messages globalOnly="true" closable="true"/>
+					<p:growl autoUpdate="true" globalOnly="true"/>
 
 					<p:toolbar>
 						<f:facet name="left">
@@ -32,8 +32,8 @@
 						</f:facet>
 						
 						<f:facet name="right">
-							<p:inputText placeholder="Pesquisar por..." size="30"/>
-							<p:commandButton value="Pesquisar" icon="fa fa-search"/>
+							<p:inputText placeholder="Pesquisar por..." size="30" value="#{setorBean.pesquisaDescricao}"/>
+							<p:commandButton value="Pesquisar" icon="fa fa-search" action="#{setorBean.pesquisar()}" update="@form"/>
 						</f:facet>
 					</p:toolbar>
 
@@ -60,7 +60,7 @@
 							<f:facet name="header">Operações</f:facet>
 							<p:commandButton title="Alterar" icon="fa fa-pencil" action="#{setorBean.alterar(setor)}"/>
 							
-							<p:commandButton title="Excluir" icon="fa fa-trash" actionListener="#{setorBean.excluir(setor)}" update="@form">
+							<p:commandButton title="Excluir" icon="fa fa-trash" actionListener="#{setorBean.excluir(setor)}" update="@form" process="@this">
 								<p:confirm header="Confirma exclusão" message="Confirma a excusão de '#{setor.descricao}'" icon="ui-icon-alert" />							
 							</p:commandButton>
 						</p:column>

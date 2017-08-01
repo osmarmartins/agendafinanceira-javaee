@@ -13,8 +13,18 @@ public class SetorDao {
 	@PersistenceContext
 	private EntityManager manager;
 	
-	public List<Setor> listarSetores(){
+	public List<Setor> listarTodos(){
 		return manager.createQuery("SELECT s FROM Setor s", Setor.class).getResultList();
+	}
+	
+	public List<Setor> listarPorDescricao(String pesquisaDescricao) {
+		System.out.println("Filtro por: " + pesquisaDescricao);
+		return manager.createQuery("SELECT s FROM Setor s WHERE s.descricao LIKE :pDescricao ", Setor.class)
+				.setParameter("pDescricao", "%" + pesquisaDescricao + "%").getResultList();
+	}
+	
+	public Setor pesquisarPorId(Integer idSetor) {
+		return manager.find(Setor.class, idSetor);
 	}
 
 	@Transactional
@@ -29,10 +39,6 @@ public class SetorDao {
 	@Transactional
 	public void excluir(Setor setor){
 		manager.remove(manager.getReference(Setor.class, setor.getIdSetor()));
-	}
-
-	public Setor findById(Integer idSetor) {
-		return manager.find(Setor.class, idSetor);
 	}
 
 }
