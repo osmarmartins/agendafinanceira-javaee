@@ -19,42 +19,58 @@ import br.com.futura.agendafinanceira.utils.MessagesHelper;
 public class UsuarioBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Usuario usuario;
-	
+
 	private List<Usuario> usuarios = new ArrayList<>();
-	
+
+	private String pesquisa;
+
 	@Inject
 	private UsuarioDao usuarioDao;
-	
+
 	@Inject
 	private MessagesHelper messagesHelper;
-	
+
 	@PostConstruct
-	private void init(){
+	private void init() {
 		usuario = new Usuario();
-		this.usuarios = usuarioDao.listarTodos(); 
+		this.usuarios = usuarioDao.listarTodos();
 	}
-	
-	public String alterar(Usuario usuario){
+
+	public String alterar(Usuario usuario) {
 		return "/usuariocadastro?faces-redirect=true&usuario=" + usuario.getIdUsuario();
 	}
-	
-	public void excluir(Usuario usuario){
+
+	public void excluir(Usuario usuario) {
 		usuarioDao.excluir(usuario);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		init();
 	}
-	
+
+	public void pesquisar() {
+		if (this.pesquisa != null && !this.pesquisa.isEmpty()) {
+			usuarios = usuarioDao.listarPorPesquisa(this.pesquisa);
+		}
+	}
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
-	
+
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
 	public List<Usuario> getUsuarios() {
 		return usuarios;
+	}
+
+	public String getPesquisa() {
+		return pesquisa;
+	}
+
+	public void setPesquisa(String pesquisa) {
+		this.pesquisa = pesquisa;
 	}
 }

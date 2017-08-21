@@ -32,8 +32,8 @@
 						</f:facet>
 						
 						<f:facet name="right">
-							<p:inputText placeholder="Pesquisar por..." size="30"/>
-							<p:commandButton value="Pesquisar" icon="fa fa-search"/>
+							<p:inputText placeholder="Pesquisar por..." size="30" value="#{usuarioBean.pesquisa}"/>
+							<p:commandButton value="Pesquisar" icon="fa fa-search" actionListener="#{usuarioBean.pesquisar()}" update="@form"/>
 						</f:facet>
 					</p:toolbar>
 

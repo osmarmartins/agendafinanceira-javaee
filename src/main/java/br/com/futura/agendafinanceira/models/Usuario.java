@@ -47,9 +47,6 @@ public class Usuario implements Serializable {
 
 	private String senha;
 	
-	@Transient
-	private String confirmaSenha;
-
 	@Version
 	private int versao;
 	
@@ -63,11 +60,11 @@ public class Usuario implements Serializable {
 	public Usuario() {
 	}
 
-	public int getIdUsuario() {
+	public Integer getIdUsuario() {
 		return this.idUsuario;
 	}
 
-	public void setIdUsuario(int idUsuario) {
+	public void setIdUsuario(Integer idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 
@@ -161,18 +158,6 @@ public class Usuario implements Serializable {
 		this.status = status;
 	}
 	
-	public String getConfirmaSenha() {
-		return confirmaSenha;
-	}
-	
-	public void setConfirmaSenha(String confirmaSenha) {
-		this.confirmaSenha = confirmaSenha;
-	}
-	
-	public boolean isSenhaValida(){
-		return this.senha.equals(this.confirmaSenha);
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;

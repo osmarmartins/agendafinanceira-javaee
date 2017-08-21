@@ -38,7 +38,7 @@
 						<f:facet name="left">
 							<p:button value="Voltar" outcome="/usuario.xhtml"/>
 							<p:spacer style="width: 10px;"/>
-					        <p:commandButton value="Salvar" actionListener="#{usuarioCadastroBean.salvar}" update="@form"/>
+					        <p:commandButton value="Salvar" actionListener="#{usuarioCadastroBean.salvar()}" update="@form"/>
 						</f:facet>
 					</p:toolbar>
 					
@@ -60,24 +60,23 @@
 						<p:message for="login"/>
 						
 						<p:outputLabel value="Senha" for="senha"/>
-						<p:inputText id="senha" value="#{usuarioCadastroBean.usuario.senha}" style="width: 50%"/>
+						<p:password id="senha" value="#{usuarioCadastroBean.usuario.senha}" style="width: 50%"/>
 						<p:message for="senha"/>
 						
 						<p:outputLabel value="Confirmar Senha" for="confirmaSenha"/>
-						<p:inputText id="confirmaSenha" value="#{usuarioCadastroBean.usuario.confirmaSenha}" style="width: 50%"/>
+						<p:password id="confirmaSenha" value="#{usuarioCadastroBean.confirmarSenha}" style="width: 50%"/>
 						<p:message for="confirmaSenha"/>
 						
 						<p:outputLabel value="Tipo do Usuário" for="tipoUsuario"/>
-				        <p:selectOneMenu id="tipoUsuario" value="#{usuarioCadastroBean.usuario.confirmaSenha}" style="width: 50%">
+				        <p:selectOneMenu id="tipoUsuario" value="#{usuarioCadastroBean.usuario.administrador}" style="width: 50%">
 				            <f:selectItem itemLabel="Selecione o tipo de usuário..." itemValue="" />
-				            <f:selectItem itemLabel="Administrador" itemValue="administrador" />
-				            <f:selectItem itemLabel="Usuário Comum" itemValue="usuario" />
+				        	<f:selectItems value="#{usuarioCadastroBean.tiposUsuario}" var="tipo" itemLabel="#{tipo.descricaoUsuario}" itemValue="#{tipo}"/>
 				        </p:selectOneMenu>
 						<p:message for="tipoUsuario"/>
 						
 				        <p:outputLabel value="Ativo" for="ativo"/>
 				        <p:selectBooleanButton id="ativo" 
-				        	value="#{setorCadastroBean.setor.status}"
+				        	value="#{usuarioCadastroBean.usuario.status}"
 				        	onLabel="Sim" offLabel="Não" style="width:60px" />
 				        <p:message for="ativo"/>
 
