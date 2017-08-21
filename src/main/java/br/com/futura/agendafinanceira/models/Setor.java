@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -41,6 +42,9 @@ public class Setor implements Serializable {
 
 	@Version
 	private Integer versao;
+
+	@Transient
+	private boolean status;
 
 	// bi-directional many-to-one association to Pgto
 	@OneToMany(mappedBy = "setor")
@@ -103,9 +107,46 @@ public class Setor implements Serializable {
 		return pgto;
 	}
 
+	public boolean isStatus() {
+		if (this.ativo == null) {
+			return false;
+		}
+		return (this.ativo.equals(Ativo.ATIVO));
+	}
+
+	public void setStatus(boolean status) {
+		this.setAtivo(status ? Ativo.ATIVO : Ativo.INATIVO);
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "Setor [idSetor=" + idSetor + ", ativo=" + ativo + ", descricao=" + descricao + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idSetor == null) ? 0 : idSetor.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Setor other = (Setor) obj;
+		if (idSetor == null) {
+			if (other.idSetor != null)
+				return false;
+		} else if (!idSetor.equals(other.idSetor))
+			return false;
+		return true;
 	}
 
 }

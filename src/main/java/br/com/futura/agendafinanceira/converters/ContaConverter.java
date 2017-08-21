@@ -6,27 +6,27 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
-import br.com.futura.agendafinanceira.daos.SetorDao;
-import br.com.futura.agendafinanceira.models.Setor;
+import br.com.futura.agendafinanceira.daos.ContaDao;
+import br.com.futura.agendafinanceira.models.Conta;
 
-@FacesConverter(forClass = Setor.class)
-public class SetorConverter implements Converter {
+@FacesConverter(forClass = Conta.class)
+public class ContaConverter implements Converter {
 
 	@Inject
-	private SetorDao setorDao;
+	private ContaDao contaDao;
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value != null && value.trim().length() > 0) {
-			return setorDao.pesquisarPorId(Integer.valueOf(value));
+			return contaDao.pesquisarPorId(Integer.valueOf(value));
 		}
 		return null;
 	}
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		if (value != null && ((Setor) value).getIdSetor() != null) {
-			return ((Setor) value).getIdSetor().toString();
+		if (value != null && ((Conta) value).getIdConta() != null) {
+			return ((Conta) value).getIdConta().toString();
 		}
 		return "";
 	}

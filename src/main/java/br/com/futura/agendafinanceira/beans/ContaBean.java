@@ -5,13 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.inject.Model;
+import javax.faces.application.FacesMessage;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import br.com.futura.agendafinanceira.daos.ContaDao;
 import br.com.futura.agendafinanceira.models.Conta;
+import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
-@Model
+@Named
+@ViewScoped
 public class ContaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -20,8 +24,43 @@ public class ContaBean implements Serializable {
 
 	private List<Conta> contas = new ArrayList<Conta>();
 
+	private String pesquisaDescricao;
+
+	@Inject
+	private MessagesHelper messagesHelper;
+
 	@Inject
 	private ContaDao contaDao;
+
+	@PostConstruct
+	private void init() {
+		this.contas = contaDao.listarTodos();
+		this.pesquisaDescricao = new String();
+	}
+
+	public void pesquisar() {
+		if (this.pesquisaDescricao != null && !this.pesquisaDescricao.isEmpty()) {
+			this.contas = contaDao.listarPorDescricao(this.pesquisaDescricao);
+		}
+	}
+
+	public String alterar(Conta conta) {
+		return "/contacadastro?faces-redirect=true&conta=" + conta.getIdConta();
+	}
+
+	public void excluir(Conta conta) {
+		contaDao.excluir(conta);
+		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
+		init();
+	}
+	
+	public void setPesquisaDescricao(String pesquisaDescricao) {
+		this.pesquisaDescricao = pesquisaDescricao;
+	}
+
+	public String getPesquisaDescricao() {
+		return pesquisaDescricao;
+	}
 
 	public Conta getConta() {
 		return conta;
@@ -31,15 +70,8 @@ public class ContaBean implements Serializable {
 		this.conta = conta;
 	}
 
-	@PostConstruct
-	private void init() {
-		this.contas = contaDao.listarContas();
-		for (Conta conta : contas) {
-			System.out.println(conta.toString());
-		}
-	}
-
 	public List<Conta> getContas() {
 		return contas;
 	}
+
 }

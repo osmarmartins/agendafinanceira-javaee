@@ -25,12 +25,10 @@
 		<div class="ui-g">	
 			<div class="ui-g-12">
 				<h:form>
-<!-- 		
-					<p:messages globalOnly="true"/>
--->		
+
 					<p:toolbar>
 						<f:facet name="left">
-							<p:commandButton value="Novo" icon="fa fa-plus"/>
+							<p:button value="Novo" icon="fa fa-plus" outcome="/usuariocadastro.xhtml"/>
 						</f:facet>
 						
 						<f:facet name="right">
@@ -65,16 +63,24 @@
 						
 						<p:column sortBy="#{usuario.ativo}" width="15%">
 							<f:facet name="header">Situação</f:facet>
-							<h:outputText value="#{usuario.ativo}"/>
+							<h:outputText value="#{usuario.ativo.descricao}"/>
 						</p:column>
 						
 						<p:column width="15%">
 							<f:facet name="header">Operações</f:facet>
-							<p:commandButton title="Alterar" icon="fa fa-pencil"/>
-							<p:commandButton title="Excluir" icon="fa fa-trash"/>
+							<p:commandButton title="Alterar" icon="fa fa-pencil" action="#{usuarioBean.alterar(usuario)}"/>
+							
+							<p:commandButton title="Excluir" icon="fa fa-trash" actionListener="#{usuarioBean.excluir(usuario)}" update="@form" process="@this">
+								<p:confirm header="Confirma exclusão" message="Confirma a excusão de '#{usuario.nome}'" icon="ui-icon-alert" />							
+							</p:commandButton>
 						</p:column>
 						
 					</p:dataTable>
+
+				    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+				        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+				    </p:confirmDialog>	
 				</h:form>
 			</div>
 			

@@ -21,12 +21,9 @@ public class SetorCadastroBean {
 	@Inject
 	private MessagesHelper messagesHelper;
 
-	private boolean status;
-
 	@PostConstruct
 	private void init() {
 		this.setor = new Setor();
-		this.status = true;
 		this.setor.setAtivo(Ativo.ATIVO);
 	}
 
@@ -40,20 +37,10 @@ public class SetorCadastroBean {
 		if (setor == null){
 			init();
 		}
-		this.setStatus(this.setor.getAtivo().equals(Ativo.ATIVO));
 		return this.setor;
 	}
 
 	public void setSetor(Setor setor) {
 		this.setor = setor;
-	}
-
-	public boolean isStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.setor.setAtivo((status ? Ativo.ATIVO : Ativo.INATIVO));
-		this.status = status;
 	}
 }

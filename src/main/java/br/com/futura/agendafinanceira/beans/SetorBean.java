@@ -50,8 +50,8 @@ public class SetorBean implements Serializable {
 
 	public void excluir(Setor setor) {
 		setorDao.excluir(setor);
-		init();
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
+		init();
 	}
 
 	public Setor getSetor() {

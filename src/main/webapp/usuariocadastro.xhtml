@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="resources/template/layout.xhtml">
+
+	<ui:define name="navegacao">
+		<p:breadCrumb>
+		    <p:menuitem value="Dashboard" url="/" />
+		    <p:menuitem value="Usuário" url="/usuario.xhtml" />
+		    <p:menuitem value="Cadastro" url="/usuariocadastro.xhtml"/>
+		</p:breadCrumb>			
+	</ui:define>
+	
+	<ui:define name="titulo">
+		<label>Cadastro de Usuários</label>
+	</ui:define>
+
+	<ui:define name="conteudo">
+    	
+    	<f:metadata>
+    		<f:viewParam name="usuario" value="#{usuarioCadastroBean.usuario}" />
+    	</f:metadata>		
+		
+		<div class="ui-g">	
+			<div class="ui-g-12">
+
+				<h:form>
+					<p:messages autoUpdate="true" globalOnly="true"/>
+					
+					<p:focus context="@form" />
+
+					<p:toolbar>
+						<f:facet name="left">
+							<p:button value="Voltar" outcome="/usuario.xhtml"/>
+							<p:spacer style="width: 10px;"/>
+					        <p:commandButton value="Salvar" actionListener="#{usuarioCadastroBean.salvar}" update="@form"/>
+						</f:facet>
+					</p:toolbar>
+					
+					<p:panelGrid columns="3" styleClass="painel" columnClasses="rotulo, campo, mensagem">
+						<p:outputLabel value="ID" for="id"/>
+						<p:inputText id="id" value="#{usuarioCadastroBean.usuario.idUsuario}" disabled="true" style="width: 20%"/>
+						<p:message for="id"/>
+					
+						<p:outputLabel value="Nome" for="nome"/>
+						<p:inputText id="nome" value="#{usuarioCadastroBean.usuario.nome}" style="width: 95%"/>
+						<p:message for="nome"/>
+						
+						<p:outputLabel value="Email" for="email"/>
+						<p:inputText id="email" value="#{usuarioCadastroBean.usuario.email}" style="width: 95%"/>
+						<p:message for="email"/>
+						
+						<p:outputLabel value="Login" for="login"/>
+						<p:inputText id="login" value="#{usuarioCadastroBean.usuario.login}" style="width: 50%"/>
+						<p:message for="login"/>
+						
+						<p:outputLabel value="Senha" for="senha"/>
+						<p:inputText id="senha" value="#{usuarioCadastroBean.usuario.senha}" style="width: 50%"/>
+						<p:message for="senha"/>
+						
+						<p:outputLabel value="Confirmar Senha" for="confirmaSenha"/>
+						<p:inputText id="confirmaSenha" value="#{usuarioCadastroBean.usuario.confirmaSenha}" style="width: 50%"/>
+						<p:message for="confirmaSenha"/>
+						
+						<p:outputLabel value="Tipo do Usuário" for="tipoUsuario"/>
+				        <p:selectOneMenu id="tipoUsuario" value="#{usuarioCadastroBean.usuario.confirmaSenha}" style="width: 50%">
+				            <f:selectItem itemLabel="Selecione o tipo de usuário..." itemValue="" />
+				            <f:selectItem itemLabel="Administrador" itemValue="administrador" />
+				            <f:selectItem itemLabel="Usuário Comum" itemValue="usuario" />
+				        </p:selectOneMenu>
+						<p:message for="tipoUsuario"/>
+						
+				        <p:outputLabel value="Ativo" for="ativo"/>
+				        <p:selectBooleanButton id="ativo" 
+				        	value="#{setorCadastroBean.setor.status}"
+				        	onLabel="Sim" offLabel="Não" style="width:60px" />
+				        <p:message for="ativo"/>
+
+					</p:panelGrid>
+				</h:form>
+
+			</div>
+		</div>
+	</ui:define>
+
+	<ui:define name="pagina">Setores</ui:define>
+</ui:composition>
+
+</html>

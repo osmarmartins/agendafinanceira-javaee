@@ -1,5 +1,6 @@
 package br.com.futura.agendafinanceira.daos;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,8 +9,10 @@ import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.models.Setor;
 
-public class SetorDao {
+public class SetorDao implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@PersistenceContext
 	private EntityManager manager;
 	
@@ -18,9 +21,9 @@ public class SetorDao {
 	}
 	
 	public List<Setor> listarPorDescricao(String pesquisaDescricao) {
-		System.out.println("Filtro por: " + pesquisaDescricao);
 		return manager.createQuery("SELECT s FROM Setor s WHERE s.descricao LIKE :pDescricao ", Setor.class)
-				.setParameter("pDescricao", "%" + pesquisaDescricao + "%").getResultList();
+				.setParameter("pDescricao", "%" + pesquisaDescricao + "%")
+				.getResultList();
 	}
 	
 	public Setor pesquisarPorId(Integer idSetor) {

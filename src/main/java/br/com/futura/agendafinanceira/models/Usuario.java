@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import br.com.futura.agendafinanceira.models.enums.Ativo;
@@ -30,7 +31,7 @@ public class Usuario implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_usuario")
-	private int idUsuario;
+	private Integer idUsuario;
 
 	@Enumerated
 	private TipoUsuario administrador;
@@ -45,9 +46,15 @@ public class Usuario implements Serializable {
 	private String nome;
 
 	private String senha;
+	
+	@Transient
+	private String confirmaSenha;
 
 	@Version
 	private int versao;
+	
+	@Transient
+	private boolean status;
 
 	// bi-directional many-to-one association to UsuarioOperacao
 	@OneToMany(mappedBy = "usuario")
@@ -141,5 +148,58 @@ public class Usuario implements Serializable {
 
 		return usuarioOperacao;
 	}
+	
+	public boolean isStatus() {
+		if (this.ativo == null){
+			return false;
+		}
+		return (this.ativo.equals(Ativo.ATIVO));
+	}
+	
+	public void setStatus(boolean status) {
+		this.setAtivo(status ? Ativo.ATIVO : Ativo.INATIVO);
+		this.status = status;
+	}
+	
+	public String getConfirmaSenha() {
+		return confirmaSenha;
+	}
+	
+	public void setConfirmaSenha(String confirmaSenha) {
+		this.confirmaSenha = confirmaSenha;
+	}
+	
+	public boolean isSenhaValida(){
+		return this.senha.equals(this.confirmaSenha);
+	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idUsuario;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		if (idUsuario != other.idUsuario)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [idUsuario=" + idUsuario + ", administrador=" + administrador + ", ativo=" + ativo + ", email="
+				+ email + ", login=" + login + ", nome=" + nome + ", senha=" + senha + ", versao=" + versao + "]";
+	}
+
+	
 }

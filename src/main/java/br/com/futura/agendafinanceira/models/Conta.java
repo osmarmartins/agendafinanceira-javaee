@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import br.com.futura.agendafinanceira.models.enums.Ativo;
@@ -29,7 +30,7 @@ public class Conta implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_conta")
-	private int idConta;
+	private Integer idConta;
 
 	@Enumerated
 	private Ativo ativo;
@@ -39,6 +40,9 @@ public class Conta implements Serializable {
 	@Version
 	private int versao;
 
+	@Transient
+	private boolean status;
+
 	// bi-directional many-to-one association to Pgto
 	@OneToMany(mappedBy = "conta")
 	private List<Pgto> pgtos;
@@ -46,11 +50,11 @@ public class Conta implements Serializable {
 	public Conta() {
 	}
 
-	public int getIdConta() {
+	public Integer getIdConta() {
 		return this.idConta;
 	}
 
-	public void setIdConta(int idConta) {
+	public void setIdConta(Integer idConta) {
 		this.idConta = idConta;
 	}
 
@@ -98,6 +102,18 @@ public class Conta implements Serializable {
 		pgto.setConta(null);
 
 		return pgto;
+	}
+
+	public boolean isStatus() {
+		if (this.ativo == null) {
+			return false;
+		}
+		return (this.ativo.equals(Ativo.ATIVO));
+	}
+
+	public void setStatus(boolean status) {
+		this.setAtivo((status ? Ativo.ATIVO : Ativo.INATIVO));
+		this.status = status;	
 	}
 
 	@Override
