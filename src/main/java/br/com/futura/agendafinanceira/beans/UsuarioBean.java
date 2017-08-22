@@ -20,8 +20,6 @@ public class UsuarioBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Usuario usuario;
-
 	private List<Usuario> usuarios = new ArrayList<>();
 
 	private String pesquisa;
@@ -34,7 +32,6 @@ public class UsuarioBean implements Serializable {
 
 	@PostConstruct
 	private void init() {
-		usuario = new Usuario();
 		this.usuarios = usuarioDao.listarTodos();
 	}
 
@@ -52,14 +49,6 @@ public class UsuarioBean implements Serializable {
 		if (this.pesquisa != null && !this.pesquisa.isEmpty()) {
 			usuarios = usuarioDao.listarPorPesquisa(this.pesquisa);
 		}
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
 	}
 
 	public List<Usuario> getUsuarios() {

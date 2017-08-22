@@ -20,8 +20,6 @@ public class ContaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Conta conta;
-
 	private List<Conta> contas = new ArrayList<Conta>();
 
 	private String pesquisaDescricao;
@@ -60,14 +58,6 @@ public class ContaBean implements Serializable {
 
 	public String getPesquisaDescricao() {
 		return pesquisaDescricao;
-	}
-
-	public Conta getConta() {
-		return conta;
-	}
-
-	public void setConta(Conta conta) {
-		this.conta = conta;
 	}
 
 	public List<Conta> getContas() {

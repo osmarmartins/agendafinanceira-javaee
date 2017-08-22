@@ -58,15 +58,7 @@
 						<p:outputLabel value="Login" for="login"/>
 						<p:inputText id="login" value="#{usuarioCadastroBean.usuario.login}" style="width: 50%"/>
 						<p:message for="login"/>
-						
-						<p:outputLabel value="Senha" for="senha"/>
-						<p:password id="senha" value="#{usuarioCadastroBean.usuario.senha}" style="width: 50%"/>
-						<p:message for="senha"/>
-						
-						<p:outputLabel value="Confirmar Senha" for="confirmaSenha"/>
-						<p:password id="confirmaSenha" value="#{usuarioCadastroBean.confirmarSenha}" style="width: 50%"/>
-						<p:message for="confirmaSenha"/>
-						
+
 						<p:outputLabel value="Tipo do Usuário" for="tipoUsuario"/>
 				        <p:selectOneMenu id="tipoUsuario" value="#{usuarioCadastroBean.usuario.administrador}" style="width: 50%">
 				            <f:selectItem itemLabel="Selecione o tipo de usuário..." itemValue="" />
@@ -79,15 +71,31 @@
 				        	value="#{usuarioCadastroBean.usuario.status}"
 				        	onLabel="Sim" offLabel="Não" style="width:60px" />
 				        <p:message for="ativo"/>
-
 					</p:panelGrid>
+					
+					<p:panelGrid columns="3" styleClass="painel" columnClasses="rotulo, campo, mensagem" rendered="#{usuarioCadastroBean.usuario.idUsuario == null}">
+							<p:outputLabel value="Senha" for="senha"/>
+							<p:password id="senha" value="#{usuarioCadastroBean.usuario.senha}" style="width: 50%"/>
+							<p:message for="senha"/>
+							
+							<p:outputLabel value="Confirmar Senha" for="confirmaSenha"/>
+							<p:password id="confirmaSenha" value="#{usuarioCadastroBean.confirmarSenha}" style="width: 50%"/>
+							<p:message for="confirmaSenha"/>
+					</p:panelGrid>
+
+					<p:panelGrid columns="3" styleClass="painel" columnClasses="rotulo, campo, mensagem" rendered="#{usuarioCadastroBean.usuario.idUsuario != null}">
+							<p:outputLabel value="Senha" for="alterarSenha"/>
+							<p:button id="alterarSenha" value="Alterar Senha" style="width: 50%" outcome="/usuario.xhtml"/>
+							<p:message for="alterarSenha"/>
+					</p:panelGrid>
+
 				</h:form>
 
 			</div>
 		</div>
 	</ui:define>
 
-	<ui:define name="pagina">Setores</ui:define>
+	<ui:define name="pagina">Usuários</ui:define>
 </ui:composition>
 
 </html>

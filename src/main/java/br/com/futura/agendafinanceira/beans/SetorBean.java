@@ -20,8 +20,6 @@ public class SetorBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Setor setor;
-
 	private List<Setor> setores = new ArrayList<Setor>();
 
 	private String pesquisaDescricao;
@@ -52,14 +50,6 @@ public class SetorBean implements Serializable {
 		setorDao.excluir(setor);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		init();
-	}
-
-	public Setor getSetor() {
-		return setor;
-	}
-
-	public void setSetor(Setor setor) {
-		this.setor = setor;
 	}
 
 	public List<Setor> getSetores() {

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="resources/template/layout.xhtml">
+
+	<ui:define name="navegacao">
+		<p:breadCrumb>
+		    <p:menuitem value="Dashboard" url="/" />
+		    <p:menuitem value="Fornecedores" url="/fornecedor.xhtml" />
+		</p:breadCrumb>			
+	
+	</ui:define>
+	
+	<ui:define name="titulo">
+		<label>Cadastro de Fornecedores</label>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		
+		<div class="ui-g">	
+			<div class="ui-g-12">
+				<h:form>
+
+					<p:toolbar>
+						<f:facet name="left">
+							<p:button value="Novo" icon="fa fa-plus" outcome="/fornecedorcadastro.xhtml"/>
+						</f:facet>
+						
+						<f:facet name="right">
+							<p:inputText placeholder="Pesquisar por..." size="30" value="#{fornecedorBean.pesquisa}"/>
+							<p:commandButton value="Pesquisar" icon="fa fa-search" actionListener="#{fornecedorBean.pesquisar()}" update="@form"/>
+						</f:facet>
+					</p:toolbar>
+
+					<p:dataTable value="#{fornecedorBean.fornecedores}" 
+						var="fornecedor" id="tabelaFornecedor" emptyMessage="Nenhum registro encontrado" 
+						rows="8" paginator="true" paginatorPosition="bottom">
+						
+						<p:column sortBy="#{fornecedor.idFornecedor}" width="5%">
+							<f:facet name="header">ID</f:facet>
+							<h:outputText value="#{fornecedor.idFornecedor}"/>
+						</p:column>
+						
+						<p:column sortBy="#{fornecedor.razaoSocial}">
+							<f:facet name="header">Razão Social</f:facet>
+							<h:outputText value="#{fornecedor.razaoSocial}"/>
+						</p:column>
+						
+						<p:column sortBy="#{fornecedor.nomeFantasia}">
+							<f:facet name="header">Nome</f:facet>
+							<h:outputText value="#{fornecedor.nomeFantasia}"/>
+						</p:column>
+						
+						<p:column sortBy="#{fornecedor.cpfCnpj}" width="15%">
+							<f:facet name="header">CPF/CNPJ</f:facet>
+							<h:outputText value="#{fornecedor.cpfCnpj}"/>
+						</p:column>
+						
+						<p:column sortBy="#{fornecedor.ativo}" width="10%">
+							<f:facet name="header">Situação</f:facet>
+							<h:outputText value="#{fornecedor.ativo.descricao}"/>
+						</p:column>
+						
+						<p:column width="15%">
+							<f:facet name="header">Operações</f:facet>
+							<p:commandButton title="Alterar" icon="fa fa-pencil" action="#{fornecedorBean.alterar(fornecedor)}"/>
+							
+							<p:commandButton title="Excluir" icon="fa fa-trash" actionListener="#{fornecedorBean.excluir(fornecedor)}" update="@form" process="@this">
+								<p:confirm header="Confirma exclusão" message="Confirma a excusão de '#{fornecedor.razaoSocial}'" icon="ui-icon-alert" />							
+							</p:commandButton>
+						</p:column>
+						
+					</p:dataTable>
+
+				    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+				        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+				    </p:confirmDialog>	
+				</h:form>
+			</div>
+			
+		</div>
+	</ui:define>
+
+	<ui:define name="pagina">Contas</ui:define>
+</ui:composition>
+
+</html>
