@@ -23,6 +23,65 @@
 
 	<ui:define name="conteudo">
 		
+    	<f:metadata>
+    		<f:viewParam name="fornecedor" value="#{fornecedorCadastroBean.fornecedor}" />
+    	</f:metadata>		
+		
+		<div class="ui-g">	
+			<div class="ui-g-12">
+
+				<h:form>
+					<p:messages autoUpdate="true" globalOnly="true"/>
+					
+					<p:focus context="@form" />
+
+					<p:toolbar>
+						<f:facet name="left">
+							<p:button value="Voltar" outcome="/fornecedor.xhtml"/>
+							<p:spacer style="width: 10px;"/>
+					        <p:commandButton value="Salvar" actionListener="#{fornecedorCadastroBean.salvar()}" update="@form"/>
+						</f:facet>
+					</p:toolbar>
+					
+					<p:panelGrid columns="3" styleClass="painel" columnClasses="rotulo, campo, mensagem">
+						<p:outputLabel value="ID" for="id"/>
+						<p:inputText id="id" value="#{fornecedorCadastroBean.fornecedor.idFornecedor}" disabled="true" style="width: 20%"/>
+						<p:message for="id"/>
+	
+						<p:outputLabel value="Tipo de Pessoa" for="tipo"/>					
+						<p:selectOneRadio id="tipo" value="#{fornecedorCadastroBean.fornecedor.pfPj}">
+							<f:selectItems value="#{fornecedorCadastroBean.tipoPessoas}" var="tipoPessoa"
+								itemValue="#{tipoPessoa}" itemLabel="#{tipoPessoa.descricao}"/>
+						</p:selectOneRadio>
+						<p:message for="tipo"/>
+
+						<p:outputLabel value="CNPJ/CPF" for="documento"/>
+						<p:inputText id="documento" value="#{fornecedorCadastroBean.fornecedor.cpfCnpj}" style="width: 95%"/>
+						<p:message for="documento"/>
+						
+						<p:outputLabel value="Razão Social" for="razaoSocial"/>
+						<p:inputText id="razaoSocial" value="#{fornecedorCadastroBean.fornecedor.razaoSocial}" style="width: 95%"/>
+						<p:message for="razaoSocial"/>
+						
+						<p:outputLabel value="Nome/Nome Fantasia" for="nome"/>
+						<p:inputText id="nome" value="#{fornecedorCadastroBean.fornecedor.nomeFantasia}" style="width: 95%"/>
+						<p:message for="nome"/>
+						
+				        <p:outputLabel value="Ativo" for="ativo"/>
+				        <p:selectBooleanButton id="ativo" 
+				        	value="#{fornecedorCadastroBean.fornecedor.status}"
+				        	onLabel="Sim" offLabel="Não" style="width:60px" />
+				        <p:message for="ativo"/>
+					</p:panelGrid>
+
+				</h:form>
+
+			</div>
+		</div>
+		
+		
+		
+		
 	</ui:define>
 
 	<ui:define name="pagina">Fornecedores</ui:define>

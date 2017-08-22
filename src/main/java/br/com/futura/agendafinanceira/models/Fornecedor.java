@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import br.com.futura.agendafinanceira.models.enums.Ativo;
@@ -30,7 +31,7 @@ public class Fornecedor implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_fornecedor")
-	private int idFornecedor;
+	private Integer idFornecedor;
 
 	@Enumerated
 	private Ativo ativo;
@@ -51,6 +52,9 @@ public class Fornecedor implements Serializable {
 	@Version
 	private int versao;
 
+	@Transient
+	private boolean status;
+
 	// bi-directional many-to-one association to Contato
 	@OneToMany(mappedBy = "fornecedor")
 	private List<Contato> contatos;
@@ -62,11 +66,11 @@ public class Fornecedor implements Serializable {
 	public Fornecedor() {
 	}
 
-	public int getIdFornecedor() {
+	public Integer getIdFornecedor() {
 		return this.idFornecedor;
 	}
 
-	public void setIdFornecedor(int idFornecedor) {
+	public void setIdFornecedor(Integer idFornecedor) {
 		this.idFornecedor = idFornecedor;
 	}
 
@@ -160,6 +164,50 @@ public class Fornecedor implements Serializable {
 		pgto.setFornecedor(null);
 
 		return pgto;
+	}
+
+	public boolean isStatus() {
+		if (this.ativo == null){
+			return false;
+		}
+		return (this.ativo.equals(Ativo.ATIVO));
+	}
+
+	public void setStatus(boolean status) {
+		this.setAtivo(status ? Ativo.ATIVO : Ativo.INATIVO);
+		this.status = status;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idFornecedor == null) ? 0 : idFornecedor.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Fornecedor other = (Fornecedor) obj;
+		if (idFornecedor == null) {
+			if (other.idFornecedor != null)
+				return false;
+		} else if (!idFornecedor.equals(other.idFornecedor))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Fornecedor [idFornecedor=" + idFornecedor + ", ativo=" + ativo + ", cpfCnpj=" + cpfCnpj
+				+ ", nomeFantasia=" + nomeFantasia + ", pfPj=" + pfPj + ", razaoSocial=" + razaoSocial + ", versao="
+				+ versao + ", status=" + status + ", contatos=" + contatos + ", pgtos=" + pgtos + "]";
 	}
 
 }

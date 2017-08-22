@@ -38,14 +38,12 @@ public class FornecedorBean implements Serializable {
 		messagesHelper.addFlash(new FacesMessage("Em Desenvolvimento...."));
 	}
 	
-	public void alterar(){
-		messagesHelper.addFlash(new FacesMessage("Em Desenvolvimento...."));
-		
+	public String alterar(Fornecedor fornecedor){
+		return "/fornecedorcadastro?faces-redirect=true&fornecedor=" + fornecedor.getIdFornecedor();
 	}
 	
 	public void excluir(){
 		messagesHelper.addFlash(new FacesMessage("Em Desenvolvimento...."));
-		
 	}
 	
 	public String getPesquisa() {
