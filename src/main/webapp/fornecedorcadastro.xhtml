@@ -48,14 +48,14 @@
 						<p:inputText id="id" value="#{fornecedorCadastroBean.fornecedor.idFornecedor}" disabled="true" style="width: 20%"/>
 						<p:message for="id"/>
 	
-						<p:outputLabel value="Tipo de Pessoa" for="tipo"/>					
+ 						<p:outputLabel value="Tipo de Pessoa" for="tipo"/>					
 						<p:selectOneRadio id="tipo" value="#{fornecedorCadastroBean.fornecedor.pfPj}">
-							<f:selectItems value="#{fornecedorCadastroBean.tipoPessoas}" var="tipoPessoa"
-								itemValue="#{tipoPessoa}" itemLabel="#{tipoPessoa.descricao}"/>
+							<f:selectItems value="#{fornecedorCadastroBean.tipoPessoas}" var="tp"
+								itemValue="#{tp}" itemLabel="#{tp.descricao}"/>
 						</p:selectOneRadio>
 						<p:message for="tipo"/>
-
-						<p:outputLabel value="CNPJ/CPF" for="documento"/>
+						
+ 						<p:outputLabel value="CNPJ/CPF" for="documento"/>
 						<p:inputText id="documento" value="#{fornecedorCadastroBean.fornecedor.cpfCnpj}" style="width: 95%"/>
 						<p:message for="documento"/>
 						

@@ -10,27 +10,38 @@ import javax.transaction.Transactional;
 import br.com.futura.agendafinanceira.models.Fornecedor;
 
 public class FornecedorDao implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@PersistenceContext
 	private EntityManager manager;
 
 	public List<Fornecedor> listarTodos() {
-		return manager.createQuery("SELECT f FROM Fornecedor f", Fornecedor.class).getResultList();
+		return manager
+				.createQuery("SELECT DISTINCT f FROM Fornecedor f LEFT JOIN FETCH f.contatos", Fornecedor.class)
+				.getResultList();
 	}
 
+	public Fornecedor pesquisaPorId(Integer idFornecedor) {
+		return manager
+				.createQuery("SELECT DISTINCT f FROM Fornecedor f LEFT JOIN FETCH f.contatos WHERE f.idFornecedor=:pIdFornecedor", Fornecedor.class)
+				.setParameter("pIdFornecedor", idFornecedor)
+				.getSingleResult();
+	}
+	
 	@Transactional
 	public void salvar(Fornecedor fornecedor) {
-		if (fornecedor.getIdFornecedor()!=null){
+		if (fornecedor.getIdFornecedor() != null) {
 			manager.merge(fornecedor);
-		}else{
+		} else {
 			manager.persist(fornecedor);
 		}
 	}
 
-	public Fornecedor pesquisaPorId(Integer idFornecedor) {
-		return manager.find(Fornecedor.class, idFornecedor);
+	@Transactional
+	public void excluir(Fornecedor fornecedor) {
+		manager.remove(manager.getReference(Fornecedor.class, fornecedor.getIdFornecedor()));
+		
 	}
-
+	
 }

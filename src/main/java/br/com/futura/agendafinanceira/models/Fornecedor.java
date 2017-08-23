@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.models.enums.TipoPessoa;
@@ -43,6 +44,7 @@ public class Fornecedor implements Serializable {
 	private String nomeFantasia;
 
 	@Enumerated
+	@NotNull
 	@Column(name = "pf_pj")
 	private TipoPessoa pfPj;
 
