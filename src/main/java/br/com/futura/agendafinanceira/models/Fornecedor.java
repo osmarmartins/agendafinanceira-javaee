@@ -62,8 +62,8 @@ public class Fornecedor implements Serializable {
 	private List<Contato> contatos;
 
 	// bi-directional many-to-one association to Pgto
-	@OneToMany(mappedBy = "fornecedor")
-	private List<Pgto> pgtos;
+//	@OneToMany(mappedBy = "fornecedor")
+//	private List<Pgto> pgtos;
 
 	public Fornecedor() {
 	}
@@ -146,27 +146,27 @@ public class Fornecedor implements Serializable {
 		return contato;
 	}
 
-	public List<Pgto> getPgtos() {
-		return this.pgtos;
-	}
+//	public List<Pgto> getPgtos() {
+//		return this.pgtos;
+//	}
+//
+//	public void setPgtos(List<Pgto> pgtos) {
+//		this.pgtos = pgtos;
+//	}
 
-	public void setPgtos(List<Pgto> pgtos) {
-		this.pgtos = pgtos;
-	}
-
-	public Pgto addPgto(Pgto pgto) {
-		getPgtos().add(pgto);
-		pgto.setFornecedor(this);
-
-		return pgto;
-	}
-
-	public Pgto removePgto(Pgto pgto) {
-		getPgtos().remove(pgto);
-		pgto.setFornecedor(null);
-
-		return pgto;
-	}
+//	public Pgto addPgto(Pgto pgto) {
+//		getPgtos().add(pgto);
+//		pgto.setFornecedor(this);
+//
+//		return pgto;
+//	}
+//
+//	public Pgto removePgto(Pgto pgto) {
+//		getPgtos().remove(pgto);
+//		pgto.setFornecedor(null);
+//
+//		return pgto;
+//	}
 
 	public boolean isStatus() {
 		if (this.ativo == null){
@@ -209,7 +209,7 @@ public class Fornecedor implements Serializable {
 	public String toString() {
 		return "Fornecedor [idFornecedor=" + idFornecedor + ", ativo=" + ativo + ", cpfCnpj=" + cpfCnpj
 				+ ", nomeFantasia=" + nomeFantasia + ", pfPj=" + pfPj + ", razaoSocial=" + razaoSocial + ", versao="
-				+ versao + ", status=" + status + ", contatos=" + contatos + ", pgtos=" + pgtos + "]";
+				+ versao + ", status=" + status + ", contatos=" + contatos + "]";
 	}
 
 }

@@ -35,7 +35,7 @@ public class FornecedorBean implements Serializable {
 	}
 	
 	public void pesquisar(){
-		messagesHelper.addFlash(new FacesMessage("Em Desenvolvimento...."));
+		fornecedores = fornecedorDao.listarPor(pesquisa);
 	}
 	
 	public String alterar(Fornecedor fornecedor){

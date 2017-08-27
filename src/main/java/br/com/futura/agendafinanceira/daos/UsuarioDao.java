@@ -8,8 +8,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import org.primefaces.convert.NumberConverter;
+
 import br.com.futura.agendafinanceira.models.Usuario;
 import br.com.futura.agendafinanceira.utils.HashMD5Util;
+import br.com.futura.agendafinanceira.utils.NumberConversionUtil;
 
 public class UsuarioDao implements Serializable {
 
@@ -21,10 +24,15 @@ public class UsuarioDao implements Serializable {
 		return manager.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
 	}
 
-	public List<Usuario> listarPorPesquisa(String pesquisa) {
+	public List<Usuario> listarPor(String pesquisa) {
 		String argumentoPesquisa = "%" + pesquisa + "%";
 		return manager
-				.createQuery("SELECT u FROM Usuario u WHERE u.nome like :pNome OR u.login like :pLogin OR u.email like :pEmail", Usuario.class)
+				.createQuery("SELECT u FROM Usuario u "
+						+ "WHERE u.idUsuario = :pIdUsuario "
+						+ "OR u.nome like :pNome "
+						+ "OR u.login like :pLogin "
+						+ "OR u.email like :pEmail", Usuario.class)
+				.setParameter("pIdUsuario", NumberConversionUtil.getIntegerOrZero(pesquisa))
 				.setParameter("pNome", argumentoPesquisa)
 				.setParameter("pLogin", argumentoPesquisa)
 				.setParameter("pEmail", argumentoPesquisa)

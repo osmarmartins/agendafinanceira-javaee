@@ -47,7 +47,7 @@ public class UsuarioBean implements Serializable {
 
 	public void pesquisar() {
 		if (this.pesquisa != null && !this.pesquisa.isEmpty()) {
-			usuarios = usuarioDao.listarPorPesquisa(this.pesquisa);
+			usuarios = usuarioDao.listarPor(this.pesquisa);
 		}
 	}
 

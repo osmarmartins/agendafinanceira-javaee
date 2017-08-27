@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.models.Fornecedor;
+import br.com.futura.agendafinanceira.utils.NumberConversionUtil;
 
 public class FornecedorDao implements Serializable {
 
@@ -29,6 +30,20 @@ public class FornecedorDao implements Serializable {
 				.getSingleResult();
 	}
 	
+	public List<Fornecedor> listarPor(String pesquisa) {
+		return manager
+				.createQuery("SELECT DISTINCT f FROM Fornecedor f LEFT JOIN FETCH f.contatos "
+						+ "WHERE f.idFornecedor=:pIdFornecedor "
+						+ "OR f.cpfCnpj LIKE :pCpfCnpj "
+						+ "OR f.nomeFantasia LIKE :pNomeFantasia "
+						+ "OR f.razaoSocial LIKE :pRazaoSocial ", Fornecedor.class)
+				.setParameter("pIdFornecedor", NumberConversionUtil.getIntegerOrZero(pesquisa))
+				.setParameter("pCpfCnpj", "%" + pesquisa + "%")
+				.setParameter("pNomeFantasia", "%" + pesquisa + "%")
+				.setParameter("pRazaoSocial", "%" + pesquisa + "%")
+				.getResultList();
+	}
+	
 	@Transactional
 	public void salvar(Fornecedor fornecedor) {
 		if (fornecedor.getIdFornecedor() != null) {
@@ -43,5 +58,6 @@ public class FornecedorDao implements Serializable {
 		manager.remove(manager.getReference(Fornecedor.class, fornecedor.getIdFornecedor()));
 		
 	}
+
 	
 }
