@@ -56,8 +56,6 @@ public class FornecedorDao implements Serializable {
 	@Transactional
 	public void excluir(Fornecedor fornecedor) {
 		manager.remove(manager.getReference(Fornecedor.class, fornecedor.getIdFornecedor()));
-		
 	}
 
-	
 }

@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.futura.agendafinanceira.daos.FornecedorDao;
+import br.com.futura.agendafinanceira.models.Contato;
 import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.models.enums.TipoPessoa;
@@ -21,16 +22,16 @@ public class FornecedorCadastroBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Fornecedor fornecedor;
-	
+
 	private TipoPessoa[] tipoPessoas;
-	
+
 	private String documentoMascara;
-	
+
 	private String documentoRotulo;
-	
+
 	@Inject
 	private FornecedorDao fornecedorDao;
-	
+
 	@Inject
 	private MessagesHelper messagesHelper;
 
@@ -41,25 +42,38 @@ public class FornecedorCadastroBean implements Serializable {
 		this.fornecedor.setAtivo(Ativo.ATIVO);
 		this.fornecedor.setPfPj(TipoPessoa.PJ);
 	}
-	
-	public void salvar(){
+
+	public void salvar() {
 		fornecedorDao.salvar(fornecedor);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
-		init();		
+		init();
+	}
+
+	public String alterarContato(Contato contato) {
+		return "/contatocadastro?faces-redirect=true&"
+				+ "fornecedor=" + contato.getFornecedor().getIdFornecedor()
+				+ "&contato=" + contato.getIdContato();
+	}
+	
+	public String novoContato(){
+		return "/contatocadastro?faces-redirect=true&"
+				+ "fornecedor=" + fornecedor.getIdFornecedor();
+
+		
 	}
 
 	public void definirDocumento() {
 		this.documentoMascara = ((TipoPessoa) this.fornecedor.getPfPj()).getMascara();
 		this.documentoRotulo = ((TipoPessoa) this.fornecedor.getPfPj()).getRotulo();
 	}
-	
+
 	public Fornecedor getFornecedor() {
 		if (this.fornecedor == null) {
 			init();
 		}
 		return fornecedor;
 	}
-	
+
 	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
 	}
@@ -67,13 +81,13 @@ public class FornecedorCadastroBean implements Serializable {
 	public TipoPessoa[] getTipoPessoas() {
 		return tipoPessoas;
 	}
-	
+
 	public String getDocumentoMascara() {
 		return documentoMascara;
 	}
-	
+
 	public String getDocumentoRotulo() {
 		return documentoRotulo;
 	}
-	
+
 }

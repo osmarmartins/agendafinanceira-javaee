@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="resources/template/layout.xhtml">
+
+	<ui:define name="navegacao">
+		<p:breadCrumb>
+		    <p:menuitem value="Dashboard" url="/" />
+		    <p:menuitem value="Fornecedores" url="/fornecedor.xhtml" />
+		    <p:menuitem value="Cadastro" url="/fornecedorcadastro.xhtml" />
+		    <p:menuitem value="Contato" url="/contatocadastro.xhtml" />
+		</p:breadCrumb>			
+	
+	</ui:define>
+	
+	<ui:define name="titulo">
+		<label>Cadastro de Contato</label>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		
+    	<f:metadata>
+    		<f:viewParam name="contato" value="#{contatoCadastroBean.contato}" />
+    		<f:viewParam name="fornecedor" value="#{contatoCadastroBean.fornecedor}" />
+    	</f:metadata>		
+		
+		<div class="ui-g">	
+			<div class="ui-g-12">
+				<h:form id="formContatos">
+					<p:messages autoUpdate="true" globalOnly="true"/>
+					
+					<p:focus context="@form" />
+
+					<p:toolbar>
+						<f:facet name="left">
+							<p:commandButton value="Voltar" actionListener="#{contatoCadastroBean.voltar()}"/>
+							<p:spacer style="width: 10px;"/>
+					        <p:commandButton value="Salvar" actionListener="#{contatoCadastroBean.salvar()}" update="@form"/>
+						</f:facet>
+					</p:toolbar>
+					
+					<p:panelGrid columns="3" styleClass="painel" columnClasses="rotulo, campo, mensagem">
+						<p:outputLabel for="id" value="ID"/>
+						<p:inputText id="id" value="#{contatoCadastroBean.contato.idContato}" disabled="true" style="width: 20%"/>
+						<p:message for="id"/>
+					
+						<p:outputLabel for="contato" value="Contato"/>
+						<p:inputText id="contato" value="#{contatoCadastroBean.contato.contato}" style="width: 95%" 
+								rendered="true" requiredMessage="Preenchimento Obrigatório"/>
+						<p:message for="contato"/>
+					
+						<p:outputLabel for="telefone1" value="Telefone-1"/>
+						<p:inputText id="telefone1" value="#{contatoCadastroBean.contato.telefone1}" style="width: 50%"/>
+						<p:message for="telefone1"/>
+	
+						<p:outputLabel for="telefone2" value="Telefone-2"/>
+						<p:inputText id="telefone2" value="#{contatoCadastroBean.contato.telefone2}" style="width: 50%"/>
+						<p:message for="telefone2"/>
+	
+						<p:outputLabel for="telefone3" value="Telefone-3"/>
+						<p:inputText id="telefone3" value="#{contatoCadastroBean.contato.telefone3}" style="width: 50%"/>
+						<p:message for="telefone3"/>
+	
+						<p:outputLabel for="email" value="Email"/>
+						<p:inputText id="email" value="#{contatoCadastroBean.contato.email}" style="width: 95%"/>
+						<p:message for="email"/>
+	
+						<p:outputLabel for="site" value="Site"/>
+						<p:inputText id="site" value="#{contatoCadastroBean.contato.site}" style="width: 95%"/>
+						<p:message for="site"/>
+	
+						<p:outputLabel for="cep" value="CEP"/>
+						<h:panelGroup>
+							<p:inputMask id="cep" value="#{contatoCadastroBean.contato.cep}" style="width: 20%" mask="99999-999"/>
+							<p:commandButton value="Consulta Correios"/>
+						</h:panelGroup>
+						<p:message for="cep"/>
+	
+						<p:outputLabel for="endereco" value="Endereço"/>
+						<p:inputText id="endereco" value="#{contatoCadastroBean.contato.endereco}" style="width: 95%"/>
+						<p:message for="endereco"/>
+	
+						<p:outputLabel for="enderecoNr" value="Número"/>
+						<p:inputText id="enderecoNr" value="#{contatoCadastroBean.contato.numero}" style="width: 20%"/>
+						<p:message for="enderecoNr"/>
+	
+						<p:outputLabel for="complemento" value="Complemento"/>
+						<p:inputText id="complemento" value="#{contatoCadastroBean.contato.complemento}" style="width: 50%"/>
+						<p:message for="complemento"/>
+	
+						<p:outputLabel for="bairro" value="Bairro"/>
+						<p:inputText id="bairro" value="#{contatoCadastroBean.contato.bairro}" style="width: 95%"/>
+						<p:message for="bairro"/>
+	
+						<p:outputLabel for="cidade" value="Cidade/UF"/>
+						<h:panelGroup>
+							<p:inputText id="cidade" value="#{contatoCadastroBean.contato.cidade}" style="width: 70%"/>
+							<p:spacer width="5%"/>
+							<p:outputLabel value="UF"/>
+							<p:inputText value="#{contatoCadastroBean.contato.uf}" style="width: 10%" />
+						</h:panelGroup>
+						<p:message for="cidade"/>
+	
+				        <p:outputLabel value="Ativo" for="ativo"/>
+				        <p:selectBooleanButton id="ativo" 
+				        	value="#{contatoCadastroBean.contato.status}"
+				        	onLabel="Sim" offLabel="Não" style="width:60px" />
+				        <p:message for="ativo"/>
+
+					</p:panelGrid>
+				</h:form>
+			</div>
+		</div>
+		
+	</ui:define>
+
+	<ui:define name="pagina">Contatos</ui:define>
+	
+</ui:composition>
+
+</html>

@@ -142,7 +142,7 @@ public class Fornecedor implements Serializable {
 	public Contato removeContato(Contato contato) {
 		getContatos().remove(contato);
 		contato.setFornecedor(null);
-
+		
 		return contato;
 	}
 

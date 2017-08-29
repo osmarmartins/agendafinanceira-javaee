@@ -8,8 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-import org.primefaces.convert.NumberConverter;
-
 import br.com.futura.agendafinanceira.models.Usuario;
 import br.com.futura.agendafinanceira.utils.HashMD5Util;
 import br.com.futura.agendafinanceira.utils.NumberConversionUtil;

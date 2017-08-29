@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import br.com.futura.agendafinanceira.models.enums.Ativo;
@@ -29,7 +30,7 @@ public class Contato implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_contato")
-	private int idContato;
+	private Integer idContato;
 
 	@Enumerated
 	private Ativo ativo;
@@ -62,6 +63,9 @@ public class Contato implements Serializable {
 
 	@Version
 	private int versao;
+	
+	@Transient
+	private boolean status;
 
 	// bi-directional many-to-one association to Fornecedor
 	@ManyToOne
@@ -71,11 +75,11 @@ public class Contato implements Serializable {
 	public Contato() {
 	}
 
-	public int getIdContato() {
+	public Integer getIdContato() {
 		return this.idContato;
 	}
 
-	public void setIdContato(int idContato) {
+	public void setIdContato(Integer idContato) {
 		this.idContato = idContato;
 	}
 
@@ -207,6 +211,18 @@ public class Contato implements Serializable {
 		this.fornecedor = fornecedor;
 	}
 
+	public boolean isStatus() {
+		if (this.ativo == null){
+			return false;
+		}
+		return (this.ativo.equals(Ativo.ATIVO));
+	}
+
+	public void setStatus(boolean status) {
+		this.setAtivo(status ? Ativo.ATIVO : Ativo.INATIVO);
+		this.status = status;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -227,6 +243,15 @@ public class Contato implements Serializable {
 		if (idContato != other.idContato)
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Contato [idContato=" + idContato + ", ativo=" + ativo + ", bairro=" + bairro + ", cep=" + cep
+				+ ", cidade=" + cidade + ", complemento=" + complemento + ", contato=" + contato + ", email=" + email
+				+ ", endereco=" + endereco + ", numero=" + numero + ", site=" + site + ", telefone1=" + telefone1
+				+ ", telefone2=" + telefone2 + ", telefone3=" + telefone3 + ", uf=" + uf + ", versao=" + versao
+				+ ", status=" + status + ", fornecedor=" + fornecedor + "]";
 	}
 
 }
