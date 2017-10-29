@@ -12,8 +12,8 @@
 		<p:breadCrumb>
 		    <p:menuitem value="Dashboard" url="/" />
 		    <p:menuitem value="Fornecedores" url="/fornecedor.xhtml" />
-		    <p:menuitem value="Cadastro" url="/fornecedorcadastro.xhtml" />
-		    <p:menuitem value="Contato" url="/contatocadastro.xhtml" />
+		    <p:menuitem value="Cadastro" url="#{contatoCadastroBean.voltar()}" />
+		    <p:menuitem value="Contato" url="#" />
 		</p:breadCrumb>			
 	
 	</ui:define>
@@ -38,9 +38,9 @@
 
 					<p:toolbar>
 						<f:facet name="left">
-							<p:commandButton value="Voltar" actionListener="#{contatoCadastroBean.voltar()}"/>
+							<p:button value="Voltar" outcome="#{contatoCadastroBean.voltar()}"/>
 							<p:spacer style="width: 10px;"/>
-					        <p:commandButton value="Salvar" actionListener="#{contatoCadastroBean.salvar()}" update="@form"/>
+					        <p:commandButton value="Salvar" action="#{contatoCadastroBean.salvar()}" update="@form"/>
 						</f:facet>
 					</p:toolbar>
 					

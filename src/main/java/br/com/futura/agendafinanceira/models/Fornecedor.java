@@ -209,7 +209,7 @@ public class Fornecedor implements Serializable {
 	public String toString() {
 		return "Fornecedor [idFornecedor=" + idFornecedor + ", ativo=" + ativo + ", cpfCnpj=" + cpfCnpj
 				+ ", nomeFantasia=" + nomeFantasia + ", pfPj=" + pfPj + ", razaoSocial=" + razaoSocial + ", versao="
-				+ versao + ", status=" + status + ", contatos=" + contatos + "]";
+				+ versao + ", status=" + status + "]";
 	}
 
 }

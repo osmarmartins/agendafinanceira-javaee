@@ -12,7 +12,7 @@
 		<p:breadCrumb>
 		    <p:menuitem value="Dashboard" url="/" />
 		    <p:menuitem value="Fornecedores" url="/fornecedor.xhtml" />
-		    <p:menuitem value="Cadastro" url="/fornecedorcadastro.xhtml" />
+		    <p:menuitem value="Cadastro" url="#{fornecedorCadastroBean.voltar()}" />
 		</p:breadCrumb>			
 	
 	</ui:define>
@@ -40,7 +40,7 @@
 						<f:facet name="left">
 							<p:button value="Voltar" outcome="/fornecedor.xhtml"/>
 							<p:spacer style="width: 10px;"/>
-					        <p:commandButton value="Salvar" actionListener="#{fornecedorCadastroBean.salvar()}" update="@form"/>
+					        <p:commandButton value="Salvar" action="#{fornecedorCadastroBean.salvar()}" update="@form"/>
 						</f:facet>
 					</p:toolbar>
 					
@@ -83,7 +83,8 @@
 					<p:panelGrid columns="1">
 						<p:toolbar>
 							<f:facet name="left">
-								<p:commandButton value="Novo Contato" icon="fa fa-plus" action="#{fornecedorCadastroBean.novoContato()}"/>
+								<p:commandButton value="Novo Contato" icon="fa fa-plus" 
+									action="#{fornecedorCadastroBean.novoContato()}"/>
 							</f:facet>
 						</p:toolbar>
 					

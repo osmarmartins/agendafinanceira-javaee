@@ -43,10 +43,18 @@ public class FornecedorCadastroBean implements Serializable {
 		this.fornecedor.setPfPj(TipoPessoa.PJ);
 	}
 
+	public String voltar() {
+		if (this.fornecedor.getIdFornecedor()==null){
+			return "/fornecedorcadastro.xhtml";
+		}else{
+			return "/fornecedorcadastro.xhtml?fornecedor="
+					+ this.fornecedor.getIdFornecedor();
+		}
+	}
+
 	public void salvar() {
 		fornecedorDao.salvar(fornecedor);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
-		init();
 	}
 
 	public String alterarContato(Contato contato) {

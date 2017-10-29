@@ -21,7 +21,7 @@ public class ContatoCadastroBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Contato contato;
-	
+
 	private Fornecedor fornecedor;
 
 	@Inject
@@ -35,22 +35,10 @@ public class ContatoCadastroBean implements Serializable {
 		this.contato = new Contato();
 		this.contato.setFornecedor(fornecedor);
 		this.contato.setAtivo(Ativo.ATIVO);
-		
-		
-		System.out.println(fornecedor);
-		System.out.println(contato);
 	}
 
 	public String voltar() {
-
-		
-		String s = "/cadastrofornecedor?faces-redirect=true&fornecedor="
-				+ fornecedor.getIdFornecedor();
-		
-		
-		System.out.println(s);
-		
-		return s;
+		return "/fornecedorcadastro.xhtml?fornecedor=" + fornecedor.getIdFornecedor();
 	}
 
 	public void salvar() {
@@ -66,7 +54,7 @@ public class ContatoCadastroBean implements Serializable {
 	}
 
 	public Contato getContato() {
-		if (contato==null){
+		if (contato == null) {
 			init();
 		}
 		return contato;
@@ -75,11 +63,11 @@ public class ContatoCadastroBean implements Serializable {
 	public void setContato(Contato contato) {
 		this.contato = contato;
 	}
-	
+
 	public Fornecedor getFornecedor() {
 		return fornecedor;
 	}
-	
+
 	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
 	}

@@ -251,7 +251,7 @@ public class Contato implements Serializable {
 				+ ", cidade=" + cidade + ", complemento=" + complemento + ", contato=" + contato + ", email=" + email
 				+ ", endereco=" + endereco + ", numero=" + numero + ", site=" + site + ", telefone1=" + telefone1
 				+ ", telefone2=" + telefone2 + ", telefone3=" + telefone3 + ", uf=" + uf + ", versao=" + versao
-				+ ", status=" + status + ", fornecedor=" + fornecedor + "]";
+				+ ", status=" + status + "]";
 	}
 
 }

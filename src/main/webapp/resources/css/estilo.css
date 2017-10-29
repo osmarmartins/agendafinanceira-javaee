@@ -10,7 +10,6 @@ body {
 .container {
 	margin: auto;
 	width: 80%;
-	height: 99vh; 
 	padding: 0 20px;
 	background-color: #2e3436; 
 	border: 2px solid #bdbdbd;
@@ -25,8 +24,6 @@ h1 {
 }
 
 .rodape {
-	position: absolute;
-	bottom: 25px;
 	width: 79vw;
 	font-size: 0.8em;
 	text-align: center;
