@@ -11,5 +11,16 @@ public class NumberConversionUtil {
 		}
 		return numberInteger;
 	}
+	
+	public static double getDoubleOrZero(String string){
+		double numberDouble;
+		try {
+			numberDouble = Double.parseDouble(string);
+		} catch (Exception e) {
+			numberDouble = 0;
+		}
+		return numberDouble;
+	}
+	
 
 }

@@ -28,14 +28,14 @@ import br.com.futura.agendafinanceira.models.enums.SituacaoPagamento;
  */
 @Entity
 @Table(name = "pgto")
-@NamedQuery(name = "Pgto.findAll", query = "SELECT p FROM Pgto p")
-public class Pgto implements Serializable {
+@NamedQuery(name = "Pgto.findAll", query = "SELECT p FROM Pagamento p")
+public class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_pgto")
-	private int idPgto;
+	private int idPagamento;
 
 	private String documento;
 
@@ -71,18 +71,18 @@ public class Pgto implements Serializable {
 	private Setor setor;
 
 	// bi-directional many-to-one association to PgtoParcela
-	@OneToMany(mappedBy = "pgto")
-	private List<PgtoParcela> pgtoParcelas;
+	@OneToMany(mappedBy = "pagamento")
+	private List<PagamentoParcela> parcelas;
 
-	public Pgto() {
+	public Pagamento() {
 	}
 
-	public int getIdPgto() {
-		return this.idPgto;
+	public int getIdPagamento() {
+		return this.idPagamento;
 	}
 
-	public void setIdPgto(int idPgto) {
-		this.idPgto = idPgto;
+	public void setIdPagamento(int idPgto) {
+		this.idPagamento = idPgto;
 	}
 
 	public String getDocumento() {
@@ -165,26 +165,26 @@ public class Pgto implements Serializable {
 		this.setor = setor;
 	}
 
-	public List<PgtoParcela> getPgtoParcelas() {
-		return this.pgtoParcelas;
+	public List<PagamentoParcela> getParcelas() {
+		return this.parcelas;
 	}
 
-	public void setPgtoParcelas(List<PgtoParcela> pgtoParcelas) {
-		this.pgtoParcelas = pgtoParcelas;
+	public void setParcelas(List<PagamentoParcela> pgtoParcelas) {
+		this.parcelas = pgtoParcelas;
 	}
 
-	public PgtoParcela addPgtoParcela(PgtoParcela pgtoParcela) {
-		getPgtoParcelas().add(pgtoParcela);
-		pgtoParcela.setPgto(this);
+	public PagamentoParcela addPgtoParcela(PagamentoParcela parcela) {
+		getParcelas().add(parcela);
+		parcela.setPagamento(this);
 
-		return pgtoParcela;
+		return parcela;
 	}
 
-	public PgtoParcela removePgtoParcela(PgtoParcela pgtoParcela) {
-		getPgtoParcelas().remove(pgtoParcela);
-		pgtoParcela.setPgto(null);
+	public PagamentoParcela removePgtoParcela(PagamentoParcela parcela) {
+		getParcelas().remove(parcela);
+		parcela.setPagamento(null);
 
-		return pgtoParcela;
+		return parcela;
 	}
 
 }

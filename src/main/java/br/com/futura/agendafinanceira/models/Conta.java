@@ -45,7 +45,7 @@ public class Conta implements Serializable {
 
 	// bi-directional many-to-one association to Pgto
 	@OneToMany(mappedBy = "conta")
-	private List<Pgto> pgtos;
+	private List<Pagamento> pgtos;
 
 	public Conta() {
 	}
@@ -82,22 +82,22 @@ public class Conta implements Serializable {
 		this.versao = versao;
 	}
 
-	public List<Pgto> getPgtos() {
+	public List<Pagamento> getPgtos() {
 		return this.pgtos;
 	}
 
-	public void setPgtos(List<Pgto> pgtos) {
+	public void setPgtos(List<Pagamento> pgtos) {
 		this.pgtos = pgtos;
 	}
 
-	public Pgto addPgto(Pgto pgto) {
+	public Pagamento addPgto(Pagamento pgto) {
 		getPgtos().add(pgto);
 		pgto.setConta(this);
 
 		return pgto;
 	}
 
-	public Pgto removePgto(Pgto pgto) {
+	public Pagamento removePgto(Pagamento pgto) {
 		getPgtos().remove(pgto);
 		pgto.setConta(null);
 

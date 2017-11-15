@@ -28,20 +28,20 @@ import br.com.futura.agendafinanceira.models.enums.SituacaoParcela;
  */
 @Entity
 @Table(name = "pgto_parcela")
-@NamedQuery(name = "PgtoParcela.findAll", query = "SELECT p FROM PgtoParcela p")
-public class PgtoParcela implements Serializable {
+@NamedQuery(name = "PgtoParcela.findAll", query = "SELECT p FROM PagamentoParcela p")
+public class PagamentoParcela implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_pgto_parcela")
-	private int idPgtoParcela;
+	private int idPagamentoParcela;
 
 	private BigDecimal desconto;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "dt_vcto")
-	private Date dtVcto;
+	private Date vencimento;
 
 	private BigDecimal juros;
 
@@ -62,22 +62,23 @@ public class PgtoParcela implements Serializable {
 	// bi-directional many-to-one association to Pgto
 	@ManyToOne
 	@JoinColumn(name = "id_pgto")
-	private Pgto pgto;
+	private Pagamento pagamento;
 
 	// bi-directional many-to-one association to PgtoQuitacao
 	@OneToMany(mappedBy = "pgtoParcela")
-	private List<PgtoQuitacao> pgtoQuitacaos;
+	private List<PagamentoQuitacao> quitacoes;
 
-	public PgtoParcela() {
+	public PagamentoParcela() {
 	}
 
-	public int getIdPgtoParcela() {
-		return this.idPgtoParcela;
+	public int getIdPagamentoParcela() {
+		return idPagamentoParcela;
 	}
-
-	public void setIdPgtoParcela(int idPgtoParcela) {
-		this.idPgtoParcela = idPgtoParcela;
+	
+	public void setIdPagamentoParcela(int idPagamentoParcela) {
+		this.idPagamentoParcela = idPagamentoParcela;
 	}
+	
 
 	public BigDecimal getDesconto() {
 		return this.desconto;
@@ -86,13 +87,13 @@ public class PgtoParcela implements Serializable {
 	public void setDesconto(BigDecimal desconto) {
 		this.desconto = desconto;
 	}
-
-	public Date getDtVcto() {
-		return this.dtVcto;
+	
+	public Date getVencimento() {
+		return vencimento;
 	}
-
-	public void setDtVcto(Date dtVcto) {
-		this.dtVcto = dtVcto;
+	
+	public void setVencimento(Date vencimento) {
+		this.vencimento = vencimento;
 	}
 
 	public BigDecimal getJuros() {
@@ -151,30 +152,30 @@ public class PgtoParcela implements Serializable {
 		this.versao = versao;
 	}
 
-	public Pgto getPgto() {
-		return this.pgto;
+	public Pagamento getPagamento() {
+		return this.pagamento;
 	}
 
-	public void setPgto(Pgto pgto) {
-		this.pgto = pgto;
+	public void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
 	}
 
-	public List<PgtoQuitacao> getPgtoQuitacaos() {
-		return this.pgtoQuitacaos;
+	public List<PagamentoQuitacao> getPgtoQuitacaos() {
+		return this.quitacoes;
 	}
 
-	public void setPgtoQuitacaos(List<PgtoQuitacao> pgtoQuitacaos) {
-		this.pgtoQuitacaos = pgtoQuitacaos;
+	public void setPgtoQuitacaos(List<PagamentoQuitacao> pgtoQuitacaos) {
+		this.quitacoes = pgtoQuitacaos;
 	}
 
-	public PgtoQuitacao addPgtoQuitacao(PgtoQuitacao pgtoQuitacao) {
+	public PagamentoQuitacao addPgtoQuitacao(PagamentoQuitacao pgtoQuitacao) {
 		getPgtoQuitacaos().add(pgtoQuitacao);
 		pgtoQuitacao.setPgtoParcela(this);
 
 		return pgtoQuitacao;
 	}
 
-	public PgtoQuitacao removePgtoQuitacao(PgtoQuitacao pgtoQuitacao) {
+	public PagamentoQuitacao removePgtoQuitacao(PagamentoQuitacao pgtoQuitacao) {
 		getPgtoQuitacaos().remove(pgtoQuitacao);
 		pgtoQuitacao.setPgtoParcela(null);
 

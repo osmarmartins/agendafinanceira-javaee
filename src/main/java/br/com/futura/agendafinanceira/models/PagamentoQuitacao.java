@@ -26,8 +26,8 @@ import br.com.futura.agendafinanceira.models.enums.FormaPagamento;
  */
 @Entity
 @Table(name = "pgto_quitacao")
-@NamedQuery(name = "PgtoQuitacao.findAll", query = "SELECT p FROM PgtoQuitacao p")
-public class PgtoQuitacao implements Serializable {
+@NamedQuery(name = "PgtoQuitacao.findAll", query = "SELECT p FROM PagamentoQuitacao p")
+public class PagamentoQuitacao implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -51,9 +51,9 @@ public class PgtoQuitacao implements Serializable {
 	// bi-directional many-to-one association to PgtoParcela
 	@ManyToOne
 	@JoinColumn(name = "id_pgto_parcela")
-	private PgtoParcela pgtoParcela;
+	private PagamentoParcela pgtoParcela;
 
-	public PgtoQuitacao() {
+	public PagamentoQuitacao() {
 	}
 
 	public int getIdPgtoQuitacao() {
@@ -96,11 +96,11 @@ public class PgtoQuitacao implements Serializable {
 		this.versao = versao;
 	}
 
-	public PgtoParcela getPgtoParcela() {
+	public PagamentoParcela getPgtoParcela() {
 		return this.pgtoParcela;
 	}
 
-	public void setPgtoParcela(PgtoParcela pgtoParcela) {
+	public void setPgtoParcela(PagamentoParcela pgtoParcela) {
 		this.pgtoParcela = pgtoParcela;
 	}
 

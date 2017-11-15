@@ -19,20 +19,20 @@ public class FornecedorDao implements Serializable {
 
 	public List<Fornecedor> listarTodos() {
 		return manager
-				.createQuery("SELECT DISTINCT f FROM Fornecedor f LEFT JOIN FETCH f.contatos", Fornecedor.class)
+				.createQuery("SELECT f FROM Fornecedor f ", Fornecedor.class)
 				.getResultList();
 	}
 
 	public Fornecedor pesquisaPorId(Integer idFornecedor) {
 		return manager
-				.createQuery("SELECT DISTINCT f FROM Fornecedor f LEFT JOIN FETCH f.contatos WHERE f.idFornecedor=:pIdFornecedor", Fornecedor.class)
+				.createQuery("SELECT f FROM Fornecedor f LEFT JOIN FETCH f.contatos WHERE f.idFornecedor=:pIdFornecedor", Fornecedor.class)
 				.setParameter("pIdFornecedor", idFornecedor)
 				.getSingleResult();
 	}
 	
 	public List<Fornecedor> listarPor(String pesquisa) {
 		return manager
-				.createQuery("SELECT DISTINCT f FROM Fornecedor f LEFT JOIN FETCH f.contatos "
+				.createQuery("SELECT f FROM Fornecedor f "
 						+ "WHERE f.idFornecedor=:pIdFornecedor "
 						+ "OR f.cpfCnpj LIKE :pCpfCnpj "
 						+ "OR f.nomeFantasia LIKE :pNomeFantasia "
@@ -42,6 +42,7 @@ public class FornecedorDao implements Serializable {
 				.setParameter("pNomeFantasia", "%" + pesquisa + "%")
 				.setParameter("pRazaoSocial", "%" + pesquisa + "%")
 				.getResultList();
+		
 	}
 	
 	@Transactional
@@ -57,5 +58,6 @@ public class FornecedorDao implements Serializable {
 	public void excluir(Fornecedor fornecedor) {
 		manager.remove(manager.getReference(Fornecedor.class, fornecedor.getIdFornecedor()));
 	}
+	
 
 }

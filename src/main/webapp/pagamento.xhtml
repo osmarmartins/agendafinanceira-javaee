@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="resources/template/layout.xhtml">
+
+	<ui:define name="navegacao">
+		<p:breadCrumb>
+		    <p:menuitem value="Dashboard" url="/" />
+		    <p:menuitem value="Pagamentos" url="/pagamento.xhtml" />
+		</p:breadCrumb>			
+	
+	</ui:define>
+	
+	<ui:define name="titulo">
+		<label>Contas a Pagar</label>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		
+		<div class="ui-g">	
+			<div class="ui-g-12">
+				<h:form>
+
+					<p:toolbar>
+						<f:facet name="left">
+							<p:button value="Novo" icon="fa fa-plus" outcome="/pagamentocadastro.xhtml"/>
+						</f:facet>
+						
+						<f:facet name="right">
+							<p:inputText placeholder="Pesquisar por..." size="30" value="#{pagamentoBean.pesquisa}"/>
+							<p:commandButton value="Pesquisar" icon="fa fa-search" actionListener="#{pagamentoBean.pesquisar()}" update="@form"/>
+						</f:facet>
+					</p:toolbar>
+
+					<p:dataTable value="#{pagamentoBean.parcelas}" 
+						var="parcela" id="tabelaPagamento" emptyMessage="Nenhum registro encontrado" 
+						rows="8" paginator="true" paginatorPosition="bottom">
+						
+						<p:column sortBy="#{parcela.vencimento}" width="10%">
+							<f:facet name="header">Vencimento</f:facet>
+							<h:outputText value="#{parcela.vencimento}">
+								<f:convertDateTime pattern="dd/MM/yyyy"/>
+							</h:outputText>
+						</p:column>
+						
+						<p:column sortBy="#{parcela.pagamento.fornecedor.razaoSocial}">
+							<f:facet name="header">Razão Social</f:facet>
+							<h:outputText value="#{parcela.pagamento.fornecedor.razaoSocial}"/>
+						</p:column>
+						
+						<p:column sortBy="#{parcela.pagamento.historico}">
+							<f:facet name="header">Histórico</f:facet>
+							<h:outputText value="#{parcela.pagamento.historico}"/>
+						</p:column>
+						
+						<p:column sortBy="#{parcela.valor}" width="10%">
+							<f:facet name="header">Valor</f:facet>
+							<h:outputText value="#{parcela.valor}">
+								<f:convertNumber type="currency"/>
+							</h:outputText>
+						</p:column>
+						
+						<p:column width="10%">
+							<f:facet name="header">Operações</f:facet>
+							<p:commandButton title="Alterar" icon="fa fa-pencil" action="#{pagamentoBean.alterar(pagameto)}"/>
+							
+							<p:commandButton title="Excluir" icon="fa fa-trash" actionListener="#{pagamentoBean.excluir(pagamento)}" update="@form" process="@this">
+								<p:confirm header="Confirma exclusão" message="Confirma a excusão de '#{pagamento.historico}'" icon="ui-icon-alert" />							
+							</p:commandButton>
+						</p:column>
+						
+					</p:dataTable>
+
+				    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+				        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+				    </p:confirmDialog>	
+				</h:form>
+			</div>
+			
+		</div>
+	</ui:define>
+
+	<ui:define name="pagina">Pagamentos</ui:define>
+</ui:composition>
+
+</html>
