@@ -17,6 +17,10 @@ public class PagamentoDao implements Serializable {
 	@PersistenceContext
 	private EntityManager manager;
 
+	public Pagamento pesquisarPorId(int idPagamento) {
+		return manager.find(Pagamento.class, idPagamento);
+	}
+	
 	public List<PagamentoParcela> listarTodos() {
 		return manager.createQuery("select p from PagamentoParcela p "
 				+ "join fetch p.pagamento pg "
@@ -43,8 +47,18 @@ public class PagamentoDao implements Serializable {
 	@Transactional
 	public void excluir(Pagamento pagamento) {
 		manager.remove(manager.getReference(Pagamento.class, pagamento.getIdPagamento()));
+	}
+
+	@Transactional
+	public void salvar(Pagamento pagamento) {
+		if (pagamento.getIdPagamento() != null){
+			manager.merge(pagamento);
+		}else{
+			manager.persist(pagamento);
+		}
 		
 	}
+
 
 
 }

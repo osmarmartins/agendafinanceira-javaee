@@ -44,8 +44,8 @@ public class PagamentoBean implements Serializable {
 		this.parcelas = pagamentoDao.listarPor(this.pesquisa);
 	}
 
-	public String alterar(Pagamento pagamento) {
-		return "/contasapagar?faces-redirect=true&pagamentocadastro=" + pagamento.getIdPagamento();
+	public String alterar(PagamentoParcela parcela) {
+		return "/pagamentocadastro?faces-redirect=true&pagamento=" + parcela.getPagamento().getIdPagamento();
 	}
 
 	public void excluir(Pagamento pagamento) {

@@ -35,7 +35,7 @@ public class PagamentoParcela implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_pgto_parcela")
-	private int idPagamentoParcela;
+	private Integer idPagamentoParcela;
 
 	private BigDecimal desconto;
 
@@ -71,11 +71,11 @@ public class PagamentoParcela implements Serializable {
 	public PagamentoParcela() {
 	}
 
-	public int getIdPagamentoParcela() {
+	public Integer getIdPagamentoParcela() {
 		return idPagamentoParcela;
 	}
 	
-	public void setIdPagamentoParcela(int idPagamentoParcela) {
+	public void setIdPagamentoParcela(Integer idPagamentoParcela) {
 		this.idPagamentoParcela = idPagamentoParcela;
 	}
 	

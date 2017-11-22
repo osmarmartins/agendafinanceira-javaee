@@ -47,8 +47,7 @@ public class FornecedorCadastroBean implements Serializable {
 		if (this.fornecedor.getIdFornecedor()==null){
 			return "/fornecedorcadastro.xhtml";
 		}else{
-			return "/fornecedorcadastro.xhtml?fornecedor="
-					+ this.fornecedor.getIdFornecedor();
+			return "/fornecedorcadastro.xhtml?fornecedor=" + this.fornecedor.getIdFornecedor();
 		}
 	}
 

@@ -35,7 +35,7 @@ public class Pagamento implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_pgto")
-	private int idPagamento;
+	private Integer idPagamento;
 
 	private String documento;
 
@@ -77,11 +77,11 @@ public class Pagamento implements Serializable {
 	public Pagamento() {
 	}
 
-	public int getIdPagamento() {
+	public Integer getIdPagamento() {
 		return this.idPagamento;
 	}
 
-	public void setIdPagamento(int idPgto) {
+	public void setIdPagamento(Integer idPgto) {
 		this.idPagamento = idPgto;
 	}
 
