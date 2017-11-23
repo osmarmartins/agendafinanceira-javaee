@@ -18,7 +18,15 @@ public class PagamentoDao implements Serializable {
 	private EntityManager manager;
 
 	public Pagamento pesquisarPorId(int idPagamento) {
-		return manager.find(Pagamento.class, idPagamento);
+		return manager.createQuery("select pg from Pagamento pg "
+				+ "join fetch pg.parcelas p "
+				+ "join fetch pg.fornecedor "
+				+ "join fetch pg.setor "
+				+ "join fetch pg.conta "
+				+ "where pg.idPagamento = :pPagamento"
+				, Pagamento.class)
+					.setParameter("pPagamento", idPagamento)
+					.getSingleResult();
 	}
 	
 	public List<PagamentoParcela> listarTodos() {

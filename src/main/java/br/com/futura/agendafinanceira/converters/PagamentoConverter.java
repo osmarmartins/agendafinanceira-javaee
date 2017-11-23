@@ -6,9 +6,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
-import br.com.futura.agendafinanceira.daos.ContatoDao;
 import br.com.futura.agendafinanceira.daos.PagamentoDao;
-import br.com.futura.agendafinanceira.models.Contato;
 import br.com.futura.agendafinanceira.models.Pagamento;
 
 @FacesConverter(forClass = Pagamento.class)

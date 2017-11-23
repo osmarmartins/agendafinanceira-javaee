@@ -1,5 +1,7 @@
 package br.com.futura.agendafinanceira.beans;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
@@ -7,12 +9,15 @@ import javax.inject.Inject;
 
 import br.com.futura.agendafinanceira.daos.PagamentoDao;
 import br.com.futura.agendafinanceira.models.Pagamento;
+import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Model
 public class PagamentoCadastroBean {
 
 	private Pagamento pagamento;
+	
+	private List<PagamentoParcela> parcelas;
 	
 	@Inject
 	private PagamentoDao pagamentoDao;
@@ -23,6 +28,7 @@ public class PagamentoCadastroBean {
 	@PostConstruct
 	private void init() {
 		this.pagamento = new Pagamento();
+		this.parcelas = this.pagamento.getParcelas();
 	}
 
 	public void salvar() {
@@ -37,6 +43,14 @@ public class PagamentoCadastroBean {
 	
 	public void setPagamento(Pagamento pagamento) {
 		this.pagamento = pagamento;
+	}
+	
+	public List<PagamentoParcela> getParcelas() {
+		return parcelas;
+	}
+	
+	public void setParcelas(List<PagamentoParcela> parcelas) {
+		this.parcelas = parcelas;
 	}
 
 }

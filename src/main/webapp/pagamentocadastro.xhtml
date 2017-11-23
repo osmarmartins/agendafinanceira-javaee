@@ -43,21 +43,137 @@
 					</p:toolbar>
 					
 					<p:panelGrid columns="3" styleClass="painel" columnClasses="rotulo, campo, mensagem">
-						<p:outputLabel value="ID" for="id"/>
-						<p:inputText id="id" value="#{contaCadastroBean.conta.idConta}" disabled="true" style="width: 20%"/>
-						<p:message for="id"/>
+						<p:outputLabel value="Emissão" for="dataEmissao"/>
+						<p:inputText id="dataEmissao" value="#{pagamentoCadastroBean.pagamento.emissao}">
+							<f:convertDateTime pattern="dd/MM/yyyy"/>
+						</p:inputText>
+						<p:message for="dataEmissao"/>
 					
-						<p:outputLabel value="Descrição" for="descricao"/>
-						<p:inputText id="descricao" value="#{contaCadastroBean.conta.descricao}" style="width: 95%"/>
-						<p:message for="descricao"/>
+						<p:outputLabel value="Setor" for="setor"/>
+						<p:inputText id="setor" value="#{pagamentoCadastroBean.pagamento.setor.descricao}"/>
+						<p:message for="setor"/>
 					
-				        <p:outputLabel value="Ativo" for="ativo"/>
-				        <p:selectBooleanButton id="ativo" 
-				        	value="#{contaCadastroBean.conta.status}"
-				        	onLabel="Sim" offLabel="Não" style="width:60px" />
-				        <p:message for="ativo"/>
-
+						<p:outputLabel value="Conta" for="conta"/>
+						<p:inputText id="conta" value="#{pagamentoCadastroBean.pagamento.conta.descricao}"/>
+						<p:message for="conta"/>
+					
+						<p:outputLabel value="Fornecedor" for="fornecedor"/>
+						<p:inputText id="fornecedor" value="#{pagamentoCadastroBean.pagamento.fornecedor.razaoSocial}"/>
+						<p:message for="fornecedor"/>
+					
+						<p:outputLabel value="Documento" for="documento"/>
+						<p:inputText id="documento" value="#{pagamentoCadastroBean.pagamento.documento}"/>
+						<p:message for="documento"/>
+					
+						<p:outputLabel value="Histórico" for="historico"/>
+						<p:inputText id="historico" value="#{pagamentoCadastroBean.pagamento.historico}" style="width: 95%" />
+						<p:message for="historico"/>
+					
+						<p:outputLabel value="Total" for="total"/>
+						<p:inputText id="total" value="#{pagamentoCadastroBean.pagamento.total}" disabled="true">
+								<f:convertNumber type="currency"/>
+						</p:inputText>
+						<p:message for="total"/>
+					
+						<p:outputLabel value="Total a Pagar" for="totalAPagar"/>
+						<p:inputText id="totalAPagar" value="#{pagamentoCadastroBean.pagamento.total - pagamentoCadastroBean.pagamento.totalPg}" disabled="true">
+							<f:convertNumber type="currency"/>
+						</p:inputText>
+						<p:message for="totalAPagar"/>
+					
+						<p:outputLabel value="Situação" for="situacao"/>
+						<p:inputText id="situacao" value="#{pagamentoCadastroBean.pagamento.situacao.descricao}" disabled="true"/>
+						<p:message for="situacao"/>
+					
 					</p:panelGrid>
+					
+					<p:panelGrid columns="1">
+						<p:toolbar>
+							<f:facet name="left">
+								<p:commandButton value="Novo" icon="fa fa-plus" 
+									action="#{pagamentoCadastroBean.novo()}"/>
+							</f:facet>
+						</p:toolbar>
+					
+				        <p:dataTable value="#{pagamentoCadastroBean.pagamento.parcelas}" 
+							        	var="parcela" 
+							        	id="tabelaDetalhe" 
+							        	emptyMessage="Nenhum registro encontrado" 
+										rows="8" paginator="true" paginatorPosition="bottom">
+							
+				        	<p:column headerText="Parcela" >
+				        		<h:outputText value="#{parcela.parcela}"/>
+				        	</p:column>
+
+				        	<p:column headerText="Vencimento" width="10%">
+				        		<h:outputText value="#{parcela.vencimento}">
+				        			<f:convertDateTime pattern="dd/MM/yyyy"/>
+				        		</h:outputText>
+				        	</p:column>
+				        	
+				        	<p:column headerText="Valor" >
+				        		<h:outputText value="#{parcela.valor}">
+				        			<f:convertNumber type="currency"/>
+				        		</h:outputText>
+				        	</p:column>
+				        	
+				        	<p:column headerText="Desconto" >
+				        		<h:outputText value="#{parcela.desconto}">
+				        			<f:convertNumber type="currency"/>
+				        		</h:outputText>
+				        	</p:column>
+				        	
+				        	<p:column headerText="Juros" >
+				        		<h:outputText value="#{parcela.juros}">
+				        			<f:convertNumber type="currency"/>
+				        		</h:outputText>
+				        	</p:column>
+				        	
+				        	<p:column headerText="Mora" >
+				        		<h:outputText value="#{parcela.mora}">
+				        			<f:convertNumber type="currency"/>
+				        		</h:outputText>
+				        	</p:column>
+				        	
+				        	<p:column headerText="Outros" >
+				        		<h:outputText value="#{parcela.outros}">
+				        			<f:convertNumber type="currency"/>
+				        		</h:outputText>
+				        	</p:column>
+				        	
+				        	<p:column headerText="Total" >
+				        		<h:outputText value="#{parcela.totalParcela}">
+				        			<f:convertNumber type="currency"/>
+				        		</h:outputText>
+				        	</p:column>
+
+				        	<p:column headerText="Situação">
+				        		<h:outputText value="#{parcela.situacao.descricao}"/>
+				        	</p:column>
+				        	
+							<p:column width="10%">
+								<f:facet name="header">Operações</f:facet>
+								<p:commandButton title="Alterar" icon="fa fa-pencil" 
+										update="@form" process="@this" 
+										action="#{pagamentoCadastroBean.alterar(parcela)}" />
+
+								<p:commandButton title="Excluir" icon="fa fa-trash" 
+										update="@form" process="@this" 
+										action="#{pagamentoCadastroBean.excluir(parcela)}">
+									<p:confirm header="Confirma exclusão" message="Confirma a excusão de #{contato.contato}" icon="ui-icon-alert" />							
+								</p:commandButton>
+							</p:column>
+							
+				        </p:dataTable>
+	
+					    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+					        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+					        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+					    </p:confirmDialog>
+					    
+				    </p:panelGrid>
+					
+					
 				</h:form>
 
 			</div>

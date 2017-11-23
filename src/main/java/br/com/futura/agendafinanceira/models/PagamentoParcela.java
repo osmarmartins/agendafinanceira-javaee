@@ -37,24 +37,24 @@ public class PagamentoParcela implements Serializable {
 	@Column(name = "id_pgto_parcela")
 	private Integer idPagamentoParcela;
 
-	private BigDecimal desconto;
-
+	private String parcela;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "dt_vcto")
 	private Date vencimento;
 
+	private BigDecimal valor;
+
+	private BigDecimal desconto;
+	
 	private BigDecimal juros;
 
 	private BigDecimal mora;
 
 	private BigDecimal outros;
 
-	private String parcela;
-
 	@Enumerated
 	private SituacaoParcela situacao;
-
-	private BigDecimal valor;
 
 	@Version
 	private int versao;
@@ -67,7 +67,7 @@ public class PagamentoParcela implements Serializable {
 	// bi-directional many-to-one association to PgtoQuitacao
 	@OneToMany(mappedBy = "pgtoParcela")
 	private List<PagamentoQuitacao> quitacoes;
-
+	
 	public PagamentoParcela() {
 	}
 
@@ -180,6 +180,10 @@ public class PagamentoParcela implements Serializable {
 		pgtoQuitacao.setPgtoParcela(null);
 
 		return pgtoQuitacao;
+	}
+	
+	public BigDecimal getTotalParcela(){
+		return this.valor.subtract(this.desconto).add(this.juros).add(this.mora).add(this.outros);
 	}
 
 }
