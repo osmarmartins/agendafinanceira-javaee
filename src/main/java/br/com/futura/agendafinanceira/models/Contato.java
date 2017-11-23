@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -23,7 +22,6 @@ import br.com.futura.agendafinanceira.models.enums.Ativo;
  */
 @Entity
 @Table(name = "contato")
-@NamedQuery(name = "Contato.findAll", query = "SELECT c FROM Contato c")
 public class Contato implements Serializable {
 	private static final long serialVersionUID = 1L;
 

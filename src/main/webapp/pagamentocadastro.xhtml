@@ -50,11 +50,17 @@
 						<p:message for="dataEmissao"/>
 					
 						<p:outputLabel value="Setor" for="setor"/>
-						<p:inputText id="setor" value="#{pagamentoCadastroBean.pagamento.setor.descricao}"/>
-						<p:message for="setor"/>
+				        <p:selectOneMenu id="setor" value="#{pagamentoCadastroBean.pagamento.setor}" lazy="true" style="width: 95%">
+				            <f:selectItem itemLabel="Selecione um setor..." noSelectionOption="true" />
+				            <f:selectItems value="#{pagamentoCadastroBean.setores}" var="setor" itemLabel="#{setor.descricao}" itemValue="#{setor}"  />
+				        </p:selectOneMenu>						
+				        <p:message for="setor"/>
 					
 						<p:outputLabel value="Conta" for="conta"/>
-						<p:inputText id="conta" value="#{pagamentoCadastroBean.pagamento.conta.descricao}"/>
+				        <p:selectOneMenu id="conta" value="#{pagamentoCadastroBean.pagamento.conta}" lazy="true" style="width: 95%">
+				            <f:selectItem itemLabel="Selecione uma conta..." itemValue="" />
+				            <f:selectItems value="#{pagamentoCadastroBean.contas}" var="conta" itemLabel="#{conta.descricao}" itemValue="#{conta}"  />
+				        </p:selectOneMenu>						
 						<p:message for="conta"/>
 					
 						<p:outputLabel value="Fornecedor" for="fornecedor"/>

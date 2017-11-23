@@ -12,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,7 +25,6 @@ import br.com.futura.agendafinanceira.models.enums.FormaPagamento;
  */
 @Entity
 @Table(name = "pgto_quitacao")
-@NamedQuery(name = "PgtoQuitacao.findAll", query = "SELECT p FROM PagamentoQuitacao p")
 public class PagamentoQuitacao implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -9,7 +9,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -25,7 +24,6 @@ import br.com.futura.agendafinanceira.models.enums.TipoPessoa;
  */
 @Entity
 @Table(name = "fornecedor")
-@NamedQuery(name = "Fornecedor.findAll", query = "SELECT f FROM Fornecedor f")
 public class Fornecedor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
