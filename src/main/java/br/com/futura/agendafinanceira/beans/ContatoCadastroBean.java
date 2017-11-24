@@ -41,10 +41,11 @@ public class ContatoCadastroBean implements Serializable {
 		return "/fornecedorcadastro.xhtml?fornecedor=" + fornecedor.getIdFornecedor();
 	}
 
-	public void salvar() {
+	public String salvar() {
 		contato.setFornecedor(this.fornecedor);
 		contatoDao.salvar(contato);
 		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso."));
+		return "/contatocadastro.xhtml?faces-redirect=true&fornecedor=" + fornecedor.getIdFornecedor() +"&contato=" + contato.getIdContato(); 
 	}
 
 	public void excluir(Contato contato) {

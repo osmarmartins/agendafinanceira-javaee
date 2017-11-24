@@ -25,7 +25,9 @@ public class FornecedorDao implements Serializable {
 
 	public Fornecedor pesquisaPorId(Integer idFornecedor) {
 		return manager
-				.createQuery("SELECT f FROM Fornecedor f LEFT JOIN FETCH f.contatos WHERE f.idFornecedor=:pIdFornecedor", Fornecedor.class)
+				.createQuery("SELECT f FROM Fornecedor f "
+						+ "LEFT JOIN FETCH f.contatos "
+						+ "WHERE f.idFornecedor=:pIdFornecedor", Fornecedor.class)
 				.setParameter("pIdFornecedor", idFornecedor)
 				.getSingleResult();
 	}

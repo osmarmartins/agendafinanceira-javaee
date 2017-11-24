@@ -38,15 +38,15 @@
 						<f:facet name="left">
 							<p:button value="Voltar" outcome="/pagamento.xhtml"/>
 							<p:spacer style="width: 10px;"/>
-					        <p:commandButton value="Salvar" actionListener="#{pagamentoCadastroBean.salvar}" update="@form"/>
+					        <p:commandButton value="Salvar" action="#{pagamentoCadastroBean.salvar()}" update="@form"/>
 						</f:facet>
 					</p:toolbar>
 					
 					<p:panelGrid columns="3" styleClass="painel" columnClasses="rotulo, campo, mensagem">
 						<p:outputLabel value="Emissão" for="dataEmissao"/>
-						<p:inputText id="dataEmissao" value="#{pagamentoCadastroBean.pagamento.emissao}">
-							<f:convertDateTime pattern="dd/MM/yyyy"/>
-						</p:inputText>
+						<p:calendar id="dataEmissao" value="#{pagamentoCadastroBean.pagamento.emissao}" pattern="dd/MM/yyyy" mask="true" showOn="button" >
+							<f:convertDateTime pattern="dd/MM/yyyy" type="date"/>
+						</p:calendar>
 						<p:message for="dataEmissao"/>
 					
 						<p:outputLabel value="Setor" for="setor"/>
@@ -62,9 +62,12 @@
 				            <f:selectItems value="#{pagamentoCadastroBean.contas}" var="conta" itemLabel="#{conta.descricao}" itemValue="#{conta}"  />
 				        </p:selectOneMenu>						
 						<p:message for="conta"/>
-					
+
 						<p:outputLabel value="Fornecedor" for="fornecedor"/>
-						<p:inputText id="fornecedor" value="#{pagamentoCadastroBean.pagamento.fornecedor.razaoSocial}"/>
+				        <p:selectOneMenu id="fornecedor" value="#{pagamentoCadastroBean.pagamento.fornecedor}" lazy="true" style="width: 95%">
+				            <f:selectItem itemLabel="Selecione um fornecedor..." itemValue="" />
+				            <f:selectItems value="#{pagamentoCadastroBean.fornecedores}" var="fornecedor" itemLabel="#{fornecedor.razaoSocial}" itemValue="#{fornecedor}"  />
+				        </p:selectOneMenu>						
 						<p:message for="fornecedor"/>
 					
 						<p:outputLabel value="Documento" for="documento"/>
