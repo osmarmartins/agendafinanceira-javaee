@@ -39,18 +39,15 @@ public class UsuarioCadastroBean implements Serializable {
 		this.tiposUsuario = TipoUsuario.values();
 	}
 
-	public void salvar() {
-		if (this.usuario.getIdUsuario() == null && !this.usuario.getSenha().equals(this.confirmarSenha)) {
-			messagesHelper.addFlash(new FacesMessage("Senhas não conferem!"));
-			return;
-		}
+	public String salvar() {
 		try {
 			usuarioDao.salvar(usuario);
-			messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso!"));
-			init();
 		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso!"));
+		return "usuariocadastro?faces-redirect=true&usuario=" + usuario.getIdUsuario();
 	}
 
 	public TipoUsuario[] getTiposUsuario() {

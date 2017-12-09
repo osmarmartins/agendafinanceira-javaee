@@ -19,6 +19,7 @@ import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.Pagamento;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.models.Setor;
+import br.com.futura.agendafinanceira.models.enums.SituacaoPagamento;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Named
@@ -59,6 +60,7 @@ public class PagamentoCadastroBean implements Serializable{
 		fornecedores = fornecedorDao.listarTodos();
 		this.pagamento = new Pagamento();
 		this.pagamento.setEmissao(new Date());
+		this.pagamento.setSituacao(SituacaoPagamento.EMABERTO);
 	}
 	
 	public String salvar() {
@@ -68,6 +70,9 @@ public class PagamentoCadastroBean implements Serializable{
 	}
 	
 	public Pagamento getPagamento() {
+		if (this.pagamento == null){
+			init();
+		}
 		return pagamento;
 	}
 	

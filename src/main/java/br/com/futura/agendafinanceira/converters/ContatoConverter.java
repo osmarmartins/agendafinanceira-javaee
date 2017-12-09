@@ -20,7 +20,7 @@ public class ContatoConverter implements Converter {
 		if (value!=null && value.trim().length()>0){
 			return contatoDao.pesquisarPorId(Integer.parseInt(value));
 		}
-		return null;
+		return new Contato();
 	}
 
 	@Override

@@ -27,10 +27,11 @@ public class ContaCadastroBean {
 		this.conta.setAtivo(Ativo.ATIVO);
 	}
 
-	public void salvar() {
+	public String salvar() {
 		contaDao.salvar(conta);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		init();
+		return "contacadastro?faces-redirect=true";
 	}
 
 	public Conta getConta() {

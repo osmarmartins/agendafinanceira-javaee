@@ -35,10 +35,6 @@ public class UsuarioBean implements Serializable {
 		this.usuarios = usuarioDao.listarTodos();
 	}
 
-	public String alterar(Usuario usuario) {
-		return "/usuariocadastro?faces-redirect=true&usuario=" + usuario.getIdUsuario();
-	}
-
 	public void excluir(Usuario usuario) {
 		usuarioDao.excluir(usuario);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));

@@ -68,7 +68,9 @@
 						
 						<p:column width="15%">
 							<f:facet name="header">Operações</f:facet>
-							<p:commandButton title="Alterar" icon="fa fa-pencil" action="#{usuarioBean.alterar(usuario)}"/>
+							<p:button title="Alterar" icon="fa fa-pencil" outcome="usuariocadastro">
+								<f:param name="usuario" value="#{usuario.idUsuario}"/>
+							</p:button>
 							
 							<p:commandButton title="Excluir" icon="fa fa-trash" actionListener="#{usuarioBean.excluir(usuario)}" update="@form" process="@this">
 								<p:confirm header="Confirma exclusão" message="Confirma a excusão de '#{usuario.nome}'" icon="ui-icon-alert" />							

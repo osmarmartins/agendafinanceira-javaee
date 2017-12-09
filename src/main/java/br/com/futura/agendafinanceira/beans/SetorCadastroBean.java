@@ -27,10 +27,11 @@ public class SetorCadastroBean {
 		this.setor.setAtivo(Ativo.ATIVO);
 	}
 
-	public void salvar() {
+	public String salvar() {
 		setorDao.salvar(setor);
 		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso!"));
 		init();
+		return "setorcadastro?faces-redirect=true";
 	}
 
 	public Setor getSetor() {

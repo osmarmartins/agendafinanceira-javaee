@@ -37,11 +37,7 @@ public class FornecedorBean implements Serializable {
 	public void pesquisar(){
 		fornecedores = fornecedorDao.listarPor(pesquisa);
 	}
-	
-	public String alterar(Fornecedor fornecedor){
-		return "/fornecedorcadastro?faces-redirect=true&fornecedor=" + fornecedor.getIdFornecedor();
-	}
-	
+
 	public void excluir(Fornecedor fornecedor){
 		fornecedorDao.excluir(fornecedor);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));

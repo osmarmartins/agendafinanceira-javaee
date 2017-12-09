@@ -42,10 +42,6 @@ public class SetorBean implements Serializable {
 		}
 	}
 
-	public String alterar(Setor setor) {
-		return "/setorcadastro?faces-redirect=true&setor=" + setor.getIdSetor();
-	}
-
 	public void excluir(Setor setor) {
 		setorDao.excluir(setor);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));

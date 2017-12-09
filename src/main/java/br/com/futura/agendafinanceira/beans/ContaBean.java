@@ -42,10 +42,6 @@ public class ContaBean implements Serializable {
 		}
 	}
 
-	public String alterar(Conta conta) {
-		return "/contacadastro?faces-redirect=true&conta=" + conta.getIdConta();
-	}
-
 	public void excluir(Conta conta) {
 		contaDao.excluir(conta);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));

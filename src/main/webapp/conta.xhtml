@@ -58,7 +58,9 @@
 						
 						<p:column width="15%">
 							<f:facet name="header">Operações</f:facet>
-							<p:commandButton title="Alterar" icon="fa fa-pencil" action="#{contaBean.alterar(conta)}"/>
+							<p:button title="Alterar" icon="fa fa-pencil" outcome="contacadastro">
+								<f:param name="conta" value="#{conta.idConta}"/>
+							</p:button>
 							
 							<p:commandButton title="Excluir" icon="fa fa-trash" actionListener="#{contaBean.excluir(conta)}" update="@form" process="@this">
 								<p:confirm header="Confirma exclusão" message="Confirma a excusão de '#{conta.descricao}'" icon="ui-icon-alert" />							

@@ -58,7 +58,9 @@
 						
 						<p:column width="15%">
 							<f:facet name="header">Operações</f:facet>
-							<p:commandButton title="Alterar" icon="fa fa-pencil" action="#{setorBean.alterar(setor)}"/>
+							<p:button title="Alterar" icon="fa fa-pencil" outcome="setorcadastro">
+								<f:param name="setor" value="#{setor.idSetor}"/>
+							</p:button>
 							
 							<p:commandButton title="Excluir" icon="fa fa-trash" actionListener="#{setorBean.excluir(setor)}" update="@form" process="@this">
 								<p:confirm header="Confirma exclusão" message="Confirma a excusão de '#{setor.descricao}'" icon="ui-icon-alert" />							
