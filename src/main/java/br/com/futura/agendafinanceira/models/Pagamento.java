@@ -185,4 +185,36 @@ public class Pagamento implements Serializable {
 		return parcela;
 	}
 
+	public boolean isPossuiParcelas() {
+		if (this.parcelas==null){
+			return false;
+		}
+		return this.parcelas.size() > 0;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idPagamento == null) ? 0 : idPagamento.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pagamento other = (Pagamento) obj;
+		if (idPagamento == null) {
+			if (other.idPagamento != null)
+				return false;
+		} else if (!idPagamento.equals(other.idPagamento))
+			return false;
+		return true;
+	}
+
 }

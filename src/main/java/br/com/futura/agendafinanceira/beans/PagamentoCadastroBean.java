@@ -69,6 +69,10 @@ public class PagamentoCadastroBean implements Serializable{
 		return "/pagamentocadastro?faces-redirect=true&pagamento=" + pagamento.getIdPagamento();
 	}
 	
+	public void excluirParcela(PagamentoParcela parcela){
+		System.out.println(">>>>> excluir parcela" + parcela.toString());
+	}
+	
 	public Pagamento getPagamento() {
 		if (this.pagamento == null){
 			init();

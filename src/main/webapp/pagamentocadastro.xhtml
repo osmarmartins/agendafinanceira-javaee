@@ -38,7 +38,7 @@
 						<f:facet name="left">
 							<p:button value="Voltar" outcome="/pagamento.xhtml"/>
 							<p:spacer style="width: 10px;"/>
-					        <p:commandButton value="Salvar" action="#{pagamentoCadastroBean.salvar()}" update="@form"/>
+					        <p:commandButton value="Salvar" action="#{pagamentoCadastroBean.salvar()}" update="@form" rendered="#{pagamentoCadastroBean.pagamento.possuiParcelas}"/>
 						</f:facet>
 					</p:toolbar>
 					
@@ -99,8 +99,9 @@
 					<p:panelGrid columns="1">
 						<p:toolbar>
 							<f:facet name="left">
-								<p:commandButton value="Novo" icon="fa fa-plus" 
-									action="#{pagamentoCadastroBean.novo()}"/>
+								<p:button value="Nova Parcela" icon="fa fa-plus" outcome="pagamentocadastroparcela">
+									<f:param name="pagamento" value="#{pagamentoCadastroBean.pagamento.idPagamento}"/>
+								</p:button>
 							</f:facet>
 						</p:toolbar>
 					
@@ -162,13 +163,13 @@
 				        	
 							<p:column width="10%">
 								<f:facet name="header">Operações</f:facet>
-								<p:commandButton title="Alterar" icon="fa fa-pencil" 
-										update="@form" process="@this" 
-										action="#{pagamentoCadastroBean.alterar(parcela)}" />
+								<p:button title="Alterar" icon="fa fa-pencil" outcome="pagamentocadastroparcela">
+									<f:param name="parcela" value="#{parcela.idParcela}"/>
+								</p:button>
 
 								<p:commandButton title="Excluir" icon="fa fa-trash" 
 										update="@form" process="@this" 
-										action="#{pagamentoCadastroBean.excluir(parcela)}">
+										action="#{pagamentoCadastroBean.excluirParcela(parcela)}">
 									<p:confirm header="Confirma exclusão" message="Confirma a excusão de #{contato.contato}" icon="ui-icon-alert" />							
 								</p:commandButton>
 							</p:column>
@@ -189,7 +190,7 @@
 		</div>
 	</ui:define>
 
-	<ui:define name="pagina">Contas</ui:define>
+	<ui:define name="pagina">Lançamento de Contas a Pagar</ui:define>
 </ui:composition>
 
 </html>
