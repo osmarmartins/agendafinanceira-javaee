@@ -10,7 +10,6 @@ import javax.inject.Named;
 
 import br.com.futura.agendafinanceira.daos.ContatoDao;
 import br.com.futura.agendafinanceira.models.Contato;
-import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
@@ -22,8 +21,6 @@ public class ContatoCadastroBean implements Serializable {
 
 	private Contato contato;
 
-	private Fornecedor fornecedor;
-
 	@Inject
 	private ContatoDao contatoDao;
 
@@ -33,19 +30,17 @@ public class ContatoCadastroBean implements Serializable {
 	@PostConstruct
 	private void init() {
 		this.contato = new Contato();
-		this.contato.setFornecedor(fornecedor);
 		this.contato.setAtivo(Ativo.ATIVO);
 	}
 
 	public String voltar() {
-		return "/fornecedorcadastro.xhtml?fornecedor=" + fornecedor.getIdFornecedor();
+		return "/fornecedorcadastro.xhtml?fornecedor=" + contato.getFornecedor().getIdFornecedor();
 	}
 
 	public String salvar() {
-		contato.setFornecedor(this.fornecedor);
 		contatoDao.salvar(contato);
 		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso."));
-		return "/contatocadastro.xhtml?faces-redirect=true&fornecedor=" + fornecedor.getIdFornecedor() +"&contato=" + contato.getIdContato(); 
+		return "/contatocadastro.xhtml?faces-redirect=true&fornecedor=" + contato.getFornecedor().getIdFornecedor() +"&contato=" + contato.getIdContato(); 
 	}
 
 	public void excluir(Contato contato) {
@@ -63,14 +58,6 @@ public class ContatoCadastroBean implements Serializable {
 
 	public void setContato(Contato contato) {
 		this.contato = contato;
-	}
-
-	public Fornecedor getFornecedor() {
-		return fornecedor;
-	}
-
-	public void setFornecedor(Fornecedor fornecedor) {
-		this.fornecedor = fornecedor;
 	}
 
 }

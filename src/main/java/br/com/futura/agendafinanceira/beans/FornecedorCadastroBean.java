@@ -97,5 +97,9 @@ public class FornecedorCadastroBean implements Serializable {
 	public String getDocumentoRotulo() {
 		return documentoRotulo;
 	}
+	
+	public boolean isPermiteCadastrarContato(){
+		return (this.fornecedor.getIdFornecedor()!=null); 
+	}
 
 }

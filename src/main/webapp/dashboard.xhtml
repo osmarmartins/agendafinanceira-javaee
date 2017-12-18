@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:of="http://omnifaces.org/functions"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+	
+	<title>Agenda Financeira</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="#{resource['img/AppLogo.png']}"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="#{resource['img/AppLogo.png']}"/>
+
+    <h:outputStylesheet href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+    <h:outputStylesheet href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" />
+    
+    <!-- CSS Files -->
+    <h:outputStylesheet library="adminLBD" name="css/bootstrap.min.css"/>
+    <h:outputStylesheet library="adminLBD" name="css/light-bootstrap-dashboard.css"/>
+	<h:outputStylesheet name="/css/estilo.css" />
+    <h:outputStylesheet library="adminLBD" name="css/demo.css"/>
+    
+</h:head>
+
+<h:body>
+    <div class="wrapper">
+        <div class="sidebar" data-image="#{resource['adminLBD:img/sidebar-5.jpg']}" data-color="green">
+        <!--
+	       Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
+	       Tip 2: you can also add an image using data-image tag
+    	-->
+            <div class="sidebar-wrapper">
+                <div class="logo">
+                    <a href="http://www.localhost:8080/agendafinanceira-javaee/dashboard.xhtml" class="simple-text">
+                        FINANCEIRO
+                    </a>
+                </div>
+                <ul class="nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="dashboard.xhtml">
+                            <i class="nc-icon nc-chart-pie-35"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.xhtml">
+                            <i class="nc-icon nc-key-25"></i>
+                            Alteração de Senha
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.xhtml">
+                            <i class="nc-icon nc-button-power"></i>
+                            Logout
+                        </a>
+                    </li>
+
+
+                	<span class="nav-group">Cadastros</span>
+                    <li>
+                        <a class="nav-link" href="#">
+                            <i class="nc-icon nc-grid-45"></i>
+                            Centros de Custo
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="#">
+                            <i class="nc-icon nc-bullet-list-67"></i>
+                            Contas
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="#">
+                            <i class="nc-icon nc-delivery-fast"></i>
+                            Fornecedores
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="#">
+                            <i class="nc-icon nc-single-02"></i>
+                            Usuários
+                        </a>
+                    </li>
+
+                	<span class="nav-group">Operações</span>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.xhtml">
+                            <i class="nc-icon nc-paper-2"></i>
+                            Contas a Pagar
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="#">
+                            <i class="nc-icon nc-check-2"></i>
+                            Baixa
+                        </a>
+                    </li>
+
+                	<span class="nav-group">Relatórios</span>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.xhtml">
+                            <i class="nc-icon nc-notes"></i>
+                            Agendamento
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="#">
+                            <i class="nc-icon nc-money-coins"></i>
+                            Liquidações
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        
+        <div class="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+                <div class=" container-fluid  ">
+                    <a class="navbar-brand" href="#pablo"> Dashboard </a>
+                    <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                        <ul class="nav navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" data-toggle="dropdown">
+                                    <i class="nc-icon nc-palette"></i>
+                                    <span class="d-lg-none">Dashboard</span>
+                                </a>
+                            </li>
+                            <li class="dropdown nav-item">
+                                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                    <i class="nc-icon nc-planet"></i>
+                                    <span class="notification">5</span>
+                                    <span class="d-lg-none">Notification</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Notification 1</a>
+                                    <a class="dropdown-item" href="#">Notification 2</a>
+                                    <a class="dropdown-item" href="#">Notification 3</a>
+                                    <a class="dropdown-item" href="#">Notification 4</a>
+                                    <a class="dropdown-item" href="#">Another notification</a>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nc-icon nc-zoom-split"></i>
+                                    <span class="d-lg-block">Search</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#pablo">
+                                    <span class="no-icon">Account</span>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="no-icon">Dropdown</span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                    <div class="divider"></div>
+                                    <a class="dropdown-item" href="#">Separated link</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#pablo">
+                                    <span class="no-icon">Log out</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- End Navbar -->
+            
+            
+            <div class="content">
+                <div class="container-fluid">
+                
+                	<div class="row">
+                		<div class="col-md-12">
+                            <div class="card ">
+		                        <div class="card-header ">
+		                            <h4 class="card-title">Título Formulário</h4>
+		                            <p class="card-category">Descrição do conteúdo</p>
+		                        </div>
+		                        <div class="card-body ">
+									<div id="conteudo">
+										<ui:insert name="conteudo">Nenhuma informação</ui:insert>
+									</div>
+		                            <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
+		                        </div>
+		                        <div class="card-footer ">
+		                            <div class="legend">
+		                                <i class="fa fa-circle text-info"></i> 1
+		                                <i class="fa fa-circle text-danger"></i> 2
+		                                <i class="fa fa-circle text-warning"></i> 3
+		                            </div>
+		                            <hr/>
+		                            <div class="stats">
+		                                <i class="fa fa-clock-o"></i> AQUI Campaign sent 2 days ago
+		                            </div>
+		                        </div>
+		                	</div>
+                		</div>
+                	</div>
+                	
+                </div>
+            </div>
+            
+            <footer class="footer">
+                <div class="container">
+					<ui:insert name="rodape">
+		                <p class="copyright text-center">
+		                    ©
+		                    <script>
+		                        document.write(new Date().getFullYear())
+		                    </script>
+		                    <a href="https://github.com/osmarmartins">Osmar de Oliveira Martins Filho</a>, desenvolvedor web/mobile
+		                </p>
+					</ui:insert>
+                </div>
+            </footer>
+        </div>
+    </div>
+</h:body>
+
+<!--   Core JS Files   -->
+<h:outputScript library="adminLBD" name="js/core/jquery.3.2.1.min.js" />
+<h:outputScript library="adminLBD" name="js/core/popper.min.js" />
+<h:outputScript library="adminLBD" name="js/core/bootstrap.min.js"/>
+
+<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+<h:outputScript library="adminLBD" name="js/plugins/bootstrap-switch.js"/>
+
+<!--  Google Maps Plugin    -->
+<h:outputScript src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"/>
+
+<!--  Chartist Plugin  -->
+<h:outputScript library="adminLBD" name="js/plugins/chartist.min.js"/>
+
+<!--  Notifications Plugin    -->
+<h:outputScript library="adminLBD" name="js/plugins/bootstrap-notify.js"/>
+
+<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+<h:outputScript library="adminLBD" name="js/light-bootstrap-dashboard.js"/>
+
+<!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
+<h:outputScript library="adminLBD" name="js/demo.js"/>
+
+</html>

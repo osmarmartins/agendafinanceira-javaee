@@ -1,13 +1,13 @@
 @CHARSET "UTF-8";
 
-body {
+body_ {
 	margin: 0; 
-	background-color: #000;
+	background-color: #ddd;
 	font-family: 'Open Sans', sans-serif;
 	color: #bdbdbd;
 }
 
-.container {
+.container_ {
 	margin: auto;
 	width: 80%;
 	padding: 0 20px;
@@ -20,7 +20,7 @@ h1 {
 }
 
 .logo {
-	 width: 80%; 
+	 width: 100%; 
 }
 
 .rodape {
@@ -51,3 +51,14 @@ h1 {
 .mensagem {
 	width: 55%;
 }
+
+.nav-group {
+    color: #FFFFFF;
+    background-color: #000000;
+    margin: 0px;
+    opacity: .20;
+    border-radius: 0px;
+    display: block;
+    padding: 1px 5px;
+}
+
