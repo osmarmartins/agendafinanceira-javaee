@@ -6,7 +6,7 @@
 	<persistence-unit name="agendafinanceiraPU" transaction-type="JTA">
 		<description>Forge Persistence Unit</description>
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<jta-data-source>java:jboss/datasources/agendafinanceiraDS</jta-data-source>
+		<jta-data-source>java:jboss/datasources/webfinancasDS</jta-data-source>
 		
 		<class>br.com.futura.agendafinanceira.models.Conta</class>
 		<class>br.com.futura.agendafinanceira.models.Contato</class>
