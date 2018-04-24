@@ -8,8 +8,19 @@
 <h:head>
 	<title>#{empty pageTitle ? 'Page Title' : pageTitle}</title>
 	<link rel="icon" href='#{resource["img/AppLogo.png"]}' />
-	<h:outputStylesheet name="/css/estilo.css" />
+
+<!-- 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300"/>
+-->	
+	
+	
+        <h:outputStylesheet name="/css/reset.css"/>
+        <h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css"/>
+        <h:outputStylesheet name="/css/common.css"/>
+        <h:outputStylesheet library="minicolors" name="css/jquery.minicolors.css"/>
+        <h:outputStylesheet library="primefaces-bootstrap" name="custom.css"/>
+		<h:outputStylesheet name="/css/estilo.css" />
+	
 </h:head>
 
 <h:body>
@@ -98,6 +109,17 @@
 	
 	</div>
 </div>	
+
+        <h:outputScript library="primefaces" name="jquery/jquery.js" />
+        <h:outputScript library="primefaces" name="primefaces-locale.js" />
+        <h:outputScript library="bootstrap" name="js/bootstrap.min.js"/>
+        <h:outputScript library="adminlte" name="js/app.min.js"/>
+        <h:outputScript library="webbudget" name="js/chart.min.js"/>
+        <h:outputScript library="minicolors" name="js/jquery.minicolors.js"/>
+        <h:outputScript library="webbudget" name="js/helpers.js"/>
+        <h:outputScript library="webbudget" name="js/wbcharts.js"/>
+
+
 </h:body>
 
 </html>

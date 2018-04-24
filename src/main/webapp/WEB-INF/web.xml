@@ -61,4 +61,5 @@
 		<param-name>primefaces.THEME</param-name>
 		<param-value>#{temaBean.tema}</param-value>
 	</context-param>
+    
 </web-app>

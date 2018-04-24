@@ -1,0 +1,143 @@
+@charset "utf-8";
+
+/* 
+    Todas as customizacoes do primefaces vao estar neste arquivo
+
+    Author     : Arthur Gregorio
+    Created on : 26/10/2015
+*/
+
+/* customizacao da apreentacao do texto dos botoes */
+.ui-button {
+    height: 34px;
+}
+
+/* remove todos os efeitos arredondadinhos dos elementos */
+.ui-corner-all, .ui-state-default {
+    border-radius: 0 !important;
+}
+.ui-selectonemenu-trigger {
+    border-radius: 0 !important;
+}
+
+/* tira aquele fundo vermelho do label na hr da validacao */
+label.ui-state-error {
+    background: none !important;
+}
+
+/* tira a sembra para que os botoes fiquem certos quando em widgets */
+.ui-widget-content button.ui-state-default {
+    box-shadow: none !important;
+}
+
+/* posicionamento do check nos checkboxes de datatable */ 
+span.ui-icon-check {
+    position: relative;
+    right: 1px;
+    bottom: 1px;
+}
+
+/* posicionamento da caixa do checkbox */
+td .ui-chkbox-box {
+    position: relative;
+    top: 4px;
+}
+
+/* customizacao das mensagens de erro */ 
+.ui-messages > div {
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: white;
+    font-size: 16px;
+}
+.ui-messages-error {
+    border-color: #d73925 !important;
+    background-color: #dd4b39 !important;
+}
+.ui-messages-warn {
+    border-color: #e08e0b !important;
+    background-color: #f39c12 !important;
+}
+.ui-messages-info {
+    border-color: #00acd6 !important;
+    background-color: #00c0ef !important;
+}
+.ui-messages ul {
+    margin: 0 !important;
+}
+.ui-messages span.ui-messages-info-icon, 
+.ui-messages span.ui-messages-warn-icon, 
+.ui-messages span.ui-messages-error-icon { 
+    display: none;
+}
+.ui-messages-warn-summary, 
+.ui-messages-error-summary, 
+.ui-messages-info-summary {
+    margin-left: 0 !important;
+    font-weight: 600 !important;
+}
+
+/* corrige a opacidade dos checkboxes das grids */
+.ui-chkbox .ui-state-disabled {
+    opacity: initial !important;
+}
+
+/* remove uma linha preta escrota da header das tabelas */
+th[role="columnheader"].ui-state-default {
+    border-color: #ccc !important;
+}
+
+/* corrige a borda do paginador das datatables */
+div.ui-paginator {
+    border: 1px solid #dddddd !important; 
+    border-top: 0px !important;
+}
+
+/* remove aquele asterisco porco dos forms */
+.ui-outputlabel-rfi {
+    display: none;
+}
+
+/* corrige a exibicao do selectonemenu */
+.ui-selectonemenu {
+    height: 34px;
+    display: block !important;
+    border-color: #d2d6de !important;
+    border-radius: 0 !important;
+}
+.ui-selectonemenu-trigger {
+    width: 30px !important;
+    padding: 3px 6px !important;
+    border-radius: 0 !important;
+}
+.ui-selectonemenu-label {
+    padding: 6px !important;
+}
+
+/* corrige o label dos treenodes da arvore de permissoes */
+.ui-treenode-label {
+    position: relative;
+    left: 3px;
+}
+.ui-tree-toggler {
+    position: relative !important;
+}
+.ui-icon-triangle-1-e {
+    top: 4px;
+    background-position: initial !important;
+    background-image: url("#{resource['webbudget:img/ui-icon-arrow-right.png']}") !important;
+}
+.ui-icon-triangle-1-s {
+    top: 4px;
+    background-position: initial !important;
+    background-image: url("#{resource['webbudget:img/ui-icon-arrow-down.png']}") !important;
+}
+
+/* customizacao do scroller */
+.ui-datascroller-content {
+    background: none !important;
+    border: none !important;
+    padding: 0px !important;
+}
