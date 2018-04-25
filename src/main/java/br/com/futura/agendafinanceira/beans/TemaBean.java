@@ -28,4 +28,9 @@ public class TemaBean implements Serializable {
 				"overcast", "pepper-grinder", "redmond", "rocket", "sam", "smoothness", "south-street", "start",
 				"sunny", "swanky-purse", "trontastic", "ui-darkness", "ui-lightness", "vader" };
 	}
+	
+	public void mudarTema() {
+		
+	}
+
 }

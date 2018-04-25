@@ -3,6 +3,8 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <h:head>
@@ -29,7 +31,6 @@
 
 	<!-- ace styles -->
 	<h:outputStylesheet library="aceAdmin" name="css/ace.min.css" styleClass="ace-main-stylesheet" id="main-ace-style" />
-
 	<h:outputStylesheet library="aceAdmin" name="css/ace-skins.min.css"/>
 	<h:outputStylesheet library="aceAdmin" name="css/ace-rtl.min.css"/>
 
@@ -369,7 +370,7 @@
 			try{ace.settings.loadState('main-container')}catch(e){}
 		</script>
 	
-		<div id="sidebar" class="sidebar                  responsive                    ace-save-state">
+		<div id="sidebar" class="sidebar responsive ace-save-state">
 			<script type="text/javascript">
 				try{ace.settings.loadState('sidebar')}catch(e){}
 			</script>
@@ -410,7 +411,6 @@
 						<i class="menu-icon fa fa-tachometer"></i>
 						<span class="menu-text"> Dashboard </span>
 					</a>
-	
 					<b class="arrow"></b>
 				</li>
 	
@@ -421,7 +421,6 @@
 	
 						<b class="arrow fa fa-angle-down"></b>
 					</a>
-	
 					<b class="arrow"></b>
 	
 					<ul class="submenu">
@@ -430,7 +429,6 @@
 								<i class="menu-icon fa fa-caret-right"></i>
 								Simple &amp; Dynamic
 							</a>
-	
 							<b class="arrow"></b>
 						</li>
 	
@@ -439,7 +437,6 @@
 								<i class="menu-icon fa fa-caret-right"></i>
 								jqGrid plugin
 							</a>
-	
 							<b class="arrow"></b>
 						</li>
 					</ul>
@@ -449,10 +446,8 @@
 					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-pencil-square-o"></i>
 						<span class="menu-text"> Forms </span>
-	
 						<b class="arrow fa fa-angle-down"></b>
 					</a>
-	
 					<b class="arrow"></b>
 	
 					<ul class="submenu">
@@ -461,7 +456,6 @@
 								<i class="menu-icon fa fa-caret-right"></i>
 								Form Elements
 							</a>
-	
 							<b class="arrow"></b>
 						</li>
 	
@@ -470,7 +464,6 @@
 								<i class="menu-icon fa fa-caret-right"></i>
 								Form Elements 2
 							</a>
-	
 							<b class="arrow"></b>
 						</li>
 	
@@ -482,7 +475,6 @@
 						<i class="menu-icon fa fa-list-alt"></i>
 						<span class="menu-text"> Widgets </span>
 					</a>
-	
 					<b class="arrow"></b>
 				</li>
 	
@@ -498,7 +490,6 @@
 							</span>
 						</span>
 					</a>
-	
 					<b class="arrow"></b>
 				</li>
 	
@@ -527,7 +518,7 @@
 					<div class="nav-search" id="nav-search">
 						<form class="form-search">
 							<span class="input-icon">
-								<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+								<input type="text" placeholder="Pesquisar ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
 								<i class="ace-icon fa fa-search nav-search-icon"></i>
 							</span>
 						</form>
@@ -542,6 +533,7 @@
 	
 						<div class="ace-settings-box clearfix" id="ace-settings-box">
 							<div class="pull-left width-50">
+								
 								<div class="ace-settings-item">
 									<div class="pull-left">
 										<select id="skin-colorpicker" class="hide">
@@ -551,29 +543,8 @@
 											<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
 										</select>
 									</div>
-									<span> Preferência de Cor</span>
+									<span> Estilo </span>
 								</div>
-
-
-
-								
-								<div class="ace-settings-item">
-									<div>
-										<label for="form-field-select-1">Estilo do Tema</label>
-										<select class="form-control" id="form-field-select-1">
-											<option value=""></option>
-											<option value="AL">Alabama</option>
-											<option value="AK">Alaska</option>
-											<option value="AZ">Arizona</option>
-											<option value="AR">Arkansas</option>
-											<option value="CA">California</option>
-											<option value="CO">Colorado</option>
-										</select>
-									</div>
-								</div>
-								
-								
-								
 	
 								<div class="ace-settings-item">
 									<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-navbar" autocomplete="off" />
@@ -603,9 +574,6 @@
 									</label>
 								</div>
 
-							</div><!-- /.pull-left -->
-	
-							<div class="pull-left width-50">
 								<div class="ace-settings-item">
 									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover" autocomplete="off" />
 									<label class="lbl" for="ace-settings-hover"> Submenu on Hover</label>
@@ -621,19 +589,51 @@
 									<label class="lbl" for="ace-settings-highlight"> Alt. Active Item</label>
 								</div>
 							</div><!-- /.pull-left -->
+	
+							<div class="pull-left width-50">
+								
+								<div class="ace-settings-item">
+									<div class="widget-box">
+										<div class="widget-header">
+											<h4 class="widget-title">
+												<i class="ace-icon fa fa-sliders"/>
+												Tema
+											</h4>
+										</div>
+										<div class="widget-body">
+											<h:form>
+										        <h:selectOneMenu id="selecao-tema" 
+										        	value="#{temaBean.tema}" styleClass="form-control"
+										        	valueChangeListener="#{temaBean.mudarTema()}"
+										        	onchange="submit()">
+										            <f:selectItems value="#{temaBean.temas}"
+										                var="tema" itemValue="#{tema}" itemLabel="#{tema}" />
+										        </h:selectOneMenu>
+											</h:form>
+										</div>
+									</div>
+								</div>
+									
+							</div><!-- /.pull-left -->
 						</div><!-- /.ace-settings-box -->
 					</div><!-- /.ace-settings-container -->
+	
+					<div class="page-header">
+						<h1>
+							<ui:insert name="titulo">Título</ui:insert>
+							<small>
+								<ui:insert name="subtitulo"></ui:insert>
+							</small>
+						</h1>
+					</div>
+					
 	
 					<div class="row">
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
-							<h1>
-								<ui:insert name="titulo">Agenda Financeira</ui:insert>
-							</h1>
-							
-							<div id="conteudo">
+							<h:panelGroup id="tabela-form">
 								<ui:insert name="conteudo">Formulário</ui:insert>
-							</div>
+							</h:panelGroup>
 							<!-- PAGE CONTENT ENDS -->
 						</div><!-- /.col -->
 					</div><!-- /.row -->
