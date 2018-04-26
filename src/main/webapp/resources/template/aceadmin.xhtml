@@ -547,46 +547,23 @@
 								</div>
 	
 								<div class="ace-settings-item">
-									<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-navbar" autocomplete="off" />
-									<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
-								</div>
-	
-								<div class="ace-settings-item">
-									<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-sidebar" autocomplete="off" />
-									<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
-								</div>
-	
-								<div class="ace-settings-item">
-									<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-breadcrumbs" autocomplete="off" />
-									<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
-								</div>
-	
-								<div class="ace-settings-item">
-									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" autocomplete="off" />
-									<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
-								</div>
-	
-								<div class="ace-settings-item">
 									<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-add-container" autocomplete="off" />
-									<label class="lbl" for="ace-settings-add-container">
-										Inside
-										<b>.container</b>
-									</label>
+									<label class="lbl" for="ace-settings-add-container"> Ativa Margens </label>
 								</div>
 
 								<div class="ace-settings-item">
 									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover" autocomplete="off" />
-									<label class="lbl" for="ace-settings-hover"> Submenu on Hover</label>
+									<label class="lbl" for="ace-settings-hover"> Submenu Flutuante</label>
 								</div>
 	
 								<div class="ace-settings-item">
 									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-compact" autocomplete="off" />
-									<label class="lbl" for="ace-settings-compact"> Compact Sidebar</label>
+									<label class="lbl" for="ace-settings-compact"> Menu Compacto </label>
 								</div>
 	
 								<div class="ace-settings-item">
 									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight" autocomplete="off" />
-									<label class="lbl" for="ace-settings-highlight"> Alt. Active Item</label>
+									<label class="lbl" for="ace-settings-highlight"> Destacar Opção Selecionada </label>
 								</div>
 							</div><!-- /.pull-left -->
 	
@@ -603,10 +580,10 @@
 										<div class="widget-body">
 											<h:form>
 										        <h:selectOneMenu id="selecao-tema" 
-										        	value="#{temaBean.tema}" styleClass="form-control"
+										        	value="#{temaBean.temaSessao.tema}" styleClass="form-control"
 										        	valueChangeListener="#{temaBean.mudarTema()}"
 										        	onchange="submit()">
-										            <f:selectItems value="#{temaBean.temas}"
+										            <f:selectItems value="#{temaBean.temaSessao.temas}"
 										                var="tema" itemValue="#{tema}" itemLabel="#{tema}" />
 										        </h:selectOneMenu>
 											</h:form>

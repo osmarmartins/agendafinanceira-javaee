@@ -2,8 +2,12 @@ package br.com.futura.agendafinanceira.beans;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.inject.Inject;
+
+import br.com.futura.agendafinanceira.models.Tema;
 
 @ManagedBean
 @SessionScoped
@@ -11,26 +15,30 @@ public class TemaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String tema = "cupertino";
-
-	public String getTema() {
-		return tema;
+	@Inject
+	private Tema temaSessao;
+	
+	@PostConstruct
+	private void init() {
+		this.temaSessao.setTema("bootstrap");
+		this.temaSessao.setEstilo("no-skin");
+		this.temaSessao.setMargensAtivas(false);
+		this.temaSessao.setMenuCompacto(false);
+		this.temaSessao.setSubmenuFlutuante(false);
+		this.temaSessao.setDestaqueSelecao(false);
 	}
+	
 
-	public void setTema(String tema) {
-		this.tema = tema;
+	public Tema getTemaSessao() {
+		return temaSessao;
 	}
-
-	public String[] getTemas() {
-		return new String[] { "afterdark", "afternoon", "afterwork", "aristo", "black-tie", "blitzer", "bluesky",
-				"bootstrap", "casablanca", "cupertino", "cruze", "dark-hive", "delta", "dot-luv", "eggplant",
-				"excite-bike", "flick", "glass-x", "home", "hot-sneaks", "humanity", "le-frog", "midnight", "mint-choc",
-				"overcast", "pepper-grinder", "redmond", "rocket", "sam", "smoothness", "south-street", "start",
-				"sunny", "swanky-purse", "trontastic", "ui-darkness", "ui-lightness", "vader" };
+	
+	public void setTemaSessao(Tema temaSessao) {
+		this.temaSessao = temaSessao;
 	}
 	
 	public void mudarTema() {
-		
+
 	}
 
 }
