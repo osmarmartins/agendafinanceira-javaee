@@ -36,9 +36,5 @@ public class TemaBean implements Serializable {
 	public void setTemaSessao(Tema temaSessao) {
 		this.temaSessao = temaSessao;
 	}
-	
-	public void mudarTema() {
-
-	}
 
 }

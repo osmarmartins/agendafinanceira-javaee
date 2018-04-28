@@ -581,7 +581,6 @@
 											<h:form>
 										        <h:selectOneMenu id="selecao-tema" 
 										        	value="#{temaBean.temaSessao.tema}" styleClass="form-control"
-										        	valueChangeListener="#{temaBean.mudarTema()}"
 										        	onchange="submit()">
 										            <f:selectItems value="#{temaBean.temaSessao.temas}"
 										                var="tema" itemValue="#{tema}" itemLabel="#{tema}" />
