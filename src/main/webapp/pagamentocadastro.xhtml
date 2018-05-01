@@ -9,15 +9,18 @@
 <ui:composition template="resources/template/aceadmin.xhtml">
 
 	<ui:define name="navegacao">
-		<p:breadCrumb>
-		    <p:menuitem value="Dashboard" url="/" />
-		    <p:menuitem value="Pagamentos" url="/pagamento.xhtml" />
-		    <p:menuitem value="Lançamentos" url="#" />
-		</p:breadCrumb>			
+		<li>
+			<a href="pagamento.xhtml">Contas a Pagar</a>
+		</li>
+		<li class="active">Lançamento</li>
 	</ui:define>
 	
 	<ui:define name="titulo">
-		<label>Contas a Pagar - Lançamentos</label>
+		Contas a pagar
+	</ui:define>
+
+	<ui:define name="subtitulo">
+		Lançamento de contas a pagar
 	</ui:define>
 
 	<ui:define name="conteudo">

@@ -553,13 +553,16 @@
 					<ul class="breadcrumb">
 						<li>
 							<i class="ace-icon fa fa-home home-icon"></i>
-							<a href="#">Home</a>
+							<a href="index.xhtml">Home</a>
 						</li>
+						
+						<ui:insert name="navegacao">
+							<li>
+								<a href="#">Outras Páginas</a>
+							</li>
+							<li class="active">Página Atual</li>
+						</ui:insert>
 	
-						<li>
-							<a href="#">Other Pages</a>
-						</li>
-						<li class="active">Blank Page</li>
 					</ul><!-- /.breadcrumb -->
 	
 					<div class="nav-search" id="nav-search">
@@ -645,6 +648,7 @@
 						<h1>
 							<ui:insert name="titulo">Título</ui:insert>
 							<small>
+								<i class="ace-icon fa fa-angle-double-right" style="padding-right: 0.5em;"></i>
 								<ui:insert name="subtitulo"></ui:insert>
 							</small>
 						</h1>

@@ -9,15 +9,18 @@
 <ui:composition template="resources/template/aceadmin.xhtml">
 
 	<ui:define name="navegacao">
-		<p:breadCrumb>
-		    <p:menuitem value="Dashboard" url="/" />
-		    <p:menuitem value="Usuário" url="/usuario.xhtml" />
-		    <p:menuitem value="Cadastro" url="/usuariocadastro.xhtml"/>
-		</p:breadCrumb>			
+		<li>
+			<a href="usuario.xhtml">Usuários</a>
+		</li>
+		<li class="active">Cadastro</li>
 	</ui:define>
 	
 	<ui:define name="titulo">
-		<label>Cadastro de Usuários</label>
+		Cadastro de Usuários
+	</ui:define>
+
+	<ui:define name="subtitulo">
+		Relação de usuários do sistema
 	</ui:define>
 
 	<ui:define name="conteudo">

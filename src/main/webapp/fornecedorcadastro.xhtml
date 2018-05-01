@@ -10,16 +10,18 @@
 <ui:composition template="resources/template/aceadmin.xhtml">
 
 	<ui:define name="navegacao">
-		<p:breadCrumb>
-		    <p:menuitem value="Dashboard" url="/" />
-		    <p:menuitem value="Fornecedores" url="/fornecedor.xhtml" />
-		    <p:menuitem value="Cadastro" url="#{fornecedorCadastroBean.voltar()}" />
-		</p:breadCrumb>			
-	
+		<li>
+			<a href="fornecedor.xhtml">Fornecedores</a>
+		</li>
+		<li class="active">Cadastro</li>
 	</ui:define>
 	
 	<ui:define name="titulo">
-		<label>Cadastro de Fornecedores</label>
+		Cadastro de Fornecedores
+	</ui:define>
+
+	<ui:define name="subtitulo">
+		Informações referentes aos fornecedores
 	</ui:define>
 
 	<ui:define name="conteudo">
