@@ -20,8 +20,8 @@
 	<link rel="icon" href='#{resource["img/AppLogo.png"]}' />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300"/>
 
-	<!-- bootstrap & fontawesome 
-	<h:outputStylesheet library="aceAdmin" name="font-awesome/4.5.0/css/font-awesome.min.css"/> -->
+	<!-- bootstrap & fontawesome --> 
+	<link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/aceAdmin/font-awesome/4.5.0/css/font-awesome.min.css"/> 
 	<h:outputStylesheet library="aceAdmin" name="css/bootstrap.min.css"/>
 
 	<!-- page specific plugin styles -->
@@ -407,7 +407,7 @@
 	
 			<ul class="nav nav-list">
 				<li class="">
-					<a href="index.html">
+					<a href="index.xhtml">
 						<i class="menu-icon fa fa-tachometer"></i>
 						<span class="menu-text"> Dashboard </span>
 					</a>
@@ -416,8 +416,8 @@
 	
 				<li class="">
 					<a href="#" class="dropdown-toggle">
-						<i class="menu-icon fa fa-list"></i>
-						<span class="menu-text"> Tables </span>
+						<i class="menu-icon fa fa-pencil-square-o"></i>
+						<span class="menu-text"> Cadastros </span>
 	
 						<b class="arrow fa fa-angle-down"></b>
 					</a>
@@ -425,17 +425,33 @@
 	
 					<ul class="submenu">
 						<li class="">
-							<a href="tables.html">
+							<a href="setor.xhtml">
 								<i class="menu-icon fa fa-caret-right"></i>
-								Simple &amp; Dynamic
+								Setor
 							</a>
 							<b class="arrow"></b>
 						</li>
 	
 						<li class="">
-							<a href="jqgrid.html">
+							<a href="conta.xhtml">
 								<i class="menu-icon fa fa-caret-right"></i>
-								jqGrid plugin
+								Conta
+							</a>
+							<b class="arrow"></b>
+						</li>
+	
+						<li class="">
+							<a href="fornecedor.xhtml">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Fornecedor
+							</a>
+							<b class="arrow"></b>
+						</li>
+	
+						<li class="">
+							<a href="usuario.xhtml">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Usuário
 							</a>
 							<b class="arrow"></b>
 						</li>
@@ -444,25 +460,31 @@
 	
 				<li class="">
 					<a href="#" class="dropdown-toggle">
-						<i class="menu-icon fa fa-pencil-square-o"></i>
-						<span class="menu-text"> Forms </span>
+						<i class="menu-icon fa fa-dollar"></i>
+						<span class="menu-text"> 
+							Contas a Pagar
+							<span class="badge badge-transparent tooltip-error" title="2 Important Events">
+								<i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+							</span>
+							 
+						</span>
 						<b class="arrow fa fa-angle-down"></b>
 					</a>
 					<b class="arrow"></b>
 	
 					<ul class="submenu">
 						<li class="">
-							<a href="form-elements.html">
+							<a href="pagamento.xhtml">
 								<i class="menu-icon fa fa-caret-right"></i>
-								Form Elements
+								Lançamento
 							</a>
 							<b class="arrow"></b>
 						</li>
 	
 						<li class="">
-							<a href="form-elements-2.html">
+							<a href="baixa.xhtml">
 								<i class="menu-icon fa fa-caret-right"></i>
-								Form Elements 2
+								Baixa
 							</a>
 							<b class="arrow"></b>
 						</li>
@@ -471,23 +493,48 @@
 				</li>
 	
 				<li class="">
-					<a href="widgets.html">
-						<i class="menu-icon fa fa-list-alt"></i>
-						<span class="menu-text"> Widgets </span>
+					<a href="#" class="dropdown-toggle">
+						<i class="menu-icon fa fa-print"></i>
+						<span class="menu-text"> Relatórios </span>
+						<b class="arrow fa fa-angle-down"></b>
+					</a>
+					<b class="arrow"></b>
+	
+					<ul class="submenu">
+						<li class="">
+							<a href="contasapagar.xhtml">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Contas a Pagar
+							</a>
+							<b class="arrow"></b>
+						</li>
+	
+						<li class="">
+							<a href="pagamentosefetuados.xhtml">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Pagamentos Efetuados
+							</a>
+							<b class="arrow"></b>
+						</li>
+	
+					</ul>
+				</li>
+	
+				<li class="">
+					<a href="#">
+						<i class="menu-icon fa fa-key"></i>
+						<span class="menu-text"> Alterar Senha </span>
 					</a>
 					<b class="arrow"></b>
 				</li>
 	
 				<li class="">
-					<a href="calendar.html">
-						<i class="menu-icon fa fa-calendar"></i>
+					<a href="#">
+						<i class="menu-icon fa fa-user-times"></i>
 	
 						<span class="menu-text">
-							Calendar
+							Logout
 	
-							<span class="badge badge-transparent tooltip-error" title="2 Important Events">
-								<i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
-							</span>
 						</span>
 					</a>
 					<b class="arrow"></b>
