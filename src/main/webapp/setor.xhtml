@@ -63,17 +63,59 @@
 							</p:button>
 							
 							<p:commandButton title="Excluir" icon="fa fa-trash" actionListener="#{setorBean.excluir(setor)}" update="@form" process="@this">
-								<p:confirm header="Confirma exclusão" message="Confirma a excusão de '#{setor.descricao}'" icon="ui-icon-alert" />							
+								<p:confirm header="Confirma exclusão" message="Confirma a exclusão de '#{setor.descricao}'" icon="ui-icon-alert" />							
 							</p:commandButton>
 						</p:column>
-						
-					</p:dataTable>
 
+					</p:dataTable>
+						
 				    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 				        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
 				        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
 				    </p:confirmDialog>					
+
 				</h:form>
+				
+				
+									<div class="col-sm-6">
+										<h3 class="header blue lighter smaller">
+											<i class="ace-icon fa fa-list-alt smaller-90"></i>
+											Dialogs
+										</h3>
+										<a href="#" id="id-btn-dialog2" class="btn btn-info btn-sm">Confirm Dialog</a>
+										<a href="#" id="id-btn-dialog1" class="btn btn-purple btn-sm">Modal Dialog</a>
+
+										<div id="dialog-message" class="hide">
+											<p>
+												This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.
+											</p>
+
+											<div class="hr hr-12 hr-double"></div>
+
+											<p>
+												Currently using
+												<b>36% of your storage space</b>.
+											</p>
+										</div><!-- #dialog-message -->
+
+										<div id="dialog-confirm" class="hide">
+											<div class="alert alert-info bigger-110">
+												These items will be permanently deleted and cannot be recovered.
+											</div>
+
+											<div class="space-6"></div>
+
+											<p class="bigger-110 bolder center grey">
+												<i class="ace-icon fa fa-hand-o-right blue bigger-120"></i>
+												Are you sure?
+											</p>
+										</div><!-- #dialog-confirm -->
+									</div><!-- ./span -->
+
+				
+				
+				
+				
 			</div>
 			
 		</div>

@@ -18,10 +18,6 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 
-/**
- * The persistent class for the setor database table.
- * 
- */
 @Entity
 @Table(name = "setor")
 public class Setor implements Serializable {
@@ -31,12 +27,12 @@ public class Setor implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_setor")
 	private Integer idSetor;
+	
+	@NotBlank(message = "Informe um valor para o campo")
+	private String descricao;
 
 	@Enumerated
 	private Ativo ativo;
-
-	@NotBlank(message = "Informe um valor para o campo")
-	private String descricao;
 
 	@Version
 	private Integer versao;
@@ -104,6 +100,7 @@ public class Setor implements Serializable {
 
 		return pgto;
 	}
+	
 
 	public boolean isStatus() {
 		if (this.ativo == null) {

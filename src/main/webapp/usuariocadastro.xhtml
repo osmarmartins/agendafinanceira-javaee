@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <ui:composition template="resources/template/aceadmin.xhtml">
@@ -31,69 +33,127 @@
 		
 		<div class="ui-g">	
 			<div class="ui-g-12">
-
-				<h:form>
-					<p:messages autoUpdate="true" globalOnly="true"/>
+			
+				<form jsf:id="formUsuario" jsf:prependId="false">
+					<p:messages />
 					
-					<p:focus context="@form" />
-
-					<p:toolbar>
-						<f:facet name="left">
-							<p:button value="Voltar" outcome="/usuario.xhtml"/>
-							<p:spacer style="width: 10px;"/>
-					        <p:commandButton value="Salvar" action="#{usuarioCadastroBean.salvar()}" update="@form"/>
-						</f:facet>
-					</p:toolbar>
-					
-					<p:panelGrid columns="3" styleClass="painel" columnClasses="rotulo, campo, mensagem">
-						<p:outputLabel value="ID" for="id"/>
-						<p:inputText id="id" value="#{usuarioCadastroBean.usuario.idUsuario}" disabled="true" style="width: 20%"/>
-						<p:message for="id"/>
-					
-						<p:outputLabel value="Nome" for="nome"/>
-						<p:inputText id="nome" value="#{usuarioCadastroBean.usuario.nome}" style="width: 95%"/>
-						<p:message for="nome"/>
-						
-						<p:outputLabel value="Email" for="email"/>
-						<p:inputText id="email" value="#{usuarioCadastroBean.usuario.email}" style="width: 95%"/>
-						<p:message for="email"/>
-						
-						<p:outputLabel value="Login" for="login"/>
-						<p:inputText id="login" value="#{usuarioCadastroBean.usuario.login}" style="width: 50%"/>
-						<p:message for="login"/>
-
-						<p:outputLabel value="Tipo do Usuário" for="tipoUsuario"/>
-				        <p:selectOneMenu id="tipoUsuario" value="#{usuarioCadastroBean.usuario.administrador}" style="width: 50%">
-				            <f:selectItem itemLabel="Selecione o tipo de usuário..." itemValue="" />
-				        	<f:selectItems value="#{usuarioCadastroBean.tiposUsuario}" var="tipo" itemLabel="#{tipo.descricaoUsuario}" itemValue="#{tipo}"/>
-				        </p:selectOneMenu>
-						<p:message for="tipoUsuario"/>
-						
-				        <p:outputLabel value="Ativo" for="ativo"/>
-				        <p:selectBooleanButton id="ativo" 
-				        	value="#{usuarioCadastroBean.usuario.status}"
-				        	onLabel="Sim" offLabel="Não" style="width:60px" />
-				        <p:message for="ativo"/>
-					</p:panelGrid>
-					
-					<p:panelGrid columns="3" styleClass="painel" columnClasses="rotulo, campo, mensagem" rendered="#{usuarioCadastroBean.usuario.idUsuario == null}">
-							<p:outputLabel value="Senha" for="senha"/>
-							<p:password id="senha" value="#{usuarioCadastroBean.usuario.senha}" style="width: 50%"/>
-							<p:message for="senha"/>
+					<div class="widget-box">
+						<div class="widget-header">
+							<button class="btn btn-lg btn-default" type="button" jsf:outcome="usuario.xhtml">	
+								<i class="ace-icon fa fa-arrow-left"></i>
+								Voltar
+							</button>						
+	
+							<button class="btn btn-lg btn-info" type="submit" jsf:action="#{usuarioCadastroBean.salvar()}">	
+								<i class="ace-icon fa fa-check"></i>
+								Salvar
+							</button>						
+							<div class="widget-toolbar">
+							</div>
+						</div>
+	
+						<div class="widget-body">
+							<div class="widget-main">
 							
-							<p:outputLabel value="Confirmar Senha" for="confirmaSenha"/>
-							<p:password id="confirmaSenha" value="#{usuarioCadastroBean.confirmarSenha}" style="width: 50%"/>
-							<p:message for="confirmaSenha"/>
-					</p:panelGrid>
-
-					<p:panelGrid columns="3" styleClass="painel" columnClasses="rotulo, campo, mensagem" rendered="#{usuarioCadastroBean.usuario.idUsuario != null}">
-							<p:outputLabel value="Senha" for="alterarSenha"/>
-							<p:button id="alterarSenha" value="Alterar Senha" style="width: 50%" outcome="/usuario.xhtml"/>
-							<p:message for="alterarSenha"/>
-					</p:panelGrid>
-
-				</h:form>
-
+								<div class="form-group">
+									<label class="control-label" jsf:for="idUsuario">ID</label>
+									<input type="text" class="form-control input-small" readonly="readonly" 
+										jsf:id="idUsuario"
+										jsf:binding="#{idUsuario}" 
+										jsf:value="#{usuarioCadastroBean.usuario.idUsuario}"/>
+								</div>
+	
+								<div class="form-group #{!nome.valid ? 'has-error' : ''}">
+									<label class="control-label" jsf:for="nome">Nome</label>
+									<input type="text" class="form-control" 
+										jsf:id="nome"
+										jsf:binding="#{nome}" 
+										jsf:value="#{usuarioCadastroBean.usuario.nome}"
+										placeholder="Nome completo"/>
+									<div class="help-block col-xs-12 col-sm-reset inline"> 
+										<h:message for="nome"/> 
+									</div>
+								</div>
+	
+								<div class="form-group #{!email.valid ? 'has-error' : ''}">
+									<label class="control-label" jsf:for="email">Email</label>
+									<input type="text" class="form-control" 
+										jsf:id="email"
+										jsf:binding="#{email}" 
+										jsf:value="#{usuarioCadastroBean.usuario.email}"
+										placeholder="seuemail@seudominio.com"/>
+									<div class="help-block col-xs-12 col-sm-reset inline"> 
+										<h:message for="email"/> 
+									</div>
+								</div>
+		
+								<div class="form-group #{!login.valid ? 'has-error' : ''}">
+									<label class="control-label" jsf:for="login">Login</label>
+									<input type="text" class="form-control" 
+										jsf:id="login"
+										jsf:binding="#{login}" 
+										jsf:value="#{usuarioCadastroBean.usuario.login}"
+										placeholder="Login para acesso ao sistema"/>
+									<div class="help-block col-xs-12 col-sm-reset inline"> 
+										<h:message for="login"/> 
+									</div>
+								</div>
+	
+								<div class="form-group">
+									<label class="control-label" jsf:for="senha">Senha</label>
+									<input type="password" class="form-control" 
+										jsf:id="senha"
+										jsf:binding="#{senha}" 
+										jsf:value="#{usuarioCadastroBean.usuario.senha}"/>
+									<div class="help-block col-xs-12 col-sm-reset inline"> 
+										<h:message for="senha"/> 
+									</div>
+								</div>
+	
+								<div class="form-group">
+									<label class="control-label" jsf:for="confirmarSenha">Confirmar Senha</label>
+									<input type="password" class="form-control" 
+										jsf:id="confirmarSenha"
+										jsf:binding="#{confirmarSenha}" 
+										jsf:value="#{usuarioCadastroBean.confirmarSenha}"/>
+									<div class="help-block col-xs-12 col-sm-reset inline"> 
+										<h:message for="confirmarSenha"/> 
+									</div>
+								</div>
+	
+								<div class="form-group">
+									<label class="control-label" jsf:for="tipo">Tipo de Usuário</label>
+									<h:selectOneMenu value="#{usuarioCadastroBean.usuario.administrador}" id="tipo" styleClass="form-control input-medium">
+										<f:selectItems var="item" value="#{usuarioCadastroBean.tiposUsuario}"
+											itemLabel="#{item.descricaoUsuario}" itemValue="#{item}"/>
+									</h:selectOneMenu>
+									<div class="help-block col-xs-12 col-sm-reset inline"> 
+										<h:message for="tipo"/> 
+									</div>
+								</div>
+	
+								<div class="form-group">
+									<label class="control-label" jsf:for="ativo">Situação</label>
+									<div class="form-control">
+										<label>
+											<input type="checkbox" class="ace ace-switch"
+												jsf:id="ativo"
+												jsf:binding="#{ativo}"
+												jsf:value="#{usuarioCadastroBean.usuario.status}"
+												/>
+											<span class="lbl" data-lbl="Ativo"></span>
+										</label>									
+									</div>
+									<div class="help-block col-xs-12 col-sm-reset inline"> 
+										<h:message for="ativo"/> 
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</form>
+			
 			</div>
 		</div>
 	</ui:define>

@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.models.enums.TipoUsuario;
 
@@ -41,6 +43,7 @@ public class Usuario implements Serializable {
 
 	private String email;
 
+	@NotBlank(message="Campo obrigatório")
 	private String login;
 
 	private String nome;

@@ -10,6 +10,7 @@ import javax.inject.Named;
 
 import br.com.futura.agendafinanceira.daos.ContatoDao;
 import br.com.futura.agendafinanceira.models.Contato;
+import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
@@ -18,9 +19,11 @@ import br.com.futura.agendafinanceira.utils.MessagesHelper;
 public class ContatoCadastroBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	private Fornecedor fornecedor;
 
 	private Contato contato;
-
+	
 	@Inject
 	private ContatoDao contatoDao;
 
@@ -34,7 +37,7 @@ public class ContatoCadastroBean implements Serializable {
 	}
 
 	public String voltar() {
-		return "/fornecedorcadastro.xhtml?fornecedor=" + contato.getFornecedor().getIdFornecedor();
+		return "/fornecedorcadastro.xhtml?fornecedor=" + this.fornecedor.getIdFornecedor();
 	}
 
 	public String salvar() {
@@ -53,11 +56,20 @@ public class ContatoCadastroBean implements Serializable {
 		if (contato == null) {
 			init();
 		}
+		this.contato.setFornecedor(this.fornecedor);
 		return contato;
 	}
 
 	public void setContato(Contato contato) {
 		this.contato = contato;
+	}
+	
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+	
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
 	}
 
 }

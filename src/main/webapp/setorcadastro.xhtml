@@ -9,15 +9,18 @@
 <ui:composition template="resources/template/aceadmin.xhtml">
 
 	<ui:define name="navegacao">
-		<p:breadCrumb>
-		    <p:menuitem value="Dashboard" url="/" />
-		    <p:menuitem value="Setores" url="/setor.xhtml" />
-		    <p:menuitem value="Cadastro" url="/setorcadastro.xhtml"/>
-		</p:breadCrumb>			
+		<li>
+			<a href="setor.xhtml">
+				Setores
+			</a>
+		</li>
+		<li class="active">Cadastro</li>
 	</ui:define>
 	
-	<ui:define name="titulo">
-		<label>Cadastro de Setores</label>
+	<ui:define name="titulo">Cadastro de Setores</ui:define>
+	
+	<ui:define name="subtitulo">
+		<span>Relação dos centros de custo a serem gerenciados nas operações financeiras</span> 
 	</ui:define>
 
 	<ui:define name="conteudo">

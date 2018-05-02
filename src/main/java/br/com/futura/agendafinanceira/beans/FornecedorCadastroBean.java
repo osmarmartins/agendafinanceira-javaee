@@ -65,10 +65,9 @@ public class FornecedorCadastroBean implements Serializable {
 	
 	public String novoContato(){
 		return "/contatocadastro?faces-redirect=true&"
-				+ "fornecedor=" + fornecedor.getIdFornecedor();
-
-		
+				+ "fornecedor=" + this.fornecedor.getIdFornecedor();
 	}
+		
 
 	public void definirDocumento() {
 		this.documentoMascara = ((TipoPessoa) this.fornecedor.getPfPj()).getMascara();

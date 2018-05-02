@@ -10,23 +10,28 @@
 <ui:composition template="resources/template/aceadmin.xhtml">
 
 	<ui:define name="navegacao">
-		<p:breadCrumb>
-		    <p:menuitem value="Dashboard" url="/" />
-		    <p:menuitem value="Fornecedores" url="/fornecedor.xhtml" />
-		    <p:menuitem value="Cadastro" url="#{contatoCadastroBean.voltar()}" />
-		    <p:menuitem value="Contato" url="#" />
-		</p:breadCrumb>			
-	
+		<li>
+			<a href="fornecedor.xhtml">Fornecedores</a>
+		</li>
+		<li>
+			<a href="fornecedor.xhtml">Cadastro</a>
+		</li>
+		<li class="active">Contato</li>
 	</ui:define>
 	
 	<ui:define name="titulo">
-		<label>Cadastro de Contato</label>
+		Cadastro de Fornecedores
+	</ui:define>
+
+	<ui:define name="subtitulo">
+		Informações referentes aos fornecedores
 	</ui:define>
 
 	<ui:define name="conteudo">
 		
     	<f:metadata>
-    		<o:viewParam name="contato" value="#{contatoCadastroBean.contato}" />
+    		<f:viewParam name="fornecedor" value="#{contatoCadastroBean.fornecedor}" />
+    		<f:viewParam name="contato" value="#{contatoCadastroBean.contato}" />
     	</f:metadata>		
 		
 		<div class="ui-g">	

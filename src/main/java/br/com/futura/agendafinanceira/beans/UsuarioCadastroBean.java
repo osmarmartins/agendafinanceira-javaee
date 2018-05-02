@@ -23,8 +23,6 @@ public class UsuarioCadastroBean implements Serializable {
 
 	private String confirmarSenha;
 
-	private TipoUsuario[] tiposUsuario;
-
 	@Inject
 	private UsuarioDao usuarioDao;
 
@@ -36,7 +34,6 @@ public class UsuarioCadastroBean implements Serializable {
 		this.usuario = new Usuario();
 		this.usuario.setAtivo(Ativo.ATIVO);
 		this.confirmarSenha = usuario.getSenha();
-		this.tiposUsuario = TipoUsuario.values();
 	}
 
 	public String salvar() {
@@ -51,7 +48,11 @@ public class UsuarioCadastroBean implements Serializable {
 	}
 
 	public TipoUsuario[] getTiposUsuario() {
-		return tiposUsuario;
+		return TipoUsuario.values();
+	}
+	
+	public boolean getHasError() {
+		return false;
 	}
 
 	public Usuario getUsuario() {
