@@ -1,17 +1,23 @@
 package br.com.futura.agendafinanceira.beans;
 
+import java.io.Serializable;
+
 import javax.annotation.PostConstruct;
-import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import br.com.futura.agendafinanceira.daos.ContaDao;
 import br.com.futura.agendafinanceira.models.Conta;
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
-@Model
-public class ContaCadastroBean {
+@Named
+@ViewScoped
+public class ContaCadastroBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Conta conta;
 

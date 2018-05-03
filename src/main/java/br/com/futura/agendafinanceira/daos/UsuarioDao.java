@@ -49,7 +49,6 @@ public class UsuarioDao implements Serializable {
 	@Transactional
 	public void salvar(Usuario usuario) throws NoSuchAlgorithmException {
 		if (usuario.getIdUsuario() == null) {
-			usuario.setSenha(HashMD5Util.getMD5(usuario.getSenha()));
 			manager.persist(usuario);
 		} else {
 			manager.merge(usuario);

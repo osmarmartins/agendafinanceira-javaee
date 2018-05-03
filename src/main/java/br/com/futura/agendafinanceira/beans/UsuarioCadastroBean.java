@@ -4,17 +4,20 @@ import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import br.com.futura.agendafinanceira.daos.UsuarioDao;
 import br.com.futura.agendafinanceira.models.Usuario;
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.models.enums.TipoUsuario;
+import br.com.futura.agendafinanceira.utils.HashMD5Util;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
-@Model
+@Named
+@ViewScoped
 public class UsuarioCadastroBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -33,18 +36,20 @@ public class UsuarioCadastroBean implements Serializable {
 	private void init() {
 		this.usuario = new Usuario();
 		this.usuario.setAtivo(Ativo.ATIVO);
-		this.confirmarSenha = usuario.getSenha();
 	}
 
 	public String salvar() {
 		try {
+			if (this.usuario.getIdUsuario() == null) {
+				this.usuario.setSenha(HashMD5Util.getMD5(this.usuario.getSenha()));
+			}
 			usuarioDao.salvar(usuario);
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso!"));
-		return "usuariocadastro?faces-redirect=true&usuario=" + usuario.getIdUsuario();
+		init();
+		return "usuariocadastro?faces-redirect";
 	}
 
 	public TipoUsuario[] getTiposUsuario() {
@@ -53,6 +58,10 @@ public class UsuarioCadastroBean implements Serializable {
 	
 	public boolean getHasError() {
 		return false;
+	}
+	
+	public boolean isNovoUsuario() {
+		return this.usuario.getIdUsuario()==null;
 	}
 
 	public Usuario getUsuario() {

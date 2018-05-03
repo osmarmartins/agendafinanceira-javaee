@@ -4,7 +4,11 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head/>
 
 <ui:composition template="resources/template/aceadmin.xhtml">
 
@@ -12,7 +16,10 @@
 		<li class="active">Setores</li>
 	</ui:define>
 	
-	<ui:define name="titulo">Cadastro de Setores</ui:define>
+	<ui:define name="titulo">
+		<i class="ace-icon fa fa-list-alt smaller-90"></i>
+		Cadastro de Setores
+	</ui:define>
 	
 	<ui:define name="subtitulo">
 		<span>Relação dos centros de custo a serem gerenciados nas operações financeiras</span> 
@@ -75,47 +82,6 @@
 				    </p:confirmDialog>					
 
 				</h:form>
-				
-				
-									<div class="col-sm-6">
-										<h3 class="header blue lighter smaller">
-											<i class="ace-icon fa fa-list-alt smaller-90"></i>
-											Dialogs
-										</h3>
-										<a href="#" id="id-btn-dialog2" class="btn btn-info btn-sm">Confirm Dialog</a>
-										<a href="#" id="id-btn-dialog1" class="btn btn-purple btn-sm">Modal Dialog</a>
-
-										<div id="dialog-message" class="hide">
-											<p>
-												This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.
-											</p>
-
-											<div class="hr hr-12 hr-double"></div>
-
-											<p>
-												Currently using
-												<b>36% of your storage space</b>.
-											</p>
-										</div><!-- #dialog-message -->
-
-										<div id="dialog-confirm" class="hide">
-											<div class="alert alert-info bigger-110">
-												These items will be permanently deleted and cannot be recovered.
-											</div>
-
-											<div class="space-6"></div>
-
-											<p class="bigger-110 bolder center grey">
-												<i class="ace-icon fa fa-hand-o-right blue bigger-120"></i>
-												Are you sure?
-											</p>
-										</div><!-- #dialog-confirm -->
-									</div><!-- ./span -->
-
-				
-				
-				
-				
 			</div>
 			
 		</div>

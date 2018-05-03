@@ -8,6 +8,8 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
+<h:head/>
+
 <ui:composition template="resources/template/aceadmin.xhtml">
 
 	<ui:define name="navegacao">
@@ -39,115 +41,141 @@
 					
 					<div class="widget-box">
 						<div class="widget-header">
-							<button class="btn btn-lg btn-default" type="button" jsf:outcome="usuario.xhtml">	
-								<i class="ace-icon fa fa-arrow-left"></i>
-								Voltar
-							</button>						
-	
-							<button class="btn btn-lg btn-info" type="submit" jsf:action="#{usuarioCadastroBean.salvar()}">	
-								<i class="ace-icon fa fa-check"></i>
-								Salvar
-							</button>						
-							<div class="widget-toolbar">
+							<div class="widget-main">
+								<button class="btn btn-lg btn-purple" type="button" jsf:outcome="usuario.xhtml">	
+									<i class="ace-icon fa fa-arrow-left"></i>
+									Voltar
+								</button>	
+								
+								<span/>					
+		
+								<button class="btn btn-lg btn-info" type="submit" jsf:action="#{usuarioCadastroBean.salvar()}">	
+									<i class="ace-icon fa fa-check"></i>
+									Salvar
+								</button>						
 							</div>
 						</div>
 	
 						<div class="widget-body">
-							<div class="widget-main">
-							
-								<div class="form-group">
-									<label class="control-label" jsf:for="idUsuario">ID</label>
-									<input type="text" class="form-control input-small" readonly="readonly" 
-										jsf:id="idUsuario"
-										jsf:binding="#{idUsuario}" 
-										jsf:value="#{usuarioCadastroBean.usuario.idUsuario}"/>
+							<div class="container-fluid">
+								
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" jsf:for="idUsuario">ID</label>
+											<input type="text" class="form-control" readonly="readonly" 
+												jsf:id="idUsuario"
+												jsf:binding="#{idUsuario}" 
+												jsf:value="#{usuarioCadastroBean.usuario.idUsuario}"/>
+										</div>
+									</div>
+									
+									<div class="col-sm-10">
+										<div class="form-group #{!nome.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="nome">Nome</label>
+											<input type="text" class="form-control" 
+												jsf:id="nome"
+												jsf:binding="#{nome}" 
+												jsf:value="#{usuarioCadastroBean.usuario.nome}"
+												placeholder="Nome completo"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="nome"/> 
+											</div>
+										</div>
+									</div>
 								</div>
-	
-								<div class="form-group #{!nome.valid ? 'has-error' : ''}">
-									<label class="control-label" jsf:for="nome">Nome</label>
-									<input type="text" class="form-control" 
-										jsf:id="nome"
-										jsf:binding="#{nome}" 
-										jsf:value="#{usuarioCadastroBean.usuario.nome}"
-										placeholder="Nome completo"/>
-									<div class="help-block col-xs-12 col-sm-reset inline"> 
-										<h:message for="nome"/> 
+								
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group #{!email.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="email">Email</label>
+											<input type="text" class="form-control" 
+												jsf:id="email"
+												jsf:binding="#{email}" 
+												jsf:value="#{usuarioCadastroBean.usuario.email}"
+												placeholder="seuemail@seudominio.com"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="email"/> 
+											</div>
+										</div>
+									</div>
+									
+									<div class="col-sm-6">
+										<div class="form-group #{!login.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="login">Login</label>
+											<input type="text" class="form-control" 
+												jsf:id="login"
+												jsf:binding="#{login}" 
+												jsf:value="#{usuarioCadastroBean.usuario.login}"
+												placeholder="Login para acesso ao sistema"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="login"/> 
+											</div>
+										</div>
 									</div>
 								</div>
 	
-								<div class="form-group #{!email.valid ? 'has-error' : ''}">
-									<label class="control-label" jsf:for="email">Email</label>
-									<input type="text" class="form-control" 
-										jsf:id="email"
-										jsf:binding="#{email}" 
-										jsf:value="#{usuarioCadastroBean.usuario.email}"
-										placeholder="seuemail@seudominio.com"/>
-									<div class="help-block col-xs-12 col-sm-reset inline"> 
-										<h:message for="email"/> 
+								<div class="row" jsf:rendered="#{usuarioCadastroBean.novoUsuario}">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="control-label" jsf:for="senha">Senha</label>
+											<input type="password" class="form-control" 
+												jsf:id="senha"
+												jsf:binding="#{senha}" 
+												jsf:value="#{usuarioCadastroBean.usuario.senha}"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="senha"/> 
+											</div>
+										</div>
+									</div>
+									
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="control-label" jsf:for="confirmarSenha">Confirmar Senha</label>
+											<input type="password" class="form-control" 
+												jsf:id="confirmarSenha"
+												jsf:binding="#{confirmarSenha}" 
+												jsf:value="#{usuarioCadastroBean.confirmarSenha}"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="confirmarSenha"/> 
+											</div>
+										</div>
 									</div>
 								</div>
 		
-								<div class="form-group #{!login.valid ? 'has-error' : ''}">
-									<label class="control-label" jsf:for="login">Login</label>
-									<input type="text" class="form-control" 
-										jsf:id="login"
-										jsf:binding="#{login}" 
-										jsf:value="#{usuarioCadastroBean.usuario.login}"
-										placeholder="Login para acesso ao sistema"/>
-									<div class="help-block col-xs-12 col-sm-reset inline"> 
-										<h:message for="login"/> 
+								<div class="row">
+									<div class="col-sm-5">
+										<div class="form-group">
+											<label class="control-label" jsf:for="tipo">Tipo de Usuário</label>
+											<h:selectOneMenu value="#{usuarioCadastroBean.usuario.administrador}" id="tipo" styleClass="form-control">
+												<f:selectItems var="item" value="#{usuarioCadastroBean.tiposUsuario}"
+													itemLabel="#{item.descricaoUsuario}" itemValue="#{item}"/>
+											</h:selectOneMenu>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="tipo"/> 
+											</div>
+										</div>
 									</div>
-								</div>
-	
-								<div class="form-group">
-									<label class="control-label" jsf:for="senha">Senha</label>
-									<input type="password" class="form-control" 
-										jsf:id="senha"
-										jsf:binding="#{senha}" 
-										jsf:value="#{usuarioCadastroBean.usuario.senha}"/>
-									<div class="help-block col-xs-12 col-sm-reset inline"> 
-										<h:message for="senha"/> 
+									
+									<div class="col-sm-1">
+										<div class="form-group">
+											<label class="control-label" jsf:for="ativo">Situação</label>
+											<div class="form-control">
+												<label>
+													<input type="checkbox" class="ace ace-switch"
+														jsf:id="ativo"
+														jsf:binding="#{ativo}"
+														jsf:value="#{usuarioCadastroBean.usuario.status}"
+														/>
+													<span class="lbl" data-lbl="Ativo"></span>
+												</label>									
+											</div>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="ativo"/> 
+											</div>
+										</div>
 									</div>
-								</div>
-	
-								<div class="form-group">
-									<label class="control-label" jsf:for="confirmarSenha">Confirmar Senha</label>
-									<input type="password" class="form-control" 
-										jsf:id="confirmarSenha"
-										jsf:binding="#{confirmarSenha}" 
-										jsf:value="#{usuarioCadastroBean.confirmarSenha}"/>
-									<div class="help-block col-xs-12 col-sm-reset inline"> 
-										<h:message for="confirmarSenha"/> 
-									</div>
-								</div>
-	
-								<div class="form-group">
-									<label class="control-label" jsf:for="tipo">Tipo de Usuário</label>
-									<h:selectOneMenu value="#{usuarioCadastroBean.usuario.administrador}" id="tipo" styleClass="form-control input-medium">
-										<f:selectItems var="item" value="#{usuarioCadastroBean.tiposUsuario}"
-											itemLabel="#{item.descricaoUsuario}" itemValue="#{item}"/>
-									</h:selectOneMenu>
-									<div class="help-block col-xs-12 col-sm-reset inline"> 
-										<h:message for="tipo"/> 
-									</div>
-								</div>
-	
-								<div class="form-group">
-									<label class="control-label" jsf:for="ativo">Situação</label>
-									<div class="form-control">
-										<label>
-											<input type="checkbox" class="ace ace-switch"
-												jsf:id="ativo"
-												jsf:binding="#{ativo}"
-												jsf:value="#{usuarioCadastroBean.usuario.status}"
-												/>
-											<span class="lbl" data-lbl="Ativo"></span>
-										</label>									
-									</div>
-									<div class="help-block col-xs-12 col-sm-reset inline"> 
-										<h:message for="ativo"/> 
-									</div>
-								</div>
+								</div>	
 								
 							</div>
 						</div>

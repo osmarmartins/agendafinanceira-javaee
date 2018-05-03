@@ -9,13 +9,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
-
-import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.models.enums.TipoUsuario;
@@ -26,7 +23,6 @@ import br.com.futura.agendafinanceira.models.enums.TipoUsuario;
  */
 @Entity
 @Table(name = "usuario")
-@NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -43,7 +39,6 @@ public class Usuario implements Serializable {
 
 	private String email;
 
-	@NotBlank(message="Campo obrigatório")
 	private String login;
 
 	private String nome;
