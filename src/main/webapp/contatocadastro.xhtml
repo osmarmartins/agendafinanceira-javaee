@@ -4,8 +4,11 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:o="http://omnifaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head/>
 
 <ui:composition template="resources/template/aceadmin.xhtml">
 
@@ -20,8 +23,10 @@
 	</ui:define>
 	
 	<ui:define name="titulo">
+		<i class="ace-icon fa fa-list-alt smaller-90"></i>
 		Cadastro de Fornecedores
 	</ui:define>
+
 
 	<ui:define name="subtitulo">
 		Informações referentes aos fornecedores
@@ -33,94 +38,265 @@
     		<f:viewParam name="fornecedor" value="#{contatoCadastroBean.fornecedor}" />
     		<f:viewParam name="contato" value="#{contatoCadastroBean.contato}" />
     	</f:metadata>		
-		
+    	
 		<div class="ui-g">	
 			<div class="ui-g-12">
-				<h:form id="formContatos">
-					<p:messages autoUpdate="true" globalOnly="true"/>
+    	
+    			<form jsf:id="formContato" jsf:prependId="false">
+					<p:messages />
 					
-					<p:focus context="@form" />
+					<div class="widget-box">
+						<div class="widget-header">
+							<div class="widget-main">
+								<button class="btn btn-lg btn-purple" type="button" jsf:outcome="fornecedorcadastro.xhtml?fornecedor=#{contatoCadastroBean.fornecedor.idFornecedor}">	
+									<i class="ace-icon fa fa-arrow-left"></i>
+									Voltar
+								</button>	
+								
+								<span/>					
+		
+								<button class="btn btn-lg btn-info" type="submit" jsf:action="#{contatoCadastroBean.salvar()}">	
+									<i class="ace-icon fa fa-check"></i>
+									Salvar
+								</button>						
+							</div>
+						</div>
+	
+						<div class="widget-body">
+							<div class="container-fluid">
+								
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" jsf:for="id">ID</label>
+											<input type="text" class="form-control" readonly="readonly"
+												jsf:id="id"
+												jsf:binding="#{id}" 
+												jsf:value="#{contatoCadastroBean.contato.idContato}"/>
+										</div>
+									</div>
 
-					<p:toolbar>
-						<f:facet name="left">
-							<p:button value="Voltar" outcome="#{contatoCadastroBean.voltar()}"/>
-							<p:spacer style="width: 10px;"/>
-					        <p:commandButton value="Salvar" action="#{contatoCadastroBean.salvar()}" update="@form"/>
-						</f:facet>
-					</p:toolbar>
-					
-					<p:panelGrid columns="3" styleClass="painel" columnClasses="rotulo, campo, mensagem">
-						<p:outputLabel for="id" value="ID"/>
-						<p:inputText id="id" value="#{contatoCadastroBean.contato.idContato}" disabled="true" style="width: 20%"/>
-						<p:message for="id"/>
-					
-						<p:outputLabel for="contato" value="Contato"/>
-						<p:inputText id="contato" value="#{contatoCadastroBean.contato.contato}" style="width: 95%" 
-								rendered="true" requiredMessage="Preenchimento Obrigatório"/>
-						<p:message for="contato"/>
-					
-						<p:outputLabel for="telefone1" value="Telefone-1"/>
-						<p:inputText id="telefone1" value="#{contatoCadastroBean.contato.telefone1}" style="width: 50%"/>
-						<p:message for="telefone1"/>
-	
-						<p:outputLabel for="telefone2" value="Telefone-2"/>
-						<p:inputText id="telefone2" value="#{contatoCadastroBean.contato.telefone2}" style="width: 50%"/>
-						<p:message for="telefone2"/>
-	
-						<p:outputLabel for="telefone3" value="Telefone-3"/>
-						<p:inputText id="telefone3" value="#{contatoCadastroBean.contato.telefone3}" style="width: 50%"/>
-						<p:message for="telefone3"/>
-	
-						<p:outputLabel for="email" value="Email"/>
-						<p:inputText id="email" value="#{contatoCadastroBean.contato.email}" style="width: 95%"/>
-						<p:message for="email"/>
-	
-						<p:outputLabel for="site" value="Site"/>
-						<p:inputText id="site" value="#{contatoCadastroBean.contato.site}" style="width: 95%"/>
-						<p:message for="site"/>
-	
-						<p:outputLabel for="cep" value="CEP"/>
-						<h:panelGroup>
-							<p:inputMask id="cep" value="#{contatoCadastroBean.contato.cep}" style="width: 20%" mask="99999-999"/>
-							<p:commandButton value="Consulta Correios"/>
-						</h:panelGroup>
-						<p:message for="cep"/>
-	
-						<p:outputLabel for="endereco" value="Endereço"/>
-						<p:inputText id="endereco" value="#{contatoCadastroBean.contato.endereco}" style="width: 95%"/>
-						<p:message for="endereco"/>
-	
-						<p:outputLabel for="enderecoNr" value="Número"/>
-						<p:inputText id="enderecoNr" value="#{contatoCadastroBean.contato.numero}" style="width: 20%"/>
-						<p:message for="enderecoNr"/>
-	
-						<p:outputLabel for="complemento" value="Complemento"/>
-						<p:inputText id="complemento" value="#{contatoCadastroBean.contato.complemento}" style="width: 50%"/>
-						<p:message for="complemento"/>
-	
-						<p:outputLabel for="bairro" value="Bairro"/>
-						<p:inputText id="bairro" value="#{contatoCadastroBean.contato.bairro}" style="width: 95%"/>
-						<p:message for="bairro"/>
-	
-						<p:outputLabel for="cidade" value="Cidade/UF"/>
-						<h:panelGroup>
-							<p:inputText id="cidade" value="#{contatoCadastroBean.contato.cidade}" style="width: 70%"/>
-							<p:spacer width="5%"/>
-							<p:outputLabel value="UF"/>
-							<p:inputText value="#{contatoCadastroBean.contato.uf}" style="width: 10%" />
-						</h:panelGroup>
-						<p:message for="cidade"/>
-	
-				        <p:outputLabel value="Ativo" for="ativo"/>
-				        <p:selectBooleanButton id="ativo" 
-				        	value="#{contatoCadastroBean.contato.status}"
-				        	onLabel="Sim" offLabel="Não" style="width:60px" />
-				        <p:message for="ativo"/>
+									<div class="col-sm-10">
+										<div class="form-group #{!contato.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="contato">Contato</label>
+											<input type="text" class="form-control"
+												jsf:id="contato"
+												jsf:binding="#{contato}" 
+												jsf:value="#{contatoCadastroBean.contato.contato}"
+												placeholder="Nome da pessoa de contato no fornecedor: #{contatoCadastroBean.fornecedor.razaoSocial}"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="contato"/> 
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								
+								<div class="row">
+									<div class="col-sm-4">
+										<div class="form-group #{!telefone1.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="telefone1">Telefone - 1</label>
+											<input type="text" class="form-control"
+												jsf:id="telefone1"
+												jsf:binding="#{telefone1}" 
+												jsf:value="#{contatoCadastroBean.contato.telefone1}"
+												placeholder="Telefone celular"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="telefone1"/> 
+											</div>
+										</div>
+									</div>
+									
+									<div class="col-sm-4">
+										<div class="form-group #{!telefone2.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="telefone2">Telefone - 2</label>
+											<input type="text" class="form-control"
+												jsf:id="telefone2"
+												jsf:binding="#{telefone2}" 
+												jsf:value="#{contatoCadastroBean.contato.telefone2}"
+												placeholder="Telefone comercial"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="telefone2"/> 
+											</div>
+										</div>
+									</div>
+									
+									<div class="col-sm-4">
+										<div class="form-group #{!telefone3.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="telefone3">Telefone - 3</label>
+											<input type="text" class="form-control"
+												jsf:id="telefone3"
+												jsf:binding="#{telefone3}" 
+												jsf:value="#{contatoCadastroBean.contato.telefone3}"
+												placeholder="Telefone residencial"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="telefone3"/> 
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group #{!email.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="email">Email</label>
+											<input type="text" class="form-control"
+												jsf:id="email"
+												jsf:binding="#{email}" 
+												jsf:value="#{contatoCadastroBean.contato.email}"
+												placeholder="e-mail do contato"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="email"/> 
+											</div>
+										</div>
+									</div>
 
-					</p:panelGrid>
-				</h:form>
-			</div>
-		</div>
+									<div class="col-sm-6">
+										<div class="form-group #{!site.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="site">Site</label>
+											<input type="text" class="form-control"
+												jsf:id="site"
+												jsf:binding="#{site}" 
+												jsf:value="#{contatoCadastroBean.contato.site}"
+												placeholder="Site, Blog ou rede social"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="site"/> 
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="form-group #{!cep.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="cep">CEP</label>
+											<input type="text" class="form-control"
+												jsf:id="cep"
+												jsf:binding="#{cep}" 
+												jsf:value="#{contatoCadastroBean.contato.cep}"
+												placeholder="Código de endereçamento postal (CEP)"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="cep"/> 
+											</div>
+										</div>
+									</div>
+								
+									<div class="col-sm-8">
+										<div class="form-group #{!endereco.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="cep">Endereço</label>
+											<input type="text" class="form-control"
+												jsf:id="endereco"
+												jsf:binding="#{endereco}" 
+												jsf:value="#{contatoCadastroBean.contato.endereco}"
+												placeholder="Logradouro (AV, Rua, Vila, Alameda, ....)"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="endereco"/> 
+											</div>
+										</div>
+									</div>
+
+									<div class="col-sm-2">
+										<div class="form-group #{!numero.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="numero">Número</label>
+											<input type="text" class="form-control"
+												jsf:id="numero"
+												jsf:binding="#{numero}" 
+												jsf:value="#{contatoCadastroBean.contato.numero}"
+												placeholder="Número do imóvel"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="numero"/> 
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="form-group #{!complemento.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="complemento">Complemento</label>
+											<input type="text" class="form-control"
+												jsf:id="complemento"
+												jsf:binding="#{complemento}" 
+												jsf:value="#{contatoCadastroBean.contato.complemento}"
+												placeholder="Apto, Lado, Altos, ..."/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="complemento"/> 
+											</div>
+										</div>
+									</div>
+
+									<div class="col-sm-4">
+										<div class="form-group #{!bairro.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="bairro">Bairro</label>
+											<input type="text" class="form-control"
+												jsf:id="bairro"
+												jsf:binding="#{bairro}" 
+												jsf:value="#{contatoCadastroBean.contato.bairro}"
+												placeholder="Bairro"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="bairro"/> 
+											</div>
+										</div>
+									</div>
+
+									<div class="col-sm-4">
+										<div class="form-group #{!cidade.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="cidade">Cidade</label>
+											<input type="text" class="form-control"
+												jsf:id="cidade"
+												jsf:binding="#{cidade}" 
+												jsf:value="#{contatoCadastroBean.contato.cidade}"
+												placeholder="Cidade"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="cidade"/> 
+											</div>
+										</div>
+									</div>
+
+									<div class="col-sm-2">
+										<div class="form-group #{!uf.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="uf">UF</label>
+											<input type="text" class="form-control"
+												jsf:id="uf"
+												jsf:binding="#{uf}" 
+												jsf:value="#{contatoCadastroBean.contato.uf}"
+												placeholder="Unidade federativa (sigla do estado)"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="uf"/> 
+											</div>
+										</div>
+									</div>
+
+									
+								</div>
+								
+								<div class="row">	
+									<div class="col-sm-1">
+										<div class="form-group">
+											<label class="control-label" jsf:for="ativo">Situação</label>
+											<div class="form-control">
+												<label>
+													<input type="checkbox" class="ace ace-switch"
+														jsf:id="ativo"
+														jsf:binding="#{ativo}"
+														jsf:value="#{contatoCadastroBean.contato.status}"/>
+													<span class="lbl" data-lbl="Ativo"></span>
+												</label>									
+											</div>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="ativo"/> 
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+    	
+    			</form>
+    		</div>
+    	</div>
 		
 	</ui:define>
 

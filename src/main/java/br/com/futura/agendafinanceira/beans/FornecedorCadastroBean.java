@@ -23,8 +23,6 @@ public class FornecedorCadastroBean implements Serializable {
 
 	private Fornecedor fornecedor;
 
-	private TipoPessoa[] tipoPessoas;
-
 	private String documentoMascara;
 
 	private String documentoRotulo;
@@ -38,7 +36,6 @@ public class FornecedorCadastroBean implements Serializable {
 	@PostConstruct
 	private void init() {
 		this.fornecedor = new Fornecedor();
-		this.tipoPessoas = TipoPessoa.values();
 		this.fornecedor.setAtivo(Ativo.ATIVO);
 		this.fornecedor.setPfPj(TipoPessoa.PJ);
 	}
@@ -86,7 +83,7 @@ public class FornecedorCadastroBean implements Serializable {
 	}
 
 	public TipoPessoa[] getTipoPessoas() {
-		return tipoPessoas;
+		return TipoPessoa.values();
 	}
 
 	public String getDocumentoMascara() {

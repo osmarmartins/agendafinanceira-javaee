@@ -4,8 +4,11 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:o="http://omnifaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head/>
 
 <ui:composition template="resources/template/aceadmin.xhtml">
 
@@ -17,8 +20,10 @@
 	</ui:define>
 	
 	<ui:define name="titulo">
+		<i class="ace-icon fa fa-list-alt smaller-90"></i>
 		Cadastro de Fornecedores
 	</ui:define>
+
 
 	<ui:define name="subtitulo">
 		Informações referentes aos fornecedores
@@ -34,116 +39,227 @@
 		<div class="ui-g">	
 			<div class="ui-g-12">
 
-				<h:form>
-					<p:messages autoUpdate="true" globalOnly="true"/>
+				<form jsf:id="formFornecedor" jsf:prependId="false">
+					<p:messages />
 					
-					<p:focus context="@form" />
-
-					<p:toolbar>
-						<f:facet name="left">
-							<p:button value="Voltar" outcome="/fornecedor.xhtml"/>
-							<p:spacer style="width: 10px;"/>
-					        <p:commandButton value="Salvar" action="#{fornecedorCadastroBean.salvar()}" update="@form"/>
-						</f:facet>
-					</p:toolbar>
-					
-					<p:panelGrid columns="3" styleClass="painel" columnClasses="rotulo, campo, mensagem">
-						<p:outputLabel value="ID" for="id"/>
-						<p:inputText id="id" value="#{fornecedorCadastroBean.fornecedor.idFornecedor}" disabled="true" style="width: 20%"/>
-						<p:message for="id"/>
+					<div class="widget-box">
+						<div class="widget-header">
+							<div class="widget-main">
+								<button class="btn btn-lg btn-purple" type="button" jsf:outcome="fornecedor.xhtml">	
+									<i class="ace-icon fa fa-arrow-left"></i>
+									Voltar
+								</button>	
+								
+								<span/>					
+		
+								<button class="btn btn-lg btn-info" type="submit" jsf:action="#{fornecedorCadastroBean.salvar()}">	
+									<i class="ace-icon fa fa-check"></i>
+									Salvar
+								</button>						
+							</div>
+						</div>
 	
- 						<p:outputLabel value="Tipo de Pessoa" for="tipo"/>					
-						<p:selectOneRadio id="tipo" value="#{fornecedorCadastroBean.fornecedor.pfPj}">
-							<f:selectItems value="#{fornecedorCadastroBean.tipoPessoas}" var="tp"
-											itemValue="#{tp}" itemLabel="#{tp.descricao}"/>
-							<p:ajax listener="#{fornecedorCadastroBean.definirDocumento}" event="change" process="@this, tipo" update="documento, documentoRotulo"/>
-  						</p:selectOneRadio>
-						<p:message for="tipo"/>
+						<div class="widget-body">
+							<div class="container-fluid">
+								
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" jsf:for="id">ID</label>
+											<input type="text" class="form-control" readonly="readonly"
+												jsf:id="id"
+												jsf:binding="#{id}" 
+												jsf:value="#{fornecedorCadastroBean.fornecedor.idFornecedor}"/>
+										</div>
+									</div>
 
- 						<p:outputLabel value="#{fornecedorCadastroBean.documentoRotulo}" for="documento" id="documentoRotulo"/>
-						<p:inputMask id="documento"
-										value="#{fornecedorCadastroBean.fornecedor.cpfCnpj}"
-										mask="#{fornecedorCadastroBean.documentoMascara}" 
-										style="width: 95%"/>
-						<p:message for="documento"/>
-						
-						<p:outputLabel value="Razão Social" for="razaoSocial"/>
-						<p:inputText id="razaoSocial" value="#{fornecedorCadastroBean.fornecedor.razaoSocial}" style="width: 95%"/>
-						<p:message for="razaoSocial"/>
-						
-						<p:outputLabel value="Nome/Nome Fantasia" for="nome"/>
-						<p:inputText id="nome" value="#{fornecedorCadastroBean.fornecedor.nomeFantasia}" style="width: 95%"/>
-						<p:message for="nome"/>
-						
-				        <p:outputLabel value="Ativo" for="ativo"/>
-				        <p:selectBooleanButton id="ativo" 
-				        	value="#{fornecedorCadastroBean.fornecedor.status}"
-				        	onLabel="Sim" offLabel="Não" style="width:60px" />
-				        <p:message for="ativo"/>
-				        
-					</p:panelGrid>
-					
-					<p:panelGrid columns="1" rendered="#{fornecedorCadastroBean.permiteCadastrarContato}">
-						<p:toolbar>
-							<f:facet name="left">
-								<p:commandButton value="Novo Contato" icon="fa fa-plus"
-									action="#{fornecedorCadastroBean.novoContato()}"/>
-							</f:facet>
-						</p:toolbar>
-					
-				        <p:dataTable value="#{fornecedorCadastroBean.fornecedor.contatos}" 
-							        	var="contato" 
-							        	id="tabelaContatos" 
-							        	emptyMessage="Nenhum registro encontrado" 
-										rows="8" paginator="true" paginatorPosition="bottom">
-							
-				        	<p:column headerText="ID" width="5%">
-				        		<h:outputText value="#{contato.idContato}"/>
-				        	</p:column>
-				        	
-				        	<p:column headerText="Nome" >
-				        		<h:outputText value="#{contato.contato}"/>
-				        	</p:column>
-				        	
-				        	<p:column headerText="e-mail">
-				        		<h:outputText value="#{contato.email}"/>
-				        	</p:column>
-				        	
-				        	<p:column headerText="Telefone-1" width="10%">
-				        		<h:outputText value="#{contato.telefone1}"/>
-				        	</p:column>
-				        	
-				        	<p:column headerText="Telefone-2" width="10%">
-				        		<h:outputText value="#{contato.telefone2}"/>
-				        	</p:column>
-				        	
-				        	<p:column headerText="Telefone-3" width="10%">
-				        		<h:outputText value="#{contato.telefone3}"/>
-				        	</p:column>
+									<div class="col-sm-3">
+										<div class="form-group">
+											<label class="control-label" jsf:for="tipoPessoa">Tipo Pessoa</label>
+											<h:selectOneRadio value="#{fornecedorCadastroBean.fornecedor.pfPj}" styleClass="form-control ace lbl">
+											   	<f:selectItem itemValue="PF" itemLabel="Pessoa Física"/>
+											   	<f:selectItem itemValue="PJ" itemLabel="Pessoa Jurídica"/>
+											</h:selectOneRadio>											
+										</div>
+									</div>
+									
+									<div class="col-sm-3">
+										<div class="form-group">
+											<label class="control-label">Tipo Pessoa</label>
+											<div class="radio" style="margin: 0;">
+												<f:viewParam name="tipoPessoa" value="#{fornecedorCadastroBean.fornecedor.pfPj}"/>
+												<div class="form-control">
+													<label>
+														<input type="radio" class="ace"
+															pt:name="tipoPessoa"
+															jsf:id="pessoaFisica"
+															jsf:value="#{fornecedorCadastroBean.tipoPessoas[0]}">
+															<f:attribute name="checked" value="checked" />
+														</input>
+														<span class="lbl"> Pessoa Física</span>
+													</label>
+													<label>
+														<input type="radio" class="ace"
+															pt:name="tipoPessoa"
+															jsf:id="pessoaJuridica"
+															jsf:value="#{fornecedorCadastroBean.tipoPessoas[1]}"/>
+														<span class="lbl"> Pessoa Jurídica</span>
+													</label>
+												</div>
+											</div>
+										</div>									
+									</div>
 
-							<p:column width="15%">
-								<f:facet name="header">Operações</f:facet>
-								<p:commandButton title="Alterar" icon="fa fa-pencil" 
-										update="@form" process="@this" 
-										action="#{fornecedorCadastroBean.alterarContato(contato)}" />
 
-								<p:commandButton title="Excluir" icon="fa fa-trash" 
-										update="@form" process="@this" 
-										action="#{contatoCadastroBean.excluir(contato)}">
-									<p:confirm header="Confirma exclusão" message="Confirma a excusão de #{contato.contato}" icon="ui-icon-alert" />							
-								</p:commandButton>
-							</p:column>
-							
-				        </p:dataTable>
+									
+
+									<div class="col-sm-4">
+										<div class="form-group #{!cpfCnpj.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="cpfCnpj">#{fornecedorCadastroBean.documentoRotulo}</label>
+											<input type="text" class="form-control"
+												jsf:id="cpfCnpj"
+												jsf:binding="#{cpfCnpj}" 
+												jsf:value="#{fornecedorCadastroBean.fornecedor.cpfCnpj}"
+												placeholder="Documento"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="cpfCnpj"/> 
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group #{!razaoSocial.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="razaoSocial">Razão Social</label>
+											<input type="text" class="form-control"
+												jsf:id="razaoSocial"
+												jsf:binding="#{razaoSocial}" 
+												jsf:value="#{fornecedorCadastroBean.fornecedor.razaoSocial}"
+												placeholder="Razão social ou nome próprio"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="razaoSocial"/> 
+											</div>
+										</div>
+									</div>
+									
+									<div class="col-sm-5">
+										<div class="form-group #{!nomeFantasia.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="nomeFantasia">Nome Fantasia</label>
+											<input type="text" class="form-control" autofocus="autofocus"
+												jsf:id="nomeFantasia"
+												jsf:binding="#{nomeFantasia}" 
+												jsf:value="#{fornecedorCadastroBean.fornecedor.nomeFantasia}"
+												placeholder="Nome fantasia ou nome de guerra"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="nomeFantasia"/> 
+											</div>
+										</div>
+									</div>
+									
+									<div class="col-sm-1">
+										<div class="form-group">
+											<label class="control-label" jsf:for="ativo">Situação</label>
+											<div class="form-control">
+												<label>
+													<input type="checkbox" class="ace ace-switch"
+														jsf:id="ativo"
+														jsf:binding="#{ativo}"
+														jsf:value="#{fornecedorCadastroBean.fornecedor.status}"
+														/>
+													<span class="lbl" data-lbl="Ativo"></span>
+												</label>									
+											</div>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="ativo"/> 
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+
+					<div class="widget-box widget-color-default">
+						<div class="widget-header">
+							<div class="widget-main clearfix">
+								<button class="btn btn-xs btn-default pull-left" jsf:action="#{fornecedorCadastroBean.novoContato()}">
+									<i class="ace-icon fa fa-user-plus"></i>
+									<span class="bigger-110">Novo Contato</span>
+								</button>
+							</div>	
+						</div>							
+
+						<div class="widget-body">
+							<div class="widget-main no-padding">
+								<table class="table table-striped table-bordered table-hover">
+									<thead class="thin-border-bottom">
+										<tr>
+											<th>
+												<i class="ace-icon fa fa-user"></i>
+												Contato
+											</th>
+
+											<th>
+												<i class="ace-icon fa fa-at"></i>
+												Email
+											</th>
+											<th>
+												<i class="ace-icon fa fa-heartbeat"></i>
+												Situação
+											</th>
+											<th>
+												<i class="ace-icon fa fa-cog"></i>
+												Operações
+											</th>
+										</tr>
+									</thead>
+
+									<tbody>
+										<ui:repeat value="#{fornecedorCadastroBean.fornecedor.contatos}" var="contato">
+											<tr>
+												<td>
+													<h:outputLink value="contatocadastro.xhtml">
+														<f:param name="fornecedor" value="#{fornecedorCadastroBean.fornecedor.idFornecedor}"/>
+														<f:param name="contato" value="#{contato.idContato}"/>
+														#{contato.contato}
+													</h:outputLink>
+												</td>
+												<td>
+													<h:outputLink value="contatocadastro.xhtml">
+														<f:param name="fornecedor" value="#{fornecedorCadastroBean.fornecedor.idFornecedor}"/>
+														<f:param name="contato" value="#{contato.idContato}"/>
+														#{contato.email}
+													</h:outputLink>
+												</td>
 	
-					    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-					        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
-					        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
-					    </p:confirmDialog>
-					    
-				    </p:panelGrid>
+												<td>
+													<span class="label #{contato.status?'label-success':'label-danger'} ">#{contato.ativo.descricao}</span>
+												</td>
+												<td>
+													<div class="btn-group">
+														<button class="btn btn-sm btn-success btn-white btn-round" jsf:action="#{fornecedorCadastroBean.alterarContato(contato)}">
+															<i class="ace-icon fa fa-pencil bigger-110 green"></i>
+														</button>
 
-				</h:form>
+														<button class="btn btn-sm btn-danger btn-white btn-round" jsf:action="#{contatoCadastroBean.excluir(contato)}">
+															<i class="ace-icon fa fa-trash bigger-110 red2"></i>
+														</button>
+													</div>												
+												</td>
+											</tr>
+										</ui:repeat>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+				</form>			
+
+
 			</div>
 		</div>
 		
