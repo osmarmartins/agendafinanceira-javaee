@@ -73,18 +73,9 @@
 										</div>
 									</div>
 
-									<div class="col-sm-3">
+									<div class="col-sm-5">
 										<div class="form-group">
-											<label class="control-label" jsf:for="tipoPessoa">Tipo Pessoa</label>
-											<h:selectOneRadio value="#{fornecedorCadastroBean.fornecedor.pfPj}" styleClass="form-control ace lbl">
-											   	<f:selectItem itemValue="PF" itemLabel="Pessoa Física"/>
-											   	<f:selectItem itemValue="PJ" itemLabel="Pessoa Jurídica"/>
-											</h:selectOneRadio>											
-										</div>
-									</div>
-									
-									<div class="col-sm-3">
-										<div class="form-group">
+											<input type="hidden" id="valorTipoPessoa" name="valor-tp" value="#{fornecedorCadastroBean.fornecedor.pfPj}"/>
 											<label class="control-label">Tipo Pessoa</label>
 											<div class="radio" style="margin: 0;">
 												<f:viewParam name="tipoPessoa" value="#{fornecedorCadastroBean.fornecedor.pfPj}"/>
@@ -94,7 +85,6 @@
 															pt:name="tipoPessoa"
 															jsf:id="pessoaFisica"
 															jsf:value="#{fornecedorCadastroBean.tipoPessoas[0]}">
-															<f:attribute name="checked" value="checked" />
 														</input>
 														<span class="lbl"> Pessoa Física</span>
 													</label>
@@ -110,10 +100,7 @@
 										</div>									
 									</div>
 
-
-									
-
-									<div class="col-sm-4">
+									<div class="col-sm-5">
 										<div class="form-group #{!cpfCnpj.valid ? 'has-error' : ''}">
 											<label class="control-label" jsf:for="cpfCnpj">#{fornecedorCadastroBean.documentoRotulo}</label>
 											<input type="text" class="form-control"
@@ -263,9 +250,22 @@
 			</div>
 		</div>
 		
-		
 	</ui:define>
 
+	<ui:define name="scripts">
+		<script type="text/javascript">
+			var tipoPessoa = document.getElementById("valorTipoPessoa").value;
+			
+			if (tipoPessoa=='PF'){
+				document.getElementById("pessoaFisica").checked="checked";
+			}
+			
+			if (tipoPessoa=='PJ'){
+				document.getElementById("pessoaJuridica").checked="checked";
+			}
+		</script>
+	</ui:define>
+	
 	<ui:define name="pagina">Cadastro de Fornecedores</ui:define>
 	
 </ui:composition>

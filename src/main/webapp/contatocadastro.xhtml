@@ -68,24 +68,24 @@
 								<div class="row">
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" jsf:for="id">ID</label>
+											<label class="control-label" jsf:for="idContato">ID</label>
 											<input type="text" class="form-control" readonly="readonly"
-												jsf:id="id"
-												jsf:binding="#{id}" 
+												jsf:id="idContato"
+												jsf:binding="#{idContato}" 
 												jsf:value="#{contatoCadastroBean.contato.idContato}"/>
 										</div>
 									</div>
 
 									<div class="col-sm-10">
 										<div class="form-group #{!contato.valid ? 'has-error' : ''}">
-											<label class="control-label" jsf:for="contato">Contato</label>
+											<label class="control-label" jsf:for="nomeContato">Contato</label>
 											<input type="text" class="form-control"
-												jsf:id="contato"
+												jsf:id="nomeContato"
 												jsf:binding="#{contato}" 
 												jsf:value="#{contatoCadastroBean.contato.contato}"
 												placeholder="Nome da pessoa de contato no fornecedor: #{contatoCadastroBean.fornecedor.razaoSocial}"/>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
-												<h:message for="contato"/> 
+												<h:message for="nomeContato"/> 
 											</div>
 										</div>
 									</div>
@@ -174,7 +174,7 @@
 												jsf:id="cep"
 												jsf:binding="#{cep}" 
 												jsf:value="#{contatoCadastroBean.contato.cep}"
-												placeholder="Código de endereçamento postal (CEP)"/>
+												placeholder="99999-99"/>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="cep"/> 
 											</div>
@@ -260,7 +260,7 @@
 												jsf:id="uf"
 												jsf:binding="#{uf}" 
 												jsf:value="#{contatoCadastroBean.contato.uf}"
-												placeholder="Unidade federativa (sigla do estado)"/>
+												placeholder="Sigla do estado"/>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="uf"/> 
 											</div>
