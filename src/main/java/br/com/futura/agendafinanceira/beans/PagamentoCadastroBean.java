@@ -55,9 +55,9 @@ public class PagamentoCadastroBean implements Serializable{
 
 	@PostConstruct
 	private void init() {
-		setores = setorDao.listarTodos();
-		contas = contaDao.listarTodos();
-		fornecedores = fornecedorDao.listarTodos();
+		this.setores = setorDao.listarTodos();
+		this.contas = contaDao.listarTodos();
+		this.fornecedores = fornecedorDao.listarTodos();
 		this.pagamento = new Pagamento();
 		this.pagamento.setEmissao(new Date());
 		this.pagamento.setSituacao(SituacaoPagamento.EMABERTO);
@@ -75,7 +75,7 @@ public class PagamentoCadastroBean implements Serializable{
 	
 	public Pagamento getPagamento() {
 		if (this.pagamento == null){
-			init();
+			this.pagamento = new Pagamento();
 		}
 		return pagamento;
 	}
