@@ -39,7 +39,11 @@ public class FornecedorCadastroBean implements Serializable {
 		this.fornecedor.setAtivo(Ativo.ATIVO);
 		this.fornecedor.setPfPj(TipoPessoa.PJ);
 	}
-
+	
+	public boolean isCadastrarContatos() {
+		return this.fornecedor.getIdFornecedor() != null;
+	}
+	
 	public String voltar() {
 		if (this.fornecedor.getIdFornecedor()==null){
 			return "/fornecedorcadastro.xhtml";

@@ -114,7 +114,7 @@ public class Pagamento implements Serializable {
 	public void setSituacao(SituacaoPagamento situacao) {
 		this.situacao = situacao;
 	}
-
+	
 	public BigDecimal getTotal() {
 		return this.total;
 	}
@@ -216,5 +216,14 @@ public class Pagamento implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Pagamento [idPagamento=" + idPagamento + ", documento=" + documento + ", emissao=" + emissao
+				+ ", historico=" + historico + ", situacao=" + situacao + ", total=" + total + ", totalPg=" + totalPg
+				+ ", versao=" + versao + ", conta=" + conta + ", fornecedor=" + fornecedor + ", setor=" + setor
+				+ ", parcelas=" + parcelas + "]";
+	}
+	
 
 }

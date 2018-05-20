@@ -43,13 +43,15 @@ public class ContatoCadastroBean implements Serializable {
 	public String salvar() {
 		contatoDao.salvar(contato);
 		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso."));
-		return "/contatocadastro.xhtml?faces-redirect=true&fornecedor=" + contato.getFornecedor().getIdFornecedor() +"&contato=" + contato.getIdContato(); 
+		return "/fornecedorcadastro?faces-redirect=true&fornecedor=" + contato.getFornecedor().getIdFornecedor(); 
 	}
 
-	public void excluir(Contato contato) {
+	public String excluir(Contato contato) {
+		Integer fornecedorId = contato.getFornecedor().getIdFornecedor();
 		contatoDao.excluir(contato);
 		contato.getFornecedor().removeContato(contato);
 		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso."));
+		return "/fornecedorcadastro?faces-redirect=true&fornecedor=" + fornecedorId; 
 	}
 
 	public Contato getContato() {

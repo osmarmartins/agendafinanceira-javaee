@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head/>
+
+<ui:composition template="resources/template/aceadmin.xhtml">
+
+	<ui:define name="navegacao">
+		<li>
+			<a href="pagamento.xhtml">Contas a Pagar</a>
+		</li>
+		<li class="active">
+			<a href="pagamentocadastro.xhtml?pagamento=#{pagamentoParcelaBean.pagamento.idPagamento}">Lançamento</a>
+		</li>
+		<li class="active">Parcela</li>
+	</ui:define>
+	
+	<ui:define name="titulo">
+		Contas a pagar
+	</ui:define>
+
+	<ui:define name="subtitulo">
+		Lançamento de contas a pagar
+	</ui:define>
+
+	<ui:define name="conteudo">
+    	
+    	<f:metadata>
+    		<f:viewParam name="pagamento" value="#{pagamentoParcelaBean.pagamento}" />
+    		<f:viewParam name="parcela" value="#{pagamentoParcelaBean.parcela}" />
+    	</f:metadata>		
+
+		<div class="ui-g">	
+			<div class="ui-g-12">
+			
+				<form jsf:id="formParcela" jsf:prependId="false">
+					<p:messages />
+					
+					<div class="widget-box">
+						<div class="widget-header">
+							<div class="widget-main">
+								<button class="btn btn-lg btn-purple" type="button" 
+									jsf:outcome="pagamentocadastro.xhtml?pagamento=#{pagamentoParcelaBean.pagamento.idPagamento}">	
+									<i class="ace-icon fa fa-arrow-left"></i>
+									Voltar
+								</button>	
+								
+								<span/>					
+		
+								<button class="btn btn-lg btn-info" type="submit" jsf:action="#{pagamentoParcelaBean.salvar()}">	
+									<i class="ace-icon fa fa-check"></i>
+									Salvar
+								</button>						
+							</div>
+						</div>
+	
+						<div class="widget-body">
+							<div class="container-fluid">
+								
+								<div class="row">
+									<div class="col-sm-4">
+										<div class="form-group">
+											<label class="control-label" jsf:for="idPagamentoParcela">ID</label>
+											<input type="text" class="form-control" readonly="readonly"
+												jsf:id="idPagamentoParcela"
+												jsf:binding="#{idPagamentoParcela}" 
+												jsf:value="#{pagamentoParcelaBean.parcela.idPagamentoParcela}"/>
+										</div>
+									</div>
+
+									<div class="col-sm-4">
+										<div class="form-group">
+											<label class="control-label" jsf:for="nrParcela">Parcela</label>
+											<input type="text" class="form-control" 
+												jsf:id="nrParcela"
+												jsf:binding="#{nrParcela}" 
+												jsf:value="#{pagamentoParcelaBean.parcela.parcela}"/>
+										</div>
+									</div>
+									
+									<div class="col-sm-4">
+										<div class="form-group">
+											<label class="control-label" jsf:for="situacao">Situação</label>
+											<input type="text" class="form-control" readonly="readonly" 
+												jsf:id="situacao"
+												jsf:binding="#{situacao}" 
+												jsf:value="#{pagamentoParcelaBean.parcela.situacao}"/>
+										</div>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-4">
+										<div class="form-group">
+											<label class="control-label" jsf:for="vencimento">Vencimento</label>
+											<div class="input-group">
+												<input type="date" class="form-control" 
+													jsf:id="vencimento"
+													jsf:binding="#{vencimento}" 
+													jsf:value="#{pagamentoParcelaBean.parcela.vencimento}">
+													<f:convertDateTime pattern="yyyy-MM-dd"/>
+												</input>
+												<span class="input-group-addon">
+													<i class="fa fa-calendar bigger-110"></i>
+												</span>
+											</div>
+												
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="vencimento"/> 
+											</div>
+										</div>
+									</div>
+										
+									<div class="col-sm-4">
+										<div class="form-group">
+											<label class="control-label" jsf:for="valor">Valor</label>
+											<input type="text" class="form-control"  
+												jsf:id="valor"
+												jsf:binding="#{valor}" 
+												jsf:value="#{pagamentoParcelaBean.parcela.valor}">
+												<f:convertNumber type="currency"/>
+											</input>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="valor"/> 
+											</div>
+										</div>
+									</div>
+										
+									<div class="col-sm-4">
+										<div class="form-group">
+											<label class="control-label" jsf:for="desconto">Desconto</label>
+											<input type="text" class="form-control"  
+												jsf:id="desconto"
+												jsf:binding="#{desconto}" 
+												jsf:value="#{pagamentoParcelaBean.parcela.desconto}">
+												<f:convertNumber type="currency"/>
+											</input>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="desconto"/> 
+											</div>
+										</div>
+									</div>
+								</div>
+							
+								<div class="row">
+									<div class="col-sm-4">
+										<div class="form-group">
+											<label class="control-label" jsf:for="juros">Juros</label>
+											<input type="text" class="form-control"  
+												jsf:id="juros"
+												jsf:binding="#{juros}" 
+												jsf:value="#{pagamentoParcelaBean.parcela.juros}">
+												<f:convertNumber type="currency"/>
+											</input>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="juros"/> 
+											</div>
+										</div>
+									</div>
+										
+									<div class="col-sm-4">
+										<div class="form-group">
+											<label class="control-label" jsf:for="mora">Mora</label>
+											<input type="text" class="form-control"  
+												jsf:id="mora"
+												jsf:binding="#{mora}" 
+												jsf:value="#{pagamentoParcelaBean.parcela.mora}">
+												<f:convertNumber type="currency"/>
+											</input>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="mora"/> 
+											</div>
+										</div>
+									</div>
+										
+									<div class="col-sm-4">
+										<div class="form-group">
+											<label class="control-label" jsf:for="outros">Outros</label>
+											<input type="text" class="form-control"  
+												jsf:id="outros"
+												jsf:binding="#{outros}" 
+												jsf:value="#{pagamentoParcelaBean.parcela.outros}">
+												<f:convertNumber type="currency"/>
+											</input>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="outros"/> 
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								
+							</div>
+						</div>
+					</div>
+				
+				</form>			
+
+			</div>
+		</div>
+	</ui:define>
+
+	<ui:define name="pagina">Lançamento de Contas a Pagar</ui:define>
+</ui:composition>
+
+</html>

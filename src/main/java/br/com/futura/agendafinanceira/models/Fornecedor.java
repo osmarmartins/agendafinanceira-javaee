@@ -177,7 +177,7 @@ public class Fornecedor implements Serializable {
 		this.setAtivo(status ? Ativo.ATIVO : Ativo.INATIVO);
 		this.status = status;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

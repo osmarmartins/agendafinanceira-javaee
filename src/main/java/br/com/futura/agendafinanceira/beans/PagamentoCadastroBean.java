@@ -20,6 +20,7 @@ import br.com.futura.agendafinanceira.models.Pagamento;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.models.Setor;
 import br.com.futura.agendafinanceira.models.enums.SituacaoPagamento;
+import br.com.futura.agendafinanceira.services.PagamentoParcelaService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Named
@@ -49,6 +50,9 @@ public class PagamentoCadastroBean implements Serializable{
 	
 	@Inject
 	private PagamentoDao pagamentoDao;
+	
+	@Inject
+	private PagamentoParcelaService parcelaService;
 
 	@Inject
 	private MessagesHelper messagesHelper;
@@ -69,8 +73,20 @@ public class PagamentoCadastroBean implements Serializable{
 		return "/pagamentocadastro?faces-redirect=true&pagamento=" + pagamento.getIdPagamento();
 	}
 	
-	public void excluirParcela(PagamentoParcela parcela){
-		System.out.println(">>>>> excluir parcela" + parcela.toString());
+	public String alterar(PagamentoParcela parcela) {
+		return "/pagamentocadastroparcela?faces-redirect=true" +
+					"&pagamento=" + parcela.getPagamento().getIdPagamento() + 
+					"&parcela=" + parcela.getIdPagamentoParcela();
+	}
+	
+	public String excluir(PagamentoParcela parcela){
+		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
+		parcelaService.excluir(parcela);
+		return "/pagamentocadastro?faces-redirect=true&pagamento=" + pagamento.getIdPagamento();
+	}
+	
+	public String novaParcela() {
+		return "/pagamentocadastroparcela?faces-redirect=true&pagamento=" + pagamento.getIdPagamento();
 	}
 	
 	public Pagamento getPagamento() {
