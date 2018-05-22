@@ -13,15 +13,15 @@
 <ui:composition template="resources/template/aceadmin.xhtml">
 
 	<ui:define name="navegacao">
-		<li class="active">Contas a Pagar</li>
+		<li class="active">Baixa</li>
 	</ui:define>
 	
 	<ui:define name="titulo">
-		Contas a Pagar
+		Baixa de Contas a Pagar
 	</ui:define>
 
 	<ui:define name="subtitulo">
-		Lançamento de contas a pagar
+		Manutenção das parcelas do contas a pagar
 	</ui:define>
 
 	<ui:define name="conteudo">
@@ -32,17 +32,17 @@
 
 					<p:toolbar>
 						<f:facet name="left">
-							<p:button value="Novo" icon="fa fa-plus" outcome="/pagamentocadastro.xhtml"/>
+							<p:button value="Baixar" icon="fa fa-plus" outcome="/baixacadastro.xhtml"/>
 						</f:facet>
 						
 						<f:facet name="right">
-							<p:inputText placeholder="Pesquisar por..." size="30" value="#{pagamentoBean.pesquisa}"/>
-							<p:commandButton value="Pesquisar" icon="fa fa-search" actionListener="#{pagamentoBean.pesquisar()}" update="@form"/>
+							<p:inputText placeholder="Pesquisar por..." size="30" value="#{baixaBean.pesquisa}"/>
+							<p:commandButton value="Pesquisar" icon="fa fa-search" actionListener="#{baixaBean.pesquisar()}" update="@form"/>
 						</f:facet>
 					</p:toolbar>
 
-					<p:dataTable value="#{pagamentoBean.parcelas}" 
-						var="parcela" id="tabelaPagamento" emptyMessage="Nenhum registro encontrado" 
+					<p:dataTable value="#{baixaBean.parcelas}" 
+						var="parcela" id="tabelaBaixa" emptyMessage="Nenhum registro encontrado" 
 						rows="7" paginator="true" paginatorPosition="bottom">
 						
 						<p:column sortBy="#{parcela.vencimento}" width="10%">
@@ -71,9 +71,9 @@
 						
 						<p:column width="10%">
 							<f:facet name="header">Operações</f:facet>
-							<p:commandButton title="Alterar" icon="fa fa-pencil" action="#{pagamentoBean.alterar(parcela)}"/>
+							<p:commandButton title="Alterar" icon="fa fa-pencil" action="#{baixa.alterar(parcela)}"/>
 							
-							<p:commandButton title="Excluir" icon="fa fa-trash" actionListener="#{pagamentoBean.excluir(pagamento)}" update="@form" process="@this">
+							<p:commandButton title="Excluir" icon="fa fa-trash" actionListener="#{baixaBean.excluir(pagamento)}" update="@form" process="@this">
 								<p:confirm header="Confirma exclusão" message="Confirma a excusão de '#{pagamento.historico}'" icon="ui-icon-alert" />							
 							</p:commandButton>
 						</p:column>
@@ -90,7 +90,7 @@
 		</div>
 	</ui:define>
 
-	<ui:define name="pagina">Pagamentos</ui:define>
+	<ui:define name="pagina">Baixas</ui:define>
 </ui:composition>
 
 </html>
