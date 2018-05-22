@@ -1,6 +1,9 @@
 package br.com.futura.agendafinanceira.beans;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -10,6 +13,7 @@ import javax.inject.Named;
 
 import br.com.futura.agendafinanceira.models.Pagamento;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
+import br.com.futura.agendafinanceira.models.enums.SituacaoParcela;
 import br.com.futura.agendafinanceira.services.PagamentoParcelaService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
@@ -30,8 +34,7 @@ public class PagamentoParcelaBean implements Serializable{
 
 	@PostConstruct
 	private void init() {
-		this.parcela = new PagamentoParcela();
-		this.parcela.setPagamento(pagamento);
+		this.parcela = new PagamentoParcela(pagamento);
 	}
 	
 	public String salvar() {

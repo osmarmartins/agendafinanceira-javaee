@@ -2,6 +2,7 @@ package br.com.futura.agendafinanceira.models;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -67,8 +68,20 @@ public class PagamentoParcela implements Serializable {
 	private List<PagamentoQuitacao> quitacoes;
 	
 	public PagamentoParcela() {
+		setSituacao(SituacaoParcela.NOVO);
+		setValor(BigDecimal.ZERO);
+		setDesconto(BigDecimal.ZERO);
+		setJuros(BigDecimal.ZERO);
+		setMora(BigDecimal.ZERO);
+		setOutros(BigDecimal.ZERO);
+		setVencimento(Calendar.getInstance().getTime());
 	}
 
+	public PagamentoParcela(Pagamento pagamento) {
+		this();
+		setPagamento(pagamento);
+	}
+	
 	public Integer getIdPagamentoParcela() {
 		return idPagamentoParcela;
 	}

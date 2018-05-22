@@ -121,7 +121,7 @@
 									<div class="col-sm-4">
 										<div class="form-group">
 											<label class="control-label" jsf:for="valor">Valor</label>
-											<input type="text" class="form-control"  
+											<input type="text" class="form-control currency"
 												jsf:id="valor"
 												jsf:binding="#{valor}" 
 												jsf:value="#{pagamentoParcelaBean.parcela.valor}">
@@ -136,7 +136,7 @@
 									<div class="col-sm-4">
 										<div class="form-group">
 											<label class="control-label" jsf:for="desconto">Desconto</label>
-											<input type="text" class="form-control"  
+											<input type="text" class="form-control currency"  
 												jsf:id="desconto"
 												jsf:binding="#{desconto}" 
 												jsf:value="#{pagamentoParcelaBean.parcela.desconto}">
@@ -153,7 +153,7 @@
 									<div class="col-sm-4">
 										<div class="form-group">
 											<label class="control-label" jsf:for="juros">Juros</label>
-											<input type="text" class="form-control"  
+											<input type="text" class="form-control currency"  
 												jsf:id="juros"
 												jsf:binding="#{juros}" 
 												jsf:value="#{pagamentoParcelaBean.parcela.juros}">
@@ -168,7 +168,7 @@
 									<div class="col-sm-4">
 										<div class="form-group">
 											<label class="control-label" jsf:for="mora">Mora</label>
-											<input type="text" class="form-control"  
+											<input type="text" class="form-control currency"  
 												jsf:id="mora"
 												jsf:binding="#{mora}" 
 												jsf:value="#{pagamentoParcelaBean.parcela.mora}">
@@ -183,7 +183,7 @@
 									<div class="col-sm-4">
 										<div class="form-group">
 											<label class="control-label" jsf:for="outros">Outros</label>
-											<input type="text" class="form-control"  
+											<input type="text" class="form-control currency"  
 												jsf:id="outros"
 												jsf:binding="#{outros}" 
 												jsf:value="#{pagamentoParcelaBean.parcela.outros}">
@@ -208,6 +208,21 @@
 	</ui:define>
 
 	<ui:define name="pagina">Lançamento de Contas a Pagar</ui:define>
+	<ui:define name="scripts">
+		<h:outputScript library="js" name="jquery.maskMoney.min.js"/>
+		<script type="text/javascript">
+			$(function() {
+			    $('.currency').maskMoney({
+				    prefix:'R$ ', 
+				    allowNegative: true, 
+				    thousands:'.', 
+				    decimal:',', 
+				    affixesStay: true,
+				    allowZero: true
+				});
+			  })
+		</script>
+	</ui:define>
 </ui:composition>
 
 </html>
