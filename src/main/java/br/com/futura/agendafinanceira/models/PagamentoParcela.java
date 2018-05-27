@@ -64,7 +64,7 @@ public class PagamentoParcela implements Serializable {
 	private Pagamento pagamento;
 
 	// bi-directional many-to-one association to PgtoQuitacao
-	@OneToMany(mappedBy = "pgtoParcela")
+	@OneToMany(mappedBy = "parcela")
 	private List<PagamentoQuitacao> quitacoes;
 	
 	public PagamentoParcela() {
@@ -171,26 +171,26 @@ public class PagamentoParcela implements Serializable {
 		this.pagamento = pagamento;
 	}
 
-	public List<PagamentoQuitacao> getPgtoQuitacaos() {
+	public List<PagamentoQuitacao> getQuitacoes() {
 		return this.quitacoes;
 	}
 
-	public void setPgtoQuitacaos(List<PagamentoQuitacao> pgtoQuitacaos) {
+	public void setQuitacoes(List<PagamentoQuitacao> pgtoQuitacaos) {
 		this.quitacoes = pgtoQuitacaos;
 	}
 
-	public PagamentoQuitacao addPgtoQuitacao(PagamentoQuitacao pgtoQuitacao) {
-		getPgtoQuitacaos().add(pgtoQuitacao);
-		pgtoQuitacao.setPgtoParcela(this);
+	public PagamentoQuitacao addQuitacao(PagamentoQuitacao quitacao) {
+		getQuitacoes().add(quitacao);
+		quitacao.setParcela(this);
 
-		return pgtoQuitacao;
+		return quitacao;
 	}
 
-	public PagamentoQuitacao removePgtoQuitacao(PagamentoQuitacao pgtoQuitacao) {
-		getPgtoQuitacaos().remove(pgtoQuitacao);
-		pgtoQuitacao.setPgtoParcela(null);
+	public PagamentoQuitacao removeQuitacao(PagamentoQuitacao quitacao) {
+		getQuitacoes().remove(quitacao);
+		quitacao.setParcela(null);
 
-		return pgtoQuitacao;
+		return quitacao;
 	}
 	
 	public BigDecimal getTotalParcela(){

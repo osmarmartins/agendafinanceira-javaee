@@ -30,7 +30,7 @@ public class BaixaBean implements Serializable {
 	}
 	
 	public void excluir(PagamentoParcela parcela) {
-		//TODO excluir
+		//TODO excluir baixa 
 	}
 	
 	public void pesquisar(){

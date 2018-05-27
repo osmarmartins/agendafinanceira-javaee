@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import br.com.futura.agendafinanceira.models.enums.SituacaoPagamento;
@@ -29,7 +30,7 @@ import br.com.futura.agendafinanceira.models.enums.SituacaoPagamento;
 @Table(name = "pgto")
 public class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_pgto")
@@ -45,14 +46,22 @@ public class Pagamento implements Serializable {
 	@Enumerated
 	private SituacaoPagamento situacao;
 
-	private BigDecimal total;
-
-	@Column(name = "total_pg")
-	private BigDecimal totalPg;
-
 	@Version
 	private int versao;
 
+	private BigDecimal total;
+
+	@Column(name="total_pg")
+	private BigDecimal totalPago;
+	
+	@Transient
+	private BigDecimal saldoDevedor;
+	
+	public Pagamento() {
+		this.total = BigDecimal.ZERO;
+		this.totalPago = BigDecimal.ZERO;
+	}
+	
 	// bi-directional many-to-one association to Conta
 	@ManyToOne
 	@JoinColumn(name = "id_conta")
@@ -71,9 +80,6 @@ public class Pagamento implements Serializable {
 	// bi-directional many-to-one association to PgtoParcela
 	@OneToMany(mappedBy = "pagamento")
 	private List<PagamentoParcela> parcelas;
-
-	public Pagamento() {
-	}
 
 	public Integer getIdPagamento() {
 		return this.idPagamento;
@@ -113,22 +119,6 @@ public class Pagamento implements Serializable {
 
 	public void setSituacao(SituacaoPagamento situacao) {
 		this.situacao = situacao;
-	}
-	
-	public BigDecimal getTotal() {
-		return this.total;
-	}
-
-	public void setTotal(BigDecimal total) {
-		this.total = total;
-	}
-
-	public BigDecimal getTotalPg() {
-		return this.totalPg;
-	}
-
-	public void setTotalPg(BigDecimal totalPg) {
-		this.totalPg = totalPg;
 	}
 
 	public int getVersao() {
@@ -185,11 +175,24 @@ public class Pagamento implements Serializable {
 		return parcela;
 	}
 
-	public boolean isPossuiParcelas() {
-		if (this.parcelas==null){
-			return false;
-		}
-		return this.parcelas.size() > 0;
+	public BigDecimal getTotal() {
+		return this.total;
+	}
+	
+	public void setTotal(BigDecimal total) {
+		this.total = total;
+	}
+	
+	public BigDecimal getTotalPago() {
+		return this.totalPago;
+	}
+	
+	public void setTotalPago(BigDecimal totalPago) {
+		this.totalPago = totalPago;
+	}
+	
+	public BigDecimal getSaldoDevedor() {
+		return this.total.subtract(this.totalPago);
 	}
 
 	@Override
@@ -220,7 +223,7 @@ public class Pagamento implements Serializable {
 	@Override
 	public String toString() {
 		return "Pagamento [idPagamento=" + idPagamento + ", documento=" + documento + ", emissao=" + emissao
-				+ ", historico=" + historico + ", situacao=" + situacao + ", total=" + total + ", totalPg=" + totalPg
+				+ ", historico=" + historico + ", situacao=" + situacao + ", total=" + total + ", totalPg=" + totalPago
 				+ ", versao=" + versao + ", conta=" + conta + ", fornecedor=" + fornecedor + ", setor=" + setor
 				+ ", parcelas=" + parcelas + "]";
 	}

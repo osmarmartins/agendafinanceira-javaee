@@ -49,7 +49,7 @@ public class PagamentoQuitacao implements Serializable {
 	// bi-directional many-to-one association to PgtoParcela
 	@ManyToOne
 	@JoinColumn(name = "id_pgto_parcela")
-	private PagamentoParcela pgtoParcela;
+	private PagamentoParcela parcela;
 
 	public PagamentoQuitacao() {
 	}
@@ -94,12 +94,12 @@ public class PagamentoQuitacao implements Serializable {
 		this.versao = versao;
 	}
 
-	public PagamentoParcela getPgtoParcela() {
-		return this.pgtoParcela;
+	public PagamentoParcela getParcela() {
+		return this.parcela;
 	}
 
-	public void setPgtoParcela(PagamentoParcela pgtoParcela) {
-		this.pgtoParcela = pgtoParcela;
+	public void setParcela(PagamentoParcela parcela) {
+		this.parcela = parcela;
 	}
 
 }

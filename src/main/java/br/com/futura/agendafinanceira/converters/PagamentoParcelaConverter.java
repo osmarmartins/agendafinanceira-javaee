@@ -18,7 +18,6 @@ public class PagamentoParcelaConverter implements Converter {
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value!=null && value.trim().length()>0){
-			System.out.println(">>>>>>>>>>>>> "+component.getClass().getName()+"-" + value);
 			return (PagamentoParcela) parcelaDao.pesquisaPorId(Integer.parseInt(value));
 		}
 		return null;

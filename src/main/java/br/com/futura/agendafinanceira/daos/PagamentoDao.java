@@ -28,24 +28,30 @@ public class PagamentoDao implements Serializable {
 					.getSingleResult();
 	}
 	
-	public List<PagamentoParcela> listarTodos() {
-		return manager.createQuery("select p from PagamentoParcela p "
-				+ "join fetch p.pagamento pg "
+	public List<Pagamento> listarTodos() {
+		return manager.createQuery("select pg from Pagamento pg "
 				+ "join fetch pg.fornecedor "
 				+ "join fetch pg.setor "
 				+ "join fetch pg.conta "
-				, PagamentoParcela.class).getResultList();
+				, Pagamento.class).getResultList();
+
+//		
+//		return manager.createQuery("select p from PagamentoParcela p "
+//				+ "join fetch p.pagamento pg "
+//				+ "join fetch pg.fornecedor "
+//				+ "join fetch pg.setor "
+//				+ "join fetch pg.conta "
+//				, PagamentoParcela.class).getResultList();
 	}
 
-	public List<PagamentoParcela> listarPor(String pesquisa) {
+	public List<Pagamento> listarPor(String pesquisa) {
 		return manager
-				.createQuery("select p from PagamentoParcela p "
-						+ "join fetch p.pagamento pg "
+				.createQuery("select pg from Pagamento pg "
 						+ "join fetch pg.fornecedor "
 						+ "WHERE pg.historico LIKE :pHistorico "
 						+ "OR pg.fornecedor.nomeFantasia LIKE :pNomeFantasia "
 						+ "OR pg.fornecedor.razaoSocial LIKE :pRazaoSocial ", 
-						PagamentoParcela.class)
+						Pagamento.class)
 				.setParameter("pHistorico", "%" + pesquisa + "%")
 				.setParameter("pNomeFantasia", "%" + pesquisa + "%")
 				.setParameter("pRazaoSocial", "%" + pesquisa + "%")

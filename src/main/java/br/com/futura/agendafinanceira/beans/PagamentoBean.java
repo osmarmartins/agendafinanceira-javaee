@@ -20,7 +20,7 @@ public class PagamentoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private List<PagamentoParcela> parcelas;
+	private List<Pagamento> pagamentos;
 
 	private String pesquisa;
 
@@ -32,15 +32,15 @@ public class PagamentoBean implements Serializable {
 
 	@PostConstruct
 	private void init() {
-		this.parcelas = pagamentoDao.listarTodos();
+		this.pagamentos = pagamentoDao.listarTodos(); 
 	}
 
 	public void pesquisar() {
-		this.parcelas = pagamentoDao.listarPor(this.pesquisa);
+		this.pagamentos = pagamentoDao.listarPor(this.pesquisa);
 	}
 
-	public String alterar(PagamentoParcela parcela) {
-		return "/pagamentocadastro?faces-redirect=true&pagamento=" + parcela.getPagamento().getIdPagamento();
+	public String alterar(Pagamento pagamento) {
+		return "/pagamentocadastro?faces-redirect=true&pagamento=" + pagamento.getIdPagamento();
 	}
 
 	public void excluir(Pagamento pagamento) {
@@ -57,12 +57,8 @@ public class PagamentoBean implements Serializable {
 		this.pesquisa = pesquisa;
 	}
 
-	public List<PagamentoParcela> getParcelas() {
-		return parcelas;
+	public List<Pagamento> getPagamentos() {
+		return pagamentos;
 	}
-
-	public void setParcelas(List<PagamentoParcela> parcelas) {
-		this.parcelas = parcelas;
-	}
-
+	
 }

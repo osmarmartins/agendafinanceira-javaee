@@ -1,6 +1,7 @@
 package br.com.futura.agendafinanceira.beans;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.models.Setor;
 import br.com.futura.agendafinanceira.models.enums.SituacaoPagamento;
 import br.com.futura.agendafinanceira.services.PagamentoParcelaService;
+import br.com.futura.agendafinanceira.services.PagamentoService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Named
@@ -49,7 +51,7 @@ public class PagamentoCadastroBean implements Serializable{
 	private FornecedorDao fornecedorDao;
 	
 	@Inject
-	private PagamentoDao pagamentoDao;
+	private PagamentoService pagamentoService;
 	
 	@Inject
 	private PagamentoParcelaService parcelaService;
@@ -68,7 +70,7 @@ public class PagamentoCadastroBean implements Serializable{
 	}
 	
 	public String salvar() {
-		pagamentoDao.salvar(pagamento);
+		pagamentoService.salvar(pagamento);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		return "/pagamentocadastro?faces-redirect=true&pagamento=" + pagamento.getIdPagamento();
 	}
@@ -89,10 +91,19 @@ public class PagamentoCadastroBean implements Serializable{
 		return "/pagamentocadastroparcela?faces-redirect=true&pagamento=" + pagamento.getIdPagamento();
 	}
 	
+	public boolean habilitarParcelas() {
+		return this.pagamento.getIdPagamento() != null;
+	}
+	
 	public Pagamento getPagamento() {
 		if (this.pagamento == null){
 			this.pagamento = new Pagamento();
 		}
+
+		if (this.pagamento.getParcelas()!=null) {
+			pagamentoService.calcularTotais(this.pagamento);
+		}
+		
 		return pagamento;
 	}
 	
@@ -102,10 +113,6 @@ public class PagamentoCadastroBean implements Serializable{
 	
 	public List<PagamentoParcela> getParcelas() {
 		return parcelas;
-	}
-	
-	public void setParcelas(List<PagamentoParcela> parcelas) {
-		this.parcelas = parcelas;
 	}
 	
 	public List<Setor> getSetores() {
