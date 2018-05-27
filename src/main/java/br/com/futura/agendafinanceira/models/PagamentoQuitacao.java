@@ -52,6 +52,9 @@ public class PagamentoQuitacao implements Serializable {
 	private PagamentoParcela parcela;
 
 	public PagamentoQuitacao() {
+		this.valor = BigDecimal.ZERO;
+		this.dtPgto = new Date();
+		this.formaPagamento = FormaPagamento.DINHEIRO;
 	}
 
 	public Integer getIdPgtoQuitacao() {

@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
+import br.com.futura.agendafinanceira.models.PagamentoQuitacao;
 import br.com.futura.agendafinanceira.services.BaixaService;
 
 @Named
@@ -27,6 +28,10 @@ public class BaixaBean implements Serializable {
 	@PostConstruct
 	private void init() {
 		this.parcelas = baixaService.listarTodos();
+	}
+	
+	public String alterar(PagamentoParcela parcela) {
+		return "baixacadastro?faces-redirect=true&parcela=" + parcela.getIdPagamentoParcela();
 	}
 	
 	public void excluir(PagamentoParcela parcela) {

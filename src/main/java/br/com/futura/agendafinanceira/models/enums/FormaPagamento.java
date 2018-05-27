@@ -2,21 +2,21 @@ package br.com.futura.agendafinanceira.models.enums;
 
 public enum FormaPagamento {
 	
-	DINHEIRO(0), 
-	CARTAO(1), 
-	CHEQUE(2),
-	DEPOSITO(3), 
-	BOLETO(4), 
-	OUTROS(5);
+	DINHEIRO("Dinheiro"), 
+	CARTAO("Cartao"), 
+	CHEQUE("Cheque"),
+	DEPOSITO("Depósito"), 
+	BOLETO("Boleto"), 
+	OUTROS("Outros");
 	
-	private int formaPagamento;
+	private String descricao;
 	
-	private FormaPagamento(int formaPagamento){
-		this.formaPagamento = formaPagamento;
+	private FormaPagamento(String descricao){
+		this.descricao = descricao;
 	}
 	
-	public int getFormaPagamento(){
-		return formaPagamento;
+	public String getDescricao(){
+		return descricao;
 	}
 
 }

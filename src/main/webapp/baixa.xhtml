@@ -52,6 +52,11 @@
 							</h:outputText>
 						</p:column>
 						
+						<p:column sortBy="#{parcela.parcela}" width="10%">
+							<f:facet name="header">Parcela</f:facet>
+							<h:outputText value="#{parcela.parcela}"/>
+						</p:column>
+						
 						<p:column sortBy="#{parcela.pagamento.fornecedor.razaoSocial}">
 							<f:facet name="header">Razão Social</f:facet>
 							<h:outputText value="#{parcela.pagamento.fornecedor.razaoSocial}"/>
@@ -71,7 +76,7 @@
 						
 						<p:column width="10%">
 							<f:facet name="header">Operações</f:facet>
-							<p:commandButton title="Alterar" icon="fa fa-pencil" action="#{baixa.alterar(parcela)}"/>
+							<p:commandButton title="Alterar" icon="fa fa-pencil" action="#{baixaBean.alterar(parcela)}"/>
 							
 							<p:commandButton title="Excluir" icon="fa fa-trash" actionListener="#{baixaBean.excluir(pagamento)}" update="@form" process="@this">
 								<p:confirm header="Confirma exclusão" message="Confirma a excusão de '#{pagamento.historico}'" icon="ui-icon-alert" />							

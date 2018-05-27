@@ -70,14 +70,14 @@ public class PagamentoParcela implements Serializable {
 	private List<PagamentoQuitacao> quitacoes;
 	
 	public PagamentoParcela() {
-		setSituacao(SituacaoParcela.NOVO);
-		setValor(BigDecimal.ZERO);
-		setDesconto(BigDecimal.ZERO);
-		setJuros(BigDecimal.ZERO);
-		setMora(BigDecimal.ZERO);
-		setOutros(BigDecimal.ZERO);
-		setVencimento(Calendar.getInstance().getTime());
-		setQuitacoes(Collections.emptyList());
+		this.situacao = SituacaoParcela.NOVO; 
+		this.vencimento = Calendar.getInstance().getTime();
+		this.quitacoes = Collections.emptyList();
+		this.valor = BigDecimal.ZERO;
+		this.desconto = BigDecimal.ZERO;
+		this.juros = BigDecimal.ZERO;
+		this.mora = BigDecimal.ZERO;
+		this.outros = BigDecimal.ZERO;
 	}
 	
 	public Integer getIdPagamentoParcela() {
@@ -204,6 +204,14 @@ public class PagamentoParcela implements Serializable {
 			totalPago = totalPago.add(quitacao.getValor());
 		}
 		return totalPago;
+	}
+
+	@Override
+	public String toString() {
+		return "PagamentoParcela [idPagamentoParcela=" + idPagamentoParcela + ", parcela=" + parcela + ", vencimento="
+				+ vencimento + ", valor=" + valor + ", desconto=" + desconto + ", juros=" + juros + ", mora=" + mora
+				+ ", outros=" + outros + ", situacao=" + situacao + ", versao=" + versao + ", pagamento=" + pagamento
+				+ ", quitacoes=" + quitacoes + "]";
 	}
 	
 }

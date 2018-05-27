@@ -11,7 +11,6 @@ import javax.inject.Named;
 import br.com.futura.agendafinanceira.models.Pagamento;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.services.PagamentoParcelaService;
-import br.com.futura.agendafinanceira.services.PagamentoService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Named
@@ -25,9 +24,6 @@ public class PagamentoParcelaBean implements Serializable{
 	
 	@Inject
 	private PagamentoParcelaService parcelaService;
-	
-	@Inject
-	private PagamentoService pagamentoService; 
 	
 	@Inject
 	private MessagesHelper messagesHelper;

@@ -27,6 +27,7 @@ public class PagamentoParcelaDao implements Serializable {
 				+ "join fetch pg.setor "
 				+ "join fetch pg.conta "
 				+ "join fetch pg.fornecedor "
+				+ "left join fetch p.quitacoes q "
 				+ "where p.idPagamentoParcela = :pParcela ", PagamentoParcela.class)
 					.setParameter("pParcela", id)
 					.getSingleResult();
