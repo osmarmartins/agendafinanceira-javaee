@@ -20,34 +20,11 @@ public class PagamentoService implements Serializable {
 	@Inject
 	private PagamentoDao pagamentoDao;
 	
-	@Inject
-	private PagamentoQuitacaoDao pagamentoQuitacaoDao;
-	
 	public void salvar(Pagamento pagamento) {
-		calcularTotais(pagamento);
+		pagamento.setTotal(pagamento.getTotal());
+		pagamento.setTotalPago(pagamento.getTotalPago());
 		pagamentoDao.salvar(pagamento);
 	}
-	
-	public void calcularTotais(Pagamento pagamento) {
-		calculaTotalParcelas(pagamento);
-		calculaTotalPago(pagamento);
-	}
 
-	private void calculaTotalPago(Pagamento pagamento) {
-		BigDecimal total = BigDecimal.ZERO;
-		for (PagamentoQuitacao quitacao : pagamentoQuitacaoDao.listaQuitacoesPor(pagamento)) {
-			total = total.add(quitacao.getValor());
-		}
-		pagamento.setTotalPago(total);
-		
-	}
-
-	private void calculaTotalParcelas(Pagamento pagamento) {
-		BigDecimal total = BigDecimal.ZERO;
-		for (PagamentoParcela parcela : pagamento.getParcelas()) {
-			total = total.add(parcela.getTotalParcela());
-		}
-		pagamento.setTotal(total);
-	}
 
 }

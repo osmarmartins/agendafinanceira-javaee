@@ -31,7 +31,7 @@ public class PagamentoQuitacao implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_pgto_quitacao")
-	private int idPgtoQuitacao;
+	private Integer idPgtoQuitacao;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "dt_pgto")
@@ -54,11 +54,11 @@ public class PagamentoQuitacao implements Serializable {
 	public PagamentoQuitacao() {
 	}
 
-	public int getIdPgtoQuitacao() {
+	public Integer getIdPgtoQuitacao() {
 		return this.idPgtoQuitacao;
 	}
 
-	public void setIdPgtoQuitacao(int idPgtoQuitacao) {
+	public void setIdPgtoQuitacao(Integer idPgtoQuitacao) {
 		this.idPgtoQuitacao = idPgtoQuitacao;
 	}
 
@@ -102,4 +102,11 @@ public class PagamentoQuitacao implements Serializable {
 		this.parcela = parcela;
 	}
 
+	@Override
+	public String toString() {
+		return "PagamentoQuitacao [idPgtoQuitacao=" + idPgtoQuitacao + ", dtPgto=" + dtPgto + ", formaPagamento="
+				+ formaPagamento + ", valor=" + valor + ", versao=" + versao + ", parcela=" + parcela + "]";
+	}
+
+	
 }

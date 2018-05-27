@@ -2,6 +2,7 @@ package br.com.futura.agendafinanceira.models;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -60,6 +61,8 @@ public class Pagamento implements Serializable {
 	public Pagamento() {
 		this.total = BigDecimal.ZERO;
 		this.totalPago = BigDecimal.ZERO;
+		this.emissao = new Date();
+		this.situacao = SituacaoPagamento.EMABERTO;
 	}
 	
 	// bi-directional many-to-one association to Conta
@@ -154,28 +157,45 @@ public class Pagamento implements Serializable {
 	}
 
 	public List<PagamentoParcela> getParcelas() {
-		return this.parcelas;
+		return this.parcelas == null ?  Collections.emptyList() : this.parcelas;
 	}
 
 	public void setParcelas(List<PagamentoParcela> pgtoParcelas) {
 		this.parcelas = pgtoParcelas;
 	}
 
-	public PagamentoParcela addPgtoParcela(PagamentoParcela parcela) {
+	public PagamentoParcela addParcela(PagamentoParcela parcela) {
 		getParcelas().add(parcela);
 		parcela.setPagamento(this);
-
 		return parcela;
 	}
 
-	public PagamentoParcela removePgtoParcela(PagamentoParcela parcela) {
+	public PagamentoParcela removeParcela(PagamentoParcela parcela) {
 		getParcelas().remove(parcela);
 		parcela.setPagamento(null);
-
 		return parcela;
 	}
 
+	private void calcularTotais() {
+		BigDecimal totalParcelas = BigDecimal.ZERO;
+		BigDecimal totalPago = BigDecimal.ZERO;
+		
+		if (parcelas ==null || parcelas.size() == 0) {
+			this.total = totalParcelas;
+			this.totalPago = totalPago;
+			return; 
+		}
+		
+		for (PagamentoParcela parcela : this.parcelas) {
+			totalParcelas = totalParcelas.add(parcela.getTotalParcela());
+			totalPago = totalPago.add(parcela.calcularTotalPago());
+		}
+		this.total = totalParcelas;
+		this.totalPago = totalPago;
+	}
+	
 	public BigDecimal getTotal() {
+		calcularTotais();
 		return this.total;
 	}
 	
@@ -184,6 +204,7 @@ public class Pagamento implements Serializable {
 	}
 	
 	public BigDecimal getTotalPago() {
+		calcularTotais();
 		return this.totalPago;
 	}
 	

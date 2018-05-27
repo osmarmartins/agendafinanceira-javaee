@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.futura.agendafinanceira.daos.PagamentoParcelaDao;
+import br.com.futura.agendafinanceira.models.Pagamento;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.models.enums.SituacaoParcela;
 
@@ -17,15 +18,14 @@ public class PagamentoParcelaService implements Serializable {
 	@Inject
 	private PagamentoParcelaDao parcelaDao;
 	
-	public void salvar(PagamentoParcela parcela) {
-		if (parcela.getIdPagamentoParcela() == null) {
-			parcela.setSituacao(SituacaoParcela.NOVO);
-		}
+	public void salvar(Pagamento pagamento, PagamentoParcela parcela) {
+		pagamento.addParcela(parcela);
 		parcelaDao.salvar(parcela);
 	}
 	
-	public void excluir(PagamentoParcela parcela) {
-		// validar exclusão (não permitir excluir parcela com registro de quitação)
+	public void excluir(Pagamento pagamento, PagamentoParcela parcela) {
+		// TODO validar exclusão (não permitir excluir parcela com registro de quitação)
+		pagamento.removeParcela(parcela);
 		parcelaDao.excluir(parcela);
 	}
 	

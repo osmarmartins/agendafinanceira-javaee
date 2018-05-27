@@ -3,12 +3,14 @@ package br.com.futura.agendafinanceira.models;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -64,7 +66,7 @@ public class PagamentoParcela implements Serializable {
 	private Pagamento pagamento;
 
 	// bi-directional many-to-one association to PgtoQuitacao
-	@OneToMany(mappedBy = "parcela")
+	@OneToMany(mappedBy = "parcela", fetch=FetchType.EAGER)
 	private List<PagamentoQuitacao> quitacoes;
 	
 	public PagamentoParcela() {
@@ -75,11 +77,7 @@ public class PagamentoParcela implements Serializable {
 		setMora(BigDecimal.ZERO);
 		setOutros(BigDecimal.ZERO);
 		setVencimento(Calendar.getInstance().getTime());
-	}
-
-	public PagamentoParcela(Pagamento pagamento) {
-		this();
-		setPagamento(pagamento);
+		setQuitacoes(Collections.emptyList());
 	}
 	
 	public Integer getIdPagamentoParcela() {
@@ -172,29 +170,40 @@ public class PagamentoParcela implements Serializable {
 	}
 
 	public List<PagamentoQuitacao> getQuitacoes() {
-		return this.quitacoes;
+		return this.quitacoes == null ? Collections.emptyList() : this.quitacoes;
 	}
 
 	public void setQuitacoes(List<PagamentoQuitacao> pgtoQuitacaos) {
 		this.quitacoes = pgtoQuitacaos;
-	}
-
-	public PagamentoQuitacao addQuitacao(PagamentoQuitacao quitacao) {
-		getQuitacoes().add(quitacao);
-		quitacao.setParcela(this);
-
-		return quitacao;
-	}
-
-	public PagamentoQuitacao removeQuitacao(PagamentoQuitacao quitacao) {
-		getQuitacoes().remove(quitacao);
-		quitacao.setParcela(null);
-
-		return quitacao;
 	}
 	
 	public BigDecimal getTotalParcela(){
 		return this.valor.subtract(this.desconto).add(this.juros).add(this.mora).add(this.outros);
 	}
 
+	public PagamentoQuitacao addQuitacao(PagamentoQuitacao quitacao) {
+		getQuitacoes().add(quitacao);
+		quitacao.setParcela(this);
+		return quitacao;
+	}
+	
+	public PagamentoQuitacao removeQuitacao(PagamentoQuitacao quitacao) {
+		getQuitacoes().remove(quitacao);
+		quitacao.setParcela(null);
+		return quitacao;
+	}
+	
+	public BigDecimal calcularTotalPago() {
+		BigDecimal totalPago = BigDecimal.ZERO;
+		
+		if (this.quitacoes == null || this.quitacoes.size()==0) {
+			return totalPago;
+		}
+
+		for (PagamentoQuitacao quitacao : this.quitacoes) {
+			totalPago = totalPago.add(quitacao.getValor());
+		}
+		return totalPago;
+	}
+	
 }
