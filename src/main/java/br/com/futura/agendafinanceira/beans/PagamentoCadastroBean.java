@@ -68,20 +68,10 @@ public class PagamentoCadastroBean implements Serializable{
 		return "/pagamentocadastro?faces-redirect=true&pagamento=" + pagamento.getIdPagamento();
 	}
 	
-	public String alterar(PagamentoParcela parcela) {
-		return "/pagamentocadastroparcela?faces-redirect=true" +
-					"&pagamento=" + parcela.getPagamento().getIdPagamento() + 
-					"&parcela=" + parcela.getIdPagamentoParcela();
-	}
-	
 	public String excluir(PagamentoParcela parcela){
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		parcelaService.excluir(pagamento, parcela);
 		return "/pagamentocadastro?faces-redirect=true&pagamento=" + pagamento.getIdPagamento();
-	}
-	
-	public String novaParcela() {
-		return "/pagamentocadastroparcela?faces-redirect=true&pagamento=" + pagamento.getIdPagamento();
 	}
 	
 	public boolean habilitarParcelas() {

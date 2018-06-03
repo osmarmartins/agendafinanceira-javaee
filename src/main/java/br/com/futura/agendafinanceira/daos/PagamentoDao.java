@@ -8,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.models.Pagamento;
-import br.com.futura.agendafinanceira.models.PagamentoParcela;
 
 public class PagamentoDao implements Serializable {
 
@@ -23,6 +22,7 @@ public class PagamentoDao implements Serializable {
 				+ "join fetch pg.conta "
 				+ "join fetch pg.fornecedor "
 				+ "left join fetch pg.parcelas p "
+				+ "left join fetch p.quitacoes q "
 				+ "where pg.idPagamento = :pPagamento", Pagamento.class)
 					.setParameter("pPagamento", idPagamento)
 					.getSingleResult();

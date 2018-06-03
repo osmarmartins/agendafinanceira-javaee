@@ -19,7 +19,8 @@ public class FornecedorDao implements Serializable {
 
 	public List<Fornecedor> listarTodos() {
 		return manager
-				.createQuery("SELECT f FROM Fornecedor f ", Fornecedor.class)
+				.createQuery("SELECT f FROM Fornecedor f "
+						+ "LEFT JOIN FETCH f.contatos ", Fornecedor.class)
 				.getResultList();
 	}
 

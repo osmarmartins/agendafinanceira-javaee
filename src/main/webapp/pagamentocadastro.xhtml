@@ -214,7 +214,8 @@
 					<div class="widget-box widget-color-default" jsf:id="grid-parcelas" rendered="#{pagamentoCadastroBean.habilitarParcelas()}">
 						<div class="widget-header">
 							<div class="widget-main clearfix">
-								<button class="btn btn-xs btn-default pull-left" jsf:action="#{pagamentoCadastroBean.novaParcela()}">
+								<button class="btn btn-xs btn-default pull-left" jsf:outcome="pagamentocadastroparcela.xhtml">
+									<f:param name="pagamento" value="#{pagamentoCadastroBean.pagamento.idPagamento}"/>
 									<i class="ace-icon fa fa-user-plus"></i>
 									<span class="bigger-110">Nova Parcela</span>
 								</button>
@@ -319,13 +320,17 @@
 												</td>
 												<td>
 													<div class="btn-group">
-														<button class="btn btn-sm btn-success btn-white btn-round" jsf:action="#{pagamentoCadastroBean.alterar(parcela)}">
+
+														<button class="btn btn-sm btn-success btn-white btn-round" jsf:outcome="pagamentocadastroparcela.xhtml">
 															<i class="ace-icon fa fa-pencil bigger-110 green"></i>
+															<f:param name="pagamento" value="#{pagamentoCadastroBean.pagamento.idPagamento}"/>
+															<f:param name="parcela" value="#{parcela.idPagamentoParcela}"/>
 														</button>
 
 														<button class="btn btn-sm btn-danger btn-white btn-round" jsf:action="#{pagamentoCadastroBean.excluir(parcela)}">
 															<i class="ace-icon fa fa-trash bigger-110 red2"></i>
 														</button>
+														
 													</div>												
 												</td>
 											</tr>

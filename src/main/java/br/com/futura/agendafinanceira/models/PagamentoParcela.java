@@ -6,14 +6,17 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -66,13 +69,13 @@ public class PagamentoParcela implements Serializable {
 	private Pagamento pagamento;
 
 	// bi-directional many-to-one association to PgtoQuitacao
-	@OneToMany(mappedBy = "parcela", fetch=FetchType.EAGER)
-	private List<PagamentoQuitacao> quitacoes;
+	@OneToMany(mappedBy = "parcela")
+	private Set<PagamentoQuitacao> quitacoes;
 	
 	public PagamentoParcela() {
 		this.situacao = SituacaoParcela.NOVO; 
 		this.vencimento = Calendar.getInstance().getTime();
-		this.quitacoes = Collections.emptyList();
+		this.quitacoes = Collections.emptySet();
 		this.valor = BigDecimal.ZERO;
 		this.desconto = BigDecimal.ZERO;
 		this.juros = BigDecimal.ZERO;
@@ -169,11 +172,11 @@ public class PagamentoParcela implements Serializable {
 		this.pagamento = pagamento;
 	}
 
-	public List<PagamentoQuitacao> getQuitacoes() {
-		return this.quitacoes == null ? Collections.emptyList() : this.quitacoes;
+	public Set<PagamentoQuitacao> getQuitacoes() {
+		return this.quitacoes == null ? Collections.emptySet() : this.quitacoes;
 	}
 
-	public void setQuitacoes(List<PagamentoQuitacao> pgtoQuitacaos) {
+	public void setQuitacoes(Set<PagamentoQuitacao> pgtoQuitacaos) {
 		this.quitacoes = pgtoQuitacaos;
 	}
 	

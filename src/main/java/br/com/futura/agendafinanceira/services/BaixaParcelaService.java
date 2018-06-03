@@ -1,5 +1,7 @@
 package br.com.futura.agendafinanceira.services;
 
+import java.io.Serializable;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -8,7 +10,9 @@ import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.models.PagamentoQuitacao;
 
 @Named
-public class BaixaParcelaService {
+public class BaixaParcelaService implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Inject
 	private BaixaParcelaDao baixaParcelaDao;
