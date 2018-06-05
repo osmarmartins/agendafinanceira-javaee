@@ -2,21 +2,20 @@ package br.com.futura.agendafinanceira.models;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -172,12 +171,12 @@ public class PagamentoParcela implements Serializable {
 		this.pagamento = pagamento;
 	}
 
-	public Set<PagamentoQuitacao> getQuitacoes() {
-		return this.quitacoes == null ? Collections.emptySet() : this.quitacoes;
+	public List<PagamentoQuitacao> getQuitacoes() {
+		return (this.quitacoes == null) ? Collections.emptyList() : new ArrayList<PagamentoQuitacao>(this.quitacoes);
 	}
 
-	public void setQuitacoes(Set<PagamentoQuitacao> pgtoQuitacaos) {
-		this.quitacoes = pgtoQuitacaos;
+	public void setQuitacoes(List<PagamentoQuitacao> pgtoQuitacaos) {
+		this.quitacoes = new HashSet<PagamentoQuitacao>(pgtoQuitacaos);
 	}
 	
 	public BigDecimal getTotalParcela(){
@@ -214,7 +213,33 @@ public class PagamentoParcela implements Serializable {
 		return "PagamentoParcela [idPagamentoParcela=" + idPagamentoParcela + ", parcela=" + parcela + ", vencimento="
 				+ vencimento + ", valor=" + valor + ", desconto=" + desconto + ", juros=" + juros + ", mora=" + mora
 				+ ", outros=" + outros + ", situacao=" + situacao + ", versao=" + versao + ", pagamento=" + pagamento
-				+ ", quitacoes=" + quitacoes + "]";
+				+ "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idPagamentoParcela == null) ? 0 : idPagamentoParcela.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PagamentoParcela other = (PagamentoParcela) obj;
+		if (idPagamentoParcela == null) {
+			if (other.idPagamentoParcela != null)
+				return false;
+		} else if (!idPagamentoParcela.equals(other.idPagamentoParcela))
+			return false;
+		return true;
+	}
+	
 	
 }

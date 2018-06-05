@@ -8,7 +8,6 @@ import javax.inject.Named;
 import br.com.futura.agendafinanceira.daos.PagamentoParcelaDao;
 import br.com.futura.agendafinanceira.models.Pagamento;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
-import br.com.futura.agendafinanceira.models.enums.SituacaoParcela;
 
 @Named
 public class PagamentoParcelaService implements Serializable {
@@ -27,6 +26,10 @@ public class PagamentoParcelaService implements Serializable {
 		// TODO validar exclusão (não permitir excluir parcela com registro de quitação)
 		pagamento.removeParcela(parcela);
 		parcelaDao.excluir(parcela);
+	}
+
+	public PagamentoParcela pesquisaPorId(Integer idParcela) {
+		return parcelaDao.pesquisaPorId(idParcela);
 	}
 	
 

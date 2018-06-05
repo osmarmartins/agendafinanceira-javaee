@@ -25,5 +25,10 @@ public class BaixaParcelaDao implements Serializable{
 			manager.merge(quitacao);
 		}
 	}
+	
+	@Transactional
+	public void excluir(PagamentoQuitacao quitacao) {
+		manager.remove(manager.getReference(PagamentoQuitacao.class, quitacao.getIdPgtoQuitacao()));
+	}
 
 }

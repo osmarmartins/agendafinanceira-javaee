@@ -2,9 +2,12 @@ package br.com.futura.agendafinanceira.models;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -82,7 +85,7 @@ public class Pagamento implements Serializable {
 
 	// bi-directional many-to-one association to PgtoParcela
 	@OneToMany(mappedBy = "pagamento")
-	private List<PagamentoParcela> parcelas;
+	private Set<PagamentoParcela> parcelas;
 
 	public Integer getIdPagamento() {
 		return this.idPagamento;
@@ -157,11 +160,11 @@ public class Pagamento implements Serializable {
 	}
 
 	public List<PagamentoParcela> getParcelas() {
-		return this.parcelas == null ?  Collections.emptyList() : this.parcelas;
+		return (this.parcelas == null) ?  Collections.emptyList() : new ArrayList<PagamentoParcela>(this.parcelas);
 	}
 
 	public void setParcelas(List<PagamentoParcela> pgtoParcelas) {
-		this.parcelas = pgtoParcelas;
+		this.parcelas = new HashSet<PagamentoParcela>(pgtoParcelas);
 	}
 
 	public PagamentoParcela addParcela(PagamentoParcela parcela) {
@@ -180,7 +183,7 @@ public class Pagamento implements Serializable {
 		BigDecimal totalParcelas = BigDecimal.ZERO;
 		BigDecimal totalPago = BigDecimal.ZERO;
 		
-		if (parcelas ==null || parcelas.size() == 0) {
+		if (parcelas == null || getParcelas().size() == 0) {
 			this.total = totalParcelas;
 			this.totalPago = totalPago;
 			return; 

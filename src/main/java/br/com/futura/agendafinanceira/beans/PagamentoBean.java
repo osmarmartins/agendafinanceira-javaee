@@ -9,9 +9,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.futura.agendafinanceira.daos.PagamentoDao;
 import br.com.futura.agendafinanceira.models.Pagamento;
-import br.com.futura.agendafinanceira.models.PagamentoParcela;
+import br.com.futura.agendafinanceira.services.PagamentoService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Named
@@ -22,21 +21,21 @@ public class PagamentoBean implements Serializable {
 
 	private List<Pagamento> pagamentos;
 
-	private String pesquisa;
+	private String filtro;
 
 	@Inject
-	private PagamentoDao pagamentoDao;
+	private PagamentoService pagamentoService;
 
 	@Inject
 	private MessagesHelper messagesHelper;
 
 	@PostConstruct
 	private void init() {
-		this.pagamentos = pagamentoDao.listarTodos(); 
+		this.pagamentos = pagamentoService.listarTodos(); 
 	}
 
 	public void pesquisar() {
-		this.pagamentos = pagamentoDao.listarPor(this.pesquisa);
+		this.pagamentos = pagamentoService.listarPor(this.filtro);
 	}
 
 	public String alterar(Pagamento pagamento) {
@@ -44,17 +43,17 @@ public class PagamentoBean implements Serializable {
 	}
 
 	public void excluir(Pagamento pagamento) {
-		pagamentoDao.excluir(pagamento);
+		pagamentoService.excluir(pagamento);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		init();
 	}
 
-	public String getPesquisa() {
-		return pesquisa;
+	public String getFiltro() {
+		return filtro;
 	}
 
-	public void setPesquisa(String pesquisa) {
-		this.pesquisa = pesquisa;
+	public void setFiltro(String pesquisa) {
+		this.filtro = pesquisa;
 	}
 
 	public List<Pagamento> getPagamentos() {

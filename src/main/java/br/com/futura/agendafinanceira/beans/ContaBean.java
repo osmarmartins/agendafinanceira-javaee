@@ -10,8 +10,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.futura.agendafinanceira.daos.ContaDao;
 import br.com.futura.agendafinanceira.models.Conta;
+import br.com.futura.agendafinanceira.services.ContaService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Named
@@ -28,22 +28,22 @@ public class ContaBean implements Serializable {
 	private MessagesHelper messagesHelper;
 
 	@Inject
-	private ContaDao contaDao;
+	private ContaService contaService;
 
 	@PostConstruct
 	private void init() {
-		this.contas = contaDao.listarTodos();
+		this.contas = contaService.listarTodos();
 		this.pesquisaDescricao = new String();
 	}
 
 	public void pesquisar() {
 		if (this.pesquisaDescricao != null && !this.pesquisaDescricao.isEmpty()) {
-			this.contas = contaDao.listarPorDescricao(this.pesquisaDescricao);
+			this.contas = contaService.listarPorDescricao(this.pesquisaDescricao);
 		}
 	}
 
 	public void excluir(Conta conta) {
-		contaDao.excluir(conta);
+		contaService.excluir(conta);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		init();
 	}

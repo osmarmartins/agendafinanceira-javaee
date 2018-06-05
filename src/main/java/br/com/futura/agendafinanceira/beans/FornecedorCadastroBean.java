@@ -8,11 +8,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.futura.agendafinanceira.daos.FornecedorDao;
 import br.com.futura.agendafinanceira.models.Contato;
 import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.models.enums.TipoPessoa;
+import br.com.futura.agendafinanceira.services.FornecedorService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Named
@@ -28,7 +28,7 @@ public class FornecedorCadastroBean implements Serializable {
 	private String documentoRotulo;
 
 	@Inject
-	private FornecedorDao fornecedorDao;
+	private FornecedorService fornecedorService;
 
 	@Inject
 	private MessagesHelper messagesHelper;
@@ -53,7 +53,7 @@ public class FornecedorCadastroBean implements Serializable {
 	}
 
 	public String salvar() {
-		fornecedorDao.salvar(fornecedor);
+		fornecedorService.salvar(fornecedor);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		return "/fornecedorcadastro?faces-redirect=true&fornecedor=" + fornecedor.getIdFornecedor();
 	}

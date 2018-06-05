@@ -9,16 +9,16 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.futura.agendafinanceira.daos.ContaDao;
-import br.com.futura.agendafinanceira.daos.FornecedorDao;
-import br.com.futura.agendafinanceira.daos.SetorDao;
 import br.com.futura.agendafinanceira.models.Conta;
 import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.Pagamento;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.models.Setor;
+import br.com.futura.agendafinanceira.services.ContaService;
+import br.com.futura.agendafinanceira.services.FornecedorService;
 import br.com.futura.agendafinanceira.services.PagamentoParcelaService;
 import br.com.futura.agendafinanceira.services.PagamentoService;
+import br.com.futura.agendafinanceira.services.SetorService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Named
@@ -38,13 +38,13 @@ public class PagamentoCadastroBean implements Serializable{
 	private List<Fornecedor> fornecedores;
  	
 	@Inject
-	private SetorDao setorDao;
+	private SetorService setorService;
 	
 	@Inject
-	private ContaDao contaDao;
+	private ContaService contaService;
 	
 	@Inject
-	private FornecedorDao fornecedorDao;
+	private FornecedorService fornecedorService;
 	
 	@Inject
 	private PagamentoService pagamentoService;
@@ -57,9 +57,9 @@ public class PagamentoCadastroBean implements Serializable{
 
 	@PostConstruct
 	private void init() {
-		this.setores = setorDao.listarTodos();
-		this.contas = contaDao.listarTodos();
-		this.fornecedores = fornecedorDao.listarTodos();
+		this.setores = setorService.listarTodos();
+		this.contas = contaService.listarTodos();
+		this.fornecedores = fornecedorService.listarTodos();
 	}
 	
 	public String salvar() {

@@ -8,9 +8,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.futura.agendafinanceira.daos.ContaDao;
 import br.com.futura.agendafinanceira.models.Conta;
 import br.com.futura.agendafinanceira.models.enums.Ativo;
+import br.com.futura.agendafinanceira.services.ContaService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Named
@@ -22,7 +22,7 @@ public class ContaCadastroBean implements Serializable {
 	private Conta conta;
 
 	@Inject
-	private ContaDao contaDao;
+	private ContaService contaService;
 
 	@Inject
 	private MessagesHelper messagesHelper;
@@ -34,7 +34,7 @@ public class ContaCadastroBean implements Serializable {
 	}
 
 	public String salvar() {
-		contaDao.salvar(conta);
+		contaService.salvar(conta);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		init();
 		return "contacadastro?faces-redirect=true";

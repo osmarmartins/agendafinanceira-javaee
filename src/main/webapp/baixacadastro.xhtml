@@ -208,7 +208,7 @@
 										</div>
 									</div>
 								</div>
-								
+
 								<div class="row">
 									<div class="col-sm-4">
 										<div class="form-group">
@@ -232,7 +232,7 @@
 										
 									<div class="col-sm-4">
 										<div class="form-group">
-											<label class="control-label" jsf:for="idPgtoQuitacao">Forma de Pagamento</label>
+											<label class="control-label" jsf:for="forma-pgto">Forma de Pagamento</label>
 											<h:selectOneMenu value="#{baixaCadastroBean.quitacao.formaPagamento}" id="forma-pgto" styleClass="form-control">
 												<f:selectItems var="formaPagamento" value="#{baixaCadastroBean.formasDePagamento}"
 													itemLabel="#{formaPagamento.descricao}" itemValue="#{formaPagamento}"/>
@@ -255,10 +255,82 @@
 										</div>
 									</div>
 								</div>
-								
+
 							</div>
 						</div>
 					</div>
+				
+
+
+					<div class="widget-box" jsf:id="grid-quitacoes" rendered="#{baixaCadastroBean.habilitarQuitacoes()}">
+						<div class="widget-header">
+							<h4 class="widget-title">Pagamentos</h4>						
+						</div>							
+
+						<div class="widget-body">
+							<div class="widget-main no-padding">
+								<table class="table table-striped table-bordered table-hover">
+									<thead class="thin-border-bottom">
+										<tr>
+											<th>
+												<i class="ace-icon fa fa-calendar"></i>
+												Data Baixa
+											</th>
+											<th>
+												<i class="ace-icon fa fa-money"></i>
+												Forma de Pagamento
+											</th>
+											<th>
+												<i class="ace-icon fa fa-usd"></i>
+												Valor
+											</th>
+											<th>
+												<i class="ace-icon fa fa-cog"></i>
+												Operações
+											</th>
+										</tr>
+									</thead>
+
+									<tbody>
+										<ui:repeat value="#{baixaCadastroBean.parcela.quitacoes}" var="quitacao">
+											<tr>
+												<td>
+													<h:outputText value="#{quitacao.dtPgto}">
+														<f:convertDateTime pattern="dd/MM/yyyy"/>
+													</h:outputText>
+												</td>
+												<td>
+													<h:outputText value="#{quitacao.formaPagamento.descricao}"/>
+												</td>
+												<td>
+													<h:outputText value="#{quitacao.valor}" >
+														<f:convertNumber type="currency"/>
+													</h:outputText>
+												</td>
+												<td>
+													<div class="btn-group">
+
+														<button class="btn btn-sm btn-success btn-white btn-round" jsf:action="#{baixaCadastroBean.alterar(quitacao)}">
+															<i class="ace-icon fa fa-pencil bigger-110 green"></i>
+															<f:param name="parcela" value="#{quitacao.parcela.idPagamentoParcela}"/>
+														</button>
+
+														<button class="btn btn-sm btn-danger btn-white btn-round" jsf:action="#{baixaCadastroBean.excluir(quitacao)}">
+															<i class="ace-icon fa fa-trash bigger-110 red2"></i>
+														</button>
+														
+													</div>												
+												</td>
+											</tr>
+										</ui:repeat>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>				    
+				
+				
+				
 				
 				</form>			
 

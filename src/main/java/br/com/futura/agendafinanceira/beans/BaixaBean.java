@@ -9,7 +9,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
-import br.com.futura.agendafinanceira.models.PagamentoQuitacao;
 import br.com.futura.agendafinanceira.services.BaixaService;
 
 @Named

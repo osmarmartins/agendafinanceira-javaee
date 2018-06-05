@@ -6,7 +6,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.futura.agendafinanceira.daos.BaixaParcelaDao;
-import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.models.PagamentoQuitacao;
 
 @Named
@@ -17,17 +16,13 @@ public class BaixaParcelaService implements Serializable {
 	@Inject
 	private BaixaParcelaDao baixaParcelaDao;
 	
-	public void salvar(PagamentoParcela parcela, PagamentoQuitacao quitacao) {
-		quitacao.setParcela(parcela);
-		parcela.addQuitacao(quitacao);
+	public void salvar(PagamentoQuitacao quitacao) {
 		baixaParcelaDao.salvar(quitacao);
-		
+	}
 
-		System.out.println("PARCELA >>>>>>>>>>>> " + parcela);
-		System.out.println("BAIXA >>>>>>>>>>>> " + quitacao);
-		
-		
-		
+	public void excluir(PagamentoQuitacao quitacao) {
+		//TODO Realizar as validações para exclusão da quitação
+		baixaParcelaDao.excluir(quitacao);
 	}
 
 }

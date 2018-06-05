@@ -1,7 +1,6 @@
 package br.com.futura.agendafinanceira.daos;
 
 import java.io.Serializable;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.models.Usuario;
-import br.com.futura.agendafinanceira.utils.HashMD5Util;
 import br.com.futura.agendafinanceira.utils.NumberConversionUtil;
 
 public class UsuarioDao implements Serializable {
@@ -22,15 +20,15 @@ public class UsuarioDao implements Serializable {
 		return manager.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
 	}
 
-	public List<Usuario> listarPor(String pesquisa) {
-		String argumentoPesquisa = "%" + pesquisa + "%";
+	public List<Usuario> listarPor(String filtro) {
+		String argumentoPesquisa = "%" + filtro + "%";
 		return manager
 				.createQuery("SELECT u FROM Usuario u "
 						+ "WHERE u.idUsuario = :pIdUsuario "
 						+ "OR u.nome like :pNome "
 						+ "OR u.login like :pLogin "
 						+ "OR u.email like :pEmail", Usuario.class)
-				.setParameter("pIdUsuario", NumberConversionUtil.getIntegerOrZero(pesquisa))
+				.setParameter("pIdUsuario", NumberConversionUtil.getIntegerOrZero(filtro))
 				.setParameter("pNome", argumentoPesquisa)
 				.setParameter("pLogin", argumentoPesquisa)
 				.setParameter("pEmail", argumentoPesquisa)
@@ -47,7 +45,7 @@ public class UsuarioDao implements Serializable {
 	}
 
 	@Transactional
-	public void salvar(Usuario usuario) throws NoSuchAlgorithmException {
+	public void salvar(Usuario usuario) {
 		if (usuario.getIdUsuario() == null) {
 			manager.persist(usuario);
 		} else {

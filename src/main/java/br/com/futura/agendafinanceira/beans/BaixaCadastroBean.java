@@ -1,6 +1,7 @@
 package br.com.futura.agendafinanceira.beans;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
@@ -33,9 +34,25 @@ public class BaixaCadastroBean implements Serializable {
 	}
 	
 	public String salvar() {
-		baixaParcelaService.salvar(parcela, quitacao);
+		// TODO Chamada Ajax para atualizar grid de quitações após salvar
+		baixaParcelaService.salvar(quitacao);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
-		return "/baixa?faces-redirect=true";
+		return "baixacadastro?faces-redirect=true&parcela=" + parcela.getIdPagamentoParcela();
+	}
+	
+	public String excluir(PagamentoQuitacao quitacao) {
+		// TODO Chamada Ajax para atualizar grid de quitações após excluir
+		baixaParcelaService.excluir(quitacao);
+		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
+		return "baixacadastro?faces-redirect=true&parcela=" + parcela.getIdPagamentoParcela();
+	}
+	
+	public void alterar(PagamentoQuitacao quitacao) {
+		this.quitacao = quitacao;
+	}
+	
+	public boolean habilitarQuitacoes() {
+		return this.parcela.getQuitacoes().size() > 0;
 	}
 	
 	public PagamentoParcela getParcela() {
@@ -44,21 +61,25 @@ public class BaixaCadastroBean implements Serializable {
 		}
 		return parcela;
 	}
+	
 	public void setParcela(PagamentoParcela parcela) {
 		this.parcela = parcela;
 	}
+	
 	public PagamentoQuitacao getQuitacao() {
 		if (this.quitacao == null) {
 			this.quitacao = new PagamentoQuitacao();
+			this.quitacao.setParcela(parcela);
 		}
 		return quitacao;
 	}
+	
 	public void setQuitacao(PagamentoQuitacao quitacao) {
 		this.quitacao = quitacao;
 	}
 	
-	
-	
-	
+	public List<PagamentoQuitacao> getQuitacoes() {
+		return this.parcela.getQuitacoes();
+	}
 
 }

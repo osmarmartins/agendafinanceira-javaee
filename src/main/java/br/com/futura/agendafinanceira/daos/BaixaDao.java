@@ -21,7 +21,8 @@ public class BaixaDao implements Serializable {
 				+ "join fetch pg.fornecedor "
 				+ "join fetch pg.setor "
 				+ "join fetch pg.conta "
-				, PagamentoParcela.class).getResultList();
+				+ "order by p.vencimento ", 
+				PagamentoParcela.class).getResultList();
 	}
 
 	public List<PagamentoParcela> listarPor(String pesquisa) {
@@ -29,9 +30,12 @@ public class BaixaDao implements Serializable {
 				.createQuery("select p from PagamentoParcela p "
 						+ "join fetch p.pagamento pg "
 						+ "join fetch pg.fornecedor "
+						+ "join fetch pg.setor "
+						+ "join fetch pg.conta "
 						+ "WHERE pg.historico LIKE :pHistorico "
 						+ "OR pg.fornecedor.nomeFantasia LIKE :pNomeFantasia "
-						+ "OR pg.fornecedor.razaoSocial LIKE :pRazaoSocial ", 
+						+ "OR pg.fornecedor.razaoSocial LIKE :pRazaoSocial "
+						+ "order by p.vencimento ", 
 						PagamentoParcela.class)
 				.setParameter("pHistorico", "%" + pesquisa + "%")
 				.setParameter("pNomeFantasia", "%" + pesquisa + "%")

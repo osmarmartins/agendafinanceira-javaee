@@ -10,8 +10,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.futura.agendafinanceira.daos.SetorDao;
 import br.com.futura.agendafinanceira.models.Setor;
+import br.com.futura.agendafinanceira.services.SetorService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Named
@@ -28,22 +28,22 @@ public class SetorBean implements Serializable {
 	private MessagesHelper messagesHelper;
 
 	@Inject
-	private SetorDao setorDao;
+	private SetorService setorService;
 
 	@PostConstruct
 	private void init() {
-		this.setores = setorDao.listarTodos();
+		this.setores = setorService.listarTodos();
 		this.pesquisaDescricao = new String();
 	}
 
 	public void pesquisar() {
 		if (this.pesquisaDescricao != null && !this.pesquisaDescricao.isEmpty()) {
-			this.setores = setorDao.listarPorDescricao(this.pesquisaDescricao);
+			this.setores = setorService.listarPorDescricao(this.pesquisaDescricao);
 		}
 	}
 
 	public void excluir(Setor setor) {
-		setorDao.excluir(setor);
+		setorService.excluir(setor);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		init();
 	}

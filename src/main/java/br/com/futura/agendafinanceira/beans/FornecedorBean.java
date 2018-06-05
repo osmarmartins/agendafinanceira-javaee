@@ -9,8 +9,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.futura.agendafinanceira.daos.FornecedorDao;
 import br.com.futura.agendafinanceira.models.Fornecedor;
+import br.com.futura.agendafinanceira.services.FornecedorService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Named
@@ -21,35 +21,35 @@ public class FornecedorBean implements Serializable {
 
 	private List<Fornecedor> fornecedores;
 	
-	private String pesquisa;
+	private String filtro;
 	
 	@Inject
-	private FornecedorDao fornecedorDao;
+	private FornecedorService fornecedorService;
 	
 	@Inject
 	private MessagesHelper messagesHelper;
 	
 	@PostConstruct
 	private void init(){
-		this.fornecedores = fornecedorDao.listarTodos();
+		this.fornecedores = fornecedorService.listarTodos();
 	}
 	
 	public void pesquisar(){
-		fornecedores = fornecedorDao.listarPor(pesquisa);
+		fornecedores = fornecedorService.listarPor(filtro);
 	}
 
 	public void excluir(Fornecedor fornecedor){
-		fornecedorDao.excluir(fornecedor);
+		fornecedorService.excluir(fornecedor);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		init();
 	}
 	
-	public String getPesquisa() {
-		return pesquisa;
+	public String getFiltro() {
+		return filtro;
 	}
 	
-	public void setPesquisa(String pesquisa) {
-		this.pesquisa = pesquisa;
+	public void setFiltro(String pesquisa) {
+		this.filtro = pesquisa;
 	}
 	
 	public List<Fornecedor> getFornecedores() {

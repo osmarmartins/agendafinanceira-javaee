@@ -8,10 +8,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.futura.agendafinanceira.daos.ContatoDao;
 import br.com.futura.agendafinanceira.models.Contato;
 import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.enums.Ativo;
+import br.com.futura.agendafinanceira.services.ContatoService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Named
@@ -25,7 +25,7 @@ public class ContatoCadastroBean implements Serializable {
 	private Contato contato;
 	
 	@Inject
-	private ContatoDao contatoDao;
+	private ContatoService contatoService;
 
 	@Inject
 	private MessagesHelper messagesHelper;
@@ -41,14 +41,14 @@ public class ContatoCadastroBean implements Serializable {
 	}
 
 	public String salvar() {
-		contatoDao.salvar(contato);
+		contatoService.salvar(contato);
 		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso."));
 		return "/fornecedorcadastro?faces-redirect=true&fornecedor=" + contato.getFornecedor().getIdFornecedor(); 
 	}
 
 	public String excluir(Contato contato) {
 		Integer fornecedorId = contato.getFornecedor().getIdFornecedor();
-		contatoDao.excluir(contato);
+		contatoService.excluir(contato);
 		contato.getFornecedor().removeContato(contato);
 		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso."));
 		return "/fornecedorcadastro?faces-redirect=true&fornecedor=" + fornecedorId; 

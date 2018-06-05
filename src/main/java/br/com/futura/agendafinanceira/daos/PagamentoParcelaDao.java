@@ -21,6 +21,14 @@ public class PagamentoParcelaDao implements Serializable {
 	@Inject 
 	private PagamentoService pagamentoService;
 
+	public PagamentoParcela pesquisaPorId2(Integer id) {
+		return manager.createQuery("select p from PagamentoParcela p "
+				+ "left join fetch p.quitacoes q "
+				+ "where p.idPagamentoParcela = :pParcela ", PagamentoParcela.class)
+					.setParameter("pParcela", id)
+					.getSingleResult();
+	}
+
 	public PagamentoParcela pesquisaPorId(Integer id) {
 		return manager.createQuery("select p from PagamentoParcela p "
 				+ "join fetch p.pagamento pg "

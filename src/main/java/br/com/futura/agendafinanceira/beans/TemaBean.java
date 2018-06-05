@@ -3,13 +3,14 @@ package br.com.futura.agendafinanceira.beans;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import br.com.futura.agendafinanceira.models.Tema;
 
-@ManagedBean
+
+@Named
 @SessionScoped
 public class TemaBean implements Serializable {
 

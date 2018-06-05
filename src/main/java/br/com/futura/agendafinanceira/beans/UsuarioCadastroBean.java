@@ -9,10 +9,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.futura.agendafinanceira.daos.UsuarioDao;
 import br.com.futura.agendafinanceira.models.Usuario;
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.models.enums.TipoUsuario;
+import br.com.futura.agendafinanceira.services.UsuarioService;
 import br.com.futura.agendafinanceira.utils.HashMD5Util;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
@@ -27,7 +27,7 @@ public class UsuarioCadastroBean implements Serializable {
 	private String confirmarSenha;
 
 	@Inject
-	private UsuarioDao usuarioDao;
+	private UsuarioService usuarioService;
 
 	@Inject
 	private MessagesHelper messagesHelper;
@@ -43,7 +43,7 @@ public class UsuarioCadastroBean implements Serializable {
 			if (this.usuario.getIdUsuario() == null) {
 				this.usuario.setSenha(HashMD5Util.getMD5(this.usuario.getSenha()));
 			}
-			usuarioDao.salvar(usuario);
+			usuarioService.salvar(usuario);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}

@@ -27,7 +27,9 @@ public class SetorDao implements Serializable {
 	}
 	
 	public Setor pesquisarPorId(Integer idSetor) {
-		return manager.find(Setor.class, idSetor);
+		return manager.createQuery("select s from Setor s where s.idSetor = :pSetor ", Setor.class)
+				.setParameter("pSetor", idSetor)
+				.getSingleResult();
 	}
 
 	@Transactional

@@ -8,9 +8,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.futura.agendafinanceira.daos.SetorDao;
 import br.com.futura.agendafinanceira.models.Setor;
 import br.com.futura.agendafinanceira.models.enums.Ativo;
+import br.com.futura.agendafinanceira.services.SetorService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Named
@@ -22,7 +22,7 @@ public class SetorCadastroBean implements Serializable {
 	private Setor setor;
 	
 	@Inject
-	private SetorDao setorDao;
+	private SetorService setorService;
 	
 	@Inject
 	private MessagesHelper messagesHelper;
@@ -34,7 +34,7 @@ public class SetorCadastroBean implements Serializable {
 	}
 
 	public String salvar() {
-		setorDao.salvar(setor);
+		setorService.salvar(setor);
 		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso!"));
 		init();
 		return "setorcadastro?faces-redirect=true";

@@ -42,6 +42,8 @@ public class ContaDao implements Serializable {
 	}
 
 	public Conta pesquisarPorId(Integer idConta) {
-		return manager.find(Conta.class, idConta);
+		return manager.createQuery("select c form Conta c where c.idConta = pConta ", Conta.class)
+				.setParameter("pConta", idConta)
+				.getSingleResult();
 	}
 }

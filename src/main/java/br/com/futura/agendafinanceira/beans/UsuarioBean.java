@@ -10,8 +10,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.futura.agendafinanceira.daos.UsuarioDao;
 import br.com.futura.agendafinanceira.models.Usuario;
+import br.com.futura.agendafinanceira.services.UsuarioService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Named
@@ -22,28 +22,28 @@ public class UsuarioBean implements Serializable {
 
 	private List<Usuario> usuarios = new ArrayList<>();
 
-	private String pesquisa;
+	private String filtro;
 
 	@Inject
-	private UsuarioDao usuarioDao;
+	private UsuarioService usuarioService;
 
 	@Inject
 	private MessagesHelper messagesHelper;
 
 	@PostConstruct
 	private void init() {
-		this.usuarios = usuarioDao.listarTodos();
+		this.usuarios = usuarioService.listarTodos();
 	}
 
 	public void excluir(Usuario usuario) {
-		usuarioDao.excluir(usuario);
+		usuarioService.excluir(usuario);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		init();
 	}
 
 	public void pesquisar() {
-		if (this.pesquisa != null && !this.pesquisa.isEmpty()) {
-			usuarios = usuarioDao.listarPor(this.pesquisa);
+		if (this.filtro != null && !this.filtro.isEmpty()) {
+			usuarios = usuarioService.listarPor(this.filtro);
 		}
 	}
 
@@ -51,11 +51,11 @@ public class UsuarioBean implements Serializable {
 		return usuarios;
 	}
 
-	public String getPesquisa() {
-		return pesquisa;
+	public String getFiltro() {
+		return filtro;
 	}
 
-	public void setPesquisa(String pesquisa) {
-		this.pesquisa = pesquisa;
+	public void setFiltro(String filtro) {
+		this.filtro = filtro;
 	}
 }
