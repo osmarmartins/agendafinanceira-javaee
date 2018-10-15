@@ -37,7 +37,7 @@ public class SetorCadastroBean implements Serializable {
 		setorService.salvar(setor);
 		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso!"));
 		init();
-		return "setorcadastro?faces-redirect=true";
+		return "setor?faces-redirect=true";
 	}
 
 	public Setor getSetor() {

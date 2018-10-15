@@ -36,6 +36,11 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
+			<name>org.hibernate.eclipse.console.hibernateBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
 			<name>org.eclipse.m2e.core.maven2Builder</name>
 			<arguments>
 			</arguments>
@@ -57,5 +62,6 @@
 		<nature>org.zeroturnaround.eclipse.jrebelNature</nature>
 		<nature>org.jboss.tools.jst.web.kb.kbnature</nature>
 		<nature>org.jboss.tools.cdi.core.cdinature</nature>
+		<nature>org.hibernate.eclipse.console.hibernateNature</nature>
 	</natures>
 </projectDescription>

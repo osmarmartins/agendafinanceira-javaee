@@ -51,11 +51,12 @@
 								</button>	
 								
 								<span/>					
-		
-								<button class="btn btn-lg btn-info" type="submit" jsf:action="#{setorCadastroBean.salvar()}">	
+
+								<button class="btn btn-lg btn-info" type="submit" jsf:action="#{setorCadastroBean.salvar()}" onclick="handleDisableButton">	
 									<i class="ace-icon fa fa-check"></i>
 									Salvar
 								</button>						
+								
 							</div>
 						</div>
 	
@@ -120,6 +121,34 @@
 	</ui:define>
 
 	<ui:define name="pagina">Cadastro de Setores</ui:define>
+
+	<ui:define name="scripts">
+		<script>
+			function handleDisableButton(data) {
+			    var buttonElement = data.source; // The HTML DOM element which invoked the ajax event.
+			    var ajaxStatus = data.status; // Can be "begin", "complete" and "success".
+			
+			    switch (ajaxStatus) {
+			        case "begin": // This is called right before ajax request is been sent.
+				        console.log('BEGIN');
+			            buttonElement.disabled = true;
+			            break;
+			
+			        case "complete": // This is called right after ajax response is received.
+			            // We don't want to enable it yet here, right?
+				        console.log('COMPLETE');
+			            break;
+			
+			        case "success": // This is called when ajax response is successfully processed.
+				        console.log('SUCCESS');
+			            buttonElement.disabled = false;
+			            break;
+			    }
+			}
+	
+		</script>
+	</ui:define>
+	
 </ui:composition>
 
 </html>

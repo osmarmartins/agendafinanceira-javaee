@@ -1,49 +1,131 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<ui:composition template="resources/template/aceadmin.xhtml">
-	<ui:define name="titulo">
-		<label>Login</label>
-	</ui:define>
+<h:head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta charset="utf-8" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-	<ui:define name="conteudo">
-		
-		<p:messages globalOnly="true"/>
-		
-		<div class="ui-g">	
-			<div class="ui-g-4"></div>
+	<link rel="icon" href='#{resource["img/AppLogo.png"]}' />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300"/>
 
-			<div class="ui-g-4">
-				<h:form id="formLogin">
-					<p:fieldset legend="Acesso ao Sistema">
-						<h:panelGrid columns="3">
-							<p:outputLabel value="Email:" for="email"/>
-							<p:inputText id="email" value="#{loginBean.usuario.email}" required="true">
-								<f:attribute name="type" value="email"/>
-							</p:inputText>
-						 	<p:message for="email" id="messageEmail" />
-							 
-							<p:outputLabel value="Senha:" for="senha"/>
-							<p:password id="senha" value="#{loginBean.usuario.senha}" required="true" feedback="true" />
-							<p:message for="senha" id="messageSenha" />
-							
-							<p:outputLabel/>
-							<p:commandButton value="Login" action="#{loginBean.efetuarLogin}" process="@form" update="@form" />
-						</h:panelGrid>
-					</p:fieldset>
-				</h:form>
-			</div>
-			
-			<div class="ui-g-4"></div>
-		</div>
-	</ui:define>
+	<!-- bootstrap & fontawesome --> 
+	<link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/aceAdmin/font-awesome/4.5.0/css/font-awesome.min.css"/> 
+	<h:outputStylesheet library="aceAdmin" name="css/bootstrap.min.css"/>
 
-	<ui:define name="pagina">Acesso ao Sistema</ui:define>
-</ui:composition>
+	<!-- page specific plugin styles -->
 
+	<!-- text fonts -->
+	<h:outputStylesheet library="aceAdmin" name="css/fonts.googleapis.com.css"/>
+
+	<!-- ace styles -->
+	<h:outputStylesheet library="aceAdmin" name="css/ace.min.css" styleClass="ace-main-stylesheet" id="main-ace-style" /> 
+	<h:outputStylesheet library="aceAdmin" name="css/ace-skins.min.css"/>
+
+	<!-- inline styles related to this page -->
+
+	<!-- ace settings handler -->
+	<h:outputScript library="aceAdmin" name="js/ace-extra.min.js"/>
+
+	
+	<!-- Personalização -->
+	<h:outputStylesheet library="css" name="estilo.css" />
+	
+</h:head>
+
+	<h:body class="login-layout light-login">
+		<div class="main-container">
+			<div class="main-content">
+				<div class="row">
+					<div class="col-sm-10 col-sm-offset-1">
+						<div class="login-container">
+							<div class="center">
+								<h1>
+									<i class="ace-icon fa fa-leaf green"></i>
+									<span class="red">Ace</span>
+									<span class="white" id="id-text2">Application</span>
+								</h1>
+								<h4 class="blue" id="id-company-text">Company Name</h4>
+							</div>
+
+							<div class="space-6"></div>
+
+							<div class="position-relative">
+								<div id="login-box" class="login-box visible widget-box no-border">
+									<div class="widget-body">
+										<div class="widget-main">
+											<h4 class="header blue lighter bigger">
+												<i class="ace-icon fa fa-coffee green"></i>
+												Please Enter Your Information
+											</h4>
+
+											<div class="space-6"></div>
+
+											<form jsf:id="form-jsf" jsf:prependId="false">
+												<fieldset>
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input jsf:id="username" type="text" class="form-control" placeholder="Username" />
+															<i class="ace-icon fa fa-user"></i>
+														</span>
+													</label>
+
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input jsf:id="password" type="password" class="form-control" placeholder="Password" />
+															<i class="ace-icon fa fa-lock"></i>
+														</span>
+													</label>
+
+													<div class="space"></div>
+
+													<div class="clearfix">
+														<label class="inline">
+															<input type="checkbox" class="ace" />
+															<span class="lbl"> Remember Me</span>
+														</label>
+
+														<button 
+															jsf:id="enviar" 
+															type="submit" 
+															class="width-35 pull-right btn btn-sm btn-primary">
+															<i class="ace-icon fa fa-key"></i>
+															<span class="bigger-110">Login</span>
+														</button>
+													</div>
+
+													<div class="space-4"></div>
+												</fieldset>
+											</form>
+
+										</div><!-- /.widget-main -->
+
+									</div><!-- /.widget-body -->
+								</div><!-- /.login-box -->
+
+
+							</div><!-- /.position-relative -->
+
+							<div class="navbar-fixed-top align-right">
+								<br />
+								<a id="btn-login-dark" href="#">Dark</a>
+								<span class="blue">/</span>
+								<a id="btn-login-blur" href="#">Blur</a>
+								<span class="blue">/</span>
+								<a id="btn-login-light" href="#">Light</a>
+							</div>
+						</div>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.main-content -->
+		</div><!-- /.main-container -->
+
+	</h:body>
 </html>

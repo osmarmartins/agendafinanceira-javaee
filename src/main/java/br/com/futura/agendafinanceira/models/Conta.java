@@ -14,8 +14,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import org.hibernate.validator.constraints.Length;
-
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 
 /**
@@ -35,7 +33,7 @@ public class Conta implements Serializable {
 	@Enumerated
 	private Ativo ativo;
 
-	@Length(min=3, message="Descrição não pode ter menos que três caracteres")
+//	@Length(min=3, message="Descrição não pode ter menos que três caracteres")
 	private String descricao;
 
 	@Version

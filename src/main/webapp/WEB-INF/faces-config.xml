@@ -5,6 +5,8 @@
 
 	<application>
 		<message-bundle>jsf_messages</message-bundle>
+		<resource-handler>org.omnifaces.resourcehandler.CombinedResourceHandler</resource-handler>
+		
 	</application>
 	
 	<lifecycle>
