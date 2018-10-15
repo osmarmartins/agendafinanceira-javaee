@@ -87,25 +87,11 @@
 			<version>1.0.10</version>
 		</dependency>
 
-<!-- 
-		<dependency>
-			<groupId>com.github.adminfaces</groupId>
-			<artifactId>admin-template</artifactId>
-			<version>${adminfaces.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.github.adminfaces</groupId>
-					<artifactId>admin-theme</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
 		<dependency>
 			<groupId>com.github.adminfaces</groupId>
 			<artifactId>admin-theme</artifactId>
 			<version>${adminfaces.version}</version>
 		</dependency>
- -->
 	</dependencies>
 
 	<repositories>
