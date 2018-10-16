@@ -659,7 +659,20 @@
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
 							<h:panelGroup id="tabela-form">
-								<ui:insert name="conteudo">Formulário</ui:insert>
+							
+								<ui:insert name="conteudo"> Formulário </ui:insert>
+
+								<!-- AJAX STATUS BEGINS -->							
+								<p:ajaxStatus 
+									onstart="$('#ajax-status').css('display', 'block')" 
+									onsuccess="$('#ajax-status').css('display', 'none')">
+								</p:ajaxStatus>
+								<div id="ajax-status" style="position: fixed; top: 50%; left: 50%; display: none;">
+									<h:graphicImage library="img" name="ajax-loading.gif"/>
+								</div> 								
+								<!-- AJAX STATUS ENDS -->							
+
+							
 							</h:panelGroup>
 							<!-- PAGE CONTENT ENDS -->
 						</div><!-- /.col -->

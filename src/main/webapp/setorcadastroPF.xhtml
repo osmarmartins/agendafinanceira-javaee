@@ -48,6 +48,8 @@
 							<p:button value="Voltar" outcome="/setor.xhtml"/>
 							<p:spacer style="width: 10px;"/>
 					        <p:commandButton value="Salvar" actionListener="#{setorCadastroBean.salvar}" update="@form"/>
+							<p:spacer style="width: 10px;"/>
+					        <p:commandButton value="TESTAR AJAX" actionListener="#{setorCadastroBean.testar}" update="@form" process="@this"/>
 						</f:facet>
 					</p:toolbar>
 					
