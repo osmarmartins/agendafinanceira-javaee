@@ -75,16 +75,88 @@
 						</p:column>
 
 					</p:dataTable>
-						
+
 				    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 				        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
 				        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
-				    </p:confirmDialog>					
-
+				    </p:confirmDialog>
+						
 				</h:form>
 			</div>
 			
 		</div>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">x</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-danger">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>
+		
+
+<!-- 
+		<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-dialog-buttons ui-draggable"
+			tabindex="-1" role="dialog"
+			style="height: auto; width: 320px; top: 163px; left: 648px; display: block;"
+			aria-describedby="dialog-confirm" aria-labelledby="ui-id-32">
+			<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix ui-draggable-handle">
+				<span id="ui-id-32" class="ui-dialog-title">
+				</span>
+				<button type="button"
+					class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close"
+					role="button" title="Close">
+					<span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span>
+					<span class="ui-button-text">Close</span>
+				</button>
+			</div>
+			<div id="dialog-confirm" class="ui-dialog-content ui-widget-content"
+				style="width: auto; min-height: 30px; max-height: none; height: auto;">
+				<div class="alert alert-info bigger-110">These items will be permanently deleted and cannot be recovered.</div>
+
+				<div class="space-6"></div>
+
+				<p class="bigger-110 bolder center grey">
+					<i class="ace-icon fa fa-hand-o-right blue bigger-120"></i> Are you sure?
+				</p>
+			</div>
+			<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+				<div class="ui-dialog-buttonset">
+					<button type="button"
+						class="btn btn-danger btn-minier ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+						role="button">
+						<span class="ui-button-text"><i class="ace-icon fa fa-trash-o bigger-110"></i>Delete all items</span>
+					</button>
+					<button type="button"
+						class="btn btn-minier ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+						role="button">
+						<span class="ui-button-text"><i class="ace-icon fa fa-times bigger-110"></i>Cancel</span>
+					</button>
+				</div>
+			</div>
+		</div>
+ -->
+ 
+ 
+ 
 	</ui:define>
 
 	<ui:define name="pagina">Setores</ui:define>
