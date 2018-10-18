@@ -60,4 +60,5 @@ public class SetorBean implements Serializable {
 		return pesquisaDescricao;
 	}
 
+
 }
