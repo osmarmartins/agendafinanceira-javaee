@@ -29,6 +29,9 @@ public class SetorBean implements Serializable {
 
 	@Inject
 	private SetorService setorService;
+	
+	@Inject
+	private Setor setorSelecionado;
 
 	@PostConstruct
 	private void init() {
@@ -58,6 +61,14 @@ public class SetorBean implements Serializable {
 
 	public String getPesquisaDescricao() {
 		return pesquisaDescricao;
+	}
+
+	public Setor getSetorSelecionado() {
+		return setorSelecionado;
+	}
+	
+	public void selecionaSetor(Setor setor) {
+		this.setorSelecionado = setor;
 	}
 
 

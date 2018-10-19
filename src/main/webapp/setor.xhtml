@@ -30,8 +30,8 @@
 		
 		<div class="ui-g">	
 			<div class="ui-g-12">
-				<h:form id="form">
-					<p:growl autoUpdate="true" globalOnly="true"/>
+				<h:form id="form" prependId="false">
+					<!-- p:growl autoUpdate="true" globalOnly="true"/ -->
 
 					<p:toolbar>
 						<f:facet name="left">
@@ -44,8 +44,8 @@
 						</f:facet>
 					</p:toolbar>
 
-					<p:dataTable value="#{setorBean.setores}" 
-						var="setor" id="tabelaSetores" emptyMessage="Nenhum registro encontrado" 
+					<p:dataTable value="#{setorBean.setores}"
+						var="setor" id="tabela" emptyMessage="Nenhum registro encontrado" 
 						rows="8" paginator="true" paginatorPosition="bottom">
 						
 						<p:column sortBy="#{setor.idSetor}" width="15%">
@@ -65,113 +65,93 @@
 						
 						<p:column width="15%">
 							<f:facet name="header">Operações</f:facet>
-							<p:button title="Alterar" icon="fa fa-pencil" outcome="setorcadastro">
+							
+							<button type="button" class="btn btn-sm btn-success btn-white btn-round" jsf:id="btnAlterar" jsf:outcome="setorcadastro">
 								<f:param name="setor" value="#{setor.idSetor}"/>
-							</p:button>
+								<i class="ace-icon fa fa-pencil bigger-110 green"></i>
+							</button>
 							
-							<p:commandButton title="Excluir" icon="fa fa-trash" actionListener="#{setorBean.excluir(setor)}" update="@form" process="@this">
-								<p:confirm header="Confirma exclusão" message="Confirma a exclusão de '#{setor.descricao}'" icon="ui-icon-alert" />							
-							</p:commandButton>
-							
-							
-							
-							
-<!-- button class="btn btn-sm btn-success btn-white btn-round" jsf:outcome="pagamentocadastroparcela.xhtml">
-	<i class="ace-icon fa fa-pencil bigger-110 green"></i>
-	<f:param name="pagamento" value=""/>
-	<f:param name="parcela" value=""/>
-</button -->
-							
-<button type="button" class="btn btn-sm btn-danger btn-white btn-round" 
-	data-toggle="modal" 
-	data-target="#dialogModal" 
-	data-mensagem="Excluir permanentemente dos dados do setor '#{setor.descricao}' ?"
-	data-bean="#{setor}">
-	<i class="ace-icon fa fa-trash bigger-110 green"></i>
-</button>
-
-									
-							
-							
-							
+							<button type="button" class="btn btn-sm btn-danger btn-white btn-round" jsf:id="btnExcluir"
+								data-toggle="modal" 
+								data-target="#modalExclusao" 
+								data-mensagem="Excluir permanentemente dos dados do setor '#{setor.descricao}' ?">
+								<i class="ace-icon fa fa-trash bigger-110 danger"></i>
+								<f:ajax
+									execute="@this"
+									render="btnConfirmaExclucao"
+									listener="#{setorBean.selecionaSetor(setor)}"/>
+							</button>
 						</p:column>
 
 					</p:dataTable>
 
-				    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-				        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
-				        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
-				    </p:confirmDialog>
-						
 				</h:form>
 			</div>
 			
 		</div>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dialogModal">
-  Launch demo modal
-</button>
 
-<!-- Modal -->
-<div class="modal fade" id="dialogModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-		<span id="ui-id-32" class="ui-dialog-title">
-			<div class="widget-header">
-				<h4 class="smaller">
-					<i class="ace-icon fa fa-exclamation-triangle red"></i>
-					Confirmar Exclusão
-			        <button type="button" class="ui-dialog-titlebar-close ui-corner-all ui-button-icon-only close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true"><i class="ace-icon fa fa-times"></i></span>
-			        </button>
-				</h4>
+		<!-- Modal Exclusão -->
+		<div class="modal fade" id="modalExclusao" tabindex="-1" role="dialog" aria-labelledby="modalExclusao" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
 				
+					<span id="ui-id-32" class="ui-dialog-title">
+						<div class="widget-header">
+							<h4 class="smaller">
+								<i class="ace-icon fa fa-exclamation-triangle red"></i>
+								Confirmar Exclusão
+								<button type="button" class="ui-dialog-titlebar-close ui-corner-all ui-button-icon-only close"
+									data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true"><i class="ace-icon fa fa-times"></i></span>
+								</button>
+							</h4>
+						</div>
+					</span>
+
+
+					<div class="modal-body">
+						<div id="mensagem" class="alert alert-info bigger-110">
+							These items will be permanently deleted and cannot be recovered.
+						</div>
+
+						<div class="space-6"></div>
+
+						<p class="bigger-110 bolder center grey">
+							<i class="ace-icon fa fa-hand-o-right blue bigger-120"></i> Tem certeza que deseja excluir?
+						</p>
+
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" jsf:id="btnConfirmaExclucao"
+							class="btn btn-danger" data-dismiss="modal">
+							<i class="ace-icon fa fa-trash-o bigger-110"></i> Excluir
+							<f:ajax
+								listener="#{setorBean.excluir(setorBean.setorSelecionado)}"
+								execute="@this" render="tabela" />
+						</button>
+						
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">
+							<i class="ace-icon fa fa-times bigger-110"></i> Fechar
+						</button>
+					</div>
+				</div>
 			</div>
-		</span>
-
-
-      <div class="modal-body">
-		<div id="mensagem" class="alert alert-info bigger-110">
-			These items will be permanently deleted and cannot be recovered.
 		</div>
-	
-		<div class="space-6"></div>
-	
-		<p class="bigger-110 bolder center grey">
-			<i class="ace-icon fa fa-hand-o-right blue bigger-120"></i> Tem certeza que deseja excluir?
-		</p>
 
-	  </div>
-	
-      <div class="modal-footer">
-        <button type="button" id="btnExcluir" class="btn btn-danger">
-        	<i class="ace-icon fa fa-trash-o bigger-110"></i>
-        	Excluir
-       	</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-        	<i class="ace-icon fa fa-times bigger-110"></i>
-        	Fechar
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
 
- 
 	</ui:define>
 
 	<ui:define name="pagina">Setores</ui:define>
 
 	<ui:define name="scripts">
 		<script>
-			$('#dialogModal').on('show.bs.modal', function (event) {
+			$('#modalExclusao').on('show.bs.modal', function (event) {
 				  var button = $(event.relatedTarget);
 				  var mensagem = button.data('mensagem');
-				  var bean = button.data('bean');
 				  var modal = $(this)
 				  modal.find('#mensagem').text(mensagem)
-				  console.log(bean);
 				});
 
 		</script>
@@ -180,3 +160,4 @@
 </ui:composition>
 
 </html>
+
