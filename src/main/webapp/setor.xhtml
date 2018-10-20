@@ -31,8 +31,6 @@
 		<div class="ui-g">	
 			<div class="ui-g-12">
 				<h:form id="form" prependId="false">
-					<!-- p:growl autoUpdate="true" globalOnly="true"/ -->
-
 					<p:toolbar>
 						<f:facet name="left">
 							<p:button value="Novo" icon="fa fa-plus" outcome="/setorcadastro.xhtml"/>
@@ -44,29 +42,46 @@
 						</f:facet>
 					</p:toolbar>
 
-					<p:dataTable value="#{setorBean.setores}"
-						var="setor" id="tabela" emptyMessage="Nenhum registro encontrado" 
+					<h:dataTable 
+						styleClass="table table-striped table-bordered table-hover"
+						emptyMessage="Nenhum registro encontrado"
+						value="#{setorBean.setores}" var="setor" id="tabela" 
 						rows="8" paginator="true" paginatorPosition="bottom">
 						
-						<p:column sortBy="#{setor.idSetor}" width="15%">
-							<f:facet name="header">ID</f:facet>
+						<h:column sortBy="#{setor.idSetor}" width="15%">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-bookmark"></i>							
+								ID
+							</f:facet>
 							<h:outputText value="#{setor.idSetor}"/>
-						</p:column>
+						</h:column>
 						
-						<p:column sortBy="#{setor.descricao}">
-							<f:facet name="header">Descrição</f:facet>
+						<h:column sortBy="#{setor.descricao}">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-eye"></i>							
+								Descrição
+							</f:facet>
 							<h:outputText value="#{setor.descricao}"/>
-						</p:column>
+						</h:column>
 						
-						<p:column sortBy="#{setor.ativo}" width="15%">
-							<f:facet name="header">Situação</f:facet>
-							<h:outputText value="#{setor.ativo.descricao}"/>
-						</p:column>
+						<h:column sortBy="#{setor.ativo.descricao}" width="15%">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-heartbeat"></i>							
+								Situação
+							</f:facet>
+							<span class="label #{setor.status?'label-success':'label-danger'} ">							
+								<h:outputText value="#{setor.ativo.descricao}"/>
+							</span>
+						</h:column>
 						
-						<p:column width="15%">
-							<f:facet name="header">Operações</f:facet>
+						<h:column width="15%">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-gear"></i>							
+								Operações
+							</f:facet>
 							
-							<button type="button" class="btn btn-sm btn-success btn-white btn-round" jsf:id="btnAlterar" jsf:outcome="setorcadastro">
+							<button type="button" class="btn btn-sm btn-success btn-white btn-round" 
+								jsf:id="btnAlterar" jsf:outcome="setorcadastro">
 								<f:param name="setor" value="#{setor.idSetor}"/>
 								<i class="ace-icon fa fa-pencil bigger-110 green"></i>
 							</button>
@@ -81,9 +96,9 @@
 									render="btnConfirmaExclucao"
 									listener="#{setorBean.selecionaSetor(setor)}"/>
 							</button>
-						</p:column>
+						</h:column>
 
-					</p:dataTable>
+					</h:dataTable>
 
 				</h:form>
 			</div>
@@ -129,7 +144,7 @@
 							<i class="ace-icon fa fa-trash-o bigger-110"></i> Excluir
 							<f:ajax
 								listener="#{setorBean.excluir(setorBean.setorSelecionado)}"
-								execute="@this" render="tabela" />
+								execute="@this" render="tabela app-mensagem" />
 						</button>
 						
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">

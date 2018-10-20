@@ -659,7 +659,12 @@
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
 							<h:panelGroup id="tabela-form">
-							
+								<h:messages globalOnly="true" id="app-mensagem"
+									infoClass="alert alert-info"
+									errorClass="alert alert-danger" 
+									fatalClass="alert alert-danger" 
+									warnClass="alert alert-warning" />
+									
 								<ui:insert name="conteudo"> Formulário </ui:insert>
 
 								<!-- AJAX STATUS BEGINS -->							

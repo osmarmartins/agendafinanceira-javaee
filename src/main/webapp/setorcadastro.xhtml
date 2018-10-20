@@ -39,8 +39,7 @@
 		<div class="ui-g">	
 			<div class="ui-g-12">
 			
-				<form jsf:id="formSetor" jsf:prependId="false">
-					<p:messages />
+				<h:form id="formSetor" prependId="false">
 					
 					<div class="widget-box">
 						<div class="widget-header">
@@ -52,7 +51,8 @@
 								
 								<span/>					
 
-								<button class="btn btn-lg btn-info" type="submit" jsf:action="#{setorCadastroBean.salvar()}" onclick="handleDisableButton">	
+								<button class="btn btn-lg btn-info" type="submit" jsf:id="btnSalvar"
+									jsf:action="#{setorCadastroBean.salvar()}" onclick="handleDisableButton">
 									<i class="ace-icon fa fa-check"></i>
 									Salvar
 								</button>						
@@ -114,7 +114,7 @@
 					</div>
 				
 				
-				</form>
+				</h:form>
 
 			</div>
 		</div>

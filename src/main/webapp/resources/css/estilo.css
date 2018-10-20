@@ -1,5 +1,5 @@
 @CHARSET "UTF-8";
-
+/*
 body_ {
 	margin: 0; 
 	background-color: #ddd;
@@ -30,11 +30,6 @@ h1 {
 	line-height: 10px;
 }
 
-.grafico {
-	height: 200px;
-	text-align: center;
-}
-
 .painel{
 	width: 100%;
 }
@@ -61,5 +56,33 @@ h1 {
     display: block;
     padding: 1px 5px;
 }
+*/
 
+
+.grafico {
+	height: 200px;
+	text-align: center;
+}
+
+li {
+	list-style: none;
+}
+
+.alert-info::before {
+    content: "\f05a"; 
+    font-family: FontAwesome;
+    font-size: 1.2em;
+}
+
+.alert-danger::before {
+    content: "\f057"; 
+    font-family: FontAwesome;
+    font-size: 1.2em;
+}
+
+.alert-warn::before {
+    content: "\f071"; 
+    font-family: FontAwesome;
+    font-size: 1.2em;
+}
 

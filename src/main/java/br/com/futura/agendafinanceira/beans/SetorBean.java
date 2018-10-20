@@ -49,6 +49,7 @@ public class SetorBean implements Serializable {
 		setorService.excluir(setor);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		init();
+		
 	}
 
 	public List<Setor> getSetores() {
