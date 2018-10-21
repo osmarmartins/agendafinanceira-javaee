@@ -37,10 +37,24 @@
 							<button class="btn btn-white btn-primary" type="button" jsf:id="btnNovo" jsf:outcome="/setorcadastro.xhtml">
 								<i class="fa fa-plus"></i> Novo
 							</button>
+							
+							<p:spacer width="10"/>
+							
+							<button class="btn btn-white btn-primary" type="submit" jsf:id="btnSelecao" jsf:actionListener="#{setorBean.ExibirSelecao()}">
+								<i class="fa fa-search"></i> Ver Seleção
+							</button>
+							
+							<p:spacer width="10"/>
+							
+							<button class="btn btn-white btn-danger" type="button" 
+								jsf:id="btnExcluirSelecao" 
+								jsf:rendered="#{setorBean.isExisteSelecao()}">
+								<i class="fa fa-trash"></i> Excluir Seleção
+							</button>
+							
 						</div>
 						
 						<div class="col-md-offset-4 col-md-5 align-right">
-
 
 							<div class="input-group">
 								<input class="form-control input-mask-date" type="text" 
@@ -57,10 +71,18 @@
 					</div>
 					
 					
-					<p:dataTable 
+					<p:dataTable id="tabela" widgetVar="tabela"
 						emptyMessage="Nenhum registro encontrado"
-						value="#{setorBean.setores}" var="setor" id="tabela" 
-						rows="8" paginator="true" paginatorPosition="bottom">
+						value="#{setorBean.setores}" var="setor" rowKey="#{setor.idSetor}"
+						selection="#{setorBean.setoresSelecionados}" 
+						rows="8"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
+						paginator="true" paginatorPosition="bottom">
+						
+						<p:ajax event="rowSelect" listener="#{setorBean.isExisteSelecao()}" update="btnExcluirSelecao"/>
+						<p:ajax event="rowUnselect" listener="#{setorBean.isExisteSelecao()}" update="btnExcluirSelecao"/>
+
+						<p:column selectionMode="multiple" width="5%" styleClass="align-center"/>
 						
 						<p:column sortBy="#{setor.idSetor}" width="15%">
 							<f:facet name="header">

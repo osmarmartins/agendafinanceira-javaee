@@ -10,6 +10,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
+
 import br.com.futura.agendafinanceira.models.Setor;
 import br.com.futura.agendafinanceira.services.SetorService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
@@ -20,8 +23,6 @@ public class SetorBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private List<Setor> setores = new ArrayList<Setor>();
-
 	private String pesquisaDescricao;
 
 	@Inject
@@ -30,13 +31,15 @@ public class SetorBean implements Serializable {
 	@Inject
 	private SetorService setorService;
 	
-	@Inject
-	private Setor setorSelecionado;
+	private List<Setor> setores = new ArrayList<>();
+	
+	private List<Setor> setoresSelecionados = new ArrayList<>();
+	
+	private Setor setorSelecionado = new Setor();
 
 	@PostConstruct
 	private void init() {
 		this.setores = setorService.listarTodos();
-		this.pesquisaDescricao = new String();
 	}
 
 	public void pesquisar() {
@@ -73,6 +76,40 @@ public class SetorBean implements Serializable {
 	public void selecionaSetor(Setor setor) {
 		this.setorSelecionado = setor;
 	}
-
+	
+	public void setSetoresSelecionados(List<Setor> setoresSelecionados) {
+		
+		System.out.println(">>>>>>>>>>>>> (selecionou!) QTD REGISTROS SELECIONADOS: " + setoresSelecionados.size());
+		
+		this.setoresSelecionados = setoresSelecionados;
+	}
+	
+	public List<Setor> getSetoresSelecionados() {
+		return setoresSelecionados;
+	}
+	
+	public Boolean isExisteSelecao() {
+		
+		System.out.println(">>>>>>>>>>>>> QTD REGISTROS SELECIONADOS: " + setoresSelecionados.size());
+		
+		return !setoresSelecionados.isEmpty();
+	}
+	
+	public void ExibirSelecao() {
+		
+		System.out.println("REGISTROS SELECIONADOS:");
+		
+		for (Setor setor : setoresSelecionados) {
+			System.out.println(setor);
+		}
+	}
+	
+    public void onRowSelect(SelectEvent event) {
+		System.out.println(">>>>>>>>>>>>> QTD REGISTROS SELECIONADOS: " + setoresSelecionados.size());
+    }
+ 
+    public void onRowUnselect(UnselectEvent event) {
+		System.out.println(">>>>>>>>>>>>> QTD REGISTROS SELECIONADOS: " + setoresSelecionados.size());
+    }	
 
 }
