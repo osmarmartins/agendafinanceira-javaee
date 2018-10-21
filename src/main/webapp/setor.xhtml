@@ -31,50 +31,64 @@
 		<div class="ui-g">	
 			<div class="ui-g-12">
 				<h:form id="form" prependId="false">
-					<p:toolbar>
-						<f:facet name="left">
-							<p:button value="Novo" icon="fa fa-plus" outcome="/setorcadastro.xhtml"/>
-						</f:facet>
-						
-						<f:facet name="right">
-							<p:inputText placeholder="Pesquisar por..." size="30" value="#{setorBean.pesquisaDescricao}"/>
-							<p:commandButton value="Pesquisar" icon="fa fa-search" action="#{setorBean.pesquisar()}" update="@form"/>
-						</f:facet>
-					</p:toolbar>
 
-					<h:dataTable 
-						styleClass="table table-striped table-bordered table-hover"
+					<div class="clearfix form-actions ui-widget-header" style="margin-bottom: 0;" jsf:id="comandoGrid">
+						<div class="col-md-3">
+							<button class="btn btn-white btn-primary" type="button" jsf:id="btnNovo" jsf:outcome="/setorcadastro.xhtml">
+								<i class="fa fa-plus"></i> Novo
+							</button>
+						</div>
+						
+						<div class="col-md-offset-4 col-md-5 align-right">
+
+
+							<div class="input-group">
+								<input class="form-control input-mask-date" type="text" 
+									placeholder="Pesquisa por..."
+									jsf:value="#{setorBean.pesquisaDescricao}" />
+								<span class="input-group-btn">
+									<button class="btn btn-inverse btn-white" type="submit" jsf:action="#{setorBean.pesquisar()}" jsf:update="@form">
+										<i class="ace-icon fa fa-search bigger-110"></i>
+									</button>
+								</span>
+							</div>
+
+						</div>
+					</div>
+					
+					
+					<p:dataTable 
 						emptyMessage="Nenhum registro encontrado"
 						value="#{setorBean.setores}" var="setor" id="tabela" 
 						rows="8" paginator="true" paginatorPosition="bottom">
 						
-						<h:column sortBy="#{setor.idSetor}" width="15%">
+						<p:column sortBy="#{setor.idSetor}" width="15%">
 							<f:facet name="header">
 								<i class="ace-icon fa fa-bookmark"></i>							
 								ID
 							</f:facet>
 							<h:outputText value="#{setor.idSetor}"/>
-						</h:column>
+						</p:column>
 						
-						<h:column sortBy="#{setor.descricao}">
+						<p:column sortBy="#{setor.descricao}">
 							<f:facet name="header">
 								<i class="ace-icon fa fa-eye"></i>							
 								Descrição
 							</f:facet>
 							<h:outputText value="#{setor.descricao}"/>
-						</h:column>
+						</p:column>
 						
-						<h:column sortBy="#{setor.ativo.descricao}" width="15%">
+						<p:column sortBy="#{setor.ativo.descricao}" width="15%" class="text-center">
 							<f:facet name="header">
 								<i class="ace-icon fa fa-heartbeat"></i>							
 								Situação
 							</f:facet>
-							<span class="label #{setor.status?'label-success':'label-danger'} ">							
+							<span class="label label-white middle #{setor.status?'label-success':'label-danger'}" style="width: 6em;">							
 								<h:outputText value="#{setor.ativo.descricao}"/>
 							</span>
-						</h:column>
+						</p:column>
 						
-						<h:column width="15%">
+						<p:column width="13%" class="text-center">
 							<f:facet name="header">
 								<i class="ace-icon fa fa-gear"></i>							
 								Operações
@@ -96,9 +110,9 @@
 									render="btnConfirmaExclucao"
 									listener="#{setorBean.selecionaSetor(setor)}"/>
 							</button>
-						</h:column>
+						</p:column>
 
-					</h:dataTable>
+					</p:dataTable>
 
 				</h:form>
 			</div>

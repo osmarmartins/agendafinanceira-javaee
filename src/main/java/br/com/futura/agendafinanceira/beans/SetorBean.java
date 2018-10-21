@@ -42,6 +42,8 @@ public class SetorBean implements Serializable {
 	public void pesquisar() {
 		if (this.pesquisaDescricao != null && !this.pesquisaDescricao.isEmpty()) {
 			this.setores = setorService.listarPorDescricao(this.pesquisaDescricao);
+		} else {
+			init();
 		}
 	}
 

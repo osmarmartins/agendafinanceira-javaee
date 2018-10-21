@@ -86,3 +86,20 @@ li {
     font-size: 1.2em;
 }
 
+.ui-paginator .ui-paginator-page, .ui-paginator .ui-paginator-pages, 
+.ui-paginator .ui-paginator-next, .ui-paginator .ui-paginator-last, 
+.ui-paginator .ui-paginator-first, .ui-paginator .ui-paginator-prev, 
+.ui-paginator .ui-paginator-current {
+	margin-left: 0!important;
+	margin-right: 0!important;
+}
+
+.ui-paginator-pages {
+	padding-left: 0!important;
+    padding-right: 0!important;
+}
+
+.ui-corner-all {
+	border-radius: 0!important;
+}
+
