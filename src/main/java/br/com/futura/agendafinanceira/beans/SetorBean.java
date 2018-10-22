@@ -32,6 +32,8 @@ public class SetorBean implements Serializable {
 	
 	private List<Setor> setoresSelecionados = new ArrayList<>();
 	
+	private String mensagemExclusao;
+	
 	@PostConstruct
 	private void init() {
 		this.setores = setorService.listarTodos();
@@ -49,7 +51,6 @@ public class SetorBean implements Serializable {
 		setorService.excluir(setoresSelecionados);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		init();
-		
 	}
 
 	public List<Setor> getSetores() {
@@ -67,6 +68,7 @@ public class SetorBean implements Serializable {
 	public void selecionaSetor(Setor setor) {
 		setoresSelecionados = new ArrayList<>();
 		setoresSelecionados.add(setor);
+		mensagemExclusaoBuilder();
 	}
 	
 	public void setSetoresSelecionados(List<Setor> setoresSelecionados) {
@@ -77,24 +79,28 @@ public class SetorBean implements Serializable {
 		return setoresSelecionados;
 	}
 	
+	public String getMensagemExclusao() {
+		return mensagemExclusao;
+	}
+	
 	public Boolean isExisteSelecao() {
 		return !setoresSelecionados.isEmpty();
 	}
 	
-	public String mensagemExclusao() {
-		if (this.getSetoresSelecionados()==null || this.getSetoresSelecionados().size()==0) {
-			return "";
-		}
-		
+	public void mensagemExclusaoBuilder() {
 		StringBuilder msg = new StringBuilder();
-		msg.append("Excluir permanentemente ");
-		if (this.setoresSelecionados.size()>1) {
-			msg.append("os setores selecionados?");
-		}else {
-			msg.append("o setor ");
-			msg.append(setoresSelecionados.get(0).getDescricao());
+
+		if (this.getSetoresSelecionados()!=null && !this.getSetoresSelecionados().isEmpty()) {
+			msg.append("Excluir permanentemente ");
+			if (this.setoresSelecionados.size()>1) {
+				msg.append("os setores selecionados?");
+			}else {
+				msg.append("o setor ");
+				msg.append(setoresSelecionados.get(0).getDescricao());
+			}
 		}
-		return msg.toString();
+		this.mensagemExclusao = msg.toString();
 	}
+	
 
 }
