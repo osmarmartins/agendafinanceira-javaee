@@ -10,9 +10,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.primefaces.event.SelectEvent;
-import org.primefaces.event.UnselectEvent;
-
 import br.com.futura.agendafinanceira.models.Setor;
 import br.com.futura.agendafinanceira.services.SetorService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
@@ -35,8 +32,6 @@ public class SetorBean implements Serializable {
 	
 	private List<Setor> setoresSelecionados = new ArrayList<>();
 	
-	private Setor setorSelecionado = new Setor();
-
 	@PostConstruct
 	private void init() {
 		this.setores = setorService.listarTodos();
@@ -50,8 +45,8 @@ public class SetorBean implements Serializable {
 		}
 	}
 
-	public void excluir(Setor setor) {
-		setorService.excluir(setor);
+	public void excluir() {
+		setorService.excluir(setoresSelecionados);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		init();
 		
@@ -69,18 +64,12 @@ public class SetorBean implements Serializable {
 		return pesquisaDescricao;
 	}
 
-	public Setor getSetorSelecionado() {
-		return setorSelecionado;
-	}
-	
 	public void selecionaSetor(Setor setor) {
-		this.setorSelecionado = setor;
+		setoresSelecionados = new ArrayList<>();
+		setoresSelecionados.add(setor);
 	}
 	
 	public void setSetoresSelecionados(List<Setor> setoresSelecionados) {
-		
-		System.out.println(">>>>>>>>>>>>> (selecionou!) QTD REGISTROS SELECIONADOS: " + setoresSelecionados.size());
-		
 		this.setoresSelecionados = setoresSelecionados;
 	}
 	
@@ -89,27 +78,23 @@ public class SetorBean implements Serializable {
 	}
 	
 	public Boolean isExisteSelecao() {
-		
-		System.out.println(">>>>>>>>>>>>> QTD REGISTROS SELECIONADOS: " + setoresSelecionados.size());
-		
 		return !setoresSelecionados.isEmpty();
 	}
 	
-	public void ExibirSelecao() {
-		
-		System.out.println("REGISTROS SELECIONADOS:");
-		
-		for (Setor setor : setoresSelecionados) {
-			System.out.println(setor);
+	public String mensagemExclusao() {
+		if (this.getSetoresSelecionados()==null || this.getSetoresSelecionados().size()==0) {
+			return "";
 		}
+		
+		StringBuilder msg = new StringBuilder();
+		msg.append("Excluir permanentemente ");
+		if (this.setoresSelecionados.size()>1) {
+			msg.append("os setores selecionados?");
+		}else {
+			msg.append("o setor ");
+			msg.append(setoresSelecionados.get(0).getDescricao());
+		}
+		return msg.toString();
 	}
-	
-    public void onRowSelect(SelectEvent event) {
-		System.out.println(">>>>>>>>>>>>> QTD REGISTROS SELECIONADOS: " + setoresSelecionados.size());
-    }
- 
-    public void onRowUnselect(UnselectEvent event) {
-		System.out.println(">>>>>>>>>>>>> QTD REGISTROS SELECIONADOS: " + setoresSelecionados.size());
-    }	
 
 }

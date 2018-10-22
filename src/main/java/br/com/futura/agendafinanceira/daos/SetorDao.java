@@ -42,8 +42,11 @@ public class SetorDao implements Serializable {
 	}
 	
 	@Transactional
-	public void excluir(Setor setor){
-		manager.remove(manager.getReference(Setor.class, setor.getIdSetor()));
+	public void excluir(List<Setor> setores){
+		for (Setor setor : setores) {
+			manager.find(Setor.class, setor);
+			manager.remove(manager.getReference(Setor.class, setor.getIdSetor()));
+		}
 	}
 
 }

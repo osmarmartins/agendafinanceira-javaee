@@ -33,28 +33,28 @@
 				<h:form id="form" prependId="false">
 
 					<div class="clearfix form-actions ui-widget-header" style="margin-bottom: 0;" jsf:id="comandoGrid">
-						<div class="col-md-3">
+						<div class="col-md-6">
 							<button class="btn btn-white btn-primary" type="button" jsf:id="btnNovo" jsf:outcome="/setorcadastro.xhtml">
 								<i class="fa fa-plus"></i> Novo
 							</button>
 							
 							<p:spacer width="10"/>
 							
-							<button class="btn btn-white btn-primary" type="submit" jsf:id="btnSelecao" jsf:actionListener="#{setorBean.ExibirSelecao()}">
-								<i class="fa fa-search"></i> Ver Seleção
-							</button>
-							
-							<p:spacer width="10"/>
-							
 							<button class="btn btn-white btn-danger" type="button" 
+								data-toggle="modal" 
+								data-target="#modalExclusao" 
+								data-mensagem="#{setorBean.mensagemExclusao()}"
 								jsf:id="btnExcluirSelecao" 
 								jsf:rendered="#{setorBean.isExisteSelecao()}">
 								<i class="fa fa-trash"></i> Excluir Seleção
+								<f:ajax
+									execute="@this"
+									render="btnConfirmaExclucao"/>
 							</button>
 							
 						</div>
 						
-						<div class="col-md-offset-4 col-md-5 align-right">
+						<div class="col-md-offset-1 col-md-5 align-right">
 
 							<div class="input-group">
 								<input class="form-control input-mask-date" type="text" 
@@ -71,7 +71,7 @@
 					</div>
 					
 					
-					<p:dataTable id="tabela" widgetVar="tabela"
+					<p:dataTable id="tabela"
 						emptyMessage="Nenhum registro encontrado"
 						value="#{setorBean.setores}" var="setor" rowKey="#{setor.idSetor}"
 						selection="#{setorBean.setoresSelecionados}" 
@@ -79,10 +79,13 @@
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
 						paginator="true" paginatorPosition="bottom">
 						
-						<p:ajax event="rowSelect" listener="#{setorBean.isExisteSelecao()}" update="btnExcluirSelecao"/>
-						<p:ajax event="rowUnselect" listener="#{setorBean.isExisteSelecao()}" update="btnExcluirSelecao"/>
-
-						<p:column selectionMode="multiple" width="5%" styleClass="align-center"/>
+						<p:ajax event="rowSelect" process="@this" update="@form"/>
+						<p:ajax event="toggleSelect" process="@this" update="@form"/>
+						<p:ajax event="rowUnselectCheckbox" process="@this" update="@form"/>
+						<p:ajax event="rowSelectCheckbox" process="@this" update="@form"/>
+						
+						<p:column selectionMode="multiple" width="5%" styleClass="align-center">
+						</p:column>
 						
 						<p:column sortBy="#{setor.idSetor}" width="15%">
 							<f:facet name="header">
@@ -122,10 +125,12 @@
 								<i class="ace-icon fa fa-pencil bigger-110 green"></i>
 							</button>
 							
-							<button type="button" class="btn btn-sm btn-danger btn-white btn-round" jsf:id="btnExcluir"
+							<button type="button" class="btn btn-sm btn-danger btn-white btn-round" 
 								data-toggle="modal" 
 								data-target="#modalExclusao" 
-								data-mensagem="Excluir permanentemente dos dados do setor '#{setor.descricao}' ?">
+								data-mensagem="Excluir permanentemente o setor selecionado ?"
+								jsf:id="btnExcluir"
+								jsf:rendered="#{!setorBean.isExisteSelecao()}">							
 								<i class="ace-icon fa fa-trash bigger-110 danger"></i>
 								<f:ajax
 									execute="@this"
@@ -179,7 +184,7 @@
 							class="btn btn-danger" data-dismiss="modal">
 							<i class="ace-icon fa fa-trash-o bigger-110"></i> Excluir
 							<f:ajax
-								listener="#{setorBean.excluir(setorBean.setorSelecionado)}"
+								listener="#{setorBean.excluir()}"
 								execute="@this" render="tabela app-mensagem" />
 						</button>
 						

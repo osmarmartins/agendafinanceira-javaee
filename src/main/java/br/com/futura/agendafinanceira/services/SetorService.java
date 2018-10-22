@@ -23,8 +23,8 @@ public class SetorService implements Serializable {
 		return setorDao.listarPorDescricao(pesquisaDescricao);
 	}
 
-	public void excluir(Setor setor) {
-		setorDao.excluir(setor);
+	public void excluir(List<Setor> setores) {
+		setorDao.excluir(setores);
 	}
 
 	public void salvar(Setor setor) {
