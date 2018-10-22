@@ -166,8 +166,8 @@
 
 
 					<div class="modal-body">
-						<div jsf:id="mensagem" class="alert alert-info bigger-110">
-							<h:outputText value="#{setorBean.mensagemExclusao}" />
+						<div class="alert alert-info bigger-110">
+							<h:outputText id="mensagem" value="#{setorBean.mensagemExclusao}" />
 						</div>
 
 						<div class="space-6"></div>
@@ -184,7 +184,7 @@
 							<i class="ace-icon fa fa-trash-o bigger-110"></i> Excluir
 							<f:ajax
 								listener="#{setorBean.excluir()}"
-								execute="@this" render="tabela app-mensagem" />
+								execute="@this" render="@form" />
 						</button>
 						
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">

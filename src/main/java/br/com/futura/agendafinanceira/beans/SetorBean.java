@@ -20,8 +20,6 @@ public class SetorBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String pesquisaDescricao;
-
 	@Inject
 	private MessagesHelper messagesHelper;
 
@@ -34,9 +32,14 @@ public class SetorBean implements Serializable {
 	
 	private String mensagemExclusao;
 	
+	private String pesquisaDescricao;
+
 	@PostConstruct
 	private void init() {
 		this.setores = setorService.listarTodos();
+		this.setoresSelecionados = new ArrayList<>();
+		this.mensagemExclusao = new String();
+		this.pesquisaDescricao = new String();
 	}
 
 	public void pesquisar() {
@@ -52,35 +55,11 @@ public class SetorBean implements Serializable {
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		init();
 	}
-
-	public List<Setor> getSetores() {
-		return setores;
-	}
-
-	public void setPesquisaDescricao(String pesquisaDescricao) {
-		this.pesquisaDescricao = pesquisaDescricao;
-	}
-
-	public String getPesquisaDescricao() {
-		return pesquisaDescricao;
-	}
-
+	
 	public void selecionaSetor(Setor setor) {
 		setoresSelecionados = new ArrayList<>();
 		setoresSelecionados.add(setor);
 		mensagemExclusaoBuilder();
-	}
-	
-	public void setSetoresSelecionados(List<Setor> setoresSelecionados) {
-		this.setoresSelecionados = setoresSelecionados;
-	}
-	
-	public List<Setor> getSetoresSelecionados() {
-		return setoresSelecionados;
-	}
-	
-	public String getMensagemExclusao() {
-		return mensagemExclusao;
 	}
 	
 	public Boolean isExisteSelecao() {
@@ -102,5 +81,31 @@ public class SetorBean implements Serializable {
 		this.mensagemExclusao = msg.toString();
 	}
 	
+
+	
+	public List<Setor> getSetores() {
+		return setores;
+	}
+
+	public void setPesquisaDescricao(String pesquisaDescricao) {
+		this.pesquisaDescricao = pesquisaDescricao;
+	}
+
+	public String getPesquisaDescricao() {
+		return pesquisaDescricao;
+	}
+
+	public void setSetoresSelecionados(List<Setor> setoresSelecionados) {
+		this.setoresSelecionados = setoresSelecionados;
+	}
+	
+	public List<Setor> getSetoresSelecionados() {
+		return setoresSelecionados;
+	}
+	
+	public String getMensagemExclusao() {
+		return mensagemExclusao;
+	}
+		
 
 }
