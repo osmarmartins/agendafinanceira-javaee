@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,15 +33,30 @@ public class SetorBean implements Serializable {
 	private String mensagemExclusao;
 	
 	private String pesquisaDescricao;
+	
+	
+	// TODO Mudar para um Bean de sessão (preferências do usuario 
+	private String setoresPorPagina;
 
+	public String getSetoresPorPagina() {
+		return setoresPorPagina;
+	}
+	
+	public void setSetoresPorPagina(String setoresPorPagina) {
+		this.setoresPorPagina = setoresPorPagina;
+	}
+	
 	@PostConstruct
 	private void init() {
 		this.setores = setorService.listarTodos();
 		this.setoresSelecionados = new ArrayList<>();
 		this.mensagemExclusao = new String();
 		this.pesquisaDescricao = new String();
+		if (setoresPorPagina==null) {
+			this.setoresPorPagina="8";
+		}
 	}
-
+	
 	public void pesquisar() {
 		if (this.pesquisaDescricao != null && !this.pesquisaDescricao.isEmpty()) {
 			this.setores = setorService.listarPorDescricao(this.pesquisaDescricao);
