@@ -13,9 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.Email;
 
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.models.enums.TipoUsuario;

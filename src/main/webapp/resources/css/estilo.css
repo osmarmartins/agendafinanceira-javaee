@@ -5,28 +5,6 @@
 	text-align: center;
 }
 
-li {
-	list-style: none;
-}
-
-.alert-info::before {
-    content: "\f05a"; 
-    font-family: FontAwesome;
-    font-size: 1.2em;
-}
-
-.alert-danger::before {
-    content: "\f057"; 
-    font-family: FontAwesome;
-    font-size: 1.2em;
-}
-
-.alert-warn::before {
-    content: "\f071"; 
-    font-family: FontAwesome;
-    font-size: 1.2em;
-}
-
 .ui-paginator .ui-paginator-page, .ui-paginator .ui-paginator-pages, 
 .ui-paginator .ui-paginator-next, .ui-paginator .ui-paginator-last, 
 .ui-paginator .ui-paginator-first, .ui-paginator .ui-paginator-prev, 
@@ -44,3 +22,30 @@ li {
 	border-radius: 0!important;
 }
 
+.ui-messages-info-summary::before{
+    content: "\f05a"; 
+    font-family: FontAwesome;
+    font-size: 1.2em;
+    padding-right: 10px;
+}
+
+.ui-messages-warn-summary::before{
+    content: "\f071"; 
+    font-family: FontAwesome;
+    font-size: 1.2em;
+    padding-right: 10px;
+}
+
+.ui-messages-error-summary::before{
+    content: "\f057"; 
+    font-family: FontAwesome;
+    font-size: 1.2em;
+    padding-right: 10px;
+}
+
+.ui-messages-fatal-summary::before{
+    content: "\f057"; 
+    font-family: FontAwesome;
+    font-size: 1.2em;
+    padding-right: 10px;
+}

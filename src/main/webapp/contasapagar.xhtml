@@ -68,7 +68,7 @@
 						
 						<p:column width="15%">
 							<f:facet name="header">Operações</f:facet>
-							<p:commandButton title="Alterar" icon="fa fa-pencil" action="#{fornecedorBean.alterar(fornecedor)}"/>
+							<p:commandButton title="Alterar" icon="fa fa-pencil" action=""/>
 							
 							<p:commandButton title="Excluir" icon="fa fa-trash" actionListener="#{fornecedorBean.excluir(fornecedor)}" update="@form" process="@this">
 								<p:confirm header="Confirma exclusão" message="Confirma a excusão de '#{fornecedor.razaoSocial}'" icon="ui-icon-alert" />							

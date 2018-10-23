@@ -24,6 +24,8 @@ public class SetorService implements Serializable {
 	}
 
 	public void excluir(List<Setor> setores) {
+		// TODO Validar exclusão de setores
+		
 		setorDao.excluir(setores);
 	}
 
