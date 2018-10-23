@@ -77,12 +77,12 @@
 						value="#{setorBean.setores}" var="setor" rowKey="#{setor.idSetor}"
 						selection="#{setorBean.setoresSelecionados}"
 						 
-						rows="#{setorBean.setoresPorPagina}"
+						rows="#{sessionBean.itensPorPagina}"
 						paginator="true" paginatorPosition="bottom"
-						paginatorTemplate="{Custom} {RowsPerPage} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
-						<f:facet name="{Custom}">
+						paginatorTemplate="{ItensPorPagina} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+						<f:facet name="{ItensPorPagina}">
 							<h:outputLabel value="Itens por Página: " />
-							<h:inputText value="#{setorBean.setoresPorPagina}" style="width: 30px; margin-right: 10px; margin-left: 5px;" >
+							<h:inputText value="#{sessionBean.itensPorPagina}" style="width: 30px; margin-right: 10px; margin-left: 5px;" >
 								<f:ajax execute="@this" render="tabela"/>
 							</h:inputText>
 						</f:facet> 
