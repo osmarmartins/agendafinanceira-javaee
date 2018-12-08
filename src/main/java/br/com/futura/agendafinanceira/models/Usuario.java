@@ -17,10 +17,6 @@ import javax.persistence.Version;
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.models.enums.TipoUsuario;
 
-/**
- * The persistent class for the usuario database table.
- * 
- */
 @Entity
 @Table(name = "usuario")
 public class Usuario implements Serializable {
@@ -46,14 +42,14 @@ public class Usuario implements Serializable {
 	private String senha;
 	
 	@Version
-	private int versao;
+	private Integer versao;
 	
 	@Transient
 	private boolean status;
 
 	// bi-directional many-to-one association to UsuarioOperacao
 	@OneToMany(mappedBy = "usuario")
-	private List<UsuarioOperacao> usuarioOperacaos;
+	private List<UsuarioOperacao> operacoes;
 
 	public Usuario() {
 	}
@@ -114,34 +110,32 @@ public class Usuario implements Serializable {
 		this.senha = senha;
 	}
 
-	public int getVersao() {
+	public Integer getVersao() {
 		return this.versao;
 	}
 
-	public void setVersao(int versao) {
+	public void setVersao(Integer versao) {
 		this.versao = versao;
 	}
 
-	public List<UsuarioOperacao> getUsuarioOperacaos() {
-		return this.usuarioOperacaos;
+	public List<UsuarioOperacao> getOperacoes() {
+		return this.operacoes;
 	}
 
-	public void setUsuarioOperacaos(List<UsuarioOperacao> usuarioOperacaos) {
-		this.usuarioOperacaos = usuarioOperacaos;
+	public void setgetOperacoes(List<UsuarioOperacao> operacoes) {
+		this.operacoes = operacoes;
 	}
 
-	public UsuarioOperacao addUsuarioOperacao(UsuarioOperacao usuarioOperacao) {
-		getUsuarioOperacaos().add(usuarioOperacao);
-		usuarioOperacao.setUsuario(this);
-
-		return usuarioOperacao;
+	public UsuarioOperacao addUsuarioOperacao(UsuarioOperacao operacao) {
+		getOperacoes().add(operacao);
+		operacao.setUsuario(this);
+		return operacao;
 	}
 
-	public UsuarioOperacao removeUsuarioOperacao(UsuarioOperacao usuarioOperacao) {
-		getUsuarioOperacaos().remove(usuarioOperacao);
-		usuarioOperacao.setUsuario(null);
-
-		return usuarioOperacao;
+	public UsuarioOperacao removeUsuarioOperacao(UsuarioOperacao operacao) {
+		getOperacoes().remove(operacao);
+		operacao.setUsuario(null);
+		return operacao;
 	}
 	
 	public boolean isStatus() {

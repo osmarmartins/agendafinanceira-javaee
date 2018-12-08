@@ -18,10 +18,6 @@ import javax.validation.constraints.NotNull;
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.models.enums.TipoPessoa;
 
-/**
- * The persistent class for the fornecedor database table.
- * 
- */
 @Entity
 @Table(name = "fornecedor")
 public class Fornecedor implements Serializable {
@@ -50,7 +46,7 @@ public class Fornecedor implements Serializable {
 	private String razaoSocial;
 
 	@Version
-	private int versao;
+	private Integer versao;
 
 	@Transient
 	private boolean status;
@@ -60,8 +56,8 @@ public class Fornecedor implements Serializable {
 	private List<Contato> contatos;
 
 	// bi-directional many-to-one association to Pgto
-//	@OneToMany(mappedBy = "fornecedor")
-//	private List<Pgto> pgtos;
+	@OneToMany(mappedBy = "fornecedor")
+	private List<Pagamento> pagamentos;
 
 	public Fornecedor() {
 	}
@@ -143,28 +139,26 @@ public class Fornecedor implements Serializable {
 		
 		return contato;
 	}
-
-//	public List<Pgto> getPgtos() {
-//		return this.pgtos;
-//	}
-//
-//	public void setPgtos(List<Pgto> pgtos) {
-//		this.pgtos = pgtos;
-//	}
-
-//	public Pgto addPgto(Pgto pgto) {
-//		getPgtos().add(pgto);
-//		pgto.setFornecedor(this);
-//
-//		return pgto;
-//	}
-//
-//	public Pgto removePgto(Pgto pgto) {
-//		getPgtos().remove(pgto);
-//		pgto.setFornecedor(null);
-//
-//		return pgto;
-//	}
+	
+	public List<Pagamento> getPagamentos() {
+		return pagamentos;
+	}
+	
+	public void setPagamentos(List<Pagamento> pagamentos) {
+		this.pagamentos = pagamentos;
+	}
+	
+	public Pagamento addPagamento(Pagamento pagamento) {
+		getPagamentos().add(pagamento);
+		pagamento.setFornecedor(this);
+		return pagamento;
+	}
+	
+	public Pagamento removePagamento(Pagamento pagamento){
+		getPagamentos().remove(pagamento);
+		pagamento.setFornecedor(null);
+		return pagamento;
+	}
 
 	public boolean isStatus() {
 		if (this.ativo == null){

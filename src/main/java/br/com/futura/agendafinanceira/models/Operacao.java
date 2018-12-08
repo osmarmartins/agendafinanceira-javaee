@@ -12,10 +12,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-/**
- * The persistent class for the operacao database table.
- * 
- */
 @Entity
 @Table(name = "operacao")
 public class Operacao implements Serializable {
@@ -24,27 +20,27 @@ public class Operacao implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_operacao")
-	private int idOperacao;
+	private Integer idOperacao;
 
 	private String classificacao;
 
 	private String descricao;
 
 	@Version
-	private int versao;
+	private Integer versao;
 
 	// bi-directional many-to-one association to UsuarioOperacao
 	@OneToMany(mappedBy = "operacao")
-	private List<UsuarioOperacao> usuarioOperacaos;
+	private List<UsuarioOperacao> usuarios;
 
 	public Operacao() {
 	}
 
-	public int getIdOperacao() {
+	public Integer getIdOperacao() {
 		return this.idOperacao;
 	}
 
-	public void setIdOperacao(int idOperacao) {
+	public void setIdOperacao(Integer idOperacao) {
 		this.idOperacao = idOperacao;
 	}
 
@@ -64,34 +60,32 @@ public class Operacao implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public int getVersao() {
+	public Integer getVersao() {
 		return this.versao;
 	}
 
-	public void setVersao(int versao) {
+	public void setVersao(Integer versao) {
 		this.versao = versao;
 	}
 
-	public List<UsuarioOperacao> getUsuarioOperacaos() {
-		return this.usuarioOperacaos;
+	public List<UsuarioOperacao> getUsuarios() {
+		return this.usuarios;
 	}
 
-	public void setUsuarioOperacaos(List<UsuarioOperacao> usuarioOperacaos) {
-		this.usuarioOperacaos = usuarioOperacaos;
+	public void setUsuarios(List<UsuarioOperacao> usuarios) {
+		this.usuarios = usuarios;
 	}
 
-	public UsuarioOperacao addUsuarioOperacao(UsuarioOperacao usuarioOperacao) {
-		getUsuarioOperacaos().add(usuarioOperacao);
-		usuarioOperacao.setOperacao(this);
-
-		return usuarioOperacao;
+	public UsuarioOperacao addUsuario(UsuarioOperacao usuario) {
+		getUsuarios().add(usuario);
+		usuario.setOperacao(this);
+		return usuario;
 	}
 
-	public UsuarioOperacao removeUsuarioOperacao(UsuarioOperacao usuarioOperacao) {
-		getUsuarioOperacaos().remove(usuarioOperacao);
-		usuarioOperacao.setOperacao(null);
-
-		return usuarioOperacao;
+	public UsuarioOperacao removeUsuario(UsuarioOperacao usuario) {
+		getUsuarios().remove(usuario);
+		usuario.setOperacao(null);
+		return usuario;
 	}
 
 }

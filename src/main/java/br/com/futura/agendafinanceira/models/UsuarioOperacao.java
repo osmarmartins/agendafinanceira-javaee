@@ -13,23 +13,18 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-/**
- * The persistent class for the usuario_operacao database table.
- * 
- */
 @Entity
 @Table(name = "usuario_operacao")
-@NamedQuery(name = "UsuarioOperacao.findAll", query = "SELECT u FROM UsuarioOperacao u")
 public class UsuarioOperacao implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_usuario_operacao")
-	private int idUsuarioOperacao;
+	private Integer idUsuarioOperacao;
 
 	@Version
-	private int versao;
+	private Integer versao;
 
 	// bi-directional many-to-one association to Operacao
 	@ManyToOne
@@ -44,19 +39,19 @@ public class UsuarioOperacao implements Serializable {
 	public UsuarioOperacao() {
 	}
 
-	public int getIdUsuarioOperacao() {
+	public Integer getIdUsuarioOperacao() {
 		return this.idUsuarioOperacao;
 	}
 
-	public void setIdUsuarioOperacao(int idUsuarioOperacao) {
+	public void setIdUsuarioOperacao(Integer idUsuarioOperacao) {
 		this.idUsuarioOperacao = idUsuarioOperacao;
 	}
 
-	public int getVersao() {
+	public Integer getVersao() {
 		return this.versao;
 	}
 
-	public void setVersao(int versao) {
+	public void setVersao(Integer versao) {
 		this.versao = versao;
 	}
 

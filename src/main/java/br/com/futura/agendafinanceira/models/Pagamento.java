@@ -57,6 +57,7 @@ public class Pagamento implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "id_fornecedor")
 	private Fornecedor fornecedor;
+	
 
 	// bi-directional many-to-one association to Setor
 	@ManyToOne

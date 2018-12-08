@@ -1,8 +1,10 @@
 package br.com.futura.agendafinanceira.beans;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Collections;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -10,6 +12,7 @@ import javax.inject.Named;
 
 import br.com.futura.agendafinanceira.models.Pagamento;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
+import br.com.futura.agendafinanceira.models.enums.SituacaoParcela;
 import br.com.futura.agendafinanceira.services.PagamentoParcelaService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
@@ -27,10 +30,6 @@ public class PagamentoParcelaBean implements Serializable{
 	
 	@Inject
 	private MessagesHelper messagesHelper;
-
-	@PostConstruct
-	private void init() {
-	}
 
 	public String salvar() {
 		parcelaService.salvar(pagamento, parcela);
@@ -56,7 +55,16 @@ public class PagamentoParcelaBean implements Serializable{
 	
 	public PagamentoParcela getParcela() {
 		if (parcela == null) {
-			parcela = new PagamentoParcela();
+			parcela = new PagamentoParcela(
+					SituacaoParcela.NOVO,
+					Calendar.getInstance().getTime(),
+					Collections.emptySet(),
+					BigDecimal.ZERO,
+					BigDecimal.ZERO,
+					BigDecimal.ZERO,
+					BigDecimal.ZERO,
+					BigDecimal.ZERO
+					);
 		}
 		return parcela;
 	}

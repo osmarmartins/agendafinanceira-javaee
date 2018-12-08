@@ -3,7 +3,6 @@ package br.com.futura.agendafinanceira.models;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -26,10 +25,6 @@ import javax.persistence.Version;
 
 import br.com.futura.agendafinanceira.models.enums.SituacaoParcela;
 
-/**
- * The persistent class for the pgto_parcela database table.
- * 
- */
 @Entity
 @Table(name = "pgto_parcela")
 public class PagamentoParcela implements Serializable {
@@ -60,7 +55,7 @@ public class PagamentoParcela implements Serializable {
 	private SituacaoParcela situacao;
 
 	@Version
-	private int versao;
+	private Integer versao;
 
 	// bi-directional many-to-one association to Pgto
 	@ManyToOne
@@ -72,14 +67,25 @@ public class PagamentoParcela implements Serializable {
 	private Set<PagamentoQuitacao> quitacoes;
 
 	public PagamentoParcela() {
-		this.situacao = SituacaoParcela.NOVO;
-		this.vencimento = Calendar.getInstance().getTime();
-		this.quitacoes = Collections.emptySet();
-		this.valor = BigDecimal.ZERO;
-		this.desconto = BigDecimal.ZERO;
-		this.juros = BigDecimal.ZERO;
-		this.mora = BigDecimal.ZERO;
-		this.outros = BigDecimal.ZERO;
+	}
+
+	public PagamentoParcela(
+			SituacaoParcela situacao,
+			Date vencimento,
+			Set<PagamentoQuitacao> quitacoes,
+			BigDecimal valor,
+			BigDecimal desconto,
+			BigDecimal juros,
+			BigDecimal mora,
+			BigDecimal outros ) {
+		this.situacao = situacao;
+		this.vencimento = vencimento;
+		this.quitacoes = quitacoes;
+		this.valor = valor;
+		this.desconto = desconto;
+		this.juros = juros;
+		this.mora = mora;
+		this.outros = outros;
 	}
 
 	public Integer getIdPagamentoParcela() {
@@ -154,11 +160,11 @@ public class PagamentoParcela implements Serializable {
 		this.valor = valor;
 	}
 
-	public int getVersao() {
+	public Integer getVersao() {
 		return this.versao;
 	}
 
-	public void setVersao(int versao) {
+	public void setVersao(Integer versao) {
 		this.versao = versao;
 	}
 
@@ -177,21 +183,21 @@ public class PagamentoParcela implements Serializable {
 	public void setQuitacoes(List<PagamentoQuitacao> pgtoQuitacaos) {
 		this.quitacoes = new HashSet<PagamentoQuitacao>(pgtoQuitacaos);
 	}
-
-	public BigDecimal totalParcela() {
-		return this.valor.subtract(this.desconto).add(this.juros).add(this.mora).add(this.outros);
-	}
-
+	
 	public PagamentoQuitacao addQuitacao(PagamentoQuitacao quitacao) {
 		getQuitacoes().add(quitacao);
 		quitacao.setParcela(this);
 		return quitacao;
 	}
-
+	
 	public PagamentoQuitacao removeQuitacao(PagamentoQuitacao quitacao) {
 		getQuitacoes().remove(quitacao);
 		quitacao.setParcela(null);
 		return quitacao;
+	}
+	
+	public BigDecimal totalParcela() {
+		return this.valor.subtract(this.desconto).add(this.juros).add(this.mora).add(this.outros);
 	}
 
 	public BigDecimal totalPago() {

@@ -16,10 +16,6 @@ import javax.persistence.Version;
 
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 
-/**
- * The persistent class for the contato database table.
- * 
- */
 @Entity
 @Table(name = "contato")
 public class Contato implements Serializable {
@@ -60,7 +56,7 @@ public class Contato implements Serializable {
 	private String uf;
 
 	@Version
-	private int versao;
+	private Integer versao;
 	
 	@Transient
 	private boolean status;
@@ -193,11 +189,11 @@ public class Contato implements Serializable {
 		this.uf = uf;
 	}
 
-	public int getVersao() {
+	public Integer getVersao() {
 		return this.versao;
 	}
 
-	public void setVersao(int versao) {
+	public void setVersao(Integer versao) {
 		this.versao = versao;
 	}
 

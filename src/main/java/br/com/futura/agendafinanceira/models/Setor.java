@@ -44,7 +44,7 @@ public class Setor implements Serializable {
 
 	// bi-directional many-to-one association to Pgto
 	@OneToMany(mappedBy = "setor")
-	private List<Pagamento> pgtos;
+	private List<Pagamento> pagamentos;
 
 	public Setor() {
 	}
@@ -81,29 +81,26 @@ public class Setor implements Serializable {
 		this.versao = versao;
 	}
 
-	public List<Pagamento> getPgtos() {
-		return this.pgtos;
+	public List<Pagamento> getPagamentos() {
+		return this.pagamentos;
 	}
 
-	public void setPgtos(List<Pagamento> pgtos) {
-		this.pgtos = pgtos;
+	public void setPagamentos(List<Pagamento> pagamentos) {
+		this.pagamentos = pagamentos;
 	}
 
-	public Pagamento addPgto(Pagamento pgto) {
-		getPgtos().add(pgto);
-		pgto.setSetor(this);
-
-		return pgto;
+	public Pagamento addPagamento(Pagamento pagamento) {
+		getPagamentos().add(pagamento);
+		pagamento.setSetor(this);
+		return pagamento;
 	}
 
-	public Pagamento removePgto(Pagamento pgto) {
-		getPgtos().remove(pgto);
-		pgto.setSetor(null);
-
-		return pgto;
+	public Pagamento removePagamento(Pagamento pagamento) {
+		getPagamentos().remove(pagamento);
+		pagamento.setSetor(null);
+		return pagamento;
 	}
 	
-
 	public boolean isStatus() {
 		if (this.ativo == null) {
 			return false;
