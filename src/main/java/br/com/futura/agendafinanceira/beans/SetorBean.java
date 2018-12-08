@@ -104,5 +104,5 @@ public class SetorBean implements Serializable {
 	public String getMensagemExclusao() {
 		return mensagemExclusao;
 	}
-	
+		
 }

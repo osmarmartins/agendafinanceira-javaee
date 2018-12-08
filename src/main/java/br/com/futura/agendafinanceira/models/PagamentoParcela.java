@@ -41,7 +41,7 @@ public class PagamentoParcela implements Serializable {
 	private Integer idPagamentoParcela;
 
 	private String parcela;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "dt_vcto")
 	private Date vencimento;
@@ -49,7 +49,7 @@ public class PagamentoParcela implements Serializable {
 	private BigDecimal valor;
 
 	private BigDecimal desconto;
-	
+
 	private BigDecimal juros;
 
 	private BigDecimal mora;
@@ -70,9 +70,9 @@ public class PagamentoParcela implements Serializable {
 	// bi-directional many-to-one association to PgtoQuitacao
 	@OneToMany(mappedBy = "parcela")
 	private Set<PagamentoQuitacao> quitacoes;
-	
+
 	public PagamentoParcela() {
-		this.situacao = SituacaoParcela.NOVO; 
+		this.situacao = SituacaoParcela.NOVO;
 		this.vencimento = Calendar.getInstance().getTime();
 		this.quitacoes = Collections.emptySet();
 		this.valor = BigDecimal.ZERO;
@@ -81,15 +81,14 @@ public class PagamentoParcela implements Serializable {
 		this.mora = BigDecimal.ZERO;
 		this.outros = BigDecimal.ZERO;
 	}
-	
+
 	public Integer getIdPagamentoParcela() {
 		return idPagamentoParcela;
 	}
-	
+
 	public void setIdPagamentoParcela(Integer idPagamentoParcela) {
 		this.idPagamentoParcela = idPagamentoParcela;
 	}
-	
 
 	public BigDecimal getDesconto() {
 		return this.desconto;
@@ -98,11 +97,11 @@ public class PagamentoParcela implements Serializable {
 	public void setDesconto(BigDecimal desconto) {
 		this.desconto = desconto;
 	}
-	
+
 	public Date getVencimento() {
 		return vencimento;
 	}
-	
+
 	public void setVencimento(Date vencimento) {
 		this.vencimento = vencimento;
 	}
@@ -178,8 +177,8 @@ public class PagamentoParcela implements Serializable {
 	public void setQuitacoes(List<PagamentoQuitacao> pgtoQuitacaos) {
 		this.quitacoes = new HashSet<PagamentoQuitacao>(pgtoQuitacaos);
 	}
-	
-	public BigDecimal getTotalParcela(){
+
+	public BigDecimal getTotalParcela() {
 		return this.valor.subtract(this.desconto).add(this.juros).add(this.mora).add(this.outros);
 	}
 
@@ -188,17 +187,17 @@ public class PagamentoParcela implements Serializable {
 		quitacao.setParcela(this);
 		return quitacao;
 	}
-	
+
 	public PagamentoQuitacao removeQuitacao(PagamentoQuitacao quitacao) {
 		getQuitacoes().remove(quitacao);
 		quitacao.setParcela(null);
 		return quitacao;
 	}
-	
+
 	public BigDecimal calcularTotalPago() {
 		BigDecimal totalPago = BigDecimal.ZERO;
-		
-		if (this.quitacoes == null || this.quitacoes.size()==0) {
+
+		if (this.quitacoes == null || this.quitacoes.size() == 0) {
 			return totalPago;
 		}
 
@@ -240,6 +239,5 @@ public class PagamentoParcela implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
+
 }

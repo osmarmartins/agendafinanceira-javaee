@@ -39,6 +39,13 @@ public class PagamentoParcelaBean implements Serializable{
 				"&pagamento=" + parcela.getPagamento().getIdPagamento();
 	}
 	
+	public String excluir(PagamentoParcela parcela){
+		String pagamento = parcela.getPagamento().getIdPagamento().toString();
+		parcelaService.excluir(parcela);
+		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
+		return "/pagamentocadastro?faces-redirect=true&pagamento=" + pagamento;
+	}
+	
 	public Pagamento getPagamento() {
 		return pagamento;
 	}

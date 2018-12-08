@@ -24,7 +24,7 @@ public class SessionBean implements Serializable{
 	}
 	
 	public Integer getItensPorPagina() {
-		return itensPorPagina;
+		return this.itensPorPagina;
 	}
 
 }

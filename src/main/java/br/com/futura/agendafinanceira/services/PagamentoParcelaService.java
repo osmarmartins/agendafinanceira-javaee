@@ -22,10 +22,10 @@ public class PagamentoParcelaService implements Serializable {
 		parcelaDao.salvar(parcela);
 	}
 	
-	public void excluir(Pagamento pagamento, PagamentoParcela parcela) {
+	public void excluir(PagamentoParcela parcela) {
 		// TODO validar exclusão (não permitir excluir parcela com registro de quitação)
-		pagamento.removeParcela(parcela);
 		parcelaDao.excluir(parcela);
+		parcela.getPagamento().removeParcela(parcela);
 	}
 
 	public PagamentoParcela pesquisaPorId(Integer idParcela) {

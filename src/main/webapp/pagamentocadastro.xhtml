@@ -37,7 +37,6 @@
 			<div class="ui-g-12">
 			
 				<form jsf:id="formPagamento" jsf:prependId="false">
-					<p:messages />
 					
 					<div class="widget-box">
 						<div class="widget-header">
@@ -79,6 +78,7 @@
 													jsf:binding="#{emissao}" 
 													jsf:value="#{pagamentoCadastroBean.pagamento.emissao}">
 													<f:convertDateTime pattern="yyyy-MM-dd"/>
+												</input>
 												<span class="input-group-addon">
 													<i class="fa fa-calendar bigger-110"></i>
 												</span>
@@ -320,13 +320,16 @@
 												<td>
 													<div class="btn-group">
 
-														<button class="btn btn-sm btn-success btn-white btn-round" jsf:outcome="pagamentocadastroparcela.xhtml">
-															<i class="ace-icon fa fa-pencil bigger-110 green"></i>
+														<button class="btn btn-sm btn-success btn-white btn-round" 
+															jsf:outcome="pagamentocadastroparcela.xhtml">
 															<f:param name="pagamento" value="#{pagamentoCadastroBean.pagamento.idPagamento}"/>
 															<f:param name="parcela" value="#{parcela.idPagamentoParcela}"/>
+															<i class="ace-icon fa fa-pencil bigger-110 green"></i>
 														</button>
 
-														<button class="btn btn-sm btn-danger btn-white btn-round" jsf:action="#{pagamentoCadastroBean.excluir(parcela)}">
+														<button class="btn btn-sm btn-danger btn-white btn-round" 
+															jsf:action="#{pagamentoParcelaBean.excluir(parcela)}">
+															<f:ajax execute="@this" render="@form" immediate="true"/>
 															<i class="ace-icon fa fa-trash bigger-110 red2"></i>
 														</button>
 														

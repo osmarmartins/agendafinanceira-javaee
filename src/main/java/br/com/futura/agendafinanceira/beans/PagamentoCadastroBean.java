@@ -68,9 +68,9 @@ public class PagamentoCadastroBean implements Serializable{
 		return "/pagamentocadastro?faces-redirect=true&pagamento=" + pagamento.getIdPagamento();
 	}
 	
-	public String excluir(PagamentoParcela parcela){
+	public String excluir(Pagamento pagamento){
+		// TODO Excluir Pagamento
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
-		parcelaService.excluir(pagamento, parcela);
 		return "/pagamentocadastro?faces-redirect=true&pagamento=" + pagamento.getIdPagamento();
 	}
 	

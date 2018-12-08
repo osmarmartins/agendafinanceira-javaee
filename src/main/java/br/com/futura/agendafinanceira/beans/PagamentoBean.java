@@ -43,6 +43,7 @@ public class PagamentoBean implements Serializable {
 	}
 
 	public void excluir(Pagamento pagamento) {
+		// TODO Exclusão de pagamentos: Validar dependências
 		pagamentoService.excluir(pagamento);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		init();

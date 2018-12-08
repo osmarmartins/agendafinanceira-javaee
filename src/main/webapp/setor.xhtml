@@ -78,15 +78,13 @@
 						selection="#{setorBean.setoresSelecionados}"
 						 
 						rows="#{sessionBean.itensPorPagina}"
+						rowsPerPageTemplate="3 8 10 20"
 						paginator="true" paginatorPosition="bottom"
 						paginatorTemplate="{ItensPorPagina} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
 						<f:facet name="{ItensPorPagina}">
-							<h:outputLabel value="Itens por Página: " />
-							<h:inputText value="#{sessionBean.itensPorPagina}" style="width: 30px; margin-right: 10px; margin-left: 5px;" >
-								<f:ajax execute="@this" render="tabela"/>
-							</h:inputText>
+							<p:outputLabel value="Itens por Página: " />
+							<p:inputText value="#{sessionBean.itensPorPagina}" process="@this" update="@form" style="width: 50px; margin-right: 10px; margin-left: 5px;"/>
 						</f:facet> 
-
 						
 						<p:ajax event="rowSelect" process="@this" update="@form"/>
 						<p:ajax event="toggleSelect" process="@this" update="@form"/>
@@ -155,53 +153,7 @@
 		</div>
 
 		<!-- Modal Exclusão -->
-		<div class="modal fade" id="modalExclusao" tabindex="-1" role="dialog" aria-labelledby="modalExclusao" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-				
-					<span id="ui-id-32" class="ui-dialog-title">
-						<div class="widget-header">
-							<h4 class="smaller">
-								<i class="ace-icon fa fa-exclamation-triangle red"></i>
-								Confirmar Exclusão
-								<button type="button" class="ui-dialog-titlebar-close ui-corner-all ui-button-icon-only close"
-									data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true"><i class="ace-icon fa fa-times"></i></span>
-								</button>
-							</h4>
-						</div>
-					</span>
-
-
-					<div class="modal-body">
-						<div class="alert alert-info bigger-110">
-							<h:outputText id="mensagem" value="#{setorBean.mensagemExclusao}" />
-						</div>
-
-						<div class="space-6"></div>
-
-						<p class="bigger-110 bolder center grey">
-							<i class="ace-icon fa fa-hand-o-right blue bigger-120"></i> Tem certeza que deseja excluir?
-						</p>
-
-					</div>
-
-					<div class="modal-footer">
-						<button type="button" jsf:id="btnConfirmaExclucao"
-							class="btn btn-danger" data-dismiss="modal">
-							<i class="ace-icon fa fa-trash-o bigger-110"></i> Excluir
-							<f:ajax
-								listener="#{setorBean.excluir()}"
-								execute="@this" render="@form" />
-						</button>
-						
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">
-							<i class="ace-icon fa fa-times bigger-110"></i> Fechar
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
+		<ui:include src="setorexclusaodialog.xhtml"/>
 
 
 	</ui:define>
