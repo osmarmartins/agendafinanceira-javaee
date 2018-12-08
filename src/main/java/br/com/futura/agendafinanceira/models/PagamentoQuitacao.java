@@ -19,10 +19,6 @@ import javax.persistence.Version;
 
 import br.com.futura.agendafinanceira.models.enums.FormaPagamento;
 
-/**
- * The persistent class for the pgto_quitacao database table.
- * 
- */
 @Entity
 @Table(name = "pgto_quitacao")
 public class PagamentoQuitacao implements Serializable {
@@ -44,7 +40,7 @@ public class PagamentoQuitacao implements Serializable {
 	private BigDecimal valor;
 
 	@Version
-	private int versao;
+	private Integer versao;
 
 	// bi-directional many-to-one association to PgtoParcela
 	@ManyToOne
@@ -52,9 +48,12 @@ public class PagamentoQuitacao implements Serializable {
 	private PagamentoParcela parcela;
 
 	public PagamentoQuitacao() {
-		this.valor = BigDecimal.ZERO;
-		this.dtPgto = new Date();
-		this.formaPagamento = FormaPagamento.DINHEIRO;
+	}
+	
+	public PagamentoQuitacao(BigDecimal valor, Date dataPgto, FormaPagamento formaPagamento) {
+		this.valor = valor;
+		this.dtPgto = dataPgto;
+		this.formaPagamento = formaPagamento;
 	}
 
 	public Integer getIdPgtoQuitacao() {
@@ -89,11 +88,11 @@ public class PagamentoQuitacao implements Serializable {
 		this.valor = valor;
 	}
 
-	public int getVersao() {
+	public Integer getVersao() {
 		return this.versao;
 	}
 
-	public void setVersao(int versao) {
+	public void setVersao(Integer versao) {
 		this.versao = versao;
 	}
 
@@ -135,6 +134,4 @@ public class PagamentoQuitacao implements Serializable {
 			return false;
 		return true;
 	}
-
-	
 }

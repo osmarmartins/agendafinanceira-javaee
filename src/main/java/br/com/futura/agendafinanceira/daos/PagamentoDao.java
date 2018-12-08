@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.models.Pagamento;
 
@@ -16,7 +15,7 @@ public class PagamentoDao implements Serializable {
 	@PersistenceContext
 	private EntityManager manager;
 
-	public Pagamento pesquisarPorId(int idPagamento) {
+	public Pagamento pesquisarPorId(Integer idPagamento) {
 		Pagamento pagamento = manager.createQuery("select pg from Pagamento pg "
 				+ "join fetch pg.setor "
 				+ "join fetch pg.conta "
@@ -30,10 +29,11 @@ public class PagamentoDao implements Serializable {
 	}
 	
 	public List<Pagamento> listarTodos() {
-		return manager.createQuery("select pg from Pagamento pg "
-				+ "join fetch pg.fornecedor "
-				+ "join fetch pg.setor "
-				+ "join fetch pg.conta ", Pagamento.class)
+		return manager.createQuery("select distinct pg from Pagamento pg "
+				+ "join fetch pg.fornecedor f "
+				+ "left join fetch pg.parcelas p "
+				+ "left join fetch p.quitacoes q "
+				+ "join fetch pg.conta c ", Pagamento.class)
 					.getResultList();
 	}
 
@@ -49,12 +49,10 @@ public class PagamentoDao implements Serializable {
 					.getResultList();
 		}
 
-	@Transactional
 	public void excluir(Pagamento pagamento) {
 		manager.remove(manager.getReference(Pagamento.class, pagamento.getIdPagamento()));
 	}
 
-	@Transactional
 	public void salvar(Pagamento pagamento) {
 		if (pagamento.getIdPagamento() != null){
 			manager.merge(pagamento);

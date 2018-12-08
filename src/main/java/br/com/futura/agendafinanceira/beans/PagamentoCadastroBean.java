@@ -1,6 +1,7 @@
 package br.com.futura.agendafinanceira.beans;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,9 +15,9 @@ import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.Pagamento;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.models.Setor;
+import br.com.futura.agendafinanceira.models.enums.SituacaoPagamento;
 import br.com.futura.agendafinanceira.services.ContaService;
 import br.com.futura.agendafinanceira.services.FornecedorService;
-import br.com.futura.agendafinanceira.services.PagamentoParcelaService;
 import br.com.futura.agendafinanceira.services.PagamentoService;
 import br.com.futura.agendafinanceira.services.SetorService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
@@ -50,9 +51,6 @@ public class PagamentoCadastroBean implements Serializable{
 	private PagamentoService pagamentoService;
 	
 	@Inject
-	private PagamentoParcelaService parcelaService;
-
-	@Inject
 	private MessagesHelper messagesHelper;
 
 	@PostConstruct
@@ -79,10 +77,11 @@ public class PagamentoCadastroBean implements Serializable{
 	}
 	
 	public Pagamento getPagamento() {
-		if (this.pagamento == null){
-			this.pagamento = new Pagamento();
+		if (this.pagamento == null) {
+			this.pagamento = new Pagamento(new Date(), SituacaoPagamento.EMABERTO);
+
 		}
-		return pagamento;
+		return this.pagamento;
 	}
 	
 	public void setPagamento(Pagamento pagamento) {

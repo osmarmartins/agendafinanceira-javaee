@@ -16,10 +16,6 @@ import javax.persistence.Version;
 
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 
-/**
- * The persistent class for the conta database table.
- * 
- */
 @Entity
 @Table(name = "conta")
 public class Conta implements Serializable {
@@ -33,14 +29,14 @@ public class Conta implements Serializable {
 	@Enumerated
 	private Ativo ativo;
 
-//	@Length(min=3, message="Descrição não pode ter menos que três caracteres")
+	// @Length(min=3, message="Descrição não pode ter menos que três caracteres")
 	private String descricao;
 
 	@Version
-	private int versao;
+	private Integer versao;
 
 	@Transient
-	private boolean status;
+	private Boolean status;
 
 	// bi-directional many-to-one association to Pgto
 	@OneToMany(mappedBy = "conta")
@@ -50,7 +46,7 @@ public class Conta implements Serializable {
 	}
 
 	public Integer getIdConta() {
-		return this.idConta;
+		return idConta;
 	}
 
 	public void setIdConta(Integer idConta) {
@@ -58,7 +54,7 @@ public class Conta implements Serializable {
 	}
 
 	public Ativo getAtivo() {
-		return this.ativo;
+		return ativo;
 	}
 
 	public void setAtivo(Ativo ativo) {
@@ -66,18 +62,18 @@ public class Conta implements Serializable {
 	}
 
 	public String getDescricao() {
-		return this.descricao;
+		return descricao;
 	}
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
 
-	public int getVersao() {
-		return this.versao;
+	public Integer getVersao() {
+		return versao;
 	}
 
-	public void setVersao(int versao) {
+	public void setVersao(Integer versao) {
 		this.versao = versao;
 	}
 
@@ -112,7 +108,7 @@ public class Conta implements Serializable {
 
 	public void setStatus(boolean status) {
 		this.setAtivo((status ? Ativo.ATIVO : Ativo.INATIVO));
-		this.status = status;	
+		this.status = status;
 	}
 
 	@Override

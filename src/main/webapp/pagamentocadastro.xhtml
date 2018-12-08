@@ -36,7 +36,7 @@
 		<div class="ui-g">	
 			<div class="ui-g-12">
 			
-				<form jsf:id="formPagamento" jsf:prependId="false">
+				<h:form id="formPagamento" prependId="false">
 					
 					<div class="widget-box">
 						<div class="widget-header">
@@ -48,7 +48,8 @@
 								
 								<span/>					
 		
-								<button class="btn btn-lg btn-info" type="submit" jsf:action="#{pagamentoCadastroBean.salvar()}">	
+								<button class="btn btn-lg btn-info" type="submit" 
+									jsf:id="btnSalvar" jsf:action="#{pagamentoCadastroBean.salvar()}">
 									<i class="ace-icon fa fa-check"></i>
 									Salvar
 								</button>						
@@ -175,7 +176,7 @@
 										<div class="form-group">
 											<label class="control-label">Total</label>
 											<p class="alert alert-info" jsf:id="label-total">
-												<h:outputText value="#{pagamentoCadastroBean.pagamento.total}">
+												<h:outputText value="#{pagamentoCadastroBean.pagamento.totalParcelas()}">
 													<f:convertNumber type="currency"/>
 												</h:outputText>
 											</p>
@@ -186,7 +187,7 @@
 										<div class="form-group">
 											<label class="control-label">Total Pago</label>
 											<p class="alert alert-success" jsf:id="label-pago">
-												<h:outputText value="#{pagamentoCadastroBean.pagamento.totalPago}">
+												<h:outputText value="#{pagamentoCadastroBean.pagamento.totalPago()}">
 													<f:convertNumber type="currency"/>
 												</h:outputText>
 											</p>
@@ -197,7 +198,7 @@
 										<div class="form-group">
 											<label class="control-label">Saldo em Aberto</label>
 											<p class="alert alert-danger" jsf:id="label-emAberto">
-												<h:outputText value="#{pagamentoCadastroBean.pagamento.saldoDevedor}">
+												<h:outputText value="#{pagamentoCadastroBean.pagamento.saldoDevedor()}">
 													<f:convertNumber type="currency"/>
 												</h:outputText>
 											</p>
@@ -310,7 +311,7 @@
 													</h:outputText>
 												</td>
 												<td>
-													<h:outputText value="#{parcela.totalParcela}" >
+													<h:outputText value="#{parcela.totalParcela()}" >
 														<f:convertNumber type="currency"/>
 													</h:outputText>
 												</td>
@@ -329,7 +330,6 @@
 
 														<button class="btn btn-sm btn-danger btn-white btn-round" 
 															jsf:action="#{pagamentoParcelaBean.excluir(parcela)}">
-															<f:ajax execute="@this" render="@form" immediate="true"/>
 															<i class="ace-icon fa fa-trash bigger-110 red2"></i>
 														</button>
 														
@@ -344,7 +344,7 @@
 					</div>				    
 					
 				
-				</form>			
+				</h:form>			
 
 			</div>
 		</div>

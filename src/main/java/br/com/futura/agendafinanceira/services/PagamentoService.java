@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.daos.PagamentoDao;
 import br.com.futura.agendafinanceira.models.Pagamento;
@@ -16,12 +17,7 @@ public class PagamentoService implements Serializable {
 
 	@Inject
 	private PagamentoDao pagamentoDao;
-	
-	public void salvar(Pagamento pagamento) {
-		pagamento.setTotal(pagamento.getTotal());
-		pagamento.setTotalPago(pagamento.getTotalPago());
-		pagamentoDao.salvar(pagamento);
-	}
+
 
 	public Pagamento pesquisarPorId(Integer idPagamento) {
 		return pagamentoDao.pesquisarPorId(idPagamento);
@@ -35,6 +31,12 @@ public class PagamentoService implements Serializable {
 		return pagamentoDao.listarPor(filtro);
 	}
 
+	@Transactional
+	public void salvar(Pagamento pagamento) {
+		pagamentoDao.salvar(pagamento);
+	}
+
+	@Transactional
 	public void excluir(Pagamento pagamento) {
 		pagamentoDao.excluir(pagamento);
 	}

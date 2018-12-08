@@ -178,7 +178,7 @@ public class PagamentoParcela implements Serializable {
 		this.quitacoes = new HashSet<PagamentoQuitacao>(pgtoQuitacaos);
 	}
 
-	public BigDecimal getTotalParcela() {
+	public BigDecimal totalParcela() {
 		return this.valor.subtract(this.desconto).add(this.juros).add(this.mora).add(this.outros);
 	}
 
@@ -194,17 +194,17 @@ public class PagamentoParcela implements Serializable {
 		return quitacao;
 	}
 
-	public BigDecimal calcularTotalPago() {
-		BigDecimal totalPago = BigDecimal.ZERO;
+	public BigDecimal totalPago() {
+		BigDecimal pagamentos = BigDecimal.ZERO;
 
 		if (this.quitacoes == null || this.quitacoes.size() == 0) {
-			return totalPago;
+			return pagamentos;
 		}
 
 		for (PagamentoQuitacao quitacao : this.quitacoes) {
-			totalPago = totalPago.add(quitacao.getValor());
+			pagamentos = pagamentos.add(quitacao.getValor());
 		}
-		return totalPago;
+		return pagamentos;
 	}
 
 	@Override
