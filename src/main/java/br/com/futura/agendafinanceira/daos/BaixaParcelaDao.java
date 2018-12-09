@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.models.PagamentoQuitacao;
 
@@ -17,7 +16,6 @@ public class BaixaParcelaDao implements Serializable{
 	@PersistenceContext
 	private EntityManager manager;
 	
-	@Transactional
 	public void salvar(PagamentoQuitacao quitacao) {
 		if (quitacao.getIdPgtoQuitacao() == null) {
 			manager.persist(quitacao);
@@ -26,7 +24,6 @@ public class BaixaParcelaDao implements Serializable{
 		}
 	}
 	
-	@Transactional
 	public void excluir(PagamentoQuitacao quitacao) {
 		manager.remove(manager.getReference(PagamentoQuitacao.class, quitacao.getIdPgtoQuitacao()));
 	}

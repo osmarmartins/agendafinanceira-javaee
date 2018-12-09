@@ -45,7 +45,7 @@
 						var="parcela" id="tabelaBaixa" emptyMessage="Nenhum registro encontrado" 
 						rows="7" paginator="true" paginatorPosition="bottom">
 						
-						<p:column sortBy="#{parcela.vencimento}" width="10%">
+						<p:column sortBy="#{parcela.vencimento}" width="15%">
 							<f:facet name="header">Vencimento</f:facet>
 							<h:outputText value="#{parcela.vencimento}">
 								<f:convertDateTime pattern="dd/MM/yyyy"/>
@@ -67,9 +67,9 @@
 							<h:outputText value="#{parcela.pagamento.historico}"/>
 						</p:column>
 						
-						<p:column sortBy="#{parcela.valor}" width="10%">
-							<f:facet name="header">Valor</f:facet>
-							<h:outputText value="#{parcela.valor}">
+						<p:column sortBy="#{parcela.saldoDevedor()}" width="10%">
+							<f:facet name="header">Saldo Devedor</f:facet>
+							<h:outputText value="#{parcela.saldoDevedor()}">
 								<f:convertNumber type="currency"/>
 							</h:outputText>
 						</p:column>

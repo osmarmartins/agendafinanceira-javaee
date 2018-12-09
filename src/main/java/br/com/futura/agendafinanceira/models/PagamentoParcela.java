@@ -212,6 +212,10 @@ public class PagamentoParcela implements Serializable {
 		}
 		return pagamentos;
 	}
+	
+	public BigDecimal saldoDevedor() {
+		return totalParcela().subtract(totalPago());
+	}
 
 	@Override
 	public String toString() {

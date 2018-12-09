@@ -63,7 +63,7 @@
 						</p:column>
 						
 						<p:column sortBy="#{pagamento.saldoDevedor()}" width="10%">
-							<f:facet name="header">Saldo em Aberto</f:facet>
+							<f:facet name="header">Saldo Devedor</f:facet>
 							<h:outputText value="#{pagamento.saldoDevedor()}">
 								<f:convertNumber type="currency"/>
 							</h:outputText>

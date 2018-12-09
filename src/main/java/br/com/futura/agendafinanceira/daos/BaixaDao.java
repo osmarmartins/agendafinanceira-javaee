@@ -16,12 +16,13 @@ public class BaixaDao implements Serializable {
 	private EntityManager manager;
 	
 	public List<PagamentoParcela> listarTodos() {
-		return manager.createQuery("select p from PagamentoParcela p "
+		return manager.createQuery("select distinct p from PagamentoParcela p "
 				+ "join fetch p.pagamento pg "
 				+ "join fetch pg.fornecedor "
 				+ "join fetch pg.setor "
 				+ "join fetch pg.conta "
-				+ "order by p.vencimento ", 
+				+ "left join fetch p.quitacoes q "
+				+ "order by p.vencimento, p.parcela ", 
 				PagamentoParcela.class).getResultList();
 	}
 

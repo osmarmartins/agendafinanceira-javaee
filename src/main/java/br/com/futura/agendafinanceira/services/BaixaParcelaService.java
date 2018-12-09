@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.daos.BaixaParcelaDao;
 import br.com.futura.agendafinanceira.models.PagamentoQuitacao;
@@ -16,10 +17,12 @@ public class BaixaParcelaService implements Serializable {
 	@Inject
 	private BaixaParcelaDao baixaParcelaDao;
 	
+	@Transactional
 	public void salvar(PagamentoQuitacao quitacao) {
 		baixaParcelaDao.salvar(quitacao);
 	}
 
+	@Transactional
 	public void excluir(PagamentoQuitacao quitacao) {
 		//TODO Realizar as validações para exclusão da quitação
 		baixaParcelaDao.excluir(quitacao);

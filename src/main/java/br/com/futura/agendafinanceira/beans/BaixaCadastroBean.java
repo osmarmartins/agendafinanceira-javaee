@@ -1,8 +1,10 @@
 package br.com.futura.agendafinanceira.beans;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -29,12 +31,23 @@ public class BaixaCadastroBean implements Serializable {
 	@Inject
 	private MessagesHelper messagesHelper;
 	
+	@PostConstruct
+	private void init() {
+		quitacao = new PagamentoQuitacao();
+		quitacao.setDtPgto(new Date());
+	}
+	
+	
 	public FormaPagamento[] getFormasDePagamento() {
 		return FormaPagamento.values();
 	}
 	
 	public String salvar() {
 		// TODO Chamada Ajax para atualizar grid de quitações após salvar
+		quitacao.setParcela(parcela);
+		
+		System.out.println("QUITACAO >>>>>>>>>>>>>>> " + quitacao);
+		
 		baixaParcelaService.salvar(quitacao);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		return "baixacadastro?faces-redirect=true&parcela=" + parcela.getIdPagamentoParcela();
