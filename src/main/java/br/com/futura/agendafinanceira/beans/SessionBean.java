@@ -6,6 +6,8 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
+import br.com.futura.agendafinanceira.models.Usuario;
+
 @Named
 @SessionScoped
 public class SessionBean implements Serializable{
@@ -13,6 +15,8 @@ public class SessionBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer itensPorPagina;
+	
+	private Usuario usuarioLogado;
 	
 	@PostConstruct
 	private void init() {
@@ -25,6 +29,21 @@ public class SessionBean implements Serializable{
 	
 	public Integer getItensPorPagina() {
 		return this.itensPorPagina;
+	}
+	
+	public void login() {
+		System.out.println("Login efetuado com o usuário: " + usuarioLogado);
+	}
+	
+	public Usuario getUsuarioLogado() {
+		if (this.usuarioLogado == null) {
+			this.usuarioLogado = new Usuario();
+		}
+		return usuarioLogado;
+	}
+	
+	public void setUsuarioLogado(Usuario usuarioLogado) {
+		this.usuarioLogado = usuarioLogado;
 	}
 
 }

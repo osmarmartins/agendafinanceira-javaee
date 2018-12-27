@@ -61,8 +61,8 @@
 			<div class="navbar-header pull-left">
 				<a href="index.html" class="navbar-brand">
 					<small>
-						<i class="fa fa-leaf"></i>
-						Ace Admin
+						<i class="fa fa-money"></i>
+						Agenda Financeira
 					</small>
 				</a>
 			</div>
@@ -328,8 +328,8 @@
 						<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 							<h:graphicImage library="aceAdmin" name="images/avatars/user.jpg" styleClass="nav-user-photo" alt="Jason's Photo"/>
 							<span class="user-info">
-								<small>Welcome,</small>
-								Jason
+								<small>Bem Vindo,</small>
+								#{request.remoteUser}
 							</span>
 	
 							<i class="ace-icon fa fa-caret-down"></i>
@@ -339,23 +339,23 @@
 							<li>
 								<a href="#">
 									<i class="ace-icon fa fa-cog"></i>
-									Settings
+									Minhas preferências
 								</a>
 							</li>
 	
 							<li>
-								<a href="profile.html">
+								<a href="#">
 									<i class="ace-icon fa fa-user"></i>
-									Profile
+									Meus dados
 								</a>
 							</li>
 	
 							<li class="divider"></li>
 	
 							<li>
-								<a href="#">
+								<a href="#{facesContext.externalContext.requestContextPath}">
 									<i class="ace-icon fa fa-power-off"></i>
-									Logout
+									Sair
 								</a>
 							</li>
 						</ul>

@@ -13,30 +13,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.
-			inMemoryAuthentication()
-				.withUser("usuario").password("prisma.12").roles("USER")
-			.and()
-				.withUser("admin").password("prisma.12").roles("ADMIN");
+		auth.inMemoryAuthentication()
+			.withUser("usuario").password("prisma").roles("USER").and()
+			.withUser("admin").password("prisma").roles("ADMIN");
 	}
 	
 	protected void configure(HttpSecurity http) throws Exception {
-		http
-			.csrf().disable();
-	 	http
-	 		.authorizeRequests()
+		http.csrf().disable();
+	 	http.authorizeRequests()
+	 		.anyRequest().authenticated().and()
+	 		.logout().logoutSuccessUrl("/login.xhtml?logout").permitAll().and()
+	 		.formLogin().loginPage("/login.xhtml")
+	 			.failureUrl("/login.xhtml?erro").permitAll();
+
+	 	
+	 	
 //		 		.antMatchers("/javax.faces.resource/**").permitAll()
-		 		.antMatchers("/**").permitAll()
-		 		.anyRequest().authenticated()
-		 		.and()
-	 		.logout()
-	 			.logoutSuccessUrl("/login.xhtml?logout")
-	 			.permitAll()
-	 			.and()
-	 		.formLogin()
-	 			.loginPage("/login.xhtml")
-	 			.failureUrl("/login.xhtml?erro")
-	 			.permitAll();
+//		 		.antMatchers("/**").permitAll()
+//		 		.anyRequest().authenticated()
+//		 		.and()
+//	 		.logout()
+//	 			.logoutSuccessUrl("/login.xhtml?logout")
+//	 			.permitAll()
+//	 			.and()
+//	 		.formLogin()
+//	 			.loginPage("/login.xhtml")
+//	 			.failureUrl("/login.xhtml?erro")
+//	 			.permitAll();
 	}	
 
 }
