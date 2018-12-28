@@ -1,7 +1,6 @@
 package br.com.futura.agendafinanceira.models;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +8,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -46,10 +44,6 @@ public class Usuario implements Serializable {
 	
 	@Transient
 	private boolean status;
-
-	// bi-directional many-to-one association to UsuarioOperacao
-	@OneToMany(mappedBy = "usuario")
-	private List<UsuarioOperacao> operacoes;
 
 	public Usuario() {
 	}
@@ -116,26 +110,6 @@ public class Usuario implements Serializable {
 
 	public void setVersao(Integer versao) {
 		this.versao = versao;
-	}
-
-	public List<UsuarioOperacao> getOperacoes() {
-		return this.operacoes;
-	}
-
-	public void setgetOperacoes(List<UsuarioOperacao> operacoes) {
-		this.operacoes = operacoes;
-	}
-
-	public UsuarioOperacao addUsuarioOperacao(UsuarioOperacao operacao) {
-		getOperacoes().add(operacao);
-		operacao.setUsuario(this);
-		return operacao;
-	}
-
-	public UsuarioOperacao removeUsuarioOperacao(UsuarioOperacao operacao) {
-		getOperacoes().remove(operacao);
-		operacao.setUsuario(null);
-		return operacao;
 	}
 	
 	public boolean isStatus() {

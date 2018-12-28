@@ -9,8 +9,10 @@
 		
 	</application>
 	
+<!-- 
 	<lifecycle>
 		<phase-listener>br.com.futura.agendafinanceira.utils.LogPhaseListener</phase-listener>
 	</lifecycle>
-
+-->
+ 
 </faces-config>	

@@ -11,13 +11,11 @@
 		<class>br.com.futura.agendafinanceira.models.Conta</class>
 		<class>br.com.futura.agendafinanceira.models.Contato</class>
 		<class>br.com.futura.agendafinanceira.models.Fornecedor</class>
-		<class>br.com.futura.agendafinanceira.models.Operacao</class>
 		<class>br.com.futura.agendafinanceira.models.Pagamento</class>
 		<class>br.com.futura.agendafinanceira.models.PagamentoParcela</class>
 		<class>br.com.futura.agendafinanceira.models.PagamentoQuitacao</class>
 		<class>br.com.futura.agendafinanceira.models.Setor</class>
 		<class>br.com.futura.agendafinanceira.models.Usuario</class>
-		<class>br.com.futura.agendafinanceira.models.UsuarioOperacao</class>
 		
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		
