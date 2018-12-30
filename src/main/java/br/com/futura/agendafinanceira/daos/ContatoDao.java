@@ -16,7 +16,7 @@ public class ContatoDao implements Serializable{
 	private EntityManager manager;
 	
 	public Contato pesquisarPorId(Integer idContato){
-		return manager.createQuery("select c from Contato c where c.idContato = pContato ", Contato.class)
+		return manager.createQuery("select c from Contato c where c.idContato = :pContato ", Contato.class)
 				.setParameter("pContato", idContato)
 				.getSingleResult();
 	}

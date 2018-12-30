@@ -59,13 +59,13 @@ public class FornecedorCadastroBean implements Serializable {
 	}
 
 	public String alterarContato(Contato contato) {
-		return "/contatocadastro?faces-redirect=true&"
+		return "contatocadastro?faces-redirect=true&"
 				+ "fornecedor=" + contato.getFornecedor().getIdFornecedor()
 				+ "&contato=" + contato.getIdContato();
 	}
 	
 	public String novoContato(){
-		return "/contatocadastro?faces-redirect=true&"
+		return "contatocadastro?faces-redirect=true&"
 				+ "fornecedor=" + this.fornecedor.getIdFornecedor();
 	}
 		

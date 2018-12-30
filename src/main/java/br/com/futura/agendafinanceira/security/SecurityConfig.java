@@ -1,6 +1,7 @@
 package br.com.futura.agendafinanceira.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.faces.context.FacesContext;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,15 +13,16 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+	@Override
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication()
-			.withUser("usuario").password("prisma").roles("USER").and()
-			.withUser("admin").password("prisma").roles("ADMIN");
+			.withUser("usuario").password("prisma").roles("SETOR", "CONTA", "FORNECEDOR").and()
+			.withUser("admin").password("prisma").roles("PAGAMENTO", "BAIXA");
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+
 		http
 		.csrf().disable()
 		
@@ -34,31 +36,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			
 		.authorizeRequests()
-			.antMatchers(HttpMethod.GET, "/setor*.xhtml").hasRole("SETOR")
-			.antMatchers("/setor*.xhtml").hasRole("SETOR_MANUTENCAO")
-		
-			.antMatchers(HttpMethod.GET, "/conta*.xhtml").hasRole("CONTA")
-			.antMatchers("/conta*.xhtml").hasRole("CONTA_MANUTENCAO")
+//			.antMatchers("/setor/**").hasRole("SETOR")
+//			.antMatchers("/conta/**").hasRole("CONTA")
+//			
+//			.antMatchers(HttpMethod.GET, "/fornecedor*.xhtml").hasRole("FORNECEDOR")
+//			.antMatchers(HttpMethod.GET, "/contatocadastro.xhtml").hasRole("FORNECEDOR")
+//			.antMatchers("/fornecedor*.xhtml").hasRole("FORNECEDOR_MANUTENCAO")
+//			.antMatchers("/contatocadastro.xhtml").hasRole("FORNECEDOR_MANUTENCAO")
+//
+//			.antMatchers(HttpMethod.GET, "/usuario*.xhtml").hasRole("USUARIO")
+//			.antMatchers("/usuario*.xhtml").hasRole("USUARIO_MANUTENCAO")
+//
+//			.antMatchers(HttpMethod.GET, "/usuario*.xhtml").hasRole("USUARIO")
+//			.antMatchers("/usuario*.xhtml").hasRole("USUARIO_MANUTENCAO")
+//			
+//			.antMatchers(HttpMethod.GET, "/pagamento*.xhtml").hasRole("PAGAMENTO")
+//			.antMatchers("/pagamento*.xhtml").hasRole("PAGAMENTO_MANUTENCAO")
+//
+//			.antMatchers(HttpMethod.GET, "/baixa*.xhtml").hasRole("BAIXA")
+//			.antMatchers("/baixa*.xhtml").hasRole("BAIXA_MANUTENCAO")
 			
-			.antMatchers(HttpMethod.GET, "/fornecedor*.xhtml").hasRole("FORNECEDOR")
-			.antMatchers(HttpMethod.GET, "/contatocadastro.xhtml").hasRole("FORNECEDOR")
-			.antMatchers("/fornecedor*.xhtml").hasRole("FORNECEDOR_MANUTENCAO")
-			.antMatchers("/contatocadastro.xhtml").hasRole("FORNECEDOR_MANUTENCAO")
-
-			.antMatchers(HttpMethod.GET, "/usuario*.xhtml").hasRole("USUARIO")
-			.antMatchers("/usuario*.xhtml").hasRole("USUARIO_MANUTENCAO")
-
-			.antMatchers(HttpMethod.GET, "/usuario*.xhtml").hasRole("USUARIO")
-			.antMatchers("/usuario*.xhtml").hasRole("USUARIO_MANUTENCAO")
-			
-			.antMatchers(HttpMethod.GET, "/pagamento*.xhtml").hasRole("PAGAMENTO")
-			.antMatchers("/pagamento*.xhtml").hasRole("PAGAMENTO_MANUTENCAO")
-
-			.antMatchers(HttpMethod.GET, "/baixa*.xhtml").hasRole("BAIXA")
-			.antMatchers("/baixa*.xhtml").hasRole("BAIXA_MANUTENCAO")
-			
-			.antMatchers("/javax.faces.resource/**").permitAll()
 			.anyRequest().authenticated()
+//			.antMatchers("/javax.faces.resource/**").permitAll()
 	 		.and()
 	 		
  		.logout()
@@ -69,6 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  		.formLogin()
  			.loginPage("/login.xhtml")
  			.failureUrl("/login.xhtml?erro")
+ 			.defaultSuccessUrl("/", true)
  			.permitAll();
 
 	}	

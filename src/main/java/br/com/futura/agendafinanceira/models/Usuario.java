@@ -25,23 +25,23 @@ public class Usuario implements Serializable {
 	@Column(name = "id_usuario")
 	private Integer idUsuario;
 
+	private String nome;
+	
+	private String email;
+	
+	private String login;
+
+	private String senha;
+
 	@Enumerated
 	private TipoUsuario administrador;
 
 	@Enumerated
 	private Ativo ativo;
 
-	private String email;
-
-	private String login;
-
-	private String nome;
-
-	private String senha;
-	
 	@Version
 	private Integer versao;
-	
+
 	@Transient
 	private boolean status;
 
@@ -111,19 +111,19 @@ public class Usuario implements Serializable {
 	public void setVersao(Integer versao) {
 		this.versao = versao;
 	}
-	
+
 	public boolean isStatus() {
-		if (this.ativo == null){
+		if (this.ativo == null) {
 			return false;
 		}
 		return (this.ativo.equals(Ativo.ATIVO));
 	}
-	
+
 	public void setStatus(boolean status) {
 		this.setAtivo(status ? Ativo.ATIVO : Ativo.INATIVO);
 		this.status = status;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -152,5 +152,4 @@ public class Usuario implements Serializable {
 				+ email + ", login=" + login + ", nome=" + nome + ", senha=" + senha + ", versao=" + versao + "]";
 	}
 
-	
 }

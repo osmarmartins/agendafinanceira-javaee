@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<ui:composition template="resources/template/aceadmin.xhtml">
+<ui:composition template="/resources/template/aceadmin.xhtml">
 
 	<ui:define name="navegacao">
 		<li class="active">Fornecedores</li>
@@ -29,7 +29,7 @@
 
 					<p:toolbar>
 						<f:facet name="left">
-							<p:button value="Novo" icon="fa fa-plus" outcome="/fornecedorcadastro.xhtml"/>
+							<p:button value="Novo" icon="fa fa-plus" outcome="fornecedorcadastro.xhtml"/>
 						</f:facet>
 						
 						<f:facet name="right">
