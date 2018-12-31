@@ -1,9 +1,6 @@
 package br.com.futura.agendafinanceira.security;
 
-import javax.faces.context.FacesContext;
-
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,19 +23,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 		.csrf().disable()
 		
-		.headers()
-			.frameOptions()
-			.sameOrigin()
-			.and()
+//		.headers()
+//			.frameOptions()
+//			.sameOrigin()
+//			.and()
 		
 		.exceptionHandling()
 			.accessDeniedPage("/erro-403.xhtml")
 			.and()
 			
 		.authorizeRequests()
-//			.antMatchers("/setor/**").hasRole("SETOR")
-//			.antMatchers("/conta/**").hasRole("CONTA")
-//			
+			.antMatchers("/setor/**").hasRole("SETOR")
+			.antMatchers("/conta/**").hasRole("CONTA")
+			
 //			.antMatchers(HttpMethod.GET, "/fornecedor*.xhtml").hasRole("FORNECEDOR")
 //			.antMatchers(HttpMethod.GET, "/contatocadastro.xhtml").hasRole("FORNECEDOR")
 //			.antMatchers("/fornecedor*.xhtml").hasRole("FORNECEDOR_MANUTENCAO")
@@ -57,7 +54,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //			.antMatchers("/baixa*.xhtml").hasRole("BAIXA_MANUTENCAO")
 			
 			.anyRequest().authenticated()
-//			.antMatchers("/javax.faces.resource/**").permitAll()
+			.antMatchers("/**").permitAll()
+			.antMatchers("/resources/**").permitAll()
+			.antMatchers("/javax.faces.resource/**").permitAll()
 	 		.and()
 	 		
  		.logout()

@@ -39,7 +39,7 @@ public class PagamentoBean implements Serializable {
 	}
 
 	public String alterar(Pagamento pagamento) {
-		return "/pagamentocadastro?faces-redirect=true&pagamento=" + pagamento.getIdPagamento();
+		return "/pagamento/pagamentocadastro?faces-redirect=true&pagamento=" + pagamento.getIdPagamento();
 	}
 
 	public void excluir(Pagamento pagamento) {
