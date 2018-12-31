@@ -16,7 +16,7 @@
 	<link rel="icon" href='#{resource["img/AppLogo.png"]}' />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300"/>
 
-	<!-- bootstrap e fontawesome --> 
+	<!-- bootstrap & fontawesome --> 
 	<link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/aceAdmin/font-awesome/4.5.0/css/font-awesome.min.css"/> 
 	<h:outputStylesheet library="aceAdmin" name="css/bootstrap.min.css"/>
 
@@ -24,7 +24,8 @@
 
 	<!-- text fonts -->
 	<h:outputStylesheet library="aceAdmin" name="css/fonts.googleapis.com.css"/>
-
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"/>
+		
 	<!-- ace styles -->
 	<h:outputStylesheet library="aceAdmin" name="css/ace.min.css" styleClass="ace-main-stylesheet" id="main-ace-style" /> 
 	<h:outputStylesheet library="aceAdmin" name="css/ace-skins.min.css"/>
@@ -48,7 +49,7 @@
 						<div class="login-container">
 							<div class="center">
 								<h1>
-									<i class="ace-icon fa fa-money green"></i>
+									<i class="ace-icon fa fa-money-bill-alt green"></i>
 									<span class="blue" id="id-text2">Agenda Financeira</span>
 								</h1>
 							</div>
@@ -64,7 +65,7 @@
 											</h:panelGroup>
 										
 											<h4 class="header blue lighter bigger">
-												<i class="ace-icon fa fa-key green"></i>
+												<i class="ace-icon fa fa-lock green"></i>
 												Entre com seu login
 											</h4>
 
@@ -94,22 +95,17 @@
 																type="password" 
 																class="form-control" 
 																placeholder="Password" />
-															<i class="ace-icon fa fa-lock"></i>
+															<i class="ace-icon fa fa-key"></i>
 														</span>
 													</label>
 
 													<div class="space"></div>
 
 													<div class="clearfix">
-														<label class="inline">
-															<input type="checkbox" class="ace" />
-															<span class="lbl"> Lembrar-me </span>
-														</label>
-
 														<button 
 															type="submit" 
 															class="width-35 pull-right btn btn-sm btn-primary">
-															<i class="ace-icon fa fa-key"></i>
+															<i class="ace-icon fa fa-unlock"></i>
 															<span class="bigger-110">Login</span>
 														</button>
 													</div>

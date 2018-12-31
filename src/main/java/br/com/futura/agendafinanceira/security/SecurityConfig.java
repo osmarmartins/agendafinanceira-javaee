@@ -13,8 +13,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication()
-			.withUser("usuario").password("prisma").roles("SETOR", "CONTA", "FORNECEDOR").and()
-			.withUser("admin").password("prisma").roles("PAGAMENTO", "BAIXA");
+			.withUser("usuario").password("prisma").roles("PAGAMENTO", "RELATORIO").and()
+			.withUser("admin").password("prisma").roles("SETOR", "CONTA", "FORNECEDOR", "USUARIO", "PAGAMENTO", "BAIXA");
 	}
 	
 	@Override
@@ -23,10 +23,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 		.csrf().disable()
 		
-//		.headers()
-//			.frameOptions()
-//			.sameOrigin()
-//			.and()
+		.headers()
+			.frameOptions()
+			.sameOrigin()
+			.and()
 		
 		.exceptionHandling()
 			.accessDeniedPage("/erro-403.xhtml")
@@ -35,29 +35,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.authorizeRequests()
 			.antMatchers("/setor/**").hasRole("SETOR")
 			.antMatchers("/conta/**").hasRole("CONTA")
+			.antMatchers("/fornecedor/**").hasRole("FORNECEDOR")
+			.antMatchers("/usuario/**").hasRole("USUARIO")
+			.antMatchers("/pagamento/**").hasRole("PAGAMENTO")
+			.antMatchers("/baixa/**").hasRole("BAIXA")
+			.antMatchers("/relatorio/**").hasRole("RELATORIO")
 			
-//			.antMatchers(HttpMethod.GET, "/fornecedor*.xhtml").hasRole("FORNECEDOR")
-//			.antMatchers(HttpMethod.GET, "/contatocadastro.xhtml").hasRole("FORNECEDOR")
-//			.antMatchers("/fornecedor*.xhtml").hasRole("FORNECEDOR_MANUTENCAO")
-//			.antMatchers("/contatocadastro.xhtml").hasRole("FORNECEDOR_MANUTENCAO")
-//
-//			.antMatchers(HttpMethod.GET, "/usuario*.xhtml").hasRole("USUARIO")
-//			.antMatchers("/usuario*.xhtml").hasRole("USUARIO_MANUTENCAO")
-//
-//			.antMatchers(HttpMethod.GET, "/usuario*.xhtml").hasRole("USUARIO")
-//			.antMatchers("/usuario*.xhtml").hasRole("USUARIO_MANUTENCAO")
-//			
-//			.antMatchers(HttpMethod.GET, "/pagamento*.xhtml").hasRole("PAGAMENTO")
-//			.antMatchers("/pagamento*.xhtml").hasRole("PAGAMENTO_MANUTENCAO")
-//
-//			.antMatchers(HttpMethod.GET, "/baixa*.xhtml").hasRole("BAIXA")
-//			.antMatchers("/baixa*.xhtml").hasRole("BAIXA_MANUTENCAO")
-			
-			.anyRequest().authenticated()
-			.antMatchers("/**").permitAll()
-			.antMatchers("/resources/**").permitAll()
 			.antMatchers("/javax.faces.resource/**").permitAll()
-	 		.and()
+			.anyRequest().authenticated()
+	 		.and()		
 	 		
  		.logout()
  			.logoutSuccessUrl("/login.xhtml?logout")
