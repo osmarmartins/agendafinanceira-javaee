@@ -13,6 +13,7 @@ import br.com.futura.agendafinanceira.utils.NumberConversionUtil;
 public class UsuarioDao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	@PersistenceContext
 	private EntityManager manager;
 
@@ -35,10 +36,16 @@ public class UsuarioDao implements Serializable {
 				.getResultList();
 	}
 
-	public Usuario pesquisaPorId(Integer idUsuario) {
+	public Usuario pesquisaPor(Integer idUsuario) {
 		return manager.find(Usuario.class, idUsuario);
 	}
 
+	public Usuario pesquisarPor(String login) {
+		return manager.createQuery("select u from Usuario u where u.login=:pLogin", Usuario.class)
+				.setParameter("pLogin", login)
+				.getSingleResult();
+	}
+	
 	@Transactional
 	public void excluir(Usuario usuario) {
 		manager.remove(manager.getReference(Usuario.class, usuario.getIdUsuario()));
@@ -52,4 +59,5 @@ public class UsuarioDao implements Serializable {
 			manager.merge(usuario);
 		}
 	}
+	
 }

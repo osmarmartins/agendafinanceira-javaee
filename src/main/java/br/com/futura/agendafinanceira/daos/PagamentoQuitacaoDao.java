@@ -4,14 +4,12 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import br.com.futura.agendafinanceira.models.Pagamento;
 import br.com.futura.agendafinanceira.models.PagamentoQuitacao;
 
-@Named
 public class PagamentoQuitacaoDao implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -1,23 +1,32 @@
 package br.com.futura.agendafinanceira.models;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.models.enums.TipoUsuario;
 
 @Entity
 @Table(name = "usuario")
-public class Usuario implements Serializable {
+public class Usuario implements Serializable, UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -26,9 +35,9 @@ public class Usuario implements Serializable {
 	private Integer idUsuario;
 
 	private String nome;
-	
+
 	private String email;
-	
+
 	private String login;
 
 	private String senha;
@@ -45,9 +54,13 @@ public class Usuario implements Serializable {
 	@Transient
 	private boolean status;
 
-	public Usuario() {
-	}
-
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "login_role_usuario", 
+		joinColumns = {@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario") }, 
+		inverseJoinColumns = {@JoinColumn(name = "id_role", referencedColumnName = "id_role") })
+	private List<Role> permissoes;
+	
 	public Integer getIdUsuario() {
 		return this.idUsuario;
 	}
@@ -150,6 +163,41 @@ public class Usuario implements Serializable {
 	public String toString() {
 		return "Usuario [idUsuario=" + idUsuario + ", administrador=" + administrador + ", ativo=" + ativo + ", email="
 				+ email + ", login=" + login + ", nome=" + nome + ", senha=" + senha + ", versao=" + versao + "]";
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.permissoes;
+	}
+
+	@Override
+	public String getPassword() {
+		return this.senha;
+	}
+
+	@Override
+	public String getUsername() {
+		return this.login;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return this.ativo==null? false : this.ativo==Ativo.ATIVO;
 	}
 
 }

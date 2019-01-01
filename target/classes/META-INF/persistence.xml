@@ -16,11 +16,12 @@
 		<class>br.com.futura.agendafinanceira.models.PagamentoQuitacao</class>
 		<class>br.com.futura.agendafinanceira.models.Setor</class>
 		<class>br.com.futura.agendafinanceira.models.Usuario</class>
+		<class>br.com.futura.agendafinanceira.models.Role</class>
 		
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		
 		<properties>
-			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.transaction.flush_before_completion" value="true" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />

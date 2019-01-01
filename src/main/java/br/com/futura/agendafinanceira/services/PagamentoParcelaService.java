@@ -10,7 +10,6 @@ import br.com.futura.agendafinanceira.daos.PagamentoParcelaDao;
 import br.com.futura.agendafinanceira.models.Pagamento;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
 
-@Named
 public class PagamentoParcelaService implements Serializable {
 
 	private static final long serialVersionUID = 1L;

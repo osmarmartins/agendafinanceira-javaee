@@ -3,13 +3,11 @@ package br.com.futura.agendafinanceira.services;
 import java.io.Serializable;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.daos.BaixaParcelaDao;
 import br.com.futura.agendafinanceira.models.PagamentoQuitacao;
 
-@Named
 public class BaixaParcelaService implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

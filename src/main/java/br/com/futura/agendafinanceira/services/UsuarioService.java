@@ -4,11 +4,15 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import br.com.futura.agendafinanceira.daos.UsuarioDao;
 import br.com.futura.agendafinanceira.models.Usuario;
 
-public class UsuarioService implements Serializable {
+public class UsuarioService implements Serializable, UserDetailsService {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -29,6 +33,11 @@ public class UsuarioService implements Serializable {
 
 	public void salvar(Usuario usuario) {
 		usuarioDao.salvar(usuario);
+	}
+
+	@Override
+	public Usuario loadUserByUsername(String login) throws UsernameNotFoundException {
+		return usuarioDao.pesquisarPor(login);
 	}
 
 }
