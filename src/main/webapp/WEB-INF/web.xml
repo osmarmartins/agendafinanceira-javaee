@@ -94,5 +94,15 @@
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>	
-    
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>agendafinanceira</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+           <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+        
 </web-app>

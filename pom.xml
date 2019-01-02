@@ -41,6 +41,13 @@
 			<version>2.2.13</version>
 			<scope>provided</scope>
 		</dependency>
+		
+		<dependency>
+		    <groupId>org.hibernate.validator</groupId>
+		    <artifactId>hibernate-validator</artifactId>
+		    <version>6.0.13.Final</version>
+			<scope>provided</scope>
+		</dependency>		
 
 		<!-- Spring Security (autenticação e autorização) -->
 		<dependency>
@@ -104,7 +111,7 @@
 	</repositories>
 
 	<build>
-		<finalName>agendafinanceira-javaee</finalName>
+		<finalName>agendafinanceira</finalName>
 	</build>
 
 </project>
