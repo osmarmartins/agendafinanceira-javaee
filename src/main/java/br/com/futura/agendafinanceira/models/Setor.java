@@ -13,9 +13,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 
@@ -30,7 +30,7 @@ public class Setor implements Serializable {
 	private Integer idSetor;
 	
 	@Length(min=3, message = "Descrição não pode ter menos que três caracteres")
-	@NotBlank(message="Informe uma descrição para o setor")
+	@NotNull(message="Informe uma descrição para o setor")
 	private String descricao;
 
 	@Enumerated

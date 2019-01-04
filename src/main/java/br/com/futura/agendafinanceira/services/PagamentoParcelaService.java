@@ -3,7 +3,6 @@ package br.com.futura.agendafinanceira.services;
 import java.io.Serializable;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.daos.PagamentoParcelaDao;
