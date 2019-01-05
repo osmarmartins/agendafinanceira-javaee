@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head/>
+
+<ui:composition template="/resources/template/aceadmin.xhtml">
+
+	<ui:define name="navegacao">
+		<li class="active">Setores</li>
+	</ui:define>
+	
+	<ui:define name="titulo">
+		<i class="ace-icon fa fa-list-alt smaller-90"></i>
+		Cadastro de Setores
+	</ui:define>
+	
+	<ui:define name="subtitulo">
+		<span>Relação dos centros de custo a serem gerenciados nas operações financeiras</span> 
+	</ui:define>
+	
+
+	<ui:define name="conteudo">
+		
+		<div class="ui-g">	
+			<div class="ui-g-12">
+				<h:form id="form" prependId="false">
+
+					<div class="clearfix form-actions ui-widget-header" style="margin-bottom: 0;" jsf:id="comandoGrid">
+						<div class="col-md-6">
+
+							<button class="btn btn-white btn-primary" type="button" jsf:id="btnNovo" jsf:outcome="/setor/setorcadastro.xhtml">
+								<i class="fa fa-plus"></i> 
+								Novo
+							</button>
+							
+							<p:spacer width="10"/>
+							
+							<button class="btn btn-white btn-danger" type="button" 
+								data-toggle="modal" 
+								data-target="#modalExclusao" 
+								jsf:id="btnExcluirSelecao" 
+								jsf:rendered="#{setorBean.isExisteSelecao()}">
+								<i class="fa fa-trash"></i> Excluir Seleção
+								<f:ajax
+									listener="#{setorBean.mensagemExclusaoBuilder()}"
+									execute="@this"
+									render="btnConfirmaExclucao mensagem"/>
+							</button>
+							
+						</div>
+						
+						<div class="col-md-offset-1 col-md-5 align-right">
+						
+							<div class="input-group">
+								<input class="form-control input-mask-date" type="text" 
+									placeholder="Pesquisa por..."
+									jsf:value="#{setorBean.pesquisaDescricao}" />
+								<span class="input-group-btn">
+									<button class="btn btn-inverse btn-white" type="submit" jsf:action="#{setorBean.pesquisar()}" jsf:update="@form">
+										<i class="ace-icon fa fa-search bigger-110"></i>
+									</button>
+								</span>
+							</div>
+
+						</div>
+					</div>
+					
+					
+					<p:dataTable id="tabela"
+						emptyMessage="Nenhum registro encontrado"
+						value="#{setorBean.setores}" var="setor" rowKey="#{setor.idSetor}"
+						selection="#{setorBean.setoresSelecionados}"
+						 
+						rows="#{sessionBean.itensPorPagina}"
+						rowsPerPageTemplate="3 8 10 20"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{ItensPorPagina} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+						<f:facet name="{ItensPorPagina}">
+							<p:outputLabel value="Itens por Página: " />
+							<p:inputText value="#{sessionBean.itensPorPagina}" process="@this" update="@form" style="width: 50px; margin-right: 10px; margin-left: 5px;"/>
+						</f:facet> 
+						
+						<p:ajax event="rowSelect" process="@this" update="@form"/>
+						<p:ajax event="toggleSelect" process="@this" update="@form"/>
+						<p:ajax event="rowUnselectCheckbox" process="@this" update="@form"/>
+						<p:ajax event="rowSelectCheckbox" process="@this" update="@form"/>
+						
+						<p:column selectionMode="multiple" width="5%" styleClass="align-center">
+						</p:column>
+						
+						<p:column sortBy="#{setor.idSetor}" width="15%">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-bookmark"></i>							
+								ID
+							</f:facet>
+							<h:outputText value="#{setor.idSetor}"/>
+						</p:column>
+						
+						<p:column sortBy="#{setor.descricao}">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-eye"></i>							
+								Descrição
+							</f:facet>
+							<h:outputText value="#{setor.descricao}"/>
+						</p:column>
+						
+						<p:column sortBy="#{setor.ativo.descricao}" width="15%" class="text-center">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-heartbeat"></i>							
+								Situação
+							</f:facet>
+							<span class="label label-white middle #{setor.status?'label-success':'label-danger'}" style="width: 6em;">							
+								<h:outputText value="#{setor.ativo.descricao}"/>
+							</span>
+						</p:column>
+						
+						<p:column width="13%" class="text-center">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-gear"></i>							
+								Operações
+							</f:facet>
+							
+							<button type="button" class="btn btn-sm btn-success btn-white btn-round" 
+								jsf:id="btnAlterar" jsf:outcome="setorcadastro">
+								<f:param name="setor" value="#{setor.idSetor}"/>
+								<i class="ace-icon fa fa-pencil bigger-110 green"></i>
+							</button>
+							
+							<button type="button" class="btn btn-sm btn-danger btn-white btn-round" 
+								data-toggle="modal" 
+								data-target="#modalExclusao" 
+								jsf:id="btnExcluir"
+								jsf:rendered="#{!setorBean.isExisteSelecao()}">							
+								<i class="ace-icon fa fa-trash bigger-110 danger"></i>
+								<f:ajax
+									execute="@this"
+									render="btnConfirmaExclucao mensagem"
+									listener="#{setorBean.selecionaSetor(setor)}"/>
+							</button>
+						</p:column>
+
+					</p:dataTable>
+
+				</h:form>
+			</div>
+			
+		</div>
+
+		<!-- Modal Exclusão -->
+		<ui:include src="setorexclusaodialog.xhtml"/>
+
+
+	</ui:define>
+
+	<ui:define name="pagina">Setores</ui:define>
+
+	<ui:define name="scripts">
+
+	</ui:define>
+	
+</ui:composition>
+
+</html>
+

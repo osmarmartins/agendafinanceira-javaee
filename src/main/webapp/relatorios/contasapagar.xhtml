@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head/>
+
+<ui:composition template="/resources/template/aceadmin.xhtml">
+
+	<ui:define name="navegacao">
+		<li class="active">Relatório de Contas a Pagar</li>
+	</ui:define>
+	
+	<ui:define name="titulo">
+		<i class="ace-icon fa fa-print smaller-90"></i>
+		Relatório de Contas a Pagar
+	</ui:define>
+	
+	<ui:define name="subtitulo">
+		<span>Programação de pagamentos</span> 
+	</ui:define>
+	
+
+	<ui:define name="conteudo">
+		
+		<div class="ui-g">	
+			<div class="ui-g-12">
+
+				<div class="col-sm-3"></div>
+				<div class="col-sm-6 ">
+					<div class="widget-box">
+						<div class="widget-header">
+							<h5 class="widget-title">Seleção</h5>
+						</div>
+
+						<h:form id="form" prependId="false">
+							<div class="widget-body">
+								<div class="widget-main">
+								
+										<div class="row">
+											<div class="col-sm-6">
+												<div class="form-group">
+													<label class="control-label" jsf:for="emissao">Data Inicial</label>
+													<div class="input-group">
+														<input type="date" class="form-control"/> 
+														<span class="input-group-addon">
+															<i class="fa fa-calendar bigger-110"></i>
+														</span>
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-6">
+												<div class="form-group">
+													<label class="control-label" jsf:for="emissao">Data Final</label>
+													<div class="input-group">
+														<input type="date" class="form-control"/> 
+														<span class="input-group-addon">
+															<i class="fa fa-calendar bigger-110"></i>
+														</span>
+													</div>
+												</div>
+											</div>								
+										</div>
+										
+										<div class="row">
+											<div class="col-sm-12">
+												<div class="form-group">
+													<label class="control-label" jsf:for="setor">Setor</label>
+													<h:selectOneMenu value="#{pagamentoCadastroBean.pagamento.setor}" id="setor" styleClass="form-control">
+														<f:selectItems var="setor" value="#{pagamentoCadastroBean.setores}"
+															itemLabel="#{setor.descricao}" itemValue="#{setor}"/>
+													</h:selectOneMenu>
+												</div>
+											</div>
+										</div>
+										
+										<div class="row">
+											<div class="col-sm-12">
+												<div class="form-group">
+													<label class="control-label" jsf:for="conta">Conta</label>
+													<h:selectOneMenu value="#{pagamentoCadastroBean.pagamento.conta}" id="conta" styleClass="form-control">
+														<f:selectItems var="conta" value="#{pagamentoCadastroBean.contas}"
+															itemLabel="#{conta.descricao}" itemValue="#{conta}"/>
+													</h:selectOneMenu>
+												</div>
+											</div>
+										</div>
+									
+										<div class="row">
+											<div class="col-sm-12">
+												<div class="form-group">
+													<label class="control-label" jsf:for="fornecedor">Fornecedor</label>
+													<h:selectOneMenu value="#{pagamentoCadastroBean.pagamento.fornecedor}" id="fornecedor" styleClass="form-control">
+														<f:selectItems var="fornecedor" value="#{pagamentoCadastroBean.fornecedores}"
+															itemLabel="#{fornecedor.nomeFantasia}" itemValue="#{fornecedor}"/>
+													</h:selectOneMenu>
+												</div>
+											</div>
+										</div>								
+								</div>
+								
+								<div class="widget-toolbox padding-8 clearfix">
+									<button class="btn btn-xs btn-info pull-left">
+										<i class="ace-icon fa fa-arrow-left"></i>
+										<span class="bigger-110">Dashborad</span>
+									</button>
+								
+									<button class="btn btn-xs btn-success pull-right">
+										<span class="bigger-110">Gerar Relatório</span>
+										<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+									</button>
+								</div>							
+							</div>
+						</h:form>
+						
+					</div>
+				</div>
+				<div class="col-sm-3"></div>
+
+			</div>
+			
+		</div>
+
+
+	</ui:define>
+
+	<ui:define name="pagina">Setores</ui:define>
+
+	<ui:define name="scripts">
+
+	</ui:define>
+	
+</ui:composition>
+
+</html>
+
