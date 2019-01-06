@@ -218,14 +218,6 @@ public class PagamentoParcela implements Serializable {
 	}
 
 	@Override
-	public String toString() {
-		return "PagamentoParcela [idPagamentoParcela=" + idPagamentoParcela + ", parcela=" + parcela + ", vencimento="
-				+ vencimento + ", valor=" + valor + ", desconto=" + desconto + ", juros=" + juros + ", mora=" + mora
-				+ ", outros=" + outros + ", situacao=" + situacao + ", versao=" + versao + ", pagamento=" + pagamento
-				+ "]";
-	}
-
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -248,6 +240,14 @@ public class PagamentoParcela implements Serializable {
 		} else if (!idPagamentoParcela.equals(other.idPagamentoParcela))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "PagamentoParcela [idPagamentoParcela=" + idPagamentoParcela + ", parcela=" + parcela + ", vencimento="
+				+ vencimento + ", valor=" + valor + ", desconto=" + desconto + ", juros=" + juros + ", mora=" + mora
+				+ ", outros=" + outros + ", situacao=" + situacao + ", versao=" + versao + ", pagamento=" + pagamento
+				+ "]";
 	}
 
 }

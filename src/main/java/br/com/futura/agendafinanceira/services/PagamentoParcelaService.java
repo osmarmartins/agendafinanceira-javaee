@@ -1,11 +1,14 @@
 package br.com.futura.agendafinanceira.services;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.daos.PagamentoParcelaDao;
+import br.com.futura.agendafinanceira.dto.RelatorioFiltroDto;
+import br.com.futura.agendafinanceira.exceptions.NenhumResultadoException;
 import br.com.futura.agendafinanceira.models.Pagamento;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
 
@@ -18,6 +21,15 @@ public class PagamentoParcelaService implements Serializable {
 
 	public PagamentoParcela pesquisaPorId(Integer idParcela) {
 		return parcelaDao.pesquisaPorId(idParcela);
+	}
+	
+	public List<PagamentoParcela> listarPor(RelatorioFiltroDto filtro){
+		List<PagamentoParcela> lista = parcelaDao.listarPor(filtro);
+		if (lista.isEmpty()) {
+			throw new NenhumResultadoException("Nenhum registro encontrado!");
+		}else {
+			return parcelaDao.listarPor(filtro);
+		}
 	}
 
 	@Transactional

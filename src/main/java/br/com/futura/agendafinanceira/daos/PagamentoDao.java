@@ -47,7 +47,7 @@ public class PagamentoDao implements Serializable {
 					.setParameter("pNomeFantasia", "%" + filtro + "%")
 					.setParameter("pRazaoSocial", "%" + filtro + "%")
 					.getResultList();
-		}
+	}
 
 	public void excluir(Pagamento pagamento) {
 		manager.remove(manager.getReference(Pagamento.class, pagamento.getIdPagamento()));

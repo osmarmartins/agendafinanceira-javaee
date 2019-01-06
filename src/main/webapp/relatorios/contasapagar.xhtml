@@ -127,13 +127,13 @@
 								
 									<button class="btn btn-xs btn-success pull-right"
 										jsf:id="btnImprimir" 
-										jsf:value="#{relatorioPagamentosBean.gerarRelatorioContasAPagar()}" 
-										jsf:ajax="false">
+										jsf:onclick="this.form.target='_blank'"
+										jsf:action="#{relatorioPagamentosBean.gerarRelatorioContasAPagar()}">
 										<span class="bigger-110">Gerar Relatório</span>
 										<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
 									</button>
-									
-								</div>							
+								</div>
+															
 							</div>
 						</h:form>
 						

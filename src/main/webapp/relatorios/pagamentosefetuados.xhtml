@@ -119,19 +119,20 @@
 								
 								<div class="widget-toolbox padding-8 clearfix">
 									<button class="btn btn-xs btn-info pull-left" type="button" 
-										jsf:outcome="/index.xhtml"
-										jsf:id="btnDashboard">
+										jsf:id="btnDashboard"
+										jsf:outcome="/index.xhtml">
 										<i class="ace-icon fa fa-arrow-left"></i>
 										<span class="bigger-110">Dashborad</span>
 									</button>
 								
-									<button class="btn btn-xs btn-success pull-right"
+									<button class="btn btn-xs btn-success pull-right" type="button"
 										jsf:id="btnImprimir" 
-										jsf:value="#{relatorioPagamentosBean.gerarRelatorioPagamentosEfetuados()}" 
-										jsf:ajax="false">
+										jsf:ajax="false"
+										jsf:action="#{relatorioPagamentosBean.gerarRelatorioPagamentosEfetuados()}">
 										<span class="bigger-110">Gerar Relatório</span>
 										<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
 									</button>
+									
 								</div>							
 							</div>
 						</h:form>
