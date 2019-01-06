@@ -5,20 +5,79 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
+	<field name="Vencimento" class="java.util.Date">
+		<fieldDescription><![CDATA[vencimento]]></fieldDescription>
+	</field>
+	<field name="Parcela" class="java.lang.String">
+		<fieldDescription><![CDATA[parcela]]></fieldDescription>
+	</field>
+	<field name="Valor" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[valor]]></fieldDescription>
+	</field>
+	<field name="Documento" class="java.lang.String">
+		<fieldDescription><![CDATA[pagamento.documento]]></fieldDescription>
+	</field>
+	<field name="Histórico" class="java.lang.String">
+		<fieldDescription><![CDATA[pagamento.historico]]></fieldDescription>
+	</field>
+	<field name="Setor" class="java.lang.String">
+		<fieldDescription><![CDATA[pagamento.setor.descricao]]></fieldDescription>
+	</field>
+	<field name="Conta" class="java.lang.String">
+		<fieldDescription><![CDATA[pagamento.conta.descricao]]></fieldDescription>
+	</field>
+	<field name="Fornecedor" class="java.lang.String">
+		<fieldDescription><![CDATA[pagamento.fornecedor.nomeFantasia]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="79" splitType="Stretch"/>
-	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="43" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="180" height="20" uuid="1e1713c4-79d8-434e-9331-050bdddde694">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b2b8f1e0-dee0-435f-8827-bb6bf34b0b48"/>
+				</reportElement>
+				<text><![CDATA[pagamento.historico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="0" width="100" height="20" uuid="08342c85-b2bd-47bf-b901-1ee2cfabffce">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6a6517e7-c809-4970-9fb8-f26bae2f5367"/>
+				</reportElement>
+				<text><![CDATA[vencimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="0" width="100" height="20" uuid="e85eb31c-619d-428e-be03-775a16637be1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="68a46fca-64e2-4a46-a65e-aadf1a248de8"/>
+				</reportElement>
+				<text><![CDATA[valor]]></text>
+			</staticText>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="180" height="20" uuid="3157d4d6-2dc6-4833-b5e2-174b2e115810">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b2b8f1e0-dee0-435f-8827-bb6bf34b0b48"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{Histórico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="179" y="-1" width="100" height="20" uuid="3299272a-5af0-4ae4-a525-55153ed977f0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6a6517e7-c809-4970-9fb8-f26bae2f5367"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{Vencimento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="2" width="100" height="16" uuid="271acf67-10d3-47c9-b141-8391e116f884">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="68a46fca-64e2-4a46-a65e-aadf1a248de8"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{Valor}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>
