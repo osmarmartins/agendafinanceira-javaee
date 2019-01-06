@@ -22,7 +22,7 @@
 	</ui:define>
 	
 	<ui:define name="subtitulo">
-		<span>Programação de pagamentos</span> 
+		<span>Relatório com a programação de pagamentos</span> 
 	</ui:define>
 	
 
@@ -47,7 +47,12 @@
 												<div class="form-group">
 													<label class="control-label" jsf:for="emissao">Data Inicial</label>
 													<div class="input-group">
-														<input type="date" class="form-control"/> 
+														<input type="date" class="form-control" 
+															jsf:id="dataInicial"
+															jsf:binding="#{dataInicial}" 
+															jsf:value="#{relatorioPagamentosBean.filtro.dataInicial}">
+															<f:convertDateTime pattern="yyyy-MM-dd"/>
+														</input>
 														<span class="input-group-addon">
 															<i class="fa fa-calendar bigger-110"></i>
 														</span>
@@ -58,7 +63,12 @@
 												<div class="form-group">
 													<label class="control-label" jsf:for="emissao">Data Final</label>
 													<div class="input-group">
-														<input type="date" class="form-control"/> 
+														<input type="date" class="form-control" 
+															jsf:id="dataFinal"
+															jsf:binding="#{dataFinal}" 
+															jsf:value="#{relatorioPagamentosBean.filtro.dataFinal}">
+															<f:convertDateTime pattern="yyyy-MM-dd"/>
+														</input> 
 														<span class="input-group-addon">
 															<i class="fa fa-calendar bigger-110"></i>
 														</span>
@@ -71,20 +81,22 @@
 											<div class="col-sm-12">
 												<div class="form-group">
 													<label class="control-label" jsf:for="setor">Setor</label>
-													<h:selectOneMenu value="#{pagamentoCadastroBean.pagamento.setor}" id="setor" styleClass="form-control">
-														<f:selectItems var="setor" value="#{pagamentoCadastroBean.setores}"
+													<h:selectOneMenu value="#{relatorioPagamentosBean.filtro.setor}" id="setor" styleClass="form-control">
+														<f:selectItem itemLabel="Todos"/>
+														<f:selectItems var="setor" value="#{relatorioPagamentosBean.setores}"
 															itemLabel="#{setor.descricao}" itemValue="#{setor}"/>
 													</h:selectOneMenu>
 												</div>
 											</div>
 										</div>
-										
+
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="form-group">
 													<label class="control-label" jsf:for="conta">Conta</label>
-													<h:selectOneMenu value="#{pagamentoCadastroBean.pagamento.conta}" id="conta" styleClass="form-control">
-														<f:selectItems var="conta" value="#{pagamentoCadastroBean.contas}"
+													<h:selectOneMenu value="#{relatorioPagamentosBean.filtro.conta}" id="conta" styleClass="form-control">
+														<f:selectItem itemLabel="Todos"/>
+														<f:selectItems var="conta" value="#{relatorioPagamentosBean.contas}"
 															itemLabel="#{conta.descricao}" itemValue="#{conta}"/>
 													</h:selectOneMenu>
 												</div>
@@ -95,8 +107,9 @@
 											<div class="col-sm-12">
 												<div class="form-group">
 													<label class="control-label" jsf:for="fornecedor">Fornecedor</label>
-													<h:selectOneMenu value="#{pagamentoCadastroBean.pagamento.fornecedor}" id="fornecedor" styleClass="form-control">
-														<f:selectItems var="fornecedor" value="#{pagamentoCadastroBean.fornecedores}"
+													<h:selectOneMenu value="#{relatorioPagamentosBean.filtro.fornecedor}" id="fornecedor" styleClass="form-control">
+														<f:selectItem itemLabel="Todos"/>
+														<f:selectItems var="fornecedor" value="#{relatorioPagamentosBean.fornecedores}"
 															itemLabel="#{fornecedor.nomeFantasia}" itemValue="#{fornecedor}"/>
 													</h:selectOneMenu>
 												</div>
@@ -105,15 +118,21 @@
 								</div>
 								
 								<div class="widget-toolbox padding-8 clearfix">
-									<button class="btn btn-xs btn-info pull-left">
+									<button class="btn btn-xs btn-info pull-left" type="button" 
+										jsf:outcome="/index.xhtml"
+										jsf:id="btnDashboard">
 										<i class="ace-icon fa fa-arrow-left"></i>
 										<span class="bigger-110">Dashborad</span>
 									</button>
 								
-									<button class="btn btn-xs btn-success pull-right">
+									<button class="btn btn-xs btn-success pull-right"
+										jsf:id="btnImprimir" 
+										jsf:value="#{relatorioPagamentosBean.gerarRelatorioContasAPagar()}" 
+										jsf:ajax="false">
 										<span class="bigger-110">Gerar Relatório</span>
 										<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
 									</button>
+									
 								</div>							
 							</div>
 						</h:form>
