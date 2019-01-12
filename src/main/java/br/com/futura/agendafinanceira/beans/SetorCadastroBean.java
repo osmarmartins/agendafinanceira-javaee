@@ -3,18 +3,16 @@ package br.com.futura.agendafinanceira.beans;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import br.com.futura.agendafinanceira.models.Setor;
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.services.SetorService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
-@Named
-@ViewScoped
+@Model
 public class SetorCadastroBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -36,7 +34,6 @@ public class SetorCadastroBean implements Serializable {
 	public String salvar() {
 		setorService.salvar(setor);
 		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso!"));
-		init();
 		return "setor?faces-redirect=true";
 	}
 

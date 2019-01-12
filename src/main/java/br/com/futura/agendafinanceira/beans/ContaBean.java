@@ -30,10 +30,16 @@ public class ContaBean implements Serializable {
 	@Inject
 	private ContaService contaService;
 
+	private List<Conta> contasSelecionadas;
+
+	private String mensagemExclusao;
+
 	@PostConstruct
 	private void init() {
 		this.contas = contaService.listarTodos();
 		this.pesquisaDescricao = new String();
+		this.contasSelecionadas = new ArrayList<>();
+		this.mensagemExclusao = new String();
 	}
 
 	public void pesquisar() {
@@ -42,8 +48,8 @@ public class ContaBean implements Serializable {
 		}
 	}
 
-	public void excluir(Conta conta) {
-		contaService.excluir(conta);
+	public void excluir() {
+		contaService.excluir(contasSelecionadas);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		init();
 	}
@@ -60,4 +66,42 @@ public class ContaBean implements Serializable {
 		return contas;
 	}
 
+	
+	public void selecionaConta(Conta conta) {
+		contasSelecionadas = new ArrayList<>();
+		contasSelecionadas.add(conta);
+		mensagemExclusaoBuilder();
+	}
+	
+	public Boolean isExisteSelecao() {
+		return !contasSelecionadas.isEmpty();
+	}
+	
+	public void mensagemExclusaoBuilder() {
+		StringBuilder msg = new StringBuilder();
+
+		if (this.getContasSelecionadas()!=null && !this.getContasSelecionadas().isEmpty()) {
+			msg.append("Excluir permanentemente ");
+			if (this.contasSelecionadas.size()>1) {
+				msg.append("as contas selecionadas?");
+			}else {
+				msg.append("a conta ");
+				msg.append(contasSelecionadas.get(0).getDescricao());
+			}
+		}
+		this.mensagemExclusao = msg.toString();
+	}
+
+	public List<Conta> getContasSelecionadas() {
+		return contasSelecionadas;
+	}
+	
+	public void setContasSelecionadas(List<Conta> contasSelecionadas) {
+		this.contasSelecionadas = contasSelecionadas;
+	}
+	
+	public String getMensagemExclusao() {
+		return mensagemExclusao;
+	}
+	
 }

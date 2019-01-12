@@ -27,11 +27,13 @@ public class ContaDao implements Serializable {
 	}
 
 	@Transactional
-	public void excluir(Conta conta) {
-		manager.remove(manager.getReference(Conta.class, conta.getIdConta()));
-
+	public void excluir(List<Conta> contas) {
+		for (Conta conta : contas) {
+			manager.remove(manager.getReference(Conta.class, conta.getIdConta()));
+		}
 	}
 
+	
 	@Transactional
 	public void salvar(Conta conta) {
 		if (conta.getIdConta() != null) {

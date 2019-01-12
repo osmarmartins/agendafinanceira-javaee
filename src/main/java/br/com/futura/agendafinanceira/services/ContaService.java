@@ -23,9 +23,9 @@ public class ContaService implements Serializable {
 		return contaDao.listarPorDescricao(pesquisaDescricao);
 	}
 
-	public void excluir(Conta conta) {
+	public void excluir(List<Conta> contas) {
 		// TODO Validar exclusão de contas
-		contaDao.excluir(conta);
+		contaDao.excluir(contas);
 		
 	}
 
