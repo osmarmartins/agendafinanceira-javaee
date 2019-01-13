@@ -77,19 +77,19 @@ public class BaixaDao implements Serializable {
 //		String sql = "select q from PagamentoQuitacao q "
 //				+ "join fecth q.parcela p "
 //				+ "join fetch p.pagamento pg "
-//				+ "join fetch pg.setor "
-//				+ "join fetch pg.conta "
-//				+ "join fetch pg.fornecedor "
-//				+ "where p.dtPgto between :dataI and :dataF "
+//				+ "join fetch pg.setor s "
+//				+ "join fetch pg.conta c "
+//				+ "join fetch pg.fornecedor f "
+//				+ "where q.dtPgto between :dataI and :dataF "
 //				+ "  and p.situacao = 3 ";
 
 		String sql = "select p from PagamentoParcela p "
 				+ "join fetch p.pagamento pg "
-				+ "join fetch pg.setor "
-				+ "join fetch pg.conta "
-				+ "join fetch pg.fornecedor "
+				+ "join fetch pg.setor s "
+				+ "join fetch pg.conta c "
+				+ "join fetch pg.fornecedor f "
 				+ "left join fetch p.quitacoes q "
-				+ "where p.vencimento between :dataI and :dataF "
+				+ "where q.dtPgto between :dataI and :dataF "
 				+ "  and p.situacao = 3 ";
 		
 		if (filtro.getSetor() != null) {
@@ -104,7 +104,7 @@ public class BaixaDao implements Serializable {
 			sql += "and pg.fornecedor = :fornecedor ";
 		}
 		
-		sql += " order by q.dtPgto, pg.fornecedor.razaoSocial ";
+		sql += " order by q.dtPgto, f.razaoSocial ";
 		
 		return sql;
 	}
