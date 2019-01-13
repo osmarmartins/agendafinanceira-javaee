@@ -1,12 +1,25 @@
 package br.com.futura.agendafinanceira.utils;
 
 import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.ibm.icu.util.Calendar;
 import com.ibm.icu.util.GregorianCalendar;
 
 public class DataUtil {
+	
+	public static String dataDMA(Date data) {
+		return new SimpleDateFormat("dd/MM/yyyy").format(data);
+	}
+	
+	public static String dataHoraSegundo(Date data) {
+		return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(data);
+	}
+
+	public static String dataHora(Date data) {
+		return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(data);
+	}
 
 	public static String diaDaSemana(Date data) {
 		Calendar cal = new GregorianCalendar();

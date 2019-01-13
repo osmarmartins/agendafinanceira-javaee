@@ -176,7 +176,7 @@ public class Pagamento implements Serializable {
 		}
 
 		for (PagamentoParcela parcela : this.parcelas) {
-			totalParcela = totalParcela.add(parcela.totalParcela());
+			totalParcela = totalParcela.add(parcela.getTotalParcela());
 		}
 		return totalParcela;
 	}

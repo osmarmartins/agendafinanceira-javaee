@@ -76,6 +76,9 @@ public class PagamentoParcelaDao implements Serializable {
 		if (filtro.getFornecedor() != null) {
 			sql += "and pg.fornecedor = :fornecedor ";
 		}
+		
+		sql += " order by p.vencimento, pg.fornecedor.razaoSocial ";
+		
 		return sql;
 	}
 	

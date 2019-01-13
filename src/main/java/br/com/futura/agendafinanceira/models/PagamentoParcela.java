@@ -18,9 +18,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import br.com.futura.agendafinanceira.models.enums.SituacaoParcela;
@@ -57,6 +59,12 @@ public class PagamentoParcela implements Serializable {
 
 	@Version
 	private Integer versao;
+	
+	@Transient
+	private BigDecimal totalParcela;
+	
+	@Transient
+	private String diaDaSemana;
 
 	// bi-directional many-to-one association to Pgto
 	@ManyToOne
@@ -67,6 +75,12 @@ public class PagamentoParcela implements Serializable {
 	@OneToMany(mappedBy = "parcela")
 	private Set<PagamentoQuitacao> quitacoes;
 
+	@PostLoad
+	private void init() {
+		this.totalParcela = calculaTotalParcela();
+		this.diaDaSemana = retornaDiaDaSemana();
+	}
+	
 	public PagamentoParcela() {
 	}
 
@@ -87,6 +101,8 @@ public class PagamentoParcela implements Serializable {
 		this.juros = juros;
 		this.mora = mora;
 		this.outros = outros;
+		this.totalParcela = calculaTotalParcela();
+		this.diaDaSemana = retornaDiaDaSemana();
 	}
 
 	public Integer getIdPagamentoParcela() {
@@ -197,11 +213,19 @@ public class PagamentoParcela implements Serializable {
 		return quitacao;
 	}
 	
-	public String diaDaSemana() {
+	public BigDecimal getTotalParcela() {
+		return calculaTotalParcela();
+	}
+	
+	public String getDiaDaSemana() {
+		return retornaDiaDaSemana();
+	}
+	
+	private String retornaDiaDaSemana() {
 		return DataUtil.diaDaSemana(this.vencimento);
 	}
 	
-	public BigDecimal totalParcela() {
+	private BigDecimal calculaTotalParcela() {
 		return this.valor
 				.subtract(this.desconto)
 				.add(this.juros)
@@ -223,7 +247,7 @@ public class PagamentoParcela implements Serializable {
 	}
 	
 	public BigDecimal saldoDevedor() {
-		return totalParcela().subtract(totalPago());
+		return getTotalParcela().subtract(totalPago());
 	}
 
 	@Override
@@ -254,9 +278,9 @@ public class PagamentoParcela implements Serializable {
 	@Override
 	public String toString() {
 		return "PagamentoParcela [idPagamentoParcela=" + idPagamentoParcela + ", parcela=" + parcela + ", vencimento="
-				+ vencimento + ", valor=" + valor + ", desconto=" + desconto + ", juros=" + juros + ", mora=" + mora
-				+ ", outros=" + outros + ", situacao=" + situacao + ", versao=" + versao + ", pagamento=" + pagamento
-				+ "]";
+				+ vencimento + ", situacao=" + situacao + ", totalParcela=" + totalParcela + ", diaDaSemana="
+				+ diaDaSemana + ", pagamento=" + pagamento + "]";
 	}
+
 
 }

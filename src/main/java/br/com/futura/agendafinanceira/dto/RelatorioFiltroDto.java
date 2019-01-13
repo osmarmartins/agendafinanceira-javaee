@@ -5,6 +5,7 @@ import java.util.Date;
 import br.com.futura.agendafinanceira.models.Conta;
 import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.Setor;
+import br.com.futura.agendafinanceira.utils.DataUtil;
 
 public class RelatorioFiltroDto {
 
@@ -52,6 +53,32 @@ public class RelatorioFiltroDto {
 
 	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
+	}
+	
+	public String periodo() {
+		return DataUtil.dataDMA(this.dataInicial) + " - " + DataUtil.dataDMA(this.dataFinal);
+	}
+	
+	public String selecao() {
+		StringBuilder selecao = new StringBuilder();
+		
+		if (this.setor != null) {
+			selecao.append("   Setor: " + this.setor.getDescricao());
+		}
+		
+		if (this.conta != null) {
+			selecao.append("   Conta: " + this.conta.getDescricao());
+		}
+		
+		if (this.fornecedor != null) {
+			selecao.append("   Fornecedor: " + this.fornecedor.getRazaoSocial());
+		}
+		
+		if (selecao.toString().trim().isEmpty()) {
+			selecao.append("Nenhum");
+		}
+		
+		return selecao.toString().trim();
 	}
 
 	@Override

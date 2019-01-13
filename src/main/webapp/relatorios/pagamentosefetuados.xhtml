@@ -124,14 +124,15 @@
 										<i class="ace-icon fa fa-arrow-left"></i>
 										<span class="bigger-110">Dashborad</span>
 									</button>
-								
-									<button class="btn btn-xs btn-success pull-right" type="button"
+									
+									
+									<button class="btn btn-xs btn-success pull-right"
 										jsf:id="btnImprimir" 
-										jsf:ajax="false"
+										jsf:onclick="this.form.target='_blank'"
 										jsf:action="#{relatorioPagamentosBean.gerarRelatorioPagamentosEfetuados()}">
 										<span class="bigger-110">Gerar Relatório</span>
 										<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
-									</button>
+									</button>									
 									
 								</div>							
 							</div>

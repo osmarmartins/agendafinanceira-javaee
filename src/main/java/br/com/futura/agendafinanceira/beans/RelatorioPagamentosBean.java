@@ -2,6 +2,7 @@ package br.com.futura.agendafinanceira.beans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,9 @@ import br.com.futura.agendafinanceira.exceptions.NenhumResultadoException;
 import br.com.futura.agendafinanceira.models.Conta;
 import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
+import br.com.futura.agendafinanceira.models.PagamentoQuitacao;
 import br.com.futura.agendafinanceira.models.Setor;
+import br.com.futura.agendafinanceira.services.BaixaService;
 import br.com.futura.agendafinanceira.services.ContaService;
 import br.com.futura.agendafinanceira.services.FornecedorService;
 import br.com.futura.agendafinanceira.services.PagamentoParcelaService;
@@ -47,6 +50,9 @@ public class RelatorioPagamentosBean implements Serializable {
 	
 	@Inject
 	private PagamentoParcelaService parcelaService;
+	
+	@Inject
+	private BaixaService baixaService;
 	
 	@PostConstruct
 	private void init() {
@@ -82,21 +88,51 @@ public class RelatorioPagamentosBean implements Serializable {
 	public void gerarRelatorioContasAPagar() throws JRException, IOException, NenhumResultadoException {
 	
 		HashMap<String, String> parametros = new HashMap<>();
-		List<PagamentoParcela> dados = parcelaService.listarPor(filtro);
+		List<PagamentoParcela> dados = new ArrayList<>();
+		
+		try {
+			dados = parcelaService.listarPor(filtro);
+			parametros.put("periodo", filtro.periodo());
+			parametros.put("filtros", filtro.selecao());
+			RelatorioUtil.imprimeRelatorio("ContasAPagar", parametros, dados);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		
 		for (PagamentoParcela parcela : dados) {
 			System.out.println("");
 			System.out.println("-------------------------------");
 			System.out.println("PARCELA >>>>>>>>>> " + parcela);
+			System.out.println("TOTAL >>>>>>>>>>>> " + parcela.getTotalParcela());
+			System.out.println("DIA >>>>>>>>>>>>>> " + parcela.getDiaDaSemana());
 			
 		}
-		
-		RelatorioUtil.imprimeRelatorio("ContasAPagar", parametros, dados);
 	}
 	
 	public void gerarRelatorioPagamentosEfetuados() {
 		
+		HashMap<String, String> parametros = new HashMap<>();
+		List<PagamentoQuitacao> dados = new ArrayList<>();
+		
+		try {
+			dados = baixaService.listarPor(filtro);
+			parametros.put("periodo", filtro.periodo());
+			parametros.put("filtros", filtro.selecao());
+//			RelatorioUtil.imprimeRelatorio("PagamentosEfetuados", parametros, dados);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
 		System.out.println(">>>>>>>>>>>>> GERANDO RELATORIO Pagamentos Efetuados - Dados: " + filtro);
+		
+		for (PagamentoQuitacao parcela : dados) {
+			System.out.println("");
+			System.out.println("-------------------------------");
+			System.out.println("PARCELA >>>>>>>>>> " + parcela);
+			System.out.println("TOTAL >>>>>>>>>>>> " + parcela.getValor());
+			System.out.println("DIA >>>>>>>>>>>>>> " + parcela.getDiaDaSemana());
+			
+		}
 		
 	}
 

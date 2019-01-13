@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ContasAPagar" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7bf458c4-3d05-426a-b32a-aa7add85e51f">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PagamentosEfetuados" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7bf458c4-3d05-426a-b32a-aa7add85e51f">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySQL Futura UOL"/>
 	<parameter name="periodo" class="java.lang.String"/>
 	<parameter name="filtros" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[select 
-	pp.dt_vcto,
+	q.dt_pgto, 
 	f.razao_social,
     p.documento,
     pp.parcela,
     p.emissao,
     p.historico,
-    pp.valor + pp.juros + pp.mora + pp.outros - pp.desconto total,
+    q.valor total,
 	CASE WEEKDAY(pp.dt_vcto) 
         when 0 then 'Segunda'
         when 1 then 'Terça'
@@ -23,62 +23,66 @@
         when 5 then 'Sábado'
 		when 6 then 'Domingo'                 
     END DiaDaSemana
-from pgto_parcela pp
+
+from pgto_quitacao q
+inner join pgto_parcela pp on pp.id_pgto_parcela = q.id_pgto_parcela
 inner join pgto p on p.id_pgto=pp.id_pgto
 inner join fornecedor f on f.id_fornecedor=p.id_fornecedor
 inner join setor s on s.id_setor=p.id_setor
 inner join conta c on c.id_conta=p.id_conta
-where pp.situacao < 3
-order by pp.dt_vcto, f.razao_social
-                       ]]>
+where pp.situacao = 3
+order by q.dt_pgto, f.razao_social
+
+]]>
 	</queryString>
-	<field name="dt_vcto" class="java.util.Date">
-		<property name="com.jaspersoft.studio.field.label" value="dt_vcto"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="pgto_parcela"/>
-		<fieldDescription><![CDATA[vencimento]]></fieldDescription>
+	<field name="dt_pgto" class="java.util.Date">
+		<property name="com.jaspersoft.studio.field.label" value="dt_pgto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pgto_quitacao"/>
+		<fieldDescription><![CDATA[dtPgto]]></fieldDescription>
 	</field>
 	<field name="razao_social" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="razao_social"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="fornecedor"/>
-		<fieldDescription><![CDATA[pagamento.fornecedor.razaoSocial]]></fieldDescription>
+		<fieldDescription><![CDATA[parcela.pagamento.fornecedor.razaoSocial]]></fieldDescription>
 	</field>
 	<field name="documento" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="documento"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="pgto"/>
-		<fieldDescription><![CDATA[pagamento.documento]]></fieldDescription>
+		<fieldDescription><![CDATA[parcela.pagamento.documento]]></fieldDescription>
 	</field>
 	<field name="parcela" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="parcela"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="pgto_parcela"/>
-		<fieldDescription><![CDATA[parcela]]></fieldDescription>
+		<fieldDescription><![CDATA[parcela.parcela]]></fieldDescription>
 	</field>
 	<field name="emissao" class="java.util.Date">
 		<property name="com.jaspersoft.studio.field.label" value="emissao"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="pgto"/>
-		<fieldDescription><![CDATA[pagamento.emissao]]></fieldDescription>
+		<fieldDescription><![CDATA[parcela.pagamento.emissao]]></fieldDescription>
 	</field>
 	<field name="historico" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="historico"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="pgto"/>
-		<fieldDescription><![CDATA[pagamento.historico]]></fieldDescription>
+		<fieldDescription><![CDATA[parcela.pagamento.historico]]></fieldDescription>
 	</field>
 	<field name="total" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.label" value="total"/>
-		<fieldDescription><![CDATA[totalParcela]]></fieldDescription>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pgto_quitacao"/>
+		<fieldDescription><![CDATA[parcela.totalParcela]]></fieldDescription>
 	</field>
 	<field name="DiaDaSemana" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="DiaDaSemana"/>
 		<fieldDescription><![CDATA[diaDaSemana]]></fieldDescription>
 	</field>
 	<variable name="totalDia" class="java.math.BigDecimal" resetType="Group" resetGroup="VencimentoGRP" calculation="Sum">
-		<variableExpression><![CDATA[$F{total} ]]></variableExpression>
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
 	<variable name="totalAcumulado" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{total} ]]></variableExpression>
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
 	</variable>
 	<group name="VencimentoGRP">
-		<groupExpression><![CDATA[$F{dt_vcto}]]></groupExpression>
+		<groupExpression><![CDATA[$F{dt_pgto}]]></groupExpression>
 		<groupHeader>
 			<band height="18">
 				<textField pattern="dd/MM/yyyy">
@@ -86,7 +90,7 @@ order by pp.dt_vcto, f.razao_social
 					<textElement>
 						<font fontName="SansSerif" size="12" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{dt_vcto}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{dt_pgto}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="95" y="2" width="100" height="15" uuid="b4b2c51f-d9b1-428d-859c-dc35237eb097"/>
@@ -158,8 +162,7 @@ order by pp.dt_vcto, f.razao_social
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Contas a Pagar
-]]></text>
+				<text><![CDATA[Pagamentos Efetuados]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="46" y="20" width="328" height="10" uuid="7e54b2b0-0064-42a6-bd3f-5e157846e534"/>

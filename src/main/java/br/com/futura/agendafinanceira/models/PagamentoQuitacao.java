@@ -12,12 +12,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import br.com.futura.agendafinanceira.models.enums.FormaPagamento;
+import br.com.futura.agendafinanceira.utils.DataUtil;
 
 @Entity
 @Table(name = "pgto_quitacao")
@@ -41,7 +44,15 @@ public class PagamentoQuitacao implements Serializable {
 
 	@Version
 	private Integer versao;
+	
+	@Transient
+	private String diaDaSemana;
 
+	@PostLoad
+	private void init() {
+		this.diaDaSemana = retornaDiaDaSemana();
+	}
+	
 	// bi-directional many-to-one association to PgtoParcela
 	@ManyToOne
 	@JoinColumn(name = "id_pgto_parcela")
@@ -103,13 +114,15 @@ public class PagamentoQuitacao implements Serializable {
 	public void setParcela(PagamentoParcela parcela) {
 		this.parcela = parcela;
 	}
-
-	@Override
-	public String toString() {
-		return "PagamentoQuitacao [idPgtoQuitacao=" + idPgtoQuitacao + ", dtPgto=" + dtPgto + ", formaPagamento="
-				+ formaPagamento + ", valor=" + valor + ", versao=" + versao + ", parcela=" + parcela + "]";
+	
+	public String getDiaDaSemana() {
+		return retornaDiaDaSemana();
 	}
-
+	
+	private String retornaDiaDaSemana() {
+		return DataUtil.diaDaSemana(this.dtPgto);
+	}	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -135,5 +148,11 @@ public class PagamentoQuitacao implements Serializable {
 		return true;
 	}
 	
+	@Override
+	public String toString() {
+		return "PagamentoQuitacao [idPgtoQuitacao=" + idPgtoQuitacao + ", dtPgto=" + dtPgto + ", formaPagamento="
+				+ formaPagamento + ", valor=" + valor + ", versao=" + versao + ", parcela=" + parcela + "]";
+	}
+
 	
 }
