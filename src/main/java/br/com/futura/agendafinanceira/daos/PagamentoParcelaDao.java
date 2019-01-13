@@ -61,7 +61,6 @@ public class PagamentoParcelaDao implements Serializable {
 				+ "join fetch pg.setor s "
 				+ "join fetch pg.conta c "
 				+ "join fetch pg.fornecedor f "
-				+ "left join fetch p.quitacoes q "
 				+ "where p.vencimento between :dataI and :dataF "
 				+ "  and p.situacao < 3 ";
 		
@@ -78,7 +77,6 @@ public class PagamentoParcelaDao implements Serializable {
 		}
 		
 		sql += " order by p.vencimento, f.razaoSocial ";
-//		sql += " order by p.vencimento, pg.fornecedor.razaoSocial ";
 		
 		return sql;
 	}

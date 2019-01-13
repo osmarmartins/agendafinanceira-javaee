@@ -47,6 +47,8 @@ public class BaixaDao implements Serializable {
 				.setParameter("pRazaoSocial", "%" + pesquisa + "%")
 				.getResultList();
 		}
+	
+	
 
 	public List<PagamentoQuitacao> listarPor(RelatorioFiltroDto filtro){
 		String sql = preparaSql(filtro);
@@ -74,37 +76,28 @@ public class BaixaDao implements Serializable {
 	}
 
 	private String preparaSql(RelatorioFiltroDto filtro) {
-//		String sql = "select q from PagamentoQuitacao q "
-//				+ "join fecth q.parcela p "
-//				+ "join fetch p.pagamento pg "
-//				+ "join fetch pg.setor s "
-//				+ "join fetch pg.conta c "
-//				+ "join fetch pg.fornecedor f "
-//				+ "where q.dtPgto between :dataI and :dataF "
-//				+ "  and p.situacao = 3 ";
-
-		String sql = "select p from PagamentoParcela p "
+		String sql = "select q from PagamentoQuitacao q "
+				+ "join fetch q.parcela p "
 				+ "join fetch p.pagamento pg "
 				+ "join fetch pg.setor s "
 				+ "join fetch pg.conta c "
 				+ "join fetch pg.fornecedor f "
-				+ "left join fetch p.quitacoes q "
 				+ "where q.dtPgto between :dataI and :dataF "
-				+ "  and p.situacao = 3 ";
-		
+				+ "  and q.parcela.situacao = 3 ";
+
 		if (filtro.getSetor() != null) {
-			sql += "and pg.setor = :setor ";
+			sql += "and q.parcela.pagamento.setor = :setor ";
 		}
 		
 		if (filtro.getConta() != null) {
-			sql += "and pg.conta = :conta ";
+			sql += "and q.parcela.pagamento.conta = :conta ";
 		}
 		
 		if (filtro.getFornecedor() != null) {
-			sql += "and pg.fornecedor = :fornecedor ";
+			sql += "and q.parcela.pagamento.fornecedor = :fornecedor ";
 		}
 		
-		sql += " order by q.dtPgto, f.razaoSocial ";
+		sql += " order by q.dtPgto, q.parcela.pagamento.fornecedor.razaoSocial ";
 		
 		return sql;
 	}
