@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.models.Contato;
 
@@ -21,7 +20,6 @@ public class ContatoDao implements Serializable{
 				.getSingleResult();
 	}
 	
-	@Transactional
 	public void salvar(Contato contato){
 		if (contato.getIdContato()!=null){
 			manager.merge(contato);
@@ -30,7 +28,6 @@ public class ContatoDao implements Serializable{
 		}
 	}
 	
-	@Transactional
 	public void excluir(Contato contato) {
 		manager.remove(manager.getReference(Contato.class, contato.getIdContato()));
 	}

@@ -12,6 +12,7 @@ import br.com.futura.agendafinanceira.models.Contato;
 import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.models.enums.TipoPessoa;
+import br.com.futura.agendafinanceira.services.ContatoService;
 import br.com.futura.agendafinanceira.services.FornecedorService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
@@ -29,6 +30,9 @@ public class FornecedorCadastroBean implements Serializable {
 
 	@Inject
 	private FornecedorService fornecedorService;
+	
+	@Inject
+	private ContatoService contatoService;
 
 	@Inject
 	private MessagesHelper messagesHelper;
@@ -43,32 +47,18 @@ public class FornecedorCadastroBean implements Serializable {
 	public boolean isCadastrarContatos() {
 		return this.fornecedor.getIdFornecedor() != null;
 	}
-	
-	public String voltar() {
-		if (this.fornecedor.getIdFornecedor()==null){
-			return "/fornecedorcadastro.xhtml";
-		}else{
-			return "/fornecedorcadastro.xhtml?fornecedor=" + this.fornecedor.getIdFornecedor();
-		}
-	}
 
 	public String salvar() {
 		fornecedorService.salvar(fornecedor);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
-		return "/fornecedorcadastro?faces-redirect=true&fornecedor=" + fornecedor.getIdFornecedor();
-	}
-
-	public String alterarContato(Contato contato) {
-		return "contatocadastro?faces-redirect=true&"
-				+ "fornecedor=" + contato.getFornecedor().getIdFornecedor()
-				+ "&contato=" + contato.getIdContato();
+		return "fornecedor?faces-redirect=true";
 	}
 	
-	public String novoContato(){
-		return "contatocadastro?faces-redirect=true&"
-				+ "fornecedor=" + this.fornecedor.getIdFornecedor();
+	public String excluir(Contato contato) {
+		contatoService.excluir(contato);
+		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso."));
+		return "fornecedorcadastro?faces-redirect=true&fornecedor="+this.fornecedor.getIdFornecedor();
 	}
-		
 
 	public void definirDocumento() {
 		this.documentoMascara = ((TipoPessoa) this.fornecedor.getPfPj()).getMascara();

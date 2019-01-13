@@ -17,7 +17,10 @@
 			<a href="fornecedor.xhtml">Fornecedores</a>
 		</li>
 		<li>
-			<a href="fornecedor.xhtml">Cadastro</a>
+			<h:outputLink value="fornecedorcadastro.xhtml">
+				<f:param name="fornecedor" value="#{contatoCadastroBean.fornecedor.idFornecedor}"/>
+				Cadastro
+			</h:outputLink>		
 		</li>
 		<li class="active">Contato</li>
 	</ui:define>
@@ -43,12 +46,12 @@
 			<div class="ui-g-12">
     	
     			<form jsf:id="formContato" jsf:prependId="false">
-					<p:messages />
 					
 					<div class="widget-box">
 						<div class="widget-header">
 							<div class="widget-main">
-								<button class="btn btn-lg btn-purple" type="button" jsf:outcome="fornecedorcadastro.xhtml?fornecedor=#{contatoCadastroBean.fornecedor.idFornecedor}">	
+								<button class="btn btn-lg btn-purple" type="button" jsf:outcome="fornecedorcadastro.xhtml">
+									<f:param name="fornecedor" value="#{contatoCadastroBean.fornecedor.idFornecedor}"/>	
 									<i class="ace-icon fa fa-arrow-left"></i>
 									Voltar
 								</button>	
@@ -69,7 +72,7 @@
 									<div class="col-sm-2">
 										<div class="form-group">
 											<label class="control-label" jsf:for="idContato">ID</label>
-											<input type="text" class="form-control" readonly="readonly"
+											<input type="text" class="form-control" readonly="readonly" autofocus="autofocus"
 												jsf:id="idContato"
 												jsf:binding="#{idContato}" 
 												jsf:value="#{contatoCadastroBean.contato.idContato}"/>

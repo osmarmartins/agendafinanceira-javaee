@@ -3,10 +3,9 @@ package br.com.futura.agendafinanceira.beans;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import br.com.futura.agendafinanceira.models.Contato;
 import br.com.futura.agendafinanceira.models.Fornecedor;
@@ -14,8 +13,7 @@ import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.services.ContatoService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
-@Named
-@ViewScoped
+@Model
 public class ContatoCadastroBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -36,22 +34,10 @@ public class ContatoCadastroBean implements Serializable {
 		this.contato.setAtivo(Ativo.ATIVO);
 	}
 
-	public String voltar() {
-		return "/fornecedorcadastro.xhtml?fornecedor=" + this.fornecedor.getIdFornecedor();
-	}
-
 	public String salvar() {
 		contatoService.salvar(contato);
 		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso."));
-		return "/fornecedorcadastro?faces-redirect=true&fornecedor=" + contato.getFornecedor().getIdFornecedor(); 
-	}
-
-	public String excluir(Contato contato) {
-		Integer fornecedorId = contato.getFornecedor().getIdFornecedor();
-		contatoService.excluir(contato);
-		contato.getFornecedor().removeContato(contato);
-		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso."));
-		return "/fornecedorcadastro?faces-redirect=true&fornecedor=" + fornecedorId; 
+		return "fornecedorcadastro?faces-redirect=true&fornecedor=" + contato.getFornecedor().getIdFornecedor(); 
 	}
 
 	public Contato getContato() {

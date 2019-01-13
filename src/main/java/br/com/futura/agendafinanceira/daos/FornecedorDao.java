@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.utils.NumberConversionUtil;
@@ -32,22 +31,21 @@ public class FornecedorDao implements Serializable {
 				.getSingleResult();
 	}
 	
-	public List<Fornecedor> listarPor(String pesquisa) {
+	public List<Fornecedor> listarPor(String filtro) {
 		return manager
 				.createQuery("SELECT f FROM Fornecedor f "
 						+ "WHERE f.idFornecedor=:pIdFornecedor "
 						+ "OR f.cpfCnpj LIKE :pCpfCnpj "
 						+ "OR f.nomeFantasia LIKE :pNomeFantasia "
 						+ "OR f.razaoSocial LIKE :pRazaoSocial ", Fornecedor.class)
-				.setParameter("pIdFornecedor", NumberConversionUtil.getIntegerOrZero(pesquisa))
-				.setParameter("pCpfCnpj", "%" + pesquisa + "%")
-				.setParameter("pNomeFantasia", "%" + pesquisa + "%")
-				.setParameter("pRazaoSocial", "%" + pesquisa + "%")
+				.setParameter("pIdFornecedor", NumberConversionUtil.getIntegerOrZero(filtro))
+				.setParameter("pCpfCnpj", "%" + filtro + "%")
+				.setParameter("pNomeFantasia", "%" + filtro + "%")
+				.setParameter("pRazaoSocial", "%" + filtro + "%")
 				.getResultList();
 		
 	}
 	
-	@Transactional
 	public void salvar(Fornecedor fornecedor) {
 		if (fornecedor.getIdFornecedor() != null) {
 			manager.merge(fornecedor);
@@ -56,9 +54,10 @@ public class FornecedorDao implements Serializable {
 		}
 	}
 
-	@Transactional
-	public void excluir(Fornecedor fornecedor) {
-		manager.remove(manager.getReference(Fornecedor.class, fornecedor.getIdFornecedor()));
+	public void excluir(List<Fornecedor> fornecedores) {
+		for (Fornecedor fornecedor : fornecedores) {
+			manager.remove(manager.getReference(Fornecedor.class, fornecedor.getIdFornecedor()));
+		}
 	}
 	
 

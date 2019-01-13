@@ -40,7 +40,6 @@
 			<div class="ui-g-12">
 
 				<form jsf:id="formFornecedor" jsf:prependId="false">
-					<p:messages />
 					
 					<div class="widget-box">
 						<div class="widget-header">
@@ -172,14 +171,15 @@
 					<div class="widget-box widget-color-default" jsf:id="grid-contato" rendered="#{fornecedorCadastroBean.cadastrarContatos}">
 						<div class="widget-header">
 							<div class="widget-main clearfix">
-								<button class="btn btn-xs btn-default pull-left" jsf:action="#{fornecedorCadastroBean.novoContato()}">
+								<button class="btn btn-xs btn-default pull-left" jsf:outcome="/fornecedor/contatocadastro.xhtml">
+									<f:param name="fornecedor" value="#{fornecedorCadastroBean.fornecedor.idFornecedor}"/>
 									<i class="ace-icon fa fa-user-plus"></i>
 									<span class="bigger-110">Novo Contato</span>
 								</button>
 							</div>	
 						</div>							
 
-						<div class="widget-body">
+						<div class="widget-body" jsf:id="listaContatos">
 							<div class="widget-main no-padding">
 								<table class="table table-striped table-bordered table-hover">
 									<thead class="thin-border-bottom">
@@ -209,29 +209,33 @@
 											<tr>
 												<td>
 													<h:outputLink value="contatocadastro.xhtml">
-														<f:param name="fornecedor" value="#{fornecedorCadastroBean.fornecedor.idFornecedor}"/>
+														<f:param name="fornecedor" value="#{contato.fornecedor.idFornecedor}"/>
 														<f:param name="contato" value="#{contato.idContato}"/>
 														#{contato.contato}
 													</h:outputLink>
 												</td>
 												<td>
 													<h:outputLink value="contatocadastro.xhtml">
-														<f:param name="fornecedor" value="#{fornecedorCadastroBean.fornecedor.idFornecedor}"/>
+														<f:param name="fornecedor" value="#{contato.fornecedor.idFornecedor}"/>
 														<f:param name="contato" value="#{contato.idContato}"/>
 														#{contato.email}
 													</h:outputLink>
 												</td>
-	
 												<td>
-													<span class="label #{contato.status?'label-success':'label-danger'} ">#{contato.ativo.descricao}</span>
+													<span class="label label-white middle #{contato.status?'label-success':'label-danger'} ">#{contato.ativo.descricao}</span>
 												</td>
 												<td>
 													<div class="btn-group">
-														<button class="btn btn-sm btn-success btn-white btn-round" jsf:action="#{fornecedorCadastroBean.alterarContato(contato)}">
+														<button class="btn btn-sm btn-success btn-white btn-round"															
+															jsf:id="alteraContato" jsf:outcome="contatocadastro.xhtml">
+															<f:param name="fornecedor" value="#{contato.fornecedor.idFornecedor}"/>
+															<f:param name="contato" value="#{contato.idContato}"/>
 															<i class="ace-icon fa fa-pencil bigger-110 green"></i>
 														</button>
 
-														<button class="btn btn-sm btn-danger btn-white btn-round" jsf:action="#{contatoCadastroBean.excluir(contato)}">
+														<button class="btn btn-sm btn-danger btn-white btn-round" 
+															jsf:id="btnExcluirContato"
+															jsf:action="#{fornecedorCadastroBean.excluir(contato)}">
 															<i class="ace-icon fa fa-trash bigger-110 red2"></i>
 														</button>
 													</div>												

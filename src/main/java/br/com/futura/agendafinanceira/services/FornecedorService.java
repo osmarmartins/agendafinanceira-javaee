@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.daos.FornecedorDao;
 import br.com.futura.agendafinanceira.models.Fornecedor;
@@ -23,10 +24,14 @@ public class FornecedorService implements Serializable {
 		return fornecedorDao.listarTodos();
 	}
 
-	public void excluir(Fornecedor fornecedor) {
-		fornecedorDao.excluir(fornecedor);
+	@Transactional
+	public void excluir(List<Fornecedor> fornecedores) {
+		// TODO Validar exclusão de fornecedores 
+		
+		fornecedorDao.excluir(fornecedores);
 	}
 	
+	@Transactional
 	public void salvar(Fornecedor fornecedor) {
 		fornecedorDao.salvar(fornecedor);
 	}

@@ -22,8 +22,6 @@ public class ContaBean implements Serializable {
 
 	private List<Conta> contas = new ArrayList<Conta>();
 
-	private String pesquisaDescricao;
-
 	@Inject
 	private MessagesHelper messagesHelper;
 
@@ -34,17 +32,19 @@ public class ContaBean implements Serializable {
 
 	private String mensagemExclusao;
 
+	private String pesquisaFiltro;
+
 	@PostConstruct
 	private void init() {
 		this.contas = contaService.listarTodos();
-		this.pesquisaDescricao = new String();
 		this.contasSelecionadas = new ArrayList<>();
 		this.mensagemExclusao = new String();
+		this.pesquisaFiltro = new String();
 	}
 
 	public void pesquisar() {
-		if (this.pesquisaDescricao != null && !this.pesquisaDescricao.isEmpty()) {
-			this.contas = contaService.listarPorDescricao(this.pesquisaDescricao);
+		if (this.pesquisaFiltro != null && !this.pesquisaFiltro.isEmpty()) {
+			this.contas = contaService.listarPorDescricao(this.pesquisaFiltro);
 		}
 	}
 
@@ -55,11 +55,11 @@ public class ContaBean implements Serializable {
 	}
 	
 	public void setPesquisaDescricao(String pesquisaDescricao) {
-		this.pesquisaDescricao = pesquisaDescricao;
+		this.pesquisaFiltro = pesquisaDescricao;
 	}
 
 	public String getPesquisaDescricao() {
-		return pesquisaDescricao;
+		return pesquisaFiltro;
 	}
 
 	public List<Conta> getContas() {
@@ -68,7 +68,6 @@ public class ContaBean implements Serializable {
 
 	
 	public void selecionaConta(Conta conta) {
-		contasSelecionadas = new ArrayList<>();
 		contasSelecionadas.add(conta);
 		mensagemExclusaoBuilder();
 	}
@@ -104,4 +103,11 @@ public class ContaBean implements Serializable {
 		return mensagemExclusao;
 	}
 	
+	public String getPesquisaFiltro() {
+		return pesquisaFiltro;
+	}
+	
+	public void setPesquisaFiltro(String pesquisaFiltro) {
+		this.pesquisaFiltro = pesquisaFiltro;
+	}
 }

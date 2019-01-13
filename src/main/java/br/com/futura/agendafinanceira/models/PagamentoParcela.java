@@ -24,6 +24,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 import br.com.futura.agendafinanceira.models.enums.SituacaoParcela;
+import br.com.futura.agendafinanceira.utils.DataUtil;
 
 @Entity
 @Table(name = "pgto_parcela")
@@ -196,8 +197,16 @@ public class PagamentoParcela implements Serializable {
 		return quitacao;
 	}
 	
+	public String diaDaSemana() {
+		return DataUtil.diaDaSemana(this.vencimento);
+	}
+	
 	public BigDecimal totalParcela() {
-		return this.valor.subtract(this.desconto).add(this.juros).add(this.mora).add(this.outros);
+		return this.valor
+				.subtract(this.desconto)
+				.add(this.juros)
+				.add(this.mora)
+				.add(this.outros);
 	}
 
 	public BigDecimal totalPago() {

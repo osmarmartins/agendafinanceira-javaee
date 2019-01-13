@@ -4,6 +4,8 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <ui:composition template="/resources/template/aceadmin.xhtml">
@@ -25,69 +27,150 @@
 		
 		<div class="ui-g">	
 			<div class="ui-g-12">
-				<h:form>
+				<h:form id="form" prependId="false">
+				
+					<div class="clearfix form-actions ui-widget-header" style="margin-bottom: 0;" jsf:id="comandoGrid">
+						<div class="col-md-6">
 
-					<p:toolbar>
-						<f:facet name="left">
-							<p:button value="Novo" icon="fa fa-plus" outcome="fornecedorcadastro.xhtml"/>
-						</f:facet>
+							<button class="btn btn-white btn-primary" type="button" jsf:id="btnNovo" jsf:outcome="/fornecedor/fornecedorcadastro.xhtml">
+								<i class="fa fa-plus"></i> 
+								Novo
+							</button>
+							
+							<p:spacer width="10"/>
+							
+							<button class="btn btn-white btn-danger" type="button" 
+								data-toggle="modal" 
+								data-target="#modalExclusao" 
+								jsf:id="btnExcluirSelecao" 
+								jsf:rendered="#{fornecedorBean.isExisteSelecao()}">
+								<i class="fa fa-trash"></i> Excluir Seleção
+								<f:ajax
+									listener="#{fornecedorBean.mensagemExclusaoBuilder()}"
+									execute="@this"
+									render="btnConfirmaExclucao mensagem"/>
+							</button>
+							
+						</div>
 						
-						<f:facet name="right">
-							<p:inputText placeholder="Pesquisar por..." size="30" value="#{fornecedorBean.filtro}"/>
-							<p:commandButton value="Pesquisar" icon="fa fa-search" actionListener="#{fornecedorBean.pesquisar()}" update="@form"/>
-						</f:facet>
-					</p:toolbar>
+						<div class="col-md-offset-1 col-md-5 align-right">
+						
+							<div class="input-group">
+								<input class="form-control input-mask-date" type="text" 
+									placeholder="Pesquisa por..."
+									jsf:value="#{fornecedorBean.pesquisaFiltro}" />
+								<span class="input-group-btn">
+									<button class="btn btn-inverse btn-white" type="submit" jsf:action="#{fornecedorBean.pesquisar()}" jsf:update="@form">
+										<i class="ace-icon fa fa-search bigger-110"></i>
+									</button>
+								</span>
+							</div>
 
-					<p:dataTable value="#{fornecedorBean.fornecedores}" 
-						var="fornecedor" id="tabelaFornecedor" emptyMessage="Nenhum registro encontrado" 
-						rows="8" paginator="true" paginatorPosition="bottom">
+						</div>
+					</div>
+					
+					
+					<p:dataTable id="tabela"
+						emptyMessage="Nenhum registro encontrado"
+						value="#{fornecedorBean.fornecedores}" var="fornecedor" rowKey="#{fornecedor.idFornecedor}"
+						selection="#{fornecedorBean.fornecedoresSelecionados}"
+						 
+						rows="#{sessionBean.itensPorPagina}"
+						rowsPerPageTemplate="3 8 10 20"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{ItensPorPagina} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+						<f:facet name="{ItensPorPagina}">
+							<p:outputLabel value="Itens por Página: " />
+							<p:inputText value="#{sessionBean.itensPorPagina}" process="@this" update="@form" style="width: 50px; margin-right: 10px; margin-left: 5px;"/>
+						</f:facet> 
+						
+						<p:ajax event="rowSelect" process="@this" update="@form"/>
+						<p:ajax event="toggleSelect" process="@this" update="@form"/>
+						<p:ajax event="rowUnselectCheckbox" process="@this" update="@form"/>
+						<p:ajax event="rowSelectCheckbox" process="@this" update="@form"/>
+						
+						<p:column selectionMode="multiple" width="5%" styleClass="align-center">
+						</p:column>
 						
 						<p:column sortBy="#{fornecedor.idFornecedor}" width="5%">
-							<f:facet name="header">ID</f:facet>
+							<f:facet name="header">
+								<i class="ace-icon fa fa-bookmark"></i>							
+								ID
+							</f:facet>
 							<h:outputText value="#{fornecedor.idFornecedor}"/>
 						</p:column>
 						
 						<p:column sortBy="#{fornecedor.razaoSocial}">
-							<f:facet name="header">Razão Social</f:facet>
+							<f:facet name="header">
+								<i class="ace-icon fa fa-eye"></i>							
+								Descrição
+							</f:facet>
 							<h:outputText value="#{fornecedor.razaoSocial}"/>
 						</p:column>
 						
 						<p:column sortBy="#{fornecedor.nomeFantasia}">
-							<f:facet name="header">Nome</f:facet>
+							<f:facet name="header">
+								<i class="ace-icon fa fa-eye"></i>							
+								Descrição
+							</f:facet>
 							<h:outputText value="#{fornecedor.nomeFantasia}"/>
 						</p:column>
 						
 						<p:column sortBy="#{fornecedor.cpfCnpj}" width="15%">
-							<f:facet name="header">CPF/CNPJ</f:facet>
+							<f:facet name="header">
+								<i class="ace-icon fa fa-eye"></i>							
+								Descrição
+							</f:facet>
 							<h:outputText value="#{fornecedor.cpfCnpj}"/>
 						</p:column>
 						
-						<p:column sortBy="#{fornecedor.ativo}" width="10%">
-							<f:facet name="header">Situação</f:facet>
-							<h:outputText value="#{fornecedor.ativo.descricao}"/>
+						<p:column sortBy="#{fornecedor.ativo.descricao}" class="text-center" width="10%">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-heartbeat"></i>							
+								Situação
+							</f:facet>
+							<span class="label label-white middle #{fornecedor.status?'label-success':'label-danger'}" style="width: 6em;">							
+								<h:outputText value="#{fornecedor.ativo.descricao}"/>
+							</span>
 						</p:column>
 						
-						<p:column width="15%">
-							<f:facet name="header">Operações</f:facet>
-							<p:button title="Alterar" icon="fa fa-pencil" outcome="fornecedorcadastro">
-								<f:param name="fornecedor" value="#{fornecedor.idFornecedor}"/>
-							</p:button>
+						<p:column class="text-center" width="15%">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-gear"></i>							
+								Operações
+							</f:facet>
 							
-							<p:commandButton title="Excluir" icon="fa fa-trash" actionListener="#{fornecedorBean.excluir(fornecedor)}" update="@form" process="@this">
-								<p:confirm header="Confirma exclusão" message="Confirma a excusão de '#{fornecedor.razaoSocial}'" icon="ui-icon-alert" />							
-							</p:commandButton>
+							<button type="button" class="btn btn-sm btn-success btn-white btn-round" 
+								jsf:id="btnAlterar" jsf:outcome="fornecedorcadastro">
+								<f:param name="fornecedor" value="#{fornecedor.idFornecedor}"/>
+								<i class="ace-icon fa fa-pencil bigger-110 green"></i>
+							</button>
+							
+							<button type="button" class="btn btn-sm btn-danger btn-white btn-round" 
+								data-toggle="modal" 
+								data-target="#modalExclusao" 
+								jsf:id="btnExcluir"
+								jsf:rendered="#{!fornecedorBean.isExisteSelecao()}">							
+								<i class="ace-icon fa fa-trash bigger-110 danger"></i>
+								<f:ajax
+									execute="@this"
+									render="btnConfirmaExclucao mensagem"
+									listener="#{fornecedorBean.selecionaFornecedor(fornecedor)}"/>
+							</button>
 						</p:column>
-						
-					</p:dataTable>
 
-				    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-				        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
-				        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
-				    </p:confirmDialog>	
+					</p:dataTable>					
+	
 				</h:form>
 			</div>
 			
 		</div>
+		
+
+		<!-- Modal Exclusão -->
+		<ui:include src="fornecedorexclusaodialog.xhtml"/>
+
+		
 	</ui:define>
 
 	<ui:define name="pagina">Fornecedores</ui:define>

@@ -47,8 +47,5 @@ public class SetorCadastroBean implements Serializable {
 	public void setSetor(Setor setor) {
 		this.setor = setor;
 	}
-	
-	public void testar() {
-		
-	}
+
 }

@@ -32,19 +32,19 @@ public class SetorBean implements Serializable {
 	
 	private String mensagemExclusao;
 	
-	private String pesquisaDescricao;
+	private String pesquisaFiltro;
 	
 	@PostConstruct
 	private void init() {
 		this.setores = setorService.listarTodos();
 		this.setoresSelecionados = new ArrayList<>();
 		this.mensagemExclusao = new String();
-		this.pesquisaDescricao = new String();
+		this.pesquisaFiltro = new String();
 	}
 	
 	public void pesquisar() {
-		if (this.pesquisaDescricao != null && !this.pesquisaDescricao.isEmpty()) {
-			this.setores = setorService.listarPorDescricao(this.pesquisaDescricao);
+		if (this.pesquisaFiltro != null && !this.pesquisaFiltro.isEmpty()) {
+			this.setores = setorService.listarPorDescricao(this.pesquisaFiltro);
 		} else {
 			init();
 		}
@@ -57,7 +57,6 @@ public class SetorBean implements Serializable {
 	}
 	
 	public void selecionaSetor(Setor setor) {
-		setoresSelecionados = new ArrayList<>();
 		setoresSelecionados.add(setor);
 		mensagemExclusaoBuilder();
 	}
@@ -85,14 +84,14 @@ public class SetorBean implements Serializable {
 		return setores;
 	}
 
-	public void setPesquisaDescricao(String pesquisaDescricao) {
-		this.pesquisaDescricao = pesquisaDescricao;
+	public String getPesquisaFiltro() {
+		return pesquisaFiltro;
 	}
-
-	public String getPesquisaDescricao() {
-		return pesquisaDescricao;
+	
+	public void setPesquisaFiltro(String pesquisaFiltro) {
+		this.pesquisaFiltro = pesquisaFiltro;
 	}
-
+	
 	public void setSetoresSelecionados(List<Setor> setoresSelecionados) {
 		this.setoresSelecionados = setoresSelecionados;
 	}
