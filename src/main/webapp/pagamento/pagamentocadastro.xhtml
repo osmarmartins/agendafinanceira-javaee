@@ -214,11 +214,20 @@
 					<div class="widget-box widget-color-default" jsf:id="grid-parcelas" rendered="#{pagamentoCadastroBean.habilitarParcelas()}">
 						<div class="widget-header">
 							<div class="widget-main clearfix">
-								<button class="btn btn-xs btn-default pull-left" jsf:outcome="pagamentocadastroparcela.xhtml">
+								<button class="btn btn-xs btn-default" jsf:outcome="pagamentocadastroparcela.xhtml">
 									<f:param name="pagamento" value="#{pagamentoCadastroBean.pagamento.idPagamento}"/>
-									<i class="ace-icon fa fa-user-plus"></i>
+									<i class="ace-icon fa fa-plus"></i>
 									<span class="bigger-110">Nova Parcela</span>
 								</button>
+		
+								<span/>
+		
+								<button class="btn btn-xs btn-default" jsf:outcome="pagamentoparcelasmultiplas.xhtml">
+									<f:param name="pagamento" value="#{pagamentoCadastroBean.pagamento.idPagamento}"/>
+									<i class="ace-icon fa fa-th-list"></i>
+									<span class="bigger-110">Múltiplas Parcelas</span>
+								</button>
+								
 							</div>	
 						</div>							
 

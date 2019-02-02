@@ -213,7 +213,7 @@ public class PagamentoParcela implements Serializable {
 		return quitacao;
 	}
 	
-	public BigDecimal getTotalParcela() {
+	public BigDecimal totalParcela() {
 		return calculaTotalParcela();
 	}
 	
@@ -247,7 +247,7 @@ public class PagamentoParcela implements Serializable {
 	}
 	
 	public BigDecimal saldoDevedor() {
-		return getTotalParcela().subtract(totalPago());
+		return totalParcela().subtract(totalPago());
 	}
 
 	@Override
