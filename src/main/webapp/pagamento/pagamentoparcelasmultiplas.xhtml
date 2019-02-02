@@ -17,7 +17,7 @@
 			<a href="pagamento.xhtml">Contas a Pagar</a>
 		</li>
 		<li>
-			<a href="pagamentocadastro.xhtml?pagamento=#{pagamentoParcelaBean.pagamento.idPagamento}">Lançamento</a>
+			<a href="pagamentocadastro.xhtml?pagamento=#{pagamentoParcelasMultiplasBean.pagamento.idPagamento}">Lançamento</a>
 		</li>
 		<li class="active">Parcela</li>
 	</ui:define>
@@ -35,8 +35,7 @@
 	<ui:define name="conteudo">
 
     	<f:metadata>
-    		<f:viewParam name="pagamento" value="#{pagamentoParcelaBean.pagamento}" />
-    		<f:viewParam name="parcela" value="#{pagamentoParcelaBean.parcela}" />
+    		<f:viewParam name="pagamento" value="#{pagamentoParcelasMultiplasBean.pagamento}" />
     	</f:metadata>		
 
 		
@@ -61,7 +60,7 @@
 												<input type="number" class="form-control"
 													jsf:id="qtdParcelas"
 													jsf:binding="#{qtdParcelas}" 
-													jsf:value="#{pagamentoParcelaBean.parcela.parcela}">
+													jsf:value="#{pagamentoParcelasMultiplasBean.quantidadeParcelas}">
 												</input>
 											</div>
 										</div>
@@ -72,7 +71,7 @@
 												<input type="text" class="form-control currency"
 													jsf:id="valor"
 													jsf:binding="#{valor}" 
-													jsf:value="#{pagamentoParcelaBean.parcela.valor}">
+													jsf:value="#{pagamentoParcelasMultiplasBean.valorParcela}">
 													<f:convertNumber type="currency"/>
 												</input>
 											</div>
@@ -83,7 +82,7 @@
 										<div class="col-sm-12">
 											<div class="form-group">
 												<label class="control-label" for="tipo">Tipo de Lançamento:</label>
-												<h:selectOneMenu value="#{relatorioPagamentosBean.filtro.setor}" id="tipo" styleClass="form-control">
+												<h:selectOneMenu value="#{pagamentoParcelasMultiplasBean.tipoLancamento}" id="tipo" styleClass="form-control">
 													<f:selectItem itemLabel="Mensal" itemValue="0"/>
 													<f:selectItem itemLabel="Intervalo entre parcelas (qtd. dias)" itemValue="1"/>
 												</h:selectOneMenu>
@@ -99,7 +98,7 @@
 													<input type="date" class="form-control" 
 														jsf:id="dataInicial"
 														jsf:binding="#{dataInicial}" 
-														jsf:value="#{relatorioPagamentosBean.filtro.dataInicial}">
+														jsf:value="#{pagamentoParcelasMultiplasBean.primeiroVencimento}">
 														<f:convertDateTime pattern="yyyy-MM-dd"/>
 													</input>
 													<span class="input-group-addon">
@@ -115,7 +114,7 @@
 												<input type="number" class="form-control"
 													jsf:id="intervaloDias"
 													jsf:binding="#{intervaloDias}" 
-													jsf:value="#{pagamentoParcelaBean.parcela.parcela}">
+													jsf:value="#{pagamentoParcelasMultiplasBean.intervaloDias}">
 												</input>
 											</div>
 										</div>	
@@ -128,16 +127,15 @@
 								
 								<div class="widget-toolbox padding-8 clearfix">
 									<button class="btn btn-xs btn-purple pull-left" type="button" 
-										jsf:outcome="pagamentocadastro.xhtml?pagamento=#{pagamentoParcelaBean.pagamento.idPagamento}"	
+										jsf:outcome="pagamentocadastro.xhtml?pagamento=#{pagamentoParcelasMultiplasBean.pagamento.idPagamento}"	
 										jsf:id="btnVoltar">
 										<i class="ace-icon fa fa-arrow-left"></i>
 										<span class="bigger-110">Voltar</span>
 									</button>
 								
 									<button class="btn btn-xs btn-info pull-right"
-										jsf:id="btnImprimir" 
-										jsf:onclick="this.form.target='_blank'"
-										jsf:action="#{relatorioPagamentosBean.gerarRelatorioContasAPagar()}">
+										jsf:id="btnGerar" 
+										jsf:action="#{pagamentoParcelasMultiplasBean.gerarParcelas()}">
 										<span class="bigger-110">Gerar Parcelas</span>
 										<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
 									</button>
