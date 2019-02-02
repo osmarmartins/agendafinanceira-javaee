@@ -56,22 +56,22 @@
 									<div class="row">
 										<div class="col-sm-6">
 											<div class="form-group">
-												<label class="control-label" jsf:for="qtdParcelas">Qtd Parcelas</label>
+												<label class="control-label" jsf:for="quantidadeParcelas">Qtd Parcelas</label>
 												<input type="number" class="form-control"
-													jsf:id="qtdParcelas"
-													jsf:binding="#{qtdParcelas}" 
-													jsf:value="#{pagamentoParcelasMultiplasBean.quantidadeParcelas}">
+													jsf:id="quantidadeParcelas"
+													jsf:binding="#{quantidadeParcelas}" 
+													jsf:value="#{pagamentoParcelasMultiplasBean.parcelamento.quantidadeParcelas}">
 												</input>
 											</div>
 										</div>
 										
 										<div class="col-sm-6">
 											<div class="form-group">
-												<label class="control-label" jsf:for="valor">Valor da Parcela</label>
+												<label class="control-label" jsf:for="valorParcela">Valor da Parcela</label>
 												<input type="text" class="form-control currency"
-													jsf:id="valor"
-													jsf:binding="#{valor}" 
-													jsf:value="#{pagamentoParcelasMultiplasBean.valorParcela}">
+													jsf:id="valorParcela"
+													jsf:binding="#{valorParcela}" 
+													jsf:value="#{pagamentoParcelasMultiplasBean.parcelamento.valorParcela}">
 													<f:convertNumber type="currency"/>
 												</input>
 											</div>
@@ -81,8 +81,8 @@
 									<div class="row">
 										<div class="col-sm-12">
 											<div class="form-group">
-												<label class="control-label" for="tipo">Tipo de Lançamento:</label>
-												<h:selectOneMenu value="#{pagamentoParcelasMultiplasBean.tipoLancamento}" id="tipo" styleClass="form-control">
+												<label class="control-label" jsf:for="tipo">Tipo de Lançamento:</label>
+												<h:selectOneMenu value="#{pagamentoParcelasMultiplasBean.parcelamento.tipoLancamento}" id="tipo" styleClass="form-control">
 													<f:selectItem itemLabel="Mensal" itemValue="0"/>
 													<f:selectItem itemLabel="Intervalo entre parcelas (qtd. dias)" itemValue="1"/>
 												</h:selectOneMenu>
@@ -93,12 +93,12 @@
 									<div class="row">
 										<div class="col-sm-6">
 											<div class="form-group">
-												<label class="control-label" jsf:for="dataInicial">1º Vencimento</label>
+												<label class="control-label" jsf:for="primeiroVencimento">1º Vencimento</label>
 												<div class="input-group">
 													<input type="date" class="form-control" 
-														jsf:id="dataInicial"
-														jsf:binding="#{dataInicial}" 
-														jsf:value="#{pagamentoParcelasMultiplasBean.primeiroVencimento}">
+														jsf:id="primeiroVencimento"
+														jsf:binding="#{primeiroVencimento}" 
+														jsf:value="#{pagamentoParcelasMultiplasBean.parcelamento.primeiroVencimento}">
 														<f:convertDateTime pattern="yyyy-MM-dd"/>
 													</input>
 													<span class="input-group-addon">
@@ -114,15 +114,12 @@
 												<input type="number" class="form-control"
 													jsf:id="intervaloDias"
 													jsf:binding="#{intervaloDias}" 
-													jsf:value="#{pagamentoParcelasMultiplasBean.intervaloDias}">
+													jsf:value="#{pagamentoParcelasMultiplasBean.parcelamento.intervaloDias}">
 												</input>
 											</div>
 										</div>	
 									</div>
 									
-									<div class="row">
-									</div>
-							
 								</div>
 								
 								<div class="widget-toolbox padding-8 clearfix">
@@ -132,10 +129,10 @@
 										<i class="ace-icon fa fa-arrow-left"></i>
 										<span class="bigger-110">Voltar</span>
 									</button>
-								
-									<button class="btn btn-xs btn-info pull-right"
-										jsf:id="btnGerar" 
+									
+									<button class="btn btn-xs btn-info pull-right" type="button" jsf:id="btnGerar"
 										jsf:action="#{pagamentoParcelasMultiplasBean.gerarParcelas()}">
+										<f:ajax execute="@this"/>
 										<span class="bigger-110">Gerar Parcelas</span>
 										<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
 									</button>
@@ -158,9 +155,20 @@
 	<ui:define name="pagina">Setores</ui:define>
 
 	<ui:define name="scripts">
-
+		<h:outputScript library="js" name="jquery.maskMoney.min.js"/>
+		<script type="text/javascript">
+			$(function() {
+			    $('.currency').maskMoney({
+				    prefix:'R$ ', 
+				    allowNegative: true, 
+				    thousands:'.', 
+				    decimal:',', 
+				    affixesStay: true,
+				    allowZero: true
+				});
+			  })
+		</script>
 	</ui:define>
-	
 </ui:composition>
 
 </html>
