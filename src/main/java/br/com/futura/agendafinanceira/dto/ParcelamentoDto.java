@@ -22,6 +22,9 @@ public class ParcelamentoDto implements Serializable {
 		this.pagamento = pagamento;
 	}
 
+	public ParcelamentoDto() {
+	}
+
 	public Pagamento getPagamento() {
 		return pagamento;
 	}

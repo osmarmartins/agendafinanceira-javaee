@@ -23,137 +23,127 @@
 	</ui:define>
 	
 	<ui:define name="titulo">
-		<i class="ace-icon fa fa-print smaller-90"></i>
-		Contas a Pagar
+		Contas a pagar
 	</ui:define>
-	
+
 	<ui:define name="subtitulo">
-		<span>Lançamento de contas a pagar com vários parcelamentos</span> 
+		Lançamento de contas a pagar com múltiplas parcelas
 	</ui:define>
-	
 
 	<ui:define name="conteudo">
-
+    	
     	<f:metadata>
     		<f:viewParam name="pagamento" value="#{pagamentoParcelasMultiplasBean.pagamento}" />
     	</f:metadata>		
 
-		
 		<div class="ui-g">	
 			<div class="ui-g-12">
-
-				<div class="col-sm-3"></div>
-				<div class="col-sm-6 ">
+			
+				<form jsf:id="formParcela" jsf:prependId="false">
+					<p:messages closable="true" globalOnly="true" showIcon="false">
+						<p:autoUpdate/>
+					</p:messages>
+					
 					<div class="widget-box">
 						<div class="widget-header">
-							<h5 class="widget-title">Geração das parcelas</h5>
+							<div class="widget-main">
+								<button class="btn btn-lg btn-purple" type="button" 
+									jsf:outcome="pagamentocadastro.xhtml?pagamento=#{pagamentoParcelasMultiplasBean.pagamento.idPagamento}">	
+									<i class="ace-icon fa fa-arrow-left"></i>
+									Voltar
+								</button>	
+								
+								<span/>					
+		
+								<button class="btn btn-lg btn-info" type="submit" jsf:action="#{pagamentoParcelasMultiplasBean.gerarParcelas()}">	
+									<i class="ace-icon fa fa-check"></i>
+									Salvar
+								</button>						
+							</div>
 						</div>
-
-						<h:form id="form" prependId="false">
-							<div class="widget-body">
-								<div class="widget-main">
-							
-									<div class="row">
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="control-label" jsf:for="quantidadeParcelas">Qtd Parcelas</label>
-												<input type="number" class="form-control"
-													jsf:id="quantidadeParcelas"
-													jsf:binding="#{quantidadeParcelas}" 
-													jsf:value="#{pagamentoParcelasMultiplasBean.parcelamento.quantidadeParcelas}">
-												</input>
-											</div>
-										</div>
-										
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="control-label" jsf:for="valorParcela">Valor da Parcela</label>
-												<input type="text" class="form-control currency"
-													jsf:id="valorParcela"
-													jsf:binding="#{valorParcela}" 
-													jsf:value="#{pagamentoParcelasMultiplasBean.parcelamento.valorParcela}">
-													<f:convertNumber type="currency"/>
-												</input>
-											</div>
+	
+						<div class="widget-body">
+							<div class="container-fluid">
+								
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="control-label" jsf:for="quantidadeParcelas">Qtd Parcelas</label>
+											<input type="number" class="form-control"
+												jsf:id="quantidadeParcelas"
+												jsf:binding="#{quantidadeParcelas}" 
+												jsf:value="#{pagamentoParcelasMultiplasBean.parcelamento.quantidadeParcelas}">
+											</input>
 										</div>
 									</div>
 									
-									<div class="row">
-										<div class="col-sm-12">
-											<div class="form-group">
-												<label class="control-label" jsf:for="tipo">Tipo de Lançamento:</label>
-												<h:selectOneMenu value="#{pagamentoParcelasMultiplasBean.parcelamento.tipoLancamento}" id="tipo" styleClass="form-control">
-													<f:selectItem itemLabel="Mensal" itemValue="0"/>
-													<f:selectItem itemLabel="Intervalo entre parcelas (qtd. dias)" itemValue="1"/>
-												</h:selectOneMenu>
-											</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="control-label" jsf:for="valorParcela">Valor da Parcela</label>
+											<input type="text" class="form-control currency"
+												jsf:id="valorParcela"
+												jsf:binding="#{valorParcela}" 
+												jsf:value="#{pagamentoParcelasMultiplasBean.parcelamento.valorParcela}">
+												<f:convertNumber type="currency"/>
+											</input>
 										</div>
 									</div>
-									
-									<div class="row">
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="control-label" jsf:for="primeiroVencimento">1º Vencimento</label>
-												<div class="input-group">
-													<input type="date" class="form-control" 
-														jsf:id="primeiroVencimento"
-														jsf:binding="#{primeiroVencimento}" 
-														jsf:value="#{pagamentoParcelasMultiplasBean.parcelamento.primeiroVencimento}">
-														<f:convertDateTime pattern="yyyy-MM-dd"/>
-													</input>
-													<span class="input-group-addon">
-														<i class="fa fa-calendar bigger-110"></i>
-													</span>
-												</div>
-											</div>
-										</div>
-																				
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="control-label" jsf:for="intervaloDias">Qtd. de Dias Entre as Parcelas</label>
-												<input type="number" class="form-control"
-													jsf:id="intervaloDias"
-													jsf:binding="#{intervaloDias}" 
-													jsf:value="#{pagamentoParcelasMultiplasBean.parcelamento.intervaloDias}">
-												</input>
-											</div>
-										</div>	
-									</div>
-									
 								</div>
 								
-								<div class="widget-toolbox padding-8 clearfix">
-									<button class="btn btn-xs btn-purple pull-left" type="button" 
-										jsf:outcome="pagamentocadastro.xhtml?pagamento=#{pagamentoParcelasMultiplasBean.pagamento.idPagamento}"	
-										jsf:id="btnVoltar">
-										<i class="ace-icon fa fa-arrow-left"></i>
-										<span class="bigger-110">Voltar</span>
-									</button>
-									
-									<button class="btn btn-xs btn-info pull-right" type="button" jsf:id="btnGerar"
-										jsf:action="#{pagamentoParcelasMultiplasBean.gerarParcelas()}">
-										<f:ajax execute="@this"/>
-										<span class="bigger-110">Gerar Parcelas</span>
-										<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
-									</button>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label class="control-label" jsf:for="tipo">Tipo de Lançamento:</label>
+											<h:selectOneMenu value="#{pagamentoParcelasMultiplasBean.parcelamento.tipoLancamento}" id="tipo" styleClass="form-control">
+												<f:selectItem itemLabel="Mensal" itemValue="0"/>
+												<f:selectItem itemLabel="Intervalo entre parcelas (qtd. dias)" itemValue="1"/>
+											</h:selectOneMenu>
+										</div>
+									</div>
 								</div>
-															
+								
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="control-label" jsf:for="primeiroVencimento">1º Vencimento</label>
+											<div class="input-group">
+												<input type="date" class="form-control" 
+													jsf:id="primeiroVencimento"
+													jsf:binding="#{primeiroVencimento}" 
+													jsf:value="#{pagamentoParcelasMultiplasBean.parcelamento.primeiroVencimento}">
+													<f:convertDateTime pattern="yyyy-MM-dd"/>
+												</input>
+												<span class="input-group-addon">
+													<i class="fa fa-calendar bigger-110"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+																			
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="control-label" jsf:for="intervaloDias">Qtd. de Dias Entre as Parcelas</label>
+											<input type="number" class="form-control"
+												jsf:id="intervaloDias"
+												jsf:binding="#{intervaloDias}" 
+												jsf:value="#{pagamentoParcelasMultiplasBean.parcelamento.intervaloDias}">
+											</input>
+										</div>
+									</div>	
+								</div>								
+								
 							</div>
-						</h:form>
-						
+						</div>
 					</div>
-				</div>
-				<div class="col-sm-3"></div>
+				
+				</form>			
 
 			</div>
-			
 		</div>
-
-
 	</ui:define>
 
-	<ui:define name="pagina">Setores</ui:define>
-
+	<ui:define name="pagina">Lançamento de Contas a Pagar</ui:define>
+	
 	<ui:define name="scripts">
 		<h:outputScript library="js" name="jquery.maskMoney.min.js"/>
 		<script type="text/javascript">
@@ -172,4 +162,3 @@
 </ui:composition>
 
 </html>
-
