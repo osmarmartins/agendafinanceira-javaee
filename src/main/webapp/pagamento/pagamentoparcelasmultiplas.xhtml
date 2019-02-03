@@ -40,9 +40,6 @@
 			<div class="ui-g-12">
 			
 				<form jsf:id="formParcela" jsf:prependId="false">
-					<p:messages closable="true" globalOnly="true" showIcon="false">
-						<p:autoUpdate/>
-					</p:messages>
 					
 					<div class="widget-box">
 						<div class="widget-header">
@@ -55,7 +52,8 @@
 								
 								<span/>					
 		
-								<button class="btn btn-lg btn-info" type="submit" jsf:action="#{pagamentoParcelasMultiplasBean.gerarParcelas()}">	
+								<button class="btn btn-lg btn-info" type="submit" jsf:action="#{pagamentoParcelasMultiplasBean.gerarParcelas()}">
+									<f:ajax execute="@this"/>	
 									<i class="ace-icon fa fa-check"></i>
 									Salvar
 								</button>						
@@ -69,10 +67,11 @@
 									<div class="col-sm-6">
 										<div class="form-group">
 											<label class="control-label" jsf:for="quantidadeParcelas">Qtd Parcelas</label>
-											<input type="number" class="form-control"
+											<input type="number" class="form-control" autofocus="autofocus"
 												jsf:id="quantidadeParcelas"
 												jsf:binding="#{quantidadeParcelas}" 
 												jsf:value="#{pagamentoParcelasMultiplasBean.parcelamento.quantidadeParcelas}">
+											<f:ajax execute="@this"/>
 											</input>
 										</div>
 									</div>
@@ -85,6 +84,7 @@
 												jsf:binding="#{valorParcela}" 
 												jsf:value="#{pagamentoParcelasMultiplasBean.parcelamento.valorParcela}">
 												<f:convertNumber type="currency"/>
+												<f:ajax execute="@this"/>
 											</input>
 										</div>
 									</div>
@@ -95,8 +95,9 @@
 										<div class="form-group">
 											<label class="control-label" jsf:for="tipo">Tipo de Lançamento:</label>
 											<h:selectOneMenu value="#{pagamentoParcelasMultiplasBean.parcelamento.tipoLancamento}" id="tipo" styleClass="form-control">
-												<f:selectItem itemLabel="Mensal" itemValue="0"/>
-												<f:selectItem itemLabel="Intervalo entre parcelas (qtd. dias)" itemValue="1"/>
+												<f:selectItem itemLabel="Mensal" itemValue="MENSAL"/>
+												<f:selectItem itemLabel="Intervalo entre parcelas (qtd. dias)" itemValue="INTERVALO_DIAS"/>
+												<f:ajax execute="@this"/>
 											</h:selectOneMenu>
 										</div>
 									</div>
@@ -112,6 +113,7 @@
 													jsf:binding="#{primeiroVencimento}" 
 													jsf:value="#{pagamentoParcelasMultiplasBean.parcelamento.primeiroVencimento}">
 													<f:convertDateTime pattern="yyyy-MM-dd"/>
+													<f:ajax execute="@this"/>
 												</input>
 												<span class="input-group-addon">
 													<i class="fa fa-calendar bigger-110"></i>
@@ -127,6 +129,7 @@
 												jsf:id="intervaloDias"
 												jsf:binding="#{intervaloDias}" 
 												jsf:value="#{pagamentoParcelasMultiplasBean.parcelamento.intervaloDias}">
+												<f:ajax execute="@this"/>
 											</input>
 										</div>
 									</div>	
