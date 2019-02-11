@@ -82,6 +82,12 @@ public class PagamentoParcela implements Serializable {
 	}
 	
 	public PagamentoParcela() {
+		this.valor = BigDecimal.ZERO;
+		this.desconto = BigDecimal.ZERO;
+		this.juros = BigDecimal.ZERO;
+		this.mora = BigDecimal.ZERO;
+		this.outros = BigDecimal.ZERO;
+		this.situacao = SituacaoParcela.NOVO;
 	}
 
 	public PagamentoParcela(

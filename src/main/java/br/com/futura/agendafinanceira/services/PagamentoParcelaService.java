@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.daos.PagamentoParcelaDao;
+import br.com.futura.agendafinanceira.dto.ParcelamentoDto;
 import br.com.futura.agendafinanceira.dto.RelatorioFiltroDto;
 import br.com.futura.agendafinanceira.exceptions.NenhumResultadoException;
 import br.com.futura.agendafinanceira.models.Pagamento;
@@ -22,13 +23,35 @@ public class PagamentoParcelaService implements Serializable {
 	public PagamentoParcela pesquisaPorId(Integer idParcela) {
 		return parcelaDao.pesquisaPorId(idParcela);
 	}
-	
-	public List<PagamentoParcela> listarPor(RelatorioFiltroDto filtro){
+
+	public List<PagamentoParcela> listarPor(RelatorioFiltroDto filtro) {
 		List<PagamentoParcela> lista = parcelaDao.listarPor(filtro);
 		if (lista.isEmpty()) {
 			throw new NenhumResultadoException("Nenhum registro encontrado!");
-		}else {
+		} else {
 			return parcelaDao.listarPor(filtro);
+		}
+	}
+
+	@Transactional
+	public void gerarParcelamento(ParcelamentoDto parcelamento) {
+
+
+		for (Integer numeroParcela = 1; numeroParcela <= parcelamento.getQuantidadeParcelas(); numeroParcela++) {
+			PagamentoParcela parcela = new PagamentoParcela();
+			parcela.setPagamento(parcelamento.getPagamento());
+			parcela.setParcela(parcelamento.obterParcela(numeroParcela));
+			parcela.setVencimento(parcelamento.calcularVencimento(numeroParcela));
+			parcela.setValor(parcelamento.getValorParcela());
+//			parcela.setDesconto(BigDecimal.ZERO);
+//			parcela.setJuros(BigDecimal.ZERO);
+//			parcela.setMora(BigDecimal.ZERO);
+//			parcela.setOutros(BigDecimal.ZERO);
+//			parcela.setSituacao(SituacaoParcela.NOVO);
+			
+			parcelamento.getPagamento().addParcela(parcela);
+			
+			parcelaDao.salvar(parcela);
 		}
 	}
 

@@ -97,7 +97,7 @@
 											<h:selectOneMenu value="#{pagamentoParcelasMultiplasBean.parcelamento.tipoLancamento}" id="tipo" styleClass="form-control">
 												<f:selectItem itemLabel="Mensal" itemValue="MENSAL"/>
 												<f:selectItem itemLabel="Intervalo entre parcelas (qtd. dias)" itemValue="INTERVALO_DIAS"/>
-												<f:ajax execute="@this"/>
+												<f:ajax execute="@this" render="@form"/>
 											</h:selectOneMenu>
 										</div>
 									</div>
@@ -123,7 +123,9 @@
 									</div>
 																			
 									<div class="col-sm-6">
-										<div class="form-group">
+										<div class="form-group"
+										 	jsf:rendered="#{pagamentoParcelasMultiplasBean.intervaloDias}"
+											jsf:id="qtdDias">
 											<label class="control-label" jsf:for="intervaloDias">Qtd. de Dias Entre as Parcelas</label>
 											<input type="number" class="form-control"
 												jsf:id="intervaloDias"
@@ -133,8 +135,8 @@
 											</input>
 										</div>
 									</div>	
+									
 								</div>								
-								
 							</div>
 						</div>
 					</div>
