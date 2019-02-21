@@ -7,16 +7,22 @@ import java.util.Date;
 
 import br.com.futura.agendafinanceira.models.Pagamento;
 import br.com.futura.agendafinanceira.models.enums.TipoLancamento;
+import br.com.futura.agendafinanceira.utils.DataUtil;
 
 public class ParcelamentoDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	private Pagamento pagamento;
+	
 	private Integer quantidadeParcelas;
+	
 	private BigDecimal valorParcela;
+	
 	private Date primeiroVencimento;
+	
 	private Integer intervaloDias;
+	
 	private TipoLancamento tipoLancamento;
 
 	public ParcelamentoDto(Pagamento pagamento) {
@@ -52,6 +58,11 @@ public class ParcelamentoDto implements Serializable {
 
 		return vencimento.getTime();  
 	}
+
+	public Date calcularVencimentoPorIntervaloDias(Integer numeroParcela) {
+		Date dataParcela = DataUtil.adicionaDias(this.primeiroVencimento, (numeroParcela - 1) * this.getIntervaloDias());
+		return dataParcela;
+	}	
 	
 	public Pagamento getPagamento() {
 		return pagamento;

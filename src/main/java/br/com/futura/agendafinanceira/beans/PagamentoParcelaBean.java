@@ -34,7 +34,7 @@ public class PagamentoParcelaBean implements Serializable{
 	public String salvar() {
 		parcelaService.salvar(pagamento, parcela);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
-		return "/pagamentocadastro?faces-redirect=true" + 
+		return "/pagamento/pagamentocadastro?faces-redirect=true" + 
 				"&pagamento=" + parcela.getPagamento().getIdPagamento();
 	}
 	
@@ -42,7 +42,7 @@ public class PagamentoParcelaBean implements Serializable{
 		String pagamento = parcela.getPagamento().getIdPagamento().toString();
 		parcelaService.excluir(parcela);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
-		return "/pagamentocadastro?faces-redirect=true&pagamento=" + pagamento;
+		return "/pagamento/pagamentocadastro?faces-redirect=true&pagamento=" + pagamento;
 	}
 	
 	public Pagamento getPagamento() {

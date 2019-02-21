@@ -76,6 +76,16 @@ public class Pagamento implements Serializable {
 		this.situacao = situacao;
 	}
 
+	public Pagamento(Pagamento pagamento) {
+		this.documento = pagamento.getDocumento();
+		this.emissao = pagamento.getEmissao();
+		this.historico = pagamento.getHistorico();
+		this.conta = pagamento.getConta();
+		this.fornecedor = pagamento.getFornecedor();
+		this.setor = pagamento.getSetor();
+		this.situacao = SituacaoPagamento.NOVO;
+	}
+
 	public Integer getIdPagamento() {
 		return this.idPagamento;
 	}
@@ -149,7 +159,14 @@ public class Pagamento implements Serializable {
 	}
 
 	public List<PagamentoParcela> getParcelas() {
-		return (this.parcelas == null) ? Collections.emptyList() : new ArrayList<PagamentoParcela>(this.parcelas);
+		List<PagamentoParcela> parcelas = new ArrayList<>();
+		if (this.parcelas == null) {
+			Collections.emptyList();
+		}else {
+			this.parcelas.forEach(p -> parcelas.add(p));
+			parcelas.sort((p1, p2)-> p1.getVencimento().compareTo(p2.getVencimento()) );
+		}
+		return parcelas;
 	}
 
 	public void setParcelas(List<PagamentoParcela> pgtoParcelas) {

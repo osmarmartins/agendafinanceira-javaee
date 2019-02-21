@@ -95,8 +95,12 @@
 										<div class="form-group">
 											<label class="control-label" jsf:for="tipo">Tipo de Lançamento:</label>
 											<h:selectOneMenu value="#{pagamentoParcelasMultiplasBean.parcelamento.tipoLancamento}" id="tipo" styleClass="form-control">
-												<f:selectItem itemLabel="Mensal" itemValue="MENSAL"/>
-												<f:selectItem itemLabel="Intervalo entre parcelas (qtd. dias)" itemValue="INTERVALO_DIAS"/>
+												<f:selectItem itemLabel="Selecione..." noSelectionOption="true"/>
+												<f:selectItems  
+													value="#{pagamentoParcelasMultiplasBean.tiposLancamentos}" 
+													var="tipo"
+													itemLabel="#{tipo.descricao}" 
+													itemValue="#{tipo}"/>
 												<f:ajax execute="@this" render="@form"/>
 											</h:selectOneMenu>
 										</div>

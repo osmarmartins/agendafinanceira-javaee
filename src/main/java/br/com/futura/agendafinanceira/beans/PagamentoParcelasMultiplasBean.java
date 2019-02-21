@@ -31,18 +31,19 @@ public class PagamentoParcelasMultiplasBean implements Serializable {
 	@Inject
 	private MessagesHelper messagesHelper;
 
+	private TipoLancamento[] tiposLancamentos;
+		
 	@PostConstruct
 	private void init() {
 		this.parcelamento = new ParcelamentoDto(this.pagamento);
-		this.parcelamento.setTipoLancamento(TipoLancamento.MENSAL);
+		this.tiposLancamentos = TipoLancamento.values();
+		
 	}
 
 	public String gerarParcelas() {
 		this.parcelamento.setPagamento(pagamento);
 		parcelaService.gerarParcelamento(parcelamento);
-
-		messagesHelper.addFlash(new FacesMessage("Parcelas geradas com sucesso!" + this.parcelamento));
-		
+		messagesHelper.addFlash(new FacesMessage("Parcelas geradas com sucesso!"));
 		return "/pagamento/pagamentocadastro?faces-redirect=true" + "&pagamento=" + this.pagamento.getIdPagamento();
 	}
 
@@ -66,4 +67,7 @@ public class PagamentoParcelasMultiplasBean implements Serializable {
 		return this.parcelamento.getTipoLancamento() == TipoLancamento.INTERVALO_DIAS;
 	}
 
+	public TipoLancamento[] getTiposLancamentos() {
+		return tiposLancamentos;
+	}
 }
