@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head/>
+
+<ui:composition template="resources/template/aceadmin.xhtml">
+
+	<ui:define name="navegacao">
+	</ui:define>
+	
+	<ui:define name="titulo">
+	</ui:define>
+	
+	<ui:define name="subtitulo">
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<!-- PAGE CONTENT BEGINS -->
+	
+		<div class="error-container">
+			<div class="well">
+				<h1 class="grey lighter smaller">
+					<span class="blue bigger-125">
+						<i class="ace-icon fa fa-exclamation-triangle"></i>
+					</span>
+					Operação inválida!
+				</h1>
+	
+				<hr />
+				<h3 class="lighter smaller">Detalhes do erro: #{requestScope['error-message']}</h3>
+	
+				<div>
+	
+					<div class="space"></div>
+					<h4 class="smaller">Tente um dos seguinte procedimentos:</h4>
+	
+					<ul class="list-unstyled spaced inline bigger-110 margin-15">
+						<li>
+							<i class="ace-icon fa fa-hand-o-right blue"></i>
+							Verifique se os dados informados são válidos.
+						</li>
+	
+						<li>
+							<i class="ace-icon fa fa-hand-o-right blue"></i>
+							Entre em contato com o administrador.
+						</li>
+					</ul>
+				</div>
+	
+				<hr />
+				<div class="space"></div>
+	
+				<div class="center">
+					<a href="javascript:history.back()" class="btn btn-grey">
+						<i class="ace-icon fa fa-arrow-left"></i>
+						Voltar
+					</a>
+	
+					<a href="#{facesContext.externalContext.requestContextPath}" class="btn btn-primary">
+						<i class="ace-icon fa fa-tachometer"></i>
+						Dashboard
+					</a>
+				</div>
+			</div>
+		</div>
+	
+		<!-- PAGE CONTENT ENDS -->
+	</ui:define>
+
+	<ui:define name="pagina">Erro 403</ui:define>
+
+	<ui:define name="scripts">
+	</ui:define>
+	
+</ui:composition>
+
+</html>
+								

@@ -1,6 +1,7 @@
 package br.com.futura.agendafinanceira.models;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -119,7 +120,7 @@ public class Fornecedor implements Serializable {
 	}
 
 	public List<Contato> getContatos() {
-		return this.contatos;
+		return this.contatos == null? Collections.emptyList() : this.contatos;
 	}
 
 	public void setContatos(List<Contato> contatos) {

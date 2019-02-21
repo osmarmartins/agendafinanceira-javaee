@@ -102,7 +102,7 @@
 									<div class="col-sm-5">
 										<div class="form-group #{!cpfCnpj.valid ? 'has-error' : ''}">
 											<label class="control-label" jsf:for="cpfCnpj">#{fornecedorCadastroBean.documentoRotulo}</label>
-											<input type="text" class="form-control"
+											<input type="text" class="form-control" autofocus="autofocus" 
 												jsf:id="cpfCnpj"
 												jsf:binding="#{cpfCnpj}" 
 												jsf:value="#{fornecedorCadastroBean.fornecedor.cpfCnpj}"
@@ -133,7 +133,7 @@
 									<div class="col-sm-5">
 										<div class="form-group #{!nomeFantasia.valid ? 'has-error' : ''}">
 											<label class="control-label" jsf:for="nomeFantasia">Nome Fantasia</label>
-											<input type="text" class="form-control" autofocus="autofocus"
+											<input type="text" class="form-control"
 												jsf:id="nomeFantasia"
 												jsf:binding="#{nomeFantasia}" 
 												jsf:value="#{fornecedorCadastroBean.fornecedor.nomeFantasia}"

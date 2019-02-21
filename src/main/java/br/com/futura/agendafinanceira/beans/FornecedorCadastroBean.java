@@ -50,7 +50,11 @@ public class FornecedorCadastroBean implements Serializable {
 
 	public String salvar() {
 		fornecedorService.salvar(fornecedor);
+		if(fornecedor.getContatos().size() == 0)
+			return "/fornecedor/contatocadastro?faces-redirect=true&fornecedor=" + fornecedor.getIdFornecedor();
+		
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
+		
 		return "fornecedor?faces-redirect=true";
 	}
 	

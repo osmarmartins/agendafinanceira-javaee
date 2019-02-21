@@ -72,7 +72,7 @@
 									<div class="col-sm-2">
 										<div class="form-group">
 											<label class="control-label" jsf:for="idContato">ID</label>
-											<input type="text" class="form-control" readonly="readonly" autofocus="autofocus"
+											<input type="text" class="form-control" readonly="readonly"
 												jsf:id="idContato"
 												jsf:binding="#{idContato}" 
 												jsf:value="#{contatoCadastroBean.contato.idContato}"/>
@@ -82,7 +82,7 @@
 									<div class="col-sm-10">
 										<div class="form-group #{!contato.valid ? 'has-error' : ''}">
 											<label class="control-label" jsf:for="nomeContato">Contato</label>
-											<input type="text" class="form-control"
+											<input type="text" class="form-control" autofocus="autofocus"
 												jsf:id="nomeContato"
 												jsf:binding="#{contato}" 
 												jsf:value="#{contatoCadastroBean.contato.contato}"
