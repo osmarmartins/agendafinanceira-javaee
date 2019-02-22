@@ -2,11 +2,8 @@ package br.com.futura.agendafinanceira.exceptions;
 
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.Map;
 
 import javax.faces.FacesException;
-import javax.faces.application.FacesMessage;
-import javax.faces.application.NavigationHandler;
 import javax.faces.application.ViewExpiredException;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerWrapper;
@@ -15,15 +12,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
 
+import br.com.futura.agendafinanceira.utils.FacesUtil;
+
 public class ApplicationExceptionHandlerWrapper extends ExceptionHandlerWrapper {
 
 	private ExceptionHandler wrapped;
-
-	private final FacesContext facesContext = FacesContext.getCurrentInstance();
-	private final Map<String, Object> requestMap = facesContext.getExternalContext().getRequestMap();
-	private final NavigationHandler navigationHandler = facesContext.getApplication().getNavigationHandler();
-	
-	private String mensagemErro;
 
 	public ApplicationExceptionHandlerWrapper(ExceptionHandler wrapped) {
 		this.wrapped = wrapped;
@@ -36,56 +29,65 @@ public class ApplicationExceptionHandlerWrapper extends ExceptionHandlerWrapper 
 
 	@Override
 	public void handle() throws FacesException {
-		Iterator<ExceptionQueuedEvent> iterator = getUnhandledExceptionQueuedEvents().iterator();
 
-		while (iterator.hasNext()) {
-			ExceptionQueuedEvent event = iterator.next();
+		Iterator<ExceptionQueuedEvent> events = getUnhandledExceptionQueuedEvents().iterator();
+		while (events.hasNext()) {
+			ExceptionQueuedEvent event = events.next();
 			ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
+
 			Throwable exception = context.getException();
+			NegocioException negocioException = getNegocioException(exception);			
 
 			boolean handled = false;
 
 			try {
 
-				requestMap.put("error-message", exception.getMessage());
-
-				if (isException(exception, "ConstraintViolationException")) {
-					handled = true;
-					this.mensagemErro = "Registro não pode ser removido! Verifique suas associações.";
-					redirect("/erro.xhtml");
-				} else if (isException(exception, "org.hibernate.StaleObjectStateExcetion")) {
-					handled = true;
-					this.mensagemErro = "Registro alterado por outro usuário! Atualize os dados e repita a operação.";
-					redirect("/erro.xhtml");
-				}else if (exception instanceof ViewExpiredException) {
+				if (exception instanceof ViewExpiredException) {
 					handled = true;
 					redirect("/login.xhtml");
+				} else if (negocioException != null) {
+					handled = true;
+					FacesUtil.addSeverityError(negocioException.getMessage());					
+				}else if (exception instanceof NegocioException) {
+					handled = true;
+					FacesUtil.addSeverityError(exception.getMessage());
+				}else if (isException(exception, "ConstraintViolationException")) {
+					handled = true;
+					FacesUtil.addSeverityError("Registro não pode ser removido! Verifique suas associações.");
+				} else if (isException(exception, "org.hibernate.StaleObjectStateExcetion")) {
+					handled = true;
+					FacesUtil.addSeverityError("Registro alterado por outro usuário! Atualize os dados e repita a operação.");
 				} else {
 					handled = true;
 					redirect("/erro.xhtml");
 				}
 				
-//				navigationHandler.handleNavigation(context, fromAction, outcome, toFlowDocumentId);
-				
 			} finally {
 				if (handled) {
-					iterator.remove();
+					events.remove();
 				}
 			}
 		}
 
 		getWrapped().handle();
 	}
+	
+	private NegocioException getNegocioException(Throwable exception) {
+		if (exception instanceof NegocioException) {
+			return (NegocioException) exception;
+		} else if (exception.getCause() != null) {
+			return getNegocioException(exception.getCause());
+		}
+		
+		return null;
+	}	
 
 	private void redirect(String page) {
 		try {
-			
-			
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = facesContext.getExternalContext();
 			String contextPath = externalContext.getRequestContextPath();
 
-			facesContext.addMessage("mensagemErro", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensagemErro, ""));
 			externalContext.redirect(contextPath + page);
 			facesContext.responseComplete();
 		} catch (IOException e) {

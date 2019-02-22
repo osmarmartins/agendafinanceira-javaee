@@ -10,6 +10,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.futura.agendafinanceira.exceptions.NegocioException;
 import br.com.futura.agendafinanceira.models.Setor;
 import br.com.futura.agendafinanceira.services.SetorService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
@@ -51,7 +52,12 @@ public class SetorBean implements Serializable {
 	}
 
 	public void excluir() {
-		setorService.excluir(setoresSelecionados);
+		try {
+			setorService.excluir(setoresSelecionados);
+		} catch (Exception e) {
+			throw new NegocioException("Não foi possível realizar a exclusão! Verifique se há dependencias para esse(s) registro(s).", e);
+		}
+		
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		init();
 	}
