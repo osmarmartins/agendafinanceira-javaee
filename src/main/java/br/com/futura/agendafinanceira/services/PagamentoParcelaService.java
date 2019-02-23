@@ -10,6 +10,7 @@ import br.com.futura.agendafinanceira.daos.PagamentoDao;
 import br.com.futura.agendafinanceira.daos.PagamentoParcelaDao;
 import br.com.futura.agendafinanceira.dto.ParcelamentoDto;
 import br.com.futura.agendafinanceira.dto.RelatorioFiltroDto;
+import br.com.futura.agendafinanceira.exceptions.ApplicationException;
 import br.com.futura.agendafinanceira.exceptions.NenhumResultadoException;
 import br.com.futura.agendafinanceira.models.Pagamento;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
@@ -40,6 +41,10 @@ public class PagamentoParcelaService implements Serializable {
 
 	@Transactional
 	public void gerarParcelamento(ParcelamentoDto parcelamento) {
+		if (parcelamento.getParcelaInicial() > parcelamento.getQuantidadeParcelas()) {
+			throw new ApplicationException("Parcela inicial não pode ser maior qua a quantidade de parcelas");
+		}
+		
 		if (TipoLancamento.MENSAL_LANCAMENTO_VARIAS_PARCELAS.equals(parcelamento.getTipoLancamento()) )
 			gerarVariasParcelasPorLancamento(parcelamento);
 		
@@ -52,11 +57,11 @@ public class PagamentoParcelaService implements Serializable {
 	}
 
 	private void gerarParcelasPorIntervaloDias(ParcelamentoDto parcelamento) {
-		for (Integer numeroParcela = 1; numeroParcela <= parcelamento.getQuantidadeParcelas(); numeroParcela++) {
+		for (Integer numeroParcela = parcelamento.getParcelaInicial(); numeroParcela <= parcelamento.getQuantidadeParcelas(); numeroParcela++) {
 			
 			PagamentoParcela parcela = new PagamentoParcela();
 			parcela.setParcela(parcelamento.obterParcela(numeroParcela));
-			parcela.setVencimento(parcelamento.calcularVencimentoPorIntervaloDias(numeroParcela));
+			parcela.setVencimento(parcelamento.calcularVencimentoPorIntervaloDias(numeroParcela, parcelamento.getParcelaInicial()));
 			parcela.setValor(parcelamento.getValorParcela());
 			
 			parcelamento.getPagamento().addParcela(parcela);
@@ -66,7 +71,7 @@ public class PagamentoParcelaService implements Serializable {
 
 	private void gerarUmaParcelasPorLancamento(ParcelamentoDto parcelamento) {
 		Pagamento pagamento;
-		for (Integer numeroParcela = 1; numeroParcela <= parcelamento.getQuantidadeParcelas(); numeroParcela++) {
+		for (Integer numeroParcela = parcelamento.getParcelaInicial(); numeroParcela <= parcelamento.getQuantidadeParcelas(); numeroParcela++) {
 			PagamentoParcela parcela = prepararParcela(parcelamento, numeroParcela);
 
 			if (numeroParcela == 1) {
@@ -84,7 +89,7 @@ public class PagamentoParcelaService implements Serializable {
 	}
 
 	private void gerarVariasParcelasPorLancamento(ParcelamentoDto parcelamento) {
-		for (Integer numeroParcela = 1; numeroParcela <= parcelamento.getQuantidadeParcelas(); numeroParcela++) {
+		for (Integer numeroParcela = parcelamento.getParcelaInicial(); numeroParcela <= parcelamento.getQuantidadeParcelas(); numeroParcela++) {
 			PagamentoParcela parcela = prepararParcela(parcelamento, numeroParcela);
 			parcelamento.getPagamento().addParcela(parcela);
 			parcelaDao.salvar(parcela);
@@ -94,7 +99,7 @@ public class PagamentoParcelaService implements Serializable {
 	private PagamentoParcela prepararParcela(ParcelamentoDto parcelamento, Integer numeroParcela) {
 		PagamentoParcela parcela = new PagamentoParcela();
 		parcela.setParcela(parcelamento.obterParcela(numeroParcela));
-		parcela.setVencimento(parcelamento.calcularVencimento(numeroParcela));
+		parcela.setVencimento(parcelamento.calcularVencimento(numeroParcela, parcelamento.getParcelaInicial()));
 		parcela.setValor(parcelamento.getValorParcela());
 		return parcela;
 	}

@@ -17,6 +17,8 @@ public class ParcelamentoDto implements Serializable {
 	
 	private Integer quantidadeParcelas;
 	
+	private Integer parcelaInicial;
+	
 	private BigDecimal valorParcela;
 	
 	private Date primeiroVencimento;
@@ -36,15 +38,15 @@ public class ParcelamentoDto implements Serializable {
 		return numeroParcela.toString() + '/' + this.quantidadeParcelas.toString();
 	}
 	
-	public Date calcularVencimento(Integer numeroParcela) {
+	public Date calcularVencimento(Integer numeroParcela, Integer parcelaInicial) {
 		Calendar dataInicial = Calendar.getInstance();
 		dataInicial.setTime(this.primeiroVencimento);
 		Integer dia = dataInicial.get(Calendar.DAY_OF_MONTH);
 		Integer mes = dataInicial.get(Calendar.MONTH) - 1;
 		Integer ano = dataInicial.get(Calendar.YEAR);
 		
-		ano = ano + numeroParcela / 12;
-		mes = mes + numeroParcela % 12;
+		ano = ano + (numeroParcela - parcelaInicial + 1) / 12;
+		mes = mes + (numeroParcela - parcelaInicial + 1) % 12;
 		
 		Calendar vencimento = Calendar.getInstance(); 
 		vencimento.set(Calendar.YEAR, ano);
@@ -59,8 +61,8 @@ public class ParcelamentoDto implements Serializable {
 		return vencimento.getTime();  
 	}
 
-	public Date calcularVencimentoPorIntervaloDias(Integer numeroParcela) {
-		Date dataParcela = DataUtil.adicionaDias(this.primeiroVencimento, (numeroParcela - 1) * this.getIntervaloDias());
+	public Date calcularVencimentoPorIntervaloDias(Integer numeroParcela, Integer parcelaInicial) {
+		Date dataParcela = DataUtil.adicionaDias(this.primeiroVencimento, (numeroParcela - parcelaInicial) * this.getIntervaloDias());
 		return dataParcela;
 	}	
 	
@@ -112,33 +114,20 @@ public class ParcelamentoDto implements Serializable {
 		this.tipoLancamento = tipoLancamento;
 	}
 
+	public Integer getParcelaInicial() {
+		return parcelaInicial;
+	}
+
+	public void setParcelaInicial(Integer parcelaInicial) {
+		this.parcelaInicial = parcelaInicial;
+	}
+
 	@Override
 	public String toString() {
 		return "ParcelamentoDto [pagamento=" + pagamento + ", quantidadeParcelas=" + quantidadeParcelas
-				+ ", valorParcela=" + valorParcela + ", primeiroVencimento=" + primeiroVencimento + ", intervaloDias="
-				+ intervaloDias + ", tipoLancamento=" + tipoLancamento + "]";
+				+ ", parcelaInicial=" + parcelaInicial + ", valorParcela=" + valorParcela + ", primeiroVencimento="
+				+ primeiroVencimento + ", intervaloDias=" + intervaloDias + ", tipoLancamento=" + tipoLancamento + "]";
 	}
-	
-	public static void main(String[] args) {
-		
-		Calendar c = Calendar.getInstance();
-		c.set(Calendar.YEAR, 2019);
-		c.set(Calendar.MONTH, 0);
-		c.set(Calendar.DAY_OF_MONTH, 31);
-		
-		ParcelamentoDto p = new ParcelamentoDto();
-		p.setPrimeiroVencimento(c.getTime());
-		p.setValorParcela(new BigDecimal(17.99));
-		
-		for (int i = 1; i < 10; i++) {
-			c.setTime(p.calcularVencimento(i));
-			System.out.println("Parcela nº " + i + ": " + c.getTime());
-			System.out.println("DIA: " + c.get(Calendar.DAY_OF_MONTH));
-			System.out.println("MES: " + c.get(Calendar.MONTH));
-			System.out.println("ANO: " + c.get(Calendar.YEAR));
-			System.out.println("--------------------------------------------");
-		}
-		
-	}
+
 
 }
