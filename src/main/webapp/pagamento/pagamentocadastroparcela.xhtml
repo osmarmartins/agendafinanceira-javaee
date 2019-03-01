@@ -198,6 +198,21 @@
 									</div>
 								</div>
 								
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label class="control-label" jsf:for="observacao">Observações</label>
+											<input type="text" class="form-control" 
+												jsf:id="observacao"
+												jsf:binding="#{observacao}" 
+												jsf:value="#{pagamentoParcelaBean.parcela.observacao}"
+												placeholder="Informações sobre descontos, acrescimos, vencimento, etc... "/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="observacao"/> 
+											</div>
+										</div>
+									</div>
+								</div>								
 								
 							</div>
 						</div>

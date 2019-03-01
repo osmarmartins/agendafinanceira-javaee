@@ -53,6 +53,8 @@ public class PagamentoParcela implements Serializable {
 	private BigDecimal mora;
 
 	private BigDecimal outros;
+	
+	private String observacao;
 
 	@Enumerated
 	private SituacaoParcela situacao;
@@ -182,6 +184,14 @@ public class PagamentoParcela implements Serializable {
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
+	
+	public String getObservacao() {
+		return observacao;
+	}
+	
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
 
 	public Integer getVersao() {
 		return this.versao;
@@ -284,9 +294,11 @@ public class PagamentoParcela implements Serializable {
 	@Override
 	public String toString() {
 		return "PagamentoParcela [idPagamentoParcela=" + idPagamentoParcela + ", parcela=" + parcela + ", vencimento="
-				+ vencimento + ", situacao=" + situacao + ", totalParcela=" + totalParcela + ", diaDaSemana="
-				+ diaDaSemana + ", pagamento=" + pagamento + "]";
+				+ vencimento + ", valor=" + valor + ", desconto=" + desconto + ", juros=" + juros + ", mora=" + mora
+				+ ", outros=" + outros + ", observacao=" + observacao + ", situacao=" + situacao + ", versao=" + versao
+				+ ", totalParcela=" + totalParcela + ", diaDaSemana=" + diaDaSemana + ", pagamento=" + pagamento + "]";
 	}
+
 
 
 }
