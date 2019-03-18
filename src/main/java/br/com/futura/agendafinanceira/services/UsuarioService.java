@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,14 +23,17 @@ public class UsuarioService implements Serializable, UserDetailsService {
 		return usuarioDao.listarTodos();
 	}
 
-	public void excluir(Usuario usuario) {
-		usuarioDao.excluir(usuario);
+	@Transactional
+	public void excluir(List<Usuario> usuarios) {
+		// TODO Validar exclusão de usuarios
+		usuarioDao.excluir(usuarios);
 	}
 
 	public List<Usuario> listarPor(String filtro) {
 		return usuarioDao.listarPor(filtro);
 	}
 
+	@Transactional
 	public void salvar(Usuario usuario) {
 		usuarioDao.salvar(usuario);
 	}

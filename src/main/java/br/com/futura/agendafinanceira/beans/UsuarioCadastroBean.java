@@ -49,7 +49,7 @@ public class UsuarioCadastroBean implements Serializable {
 		}
 		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso!"));
 		init();
-		return "usuariocadastro?faces-redirect";
+		return "usuario?faces-redirect";
 	}
 
 	public TipoUsuario[] getTiposUsuario() {

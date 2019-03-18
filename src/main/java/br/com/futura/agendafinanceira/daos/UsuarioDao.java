@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.models.Usuario;
 import br.com.futura.agendafinanceira.utils.NumberConversionUtil;
@@ -46,12 +45,13 @@ public class UsuarioDao implements Serializable {
 				.getSingleResult();
 	}
 	
-	@Transactional
-	public void excluir(Usuario usuario) {
-		manager.remove(manager.getReference(Usuario.class, usuario.getIdUsuario()));
+	public void excluir(List<Usuario> usuarios) {
+		for (Usuario usuario : usuarios) {
+			manager.remove(manager.getReference(Usuario.class, usuario.getIdUsuario()));
+		}
+		
 	}
 
-	@Transactional
 	public void salvar(Usuario usuario) {
 		if (usuario.getIdUsuario() == null) {
 			manager.persist(usuario);

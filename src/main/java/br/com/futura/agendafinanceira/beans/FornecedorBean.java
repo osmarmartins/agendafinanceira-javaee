@@ -22,8 +22,6 @@ public class FornecedorBean implements Serializable {
 
 	private List<Fornecedor> fornecedores;
 	
-	private String filtro;
-	
 	@Inject
 	private FornecedorService fornecedorService;
 	
@@ -71,9 +69,9 @@ public class FornecedorBean implements Serializable {
 		if (this.getFornecedoresSelecionados()!=null && !this.getFornecedoresSelecionados().isEmpty()) {
 			msg.append("Excluir permanentemente ");
 			if (this.fornecedoresSelecionados.size()>1) {
-				msg.append("os setores selecionados?");
+				msg.append("os fornecedores selecionados?");
 			}else {
-				msg.append("o setor ");
+				msg.append("o fornecedor ");
 				msg.append(fornecedoresSelecionados.get(0).getRazaoSocial());
 			}
 		}
@@ -94,14 +92,6 @@ public class FornecedorBean implements Serializable {
 	
 	public void setMensagemExclusao(String mensagemExclusao) {
 		this.mensagemExclusao = mensagemExclusao;
-	}
-	
-	public String getFiltro() {
-		return filtro;
-	}
-	
-	public void setFiltro(String pesquisa) {
-		this.filtro = pesquisa;
 	}
 	
 	public String getPesquisaFiltro() {

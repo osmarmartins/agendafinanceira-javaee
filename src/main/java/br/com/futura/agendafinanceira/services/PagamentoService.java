@@ -37,8 +37,9 @@ public class PagamentoService implements Serializable {
 	}
 
 	@Transactional
-	public void excluir(Pagamento pagamento) {
-		pagamentoDao.excluir(pagamento);
+	public void excluir(List<Pagamento> pagamentos) {
+		// TODO: Validar exclusão dos pagamentos 
+		pagamentoDao.excluir(pagamentos);
 	}
 
 

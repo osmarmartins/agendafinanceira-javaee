@@ -28,71 +28,148 @@
 		
 		<div class="ui-g">	
 			<div class="ui-g-12">
-				<h:form>
+				<h:form id="form" prependId="false">
 
-					<p:toolbar>
-						<f:facet name="left">
-							<p:button value="Baixar" icon="fa fa-plus" outcome="/baixa/baixacadastro.xhtml"/>
-						</f:facet>
+					<div class="clearfix form-actions ui-widget-header" style="margin-bottom: 0;" jsf:id="comandoGrid">
+						<div class="col-md-6">
+
+							<button class="btn btn-white btn-primary" type="button" jsf:id="btnNovo" jsf:outcome="/baixa/baixacadastro.xhtml">
+								<i class="fa fa-plus"></i> 
+								Baixar
+							</button>
+							
+							<p:spacer width="10"/>
+							
+							<button class="btn btn-white btn-danger" type="button" 
+								data-toggle="modal" 
+								data-target="#modalExclusao" 
+								jsf:id="btnExcluirSelecao" 
+								jsf:rendered="#{baixaBean.isExisteSelecao()}">
+								<i class="fa fa-trash"></i> Excluir Seleção
+								<f:ajax
+									listener="#{baixaBean.mensagemExclusaoBuilder()}"
+									execute="@this"
+									render="btnConfirmaExclucao mensagem"/>
+							</button>
+							
+						</div>
 						
-						<f:facet name="right">
-							<p:inputText placeholder="Pesquisar por..." size="30" value="#{baixaBean.pesquisa}"/>
-							<p:commandButton value="Pesquisar" icon="fa fa-search" actionListener="#{baixaBean.pesquisar()}" update="@form"/>
-						</f:facet>
-					</p:toolbar>
+						<div class="col-md-offset-1 col-md-5 align-right">
+						
+							<div class="input-group">
+								<input class="form-control input-mask-date" type="text" 
+									placeholder="Pesquisa por..."
+									jsf:value="#{baixaBean.pesquisaFiltro}" />
+								<span class="input-group-btn">
+									<button class="btn btn-inverse btn-white" type="submit" jsf:action="#{baixaBean.pesquisar()}" jsf:update="@form">
+										<i class="ace-icon fa fa-search bigger-110"></i>
+									</button>
+								</span>
+							</div>
 
-					<p:dataTable value="#{baixaBean.parcelas}" 
-						var="parcela" id="tabelaBaixa" emptyMessage="Nenhum registro encontrado" 
-						rows="7" paginator="true" paginatorPosition="bottom">
+						</div>
+					</div>
+
+
+					<p:dataTable id="tabela"
+						emptyMessage="Nenhum registro encontrado"
+						value="#{baixaBean.parcelas}" var="parcela" rowKey="#{parcela.idPagamentoParcela}"
+						selection="#{baixaBean.parcelasSelecionadas}"
+						 
+						rows="#{sessionBean.itensPorPagina}"
+						rowsPerPageTemplate="3 8 10 20"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{ItensPorPagina} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+						<f:facet name="{ItensPorPagina}">
+							<p:outputLabel value="Itens por Página: " />
+							<p:inputText value="#{sessionBean.itensPorPagina}" process="@this" update="@form" style="width: 50px; margin-right: 10px; margin-left: 5px;"/>
+						</f:facet> 
+						
+						<p:ajax event="rowSelect" process="@this" update="@form"/>
+						<p:ajax event="toggleSelect" process="@this" update="@form"/>
+						<p:ajax event="rowUnselectCheckbox" process="@this" update="@form"/>
+						<p:ajax event="rowSelectCheckbox" process="@this" update="@form"/>
+						
+						<p:column selectionMode="multiple" width="5%" styleClass="align-center">
+						</p:column>
 						
 						<p:column sortBy="#{parcela.vencimento}" width="15%">
-							<f:facet name="header">Vencimento</f:facet>
+							<f:facet name="header">
+								<i class="ace-icon fa fa-calendar"></i>							
+								Vencimento
+							</f:facet>
 							<h:outputText value="#{parcela.vencimento}">
-								<f:convertDateTime pattern="dd/MM/yyyy"/>
+								<f:convertDateTime pattern="dd/MM/yyyy"/>							
 							</h:outputText>
 						</p:column>
 						
-						<p:column sortBy="#{parcela.parcela}" width="10%">
-							<f:facet name="header">Parcela</f:facet>
+						<p:column sortBy="#{parcela.parcela}" width="12%">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-list"></i>							
+								Parcela
+							</f:facet>
 							<h:outputText value="#{parcela.parcela}"/>
 						</p:column>
 						
 						<p:column sortBy="#{parcela.pagamento.fornecedor.razaoSocial}">
-							<f:facet name="header">Razão Social</f:facet>
+							<f:facet name="header">
+								<i class="ace-icon fa fa-eye"></i>							
+								Razão Social
+							</f:facet>
 							<h:outputText value="#{parcela.pagamento.fornecedor.razaoSocial}"/>
 						</p:column>
 						
 						<p:column sortBy="#{parcela.pagamento.historico}">
-							<f:facet name="header">Histórico</f:facet>
+							<f:facet name="header">
+								<i class="ace-icon fa fa-eye"></i>							
+								Histórico
+							</f:facet>
 							<h:outputText value="#{parcela.pagamento.historico}"/>
 						</p:column>
 						
-						<p:column sortBy="#{parcela.saldoDevedor()}" width="10%">
-							<f:facet name="header">Saldo Devedor</f:facet>
+						<p:column sortBy="#{parcela.saldoDevedor()}" width="15%">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-usd"></i>							
+								Saldo Devedor
+							</f:facet>
 							<h:outputText value="#{parcela.saldoDevedor()}">
 								<f:convertNumber type="currency"/>
 							</h:outputText>
 						</p:column>
 						
-						<p:column width="10%">
-							<f:facet name="header">Operações</f:facet>
-							<p:commandButton title="Alterar" icon="fa fa-pencil" action="#{baixaBean.alterar(parcela)}"/>
+						<p:column class="text-center" width="12%">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-gear"></i>							
+								Operações
+							</f:facet>
 							
-							<p:commandButton title="Excluir" icon="fa fa-trash" actionListener="#{baixaBean.excluir(pagamento)}" update="@form" process="@this">
-								<p:confirm header="Confirma exclusão" message="Confirma a excusão de '#{pagamento.historico}'" icon="ui-icon-alert" />							
-							</p:commandButton>
+							<button type="button" class="btn btn-sm btn-success btn-white btn-round" 
+								jsf:id="btnAlterar" jsf:outcome="baixacadastro">
+								<f:param name="parcela" value="#{parcela.idPagamentoParcela}"/>
+								<i class="ace-icon fa fa-pencil bigger-110 green"></i>
+							</button>
+							
+							<button type="button" class="btn btn-sm btn-danger btn-white btn-round" 
+								data-toggle="modal" 
+								data-target="#modalExclusao" 
+								jsf:id="btnExcluir"
+								jsf:rendered="#{!baixaBean.isExisteSelecao()}">							
+								<i class="ace-icon fa fa-trash bigger-110 danger"></i>
+								<f:ajax
+									execute="@this"
+									render="btnConfirmaExclucao mensagem"
+									listener="#{baixaBean.selecionaParcela(parcela)}"/>
+							</button>
 						</p:column>
-						
-					</p:dataTable>
 
-				    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-				        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
-				        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
-				    </p:confirmDialog>	
+					</p:dataTable>	
 				</h:form>
 			</div>
-			
 		</div>
+	
+		<!-- Modal Exclusão -->
+		<ui:include src="baixaexclusaodialog.xhtml"/>
+			
 	</ui:define>
 
 	<ui:define name="pagina">Baixas</ui:define>

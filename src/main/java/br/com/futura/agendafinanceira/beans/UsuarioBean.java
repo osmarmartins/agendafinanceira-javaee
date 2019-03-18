@@ -22,28 +22,59 @@ public class UsuarioBean implements Serializable {
 
 	private List<Usuario> usuarios = new ArrayList<>();
 
-	private String filtro;
+	private String pesquisaFiltro;
 
 	@Inject
 	private UsuarioService usuarioService;
 
 	@Inject
 	private MessagesHelper messagesHelper;
+	
+	private List<Usuario> usuariosSelecionados;
+	
+	private String mensagemExclusao;
 
 	@PostConstruct
 	private void init() {
 		this.usuarios = usuarioService.listarTodos();
+		this.usuariosSelecionados = new ArrayList<>();
+		this.mensagemExclusao = new String();
 	}
+	
+	public Boolean isExisteSelecao() {
+		return !usuariosSelecionados.isEmpty();
+	}
+	
+	public void selecionaUsuario(Usuario usuario) {
+		usuariosSelecionados.add(usuario);
+		mensagemExclusaoBuilder();
+	}
+	
+	public void mensagemExclusaoBuilder() {
+		StringBuilder msg = new StringBuilder();
 
-	public void excluir(Usuario usuario) {
-		usuarioService.excluir(usuario);
+		if (this.getUsuariosSelecionados()!=null && !this.getUsuariosSelecionados().isEmpty()) {
+			msg.append("Excluir permanentemente ");
+			if (this.usuariosSelecionados.size()>1) {
+				msg.append("os usuários selecionados?");
+			}else {
+				msg.append("o usuário ");
+				msg.append(usuariosSelecionados.get(0).getNome());
+			}
+		}
+		this.mensagemExclusao = msg.toString();
+	}
+		
+	
+	public void excluir() {
+		usuarioService.excluir(usuariosSelecionados);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		init();
 	}
 
 	public void pesquisar() {
-		if (this.filtro != null && !this.filtro.isEmpty()) {
-			usuarios = usuarioService.listarPor(this.filtro);
+		if (this.pesquisaFiltro != null && !this.pesquisaFiltro.isEmpty()) {
+			usuarios = usuarioService.listarPor(this.pesquisaFiltro);
 		}
 	}
 
@@ -51,11 +82,23 @@ public class UsuarioBean implements Serializable {
 		return usuarios;
 	}
 
-	public String getFiltro() {
-		return filtro;
+	public void setPesquisaFiltro(String pesquisaFiltro) {
+		this.pesquisaFiltro = pesquisaFiltro;
 	}
-
-	public void setFiltro(String filtro) {
-		this.filtro = filtro;
+	
+	public String getPesquisaFiltro() {
+		return pesquisaFiltro;
+	}
+	
+	public void setUsuariosSelecionados(List<Usuario> usuariosSelecionados) {
+		this.usuariosSelecionados = usuariosSelecionados;
+	}
+	
+	public List<Usuario> getUsuariosSelecionados() {
+		return usuariosSelecionados;
+	}
+	
+	public String getMensagemExclusao() {
+		return mensagemExclusao;
 	}
 }

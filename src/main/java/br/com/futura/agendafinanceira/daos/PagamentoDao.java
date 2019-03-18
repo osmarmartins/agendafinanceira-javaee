@@ -49,8 +49,10 @@ public class PagamentoDao implements Serializable {
 					.getResultList();
 	}
 
-	public void excluir(Pagamento pagamento) {
-		manager.remove(manager.getReference(Pagamento.class, pagamento.getIdPagamento()));
+	public void excluir(List<Pagamento> pagamentos) {
+		for (Pagamento pagamento : pagamentos) {
+			manager.remove(manager.getReference(Pagamento.class, pagamento.getIdPagamento()));
+		}
 	}
 
 	public void salvar(Pagamento pagamento) {

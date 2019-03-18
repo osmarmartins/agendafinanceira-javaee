@@ -28,66 +28,140 @@
 		
 		<div class="ui-g">	
 			<div class="ui-g-12">
-				<h:form>
+				<h:form id="form" prependId="false">
 
-					<p:toolbar>
-						<f:facet name="left">
-							<p:button value="Novo" icon="fa fa-plus" outcome="/pagamento/pagamentocadastro.xhtml"/>
-						</f:facet>
-						
-						<f:facet name="right">
-							<p:inputText placeholder="Pesquisar por..." size="30" value="#{pagamentoBean.filtro}"/>
-							<p:commandButton value="Pesquisar" icon="fa fa-search" actionListener="#{pagamentoBean.pesquisar()}" update="@form"/>
-						</f:facet>
-					</p:toolbar>
+					<div class="clearfix form-actions ui-widget-header" style="margin-bottom: 0;" jsf:id="comandoGrid">
+						<div class="col-md-6">
 
-					<p:dataTable value="#{pagamentoBean.pagamentos}" 
-						var="pagamento" id="tabelaPagamento" emptyMessage="Nenhum registro encontrado" 
-						rows="7" paginator="true" paginatorPosition="bottom">
+							<button class="btn btn-white btn-primary" type="button" jsf:id="btnNovo" jsf:outcome="/pagamento/pagamentocadastro.xhtml">
+								<i class="fa fa-plus"></i> 
+								Novo
+							</button>
+							
+							<p:spacer width="10"/>
+							
+							<button class="btn btn-white btn-danger" type="button" 
+								data-toggle="modal" 
+								data-target="#modalExclusao" 
+								jsf:id="btnExcluirSelecao" 
+								jsf:rendered="#{pagamentoBean.isExisteSelecao()}">
+								<i class="fa fa-trash"></i> Excluir Seleção
+								<f:ajax
+									listener="#{pagamentoBean.mensagemExclusaoBuilder()}"
+									execute="@this"
+									render="btnConfirmaExclucao mensagem"/>
+							</button>
+							
+						</div>
 						
-						<p:column sortBy="#{pagamento.emissao}" width="10%">
-							<f:facet name="header">Emissão</f:facet>
+						<div class="col-md-offset-1 col-md-5 align-right">
+						
+							<div class="input-group">
+								<input class="form-control input-mask-date" type="text" 
+									placeholder="Pesquisa por..."
+									jsf:value="#{pagamentoBean.pesquisaFiltro}" />
+								<span class="input-group-btn">
+									<button class="btn btn-inverse btn-white" type="submit" jsf:action="#{pagamentoBean.pesquisar()}" jsf:update="@form">
+										<i class="ace-icon fa fa-search bigger-110"></i>
+									</button>
+								</span>
+							</div>
+
+						</div>
+					</div>
+
+					<p:dataTable id="tabela"
+						emptyMessage="Nenhum registro encontrado"
+						value="#{pagamentoBean.pagamentos}" var="pagamento" rowKey="#{pagamento.idPagamento}"
+						selection="#{pagamentoBean.pagamentosSelecionados}"
+						 
+						rows="#{sessionBean.itensPorPagina}"
+						rowsPerPageTemplate="3 8 10 20"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{ItensPorPagina} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+						<f:facet name="{ItensPorPagina}">
+							<p:outputLabel value="Itens por Página: " />
+							<p:inputText value="#{sessionBean.itensPorPagina}" process="@this" update="@form" style="width: 50px; margin-right: 10px; margin-left: 5px;"/>
+						</f:facet> 
+						
+						<p:ajax event="rowSelect" process="@this" update="@form"/>
+						<p:ajax event="toggleSelect" process="@this" update="@form"/>
+						<p:ajax event="rowUnselectCheckbox" process="@this" update="@form"/>
+						<p:ajax event="rowSelectCheckbox" process="@this" update="@form"/>
+						
+						<p:column selectionMode="multiple" width="5%" styleClass="align-center">
+						</p:column>
+						
+						<p:column sortBy="#{pagamento.emissao}" width="15%">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-calendar"></i>							
+								Emissão
+							</f:facet>
 							<h:outputText value="#{pagamento.emissao}">
-								<f:convertDateTime pattern="dd/MM/yyyy"/>
+								<f:convertDateTime pattern="dd/MM/yyyy"/>							
 							</h:outputText>
 						</p:column>
 						
 						<p:column sortBy="#{pagamento.fornecedor.razaoSocial}">
-							<f:facet name="header">Razão Social</f:facet>
+							<f:facet name="header">
+								<i class="ace-icon fa fa-eye"></i>							
+								Razão Social
+							</f:facet>
 							<h:outputText value="#{pagamento.fornecedor.razaoSocial}"/>
 						</p:column>
 						
 						<p:column sortBy="#{pagamento.historico}">
-							<f:facet name="header">Histórico</f:facet>
+							<f:facet name="header">
+								<i class="ace-icon fa fa-eye"></i>							
+								Histórico
+							</f:facet>
 							<h:outputText value="#{pagamento.historico}"/>
 						</p:column>
 						
-						<p:column sortBy="#{pagamento.saldoDevedor()}" width="10%">
-							<f:facet name="header">Saldo Devedor</f:facet>
+						<p:column sortBy="#{pagamento.saldoDevedor()}" width="15%">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-usd"></i>							
+								Saldo Devedor
+							</f:facet>
 							<h:outputText value="#{pagamento.saldoDevedor()}">
 								<f:convertNumber type="currency"/>
 							</h:outputText>
 						</p:column>
 						
-						<p:column width="10%">
-							<f:facet name="header">Operações</f:facet>
-							<p:commandButton title="Alterar" icon="fa fa-pencil" action="#{pagamentoBean.alterar(pagamento)}"/>
+						<p:column class="text-center" width="12%">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-gear"></i>							
+								Operações
+							</f:facet>
 							
-							<p:commandButton title="Excluir" icon="fa fa-trash" actionListener="#{pagamentoBean.excluir(pagamento)}" update="@form" process="@this">
-								<p:confirm header="Confirma exclusão" message="Confirma a excusão de '#{pagamento.historico}'" icon="ui-icon-alert" />							
-							</p:commandButton>
+							<button type="button" class="btn btn-sm btn-success btn-white btn-round" 
+								jsf:id="btnAlterar" jsf:outcome="pagamentocadastro">
+								<f:param name="pagamento" value="#{pagamento.idPagamento}"/>
+								<i class="ace-icon fa fa-pencil bigger-110 green"></i>
+							</button>
+							
+							<button type="button" class="btn btn-sm btn-danger btn-white btn-round" 
+								data-toggle="modal" 
+								data-target="#modalExclusao" 
+								jsf:id="btnExcluir"
+								jsf:rendered="#{!pagamentoBean.isExisteSelecao()}">							
+								<i class="ace-icon fa fa-trash bigger-110 danger"></i>
+								<f:ajax
+									execute="@this"
+									render="btnConfirmaExclucao mensagem"
+									listener="#{pagamentoBean.selecionaPagamento(pagamento)}"/>
+							</button>
 						</p:column>
-						
-					</p:dataTable>
 
-				    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-				        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
-				        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
-				    </p:confirmDialog>	
+					</p:dataTable>	
+
 				</h:form>
 			</div>
-			
 		</div>
+
+		<!-- Modal Exclusão -->
+		<ui:include src="pagamentoexclusaodialog.xhtml"/>
+				
 	</ui:define>
 
 	<ui:define name="pagina">Pagamentos</ui:define>

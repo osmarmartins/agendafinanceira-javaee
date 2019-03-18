@@ -4,6 +4,8 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <ui:composition template="/resources/template/aceadmin.xhtml">
@@ -24,69 +26,147 @@
 		
 		<div class="ui-g">	
 			<div class="ui-g-12">
-				<h:form>
+				<h:form id="form" prependId="false">
 
-					<p:toolbar>
-						<f:facet name="left">
-							<p:button value="Novo" icon="fa fa-plus" outcome="/usuario/usuariocadastro.xhtml"/>
-						</f:facet>
-						
-						<f:facet name="right">
-							<p:inputText placeholder="Pesquisar por..." size="30" value="#{usuarioBean.filtro}"/>
-							<p:commandButton value="Pesquisar" icon="fa fa-search" actionListener="#{usuarioBean.pesquisar()}" update="@form"/>
-						</f:facet>
-					</p:toolbar>
+					<div class="clearfix form-actions ui-widget-header" style="margin-bottom: 0;" jsf:id="comandoGrid">
+						<div class="col-md-6">
 
-					<p:dataTable value="#{usuarioBean.usuarios}" 
-						var="usuario" id="tabelaUsuario" emptyMessage="Nenhum registro encontrado" 
-						rows="8" paginator="true" paginatorPosition="bottom">
+							<button class="btn btn-white btn-primary" type="button" jsf:id="btnNovo" jsf:outcome="/usuario/usuariocadastro.xhtml">
+								<i class="fa fa-plus"></i> 
+								Novo
+							</button>
+							
+							<p:spacer width="10"/>
+							
+							<button class="btn btn-white btn-danger" type="button" 
+								data-toggle="modal" 
+								data-target="#modalExclusao" 
+								jsf:id="btnExcluirSelecao" 
+								jsf:rendered="#{usuarioBean.isExisteSelecao()}">
+								<i class="fa fa-trash"></i> Excluir Seleção
+								<f:ajax
+									listener="#{usuarioBean.mensagemExclusaoBuilder()}"
+									execute="@this"
+									render="btnConfirmaExclucao mensagem"/>
+							</button>
+							
+						</div>
 						
-						<p:column sortBy="#{usuario.idUsuario}" width="10%">
-							<f:facet name="header">ID</f:facet>
+						<div class="col-md-offset-1 col-md-5 align-right">
+						
+							<div class="input-group">
+								<input class="form-control input-mask-date" type="text" 
+									placeholder="Pesquisa por..."
+									jsf:value="#{usuarioBean.pesquisaFiltro}" />
+								<span class="input-group-btn">
+									<button class="btn btn-inverse btn-white" type="submit" jsf:action="#{usuarioBean.pesquisar()}" jsf:update="@form">
+										<i class="ace-icon fa fa-search bigger-110"></i>
+									</button>
+								</span>
+							</div>
+
+						</div>
+					</div>
+
+					<p:dataTable id="tabela"
+						emptyMessage="Nenhum registro encontrado"
+						value="#{usuarioBean.usuarios}" var="usuario" rowKey="#{usuario.idUsuario}"
+						selection="#{usuarioBean.usuariosSelecionados}"
+						 
+						rows="#{sessionBean.itensPorPagina}"
+						rowsPerPageTemplate="3 8 10 20"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{ItensPorPagina} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+						<f:facet name="{ItensPorPagina}">
+							<p:outputLabel value="Itens por Página: " />
+							<p:inputText value="#{sessionBean.itensPorPagina}" process="@this" update="@form" style="width: 50px; margin-right: 10px; margin-left: 5px;"/>
+						</f:facet> 
+						
+						<p:ajax event="rowSelect" process="@this" update="@form"/>
+						<p:ajax event="toggleSelect" process="@this" update="@form"/>
+						<p:ajax event="rowUnselectCheckbox" process="@this" update="@form"/>
+						<p:ajax event="rowSelectCheckbox" process="@this" update="@form"/>
+						
+						<p:column selectionMode="multiple" width="5%" styleClass="align-center">
+						</p:column>
+						
+						<p:column sortBy="#{usuario.idUsuario}" width="5%">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-bookmark"></i>							
+								ID
+							</f:facet>
 							<h:outputText value="#{usuario.idUsuario}"/>
 						</p:column>
 						
 						<p:column sortBy="#{usuario.nome}">
-							<f:facet name="header">Usuário</f:facet>
+							<f:facet name="header">
+								<i class="ace-icon fa fa-eye"></i>							
+								Usuário
+							</f:facet>
 							<h:outputText value="#{usuario.nome}"/>
 						</p:column>
 						
 						<p:column sortBy="#{usuario.login}">
-							<f:facet name="header">Login</f:facet>
+							<f:facet name="header">
+								<i class="ace-icon fa fa-eye"></i>							
+								Login
+							</f:facet>
 							<h:outputText value="#{usuario.login}"/>
 						</p:column>
 						
-						<p:column sortBy="#{usuario.email}">
-							<f:facet name="header">Email</f:facet>
+						<p:column sortBy="#{usuario.email}" width="15%">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-eye"></i>							
+								e-mail
+							</f:facet>
 							<h:outputText value="#{usuario.email}"/>
 						</p:column>
 						
-						<p:column sortBy="#{usuario.ativo}" width="15%">
-							<f:facet name="header">Situação</f:facet>
-							<h:outputText value="#{usuario.ativo.descricao}"/>
+						<p:column sortBy="#{usuario.ativo.descricao}" class="text-center" width="10%">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-heartbeat"></i>							
+								Situação
+							</f:facet>
+							<span class="label label-white middle #{usuario.status?'label-success':'label-danger'}" style="width: 6em;">							
+								<h:outputText value="#{usuario.ativo.descricao}"/>
+							</span>
 						</p:column>
 						
-						<p:column width="15%">
-							<f:facet name="header">Operações</f:facet>
-							<p:button title="Alterar" icon="fa fa-pencil" outcome="usuariocadastro">
-								<f:param name="usuario" value="#{usuario.idUsuario}"/>
-							</p:button>
+						<p:column class="text-center" width="15%">
+							<f:facet name="header">
+								<i class="ace-icon fa fa-gear"></i>							
+								Operações
+							</f:facet>
 							
-							<p:commandButton title="Excluir" icon="fa fa-trash" actionListener="#{usuarioBean.excluir(usuario)}" update="@form" process="@this">
-								<p:confirm header="Confirma exclusão" message="Confirma a excusão de '#{usuario.nome}'" icon="ui-icon-alert" />							
-							</p:commandButton>
+							<button type="button" class="btn btn-sm btn-success btn-white btn-round" 
+								jsf:id="btnAlterar" jsf:outcome="usuariocadastro">
+								<f:param name="usuario" value="#{usuario.idUsuario}"/>
+								<i class="ace-icon fa fa-pencil bigger-110 green"></i>
+							</button>
+							
+							<button type="button" class="btn btn-sm btn-danger btn-white btn-round" 
+								data-toggle="modal" 
+								data-target="#modalExclusao" 
+								jsf:id="btnExcluir"
+								jsf:rendered="#{!usuarioBean.isExisteSelecao()}">							
+								<i class="ace-icon fa fa-trash bigger-110 danger"></i>
+								<f:ajax
+									execute="@this"
+									render="btnConfirmaExclucao mensagem"
+									listener="#{usuarioBean.selecionaUsuario(usuario)}"/>
+							</button>
 						</p:column>
-						
-					</p:dataTable>
 
-				    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-				        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
-				        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
-				    </p:confirmDialog>	
+					</p:dataTable>	
+
 				</h:form>
+
 			</div>
-			
 		</div>
+
+		<!-- Modal Exclusão -->
+		<ui:include src="usuarioexclusaodialog.xhtml"/>
+		
 	</ui:define>
 
 	<ui:define name="pagina">Usuários</ui:define>

@@ -9,12 +9,14 @@
 		
 	</application>
 	
+<!-- 	
 	<factory>
 		<exception-handler-factory>
 			br.com.futura.agendafinanceira.exceptions.ApplicationExceptionHandlerFactory		
 		</exception-handler-factory>
 	</factory>
-	
+ -->	
+ 
 <!-- 
 	<lifecycle>
 		<phase-listener>br.com.futura.agendafinanceira.utils.LogPhaseListener</phase-listener>

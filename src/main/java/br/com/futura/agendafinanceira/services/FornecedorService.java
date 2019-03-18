@@ -27,7 +27,6 @@ public class FornecedorService implements Serializable {
 	@Transactional
 	public void excluir(List<Fornecedor> fornecedores) {
 		// TODO Validar exclusão de fornecedores 
-		
 		fornecedorDao.excluir(fornecedores);
 	}
 	
