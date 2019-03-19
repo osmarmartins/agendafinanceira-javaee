@@ -192,6 +192,10 @@ public class PagamentoParcela implements Serializable {
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
+	
+	public BigDecimal getTotalParcela() {
+		return totalParcela;
+	}
 
 	public Integer getVersao() {
 		return this.versao;

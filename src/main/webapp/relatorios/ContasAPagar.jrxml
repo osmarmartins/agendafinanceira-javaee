@@ -29,8 +29,7 @@ inner join fornecedor f on f.id_fornecedor=p.id_fornecedor
 inner join setor s on s.id_setor=p.id_setor
 inner join conta c on c.id_conta=p.id_conta
 where pp.situacao < 3
-order by pp.dt_vcto, f.razao_social
-                       ]]>
+order by pp.dt_vcto, f.razao_social]]>
 	</queryString>
 	<field name="dt_vcto" class="java.util.Date">
 		<property name="com.jaspersoft.studio.field.label" value="dt_vcto"/>
@@ -71,11 +70,12 @@ order by pp.dt_vcto, f.razao_social
 		<fieldDescription><![CDATA[diaDaSemana]]></fieldDescription>
 	</field>
 	<variable name="totalDia" class="java.math.BigDecimal" resetType="Group" resetGroup="VencimentoGRP" calculation="Sum">
-		<variableExpression><![CDATA[$F{total} ]]></variableExpression>
-		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+		<initialValueExpression><![CDATA[BigDecimal.valueOf (0)]]></initialValueExpression>
 	</variable>
 	<variable name="totalAcumulado" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{total} ]]></variableExpression>
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+		<initialValueExpression><![CDATA[BigDecimal.valueOf (0)]]></initialValueExpression>
 	</variable>
 	<group name="VencimentoGRP">
 		<groupExpression><![CDATA[$F{dt_vcto}]]></groupExpression>
