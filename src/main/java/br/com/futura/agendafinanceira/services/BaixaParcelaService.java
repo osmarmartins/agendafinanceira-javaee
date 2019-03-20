@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.daos.BaixaParcelaDao;
+import br.com.futura.agendafinanceira.daos.PagamentoParcelaDao;
 import br.com.futura.agendafinanceira.models.PagamentoQuitacao;
 
 public class BaixaParcelaService implements Serializable {
@@ -15,8 +16,17 @@ public class BaixaParcelaService implements Serializable {
 	@Inject
 	private BaixaParcelaDao baixaParcelaDao;
 	
+	@Inject
+	private PagamentoParcelaDao parcelaDao;
+	
 	@Transactional
 	public void salvar(PagamentoQuitacao quitacao) {
+		
+		// TODO: Atualizar situação do pagamento
+		
+		// TODO: Atualizar situação da parcela
+		
+		parcelaDao.salvar(quitacao.getParcela());
 		baixaParcelaDao.salvar(quitacao);
 	}
 

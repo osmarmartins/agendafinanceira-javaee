@@ -36,7 +36,6 @@
 			<div class="ui-g-12">
 			
 				<form jsf:id="formBaixa" jsf:prependId="false">
-					<p:messages />
 					
 					<div class="widget-box">
 						<div class="widget-header">
@@ -134,7 +133,7 @@
 									<div class="col-sm-4">
 										<div class="form-group">
 											<label class="control-label" jsf:for="valorParcela">Valor</label>
-											<input type="text" class="form-control currency" readonly="readonly"
+											<input type="text" class="form-control" readonly="readonly"
 												jsf:id="valorParcela"
 												jsf:binding="#{valorParcela}" 
 												jsf:value="#{baixaCadastroBean.parcela.valor}">
@@ -149,7 +148,7 @@
 									<div class="col-sm-4">
 										<div class="form-group">
 											<label class="control-label" jsf:for="desconto">Desconto</label>
-											<input type="text" class="form-control currency" readonly="readonly"  
+											<input type="text" class="form-control currency"  
 												jsf:id="desconto"
 												jsf:binding="#{desconto}" 
 												jsf:value="#{baixaCadastroBean.parcela.desconto}">
@@ -166,7 +165,7 @@
 									<div class="col-sm-4">
 										<div class="form-group">
 											<label class="control-label" jsf:for="juros">Juros</label>
-											<input type="text" class="form-control currency" readonly="readonly"  
+											<input type="text" class="form-control currency" 
 												jsf:id="juros"
 												jsf:binding="#{juros}" 
 												jsf:value="#{baixaCadastroBean.parcela.juros}">
@@ -181,7 +180,7 @@
 									<div class="col-sm-4">
 										<div class="form-group">
 											<label class="control-label" jsf:for="mora">Mora</label>
-											<input type="text" class="form-control currency" readonly="readonly"  
+											<input type="text" class="form-control currency" 
 												jsf:id="mora"
 												jsf:binding="#{mora}" 
 												jsf:value="#{baixaCadastroBean.parcela.mora}">
@@ -196,7 +195,7 @@
 									<div class="col-sm-4">
 										<div class="form-group">
 											<label class="control-label" jsf:for="outros">Outros</label>
-											<input type="text" class="form-control currency" readonly="readonly"  
+											<input type="text" class="form-control currency"
 												jsf:id="outros"
 												jsf:binding="#{outros}" 
 												jsf:value="#{baixaCadastroBean.parcela.outros}">
@@ -243,7 +242,7 @@
 									<div class="col-sm-4">
 										<div class="form-group">
 											<label class="control-label" jsf:for="outros">Valor da Baixa</label>
-											<input type="text" class="form-control currency"   
+											<input type="text" class="form-control currency" autofocus="autofocus"   
 												jsf:id="valor"
 												jsf:binding="#{valor}" 
 												jsf:value="#{baixaCadastroBean.quitacao.valor}">
