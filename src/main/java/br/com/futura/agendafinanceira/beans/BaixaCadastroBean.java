@@ -43,7 +43,7 @@ public class BaixaCadastroBean implements Serializable {
 	}
 	
 	public String salvar() {
-		Long novoSaldoDevedor = parcela.saldoDevedor().subtract(quitacao.getValor()).longValue();
+		Float novoSaldoDevedor = parcela.saldoDevedor().subtract(quitacao.getValor()).floatValue();
 		// TODO Chamada Ajax para atualizar grid de quitações após salvar
 		parcela.addQuitacao(quitacao);
 		quitacao.setParcela(parcela);
@@ -59,6 +59,9 @@ public class BaixaCadastroBean implements Serializable {
 	
 	public String excluir(PagamentoQuitacao quitacao) {
 		// TODO Chamada Ajax para atualizar grid de quitações após excluir
+		parcela.removeQuitacao(quitacao);
+		quitacao.setParcela(parcela);
+		
 		baixaParcelaService.excluir(quitacao);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		return "baixacadastro?faces-redirect=true&parcela=" + parcela.getIdPagamentoParcela();

@@ -36,7 +36,8 @@ public class ApplicationExceptionHandlerWrapper extends ExceptionHandlerWrapper 
 			ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
 
 			Throwable exception = context.getException();
-			NegocioException negocioException = getNegocioException(exception);			
+			NegocioException negocioException = getNegocioException(exception);
+			NenhumResultadoException nenhumResultadoException = getNenhumResultadoException(exception);
 
 			boolean handled = false;
 
@@ -48,9 +49,15 @@ public class ApplicationExceptionHandlerWrapper extends ExceptionHandlerWrapper 
 				} else if (negocioException != null) {
 					handled = true;
 					FacesUtil.addSeverityError(negocioException.getMessage());					
-				}else if (exception instanceof NegocioException) {
+				} else if (nenhumResultadoException != null) {
 					handled = true;
-					FacesUtil.addSeverityError(exception.getMessage());
+					FacesUtil.addSeverityError(nenhumResultadoException.getMessage());					
+//				}else if (exception instanceof NenhumResultadoException) {
+//					handled = true;
+//					FacesUtil.addSeverityError(exception.getMessage());
+//				}else if (exception instanceof NegocioException) {
+//					handled = true;
+//					FacesUtil.addSeverityError(exception.getMessage());
 				}else if (isException(exception, "ConstraintViolationException")) {
 					handled = true;
 					FacesUtil.addSeverityError("Registro não pode ser removido! Verifique suas associações.");
@@ -82,6 +89,16 @@ public class ApplicationExceptionHandlerWrapper extends ExceptionHandlerWrapper 
 		return null;
 	}	
 
+	private NenhumResultadoException getNenhumResultadoException(Throwable exception) {
+		if (exception instanceof NenhumResultadoException) {
+			return (NenhumResultadoException) exception;
+		} else if (exception.getCause() != null) {
+			return getNenhumResultadoException(exception.getCause());
+		}
+		
+		return null;
+	}	
+	
 	private void redirect(String page) {
 		try {
 			FacesContext facesContext = FacesContext.getCurrentInstance();

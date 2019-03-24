@@ -1,5 +1,6 @@
 package br.com.futura.agendafinanceira.beans;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +24,7 @@ import br.com.futura.agendafinanceira.services.FornecedorService;
 import br.com.futura.agendafinanceira.services.PagamentoParcelaService;
 import br.com.futura.agendafinanceira.services.SetorService;
 import br.com.futura.agendafinanceira.utils.RelatorioUtil;
+import net.sf.jasperreports.engine.JRException;
 
 @Named
 @ViewScoped
@@ -82,35 +84,28 @@ public class RelatorioPagamentosBean implements Serializable {
 		this.filtro = filtro;
 	}
 	
-	public void gerarRelatorioContasAPagar() {
-	
+	public void gerarRelatorioContasAPagar() throws JRException, IOException {
+		
 		HashMap<String, String> parametros = new HashMap<>();
 		List<PagamentoParcela> dados = new ArrayList<>();
+
+		dados = parcelaService.listarPor(filtro);
+		parametros.put("periodo", filtro.periodo());
+		parametros.put("filtros", filtro.selecao());
+		RelatorioUtil.imprimeRelatorio("ContasAPagar", parametros, dados);
 		
-		try {
-			dados = parcelaService.listarPor(filtro);
-			parametros.put("periodo", filtro.periodo());
-			parametros.put("filtros", filtro.selecao());
-			RelatorioUtil.imprimeRelatorio("ContasAPagar", parametros, dados);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
 		
 	}
 	
-	public void gerarRelatorioPagamentosEfetuados() {
+	public void gerarRelatorioPagamentosEfetuados() throws JRException, IOException {
 		
 		HashMap<String, String> parametros = new HashMap<>();
 		List<PagamentoQuitacao> dados = new ArrayList<>();
 		
-		try {
-			dados = baixaService.listarPor(filtro);
-			parametros.put("periodo", filtro.periodo());
-			parametros.put("filtros", filtro.selecao());
-			RelatorioUtil.imprimeRelatorio("PagamentosEfetuados", parametros, dados);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+		dados = baixaService.listarPor(filtro);
+		parametros.put("periodo", filtro.periodo());
+		parametros.put("filtros", filtro.selecao());
+		RelatorioUtil.imprimeRelatorio("PagamentosEfetuados", parametros, dados);
 		
 	}
 
