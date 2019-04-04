@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
+import javax.validation.constraints.Min;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,12 +35,16 @@ public class Usuario implements Serializable, UserDetails {
 	@Column(name = "id_usuario")
 	private Integer idUsuario;
 
+	@Min(value=3, message="Nome não pode ser menor que três letras")
 	private String nome;
 
+//	@Email
 	private String email;
 
+	@Min(value=3, message="Login não pode ter menos que três caracteres")
 	private String login;
 
+	@Min(value=3, message="O tamanho da senha não pode ser inferior a três caracteres")
 	private String senha;
 
 	@Enumerated

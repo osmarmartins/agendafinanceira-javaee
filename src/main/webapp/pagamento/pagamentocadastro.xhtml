@@ -48,6 +48,13 @@
 								
 								<span/>					
 		
+								<button class="btn btn-lg btn-default" type="button" jsf:outcome="/pagamento/pagamentocadastro.xhtml">	
+									<i class="ace-icon fa fa-plus"></i>
+									Novo
+								</button>	
+								
+								<span/>					
+		
 								<button class="btn btn-lg btn-info" type="submit" 
 									jsf:id="btnSalvar" jsf:action="#{pagamentoCadastroBean.salvar()}">
 									<i class="ace-icon fa fa-check"></i>
@@ -93,6 +100,7 @@
 										<div class="form-group">
 											<label class="control-label" jsf:for="setor">Setor</label>
 											<h:selectOneMenu value="#{pagamentoCadastroBean.pagamento.setor}" id="setor" styleClass="form-control">
+												<f:selectItem itemLabel = "Selecione...." /> 
 												<f:selectItems var="setor" value="#{pagamentoCadastroBean.setores}"
 													itemLabel="#{setor.descricao}" itemValue="#{setor}"/>
 											</h:selectOneMenu>
@@ -106,6 +114,7 @@
 										<div class="form-group">
 											<label class="control-label" jsf:for="conta">Conta</label>
 											<h:selectOneMenu value="#{pagamentoCadastroBean.pagamento.conta}" id="conta" styleClass="form-control">
+												<f:selectItem itemLabel = "Selecione...." /> 
 												<f:selectItems var="conta" value="#{pagamentoCadastroBean.contas}"
 													itemLabel="#{conta.descricao}" itemValue="#{conta}"/>
 											</h:selectOneMenu>
@@ -121,6 +130,7 @@
 										<div class="form-group">
 											<label class="control-label" jsf:for="fornecedor">Fornecedor</label>
 											<h:selectOneMenu value="#{pagamentoCadastroBean.pagamento.fornecedor}" id="fornecedor" styleClass="form-control">
+												<f:selectItem itemLabel = "Selecione...." /> 
 												<f:selectItems var="fornecedor" value="#{pagamentoCadastroBean.fornecedores}"
 													itemLabel="#{fornecedor.nomeFantasia}" itemValue="#{fornecedor}"/>
 											</h:selectOneMenu>

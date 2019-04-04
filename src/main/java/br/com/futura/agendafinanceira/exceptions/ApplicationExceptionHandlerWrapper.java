@@ -52,12 +52,6 @@ public class ApplicationExceptionHandlerWrapper extends ExceptionHandlerWrapper 
 				} else if (nenhumResultadoException != null) {
 					handled = true;
 					FacesUtil.addSeverityError(nenhumResultadoException.getMessage());					
-//				}else if (exception instanceof NenhumResultadoException) {
-//					handled = true;
-//					FacesUtil.addSeverityError(exception.getMessage());
-//				}else if (exception instanceof NegocioException) {
-//					handled = true;
-//					FacesUtil.addSeverityError(exception.getMessage());
 				}else if (isException(exception, "ConstraintViolationException")) {
 					handled = true;
 					FacesUtil.addSeverityError("Registro não pode ser removido! Verifique suas associações.");

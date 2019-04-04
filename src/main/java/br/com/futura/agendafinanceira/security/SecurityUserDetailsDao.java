@@ -26,7 +26,7 @@ public class SecurityUserDetailsDao {
 	public Usuario pesquisarPor(String login) {
 		Usuario usuarioLogado = new Usuario();
 		try {
-			usuarioLogado = em.createQuery("select u from Usuario u where u.login = :pLogin ", Usuario.class)
+			usuarioLogado = em.createQuery("select u from Usuario u where u.ativo=1 and u.login = :pLogin ", Usuario.class)
 					.setParameter("pLogin", login)
 					.getSingleResult();
 		} catch (Exception e) {

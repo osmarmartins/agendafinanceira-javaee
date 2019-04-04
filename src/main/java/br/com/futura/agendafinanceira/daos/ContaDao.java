@@ -17,7 +17,7 @@ public class ContaDao implements Serializable {
 	private EntityManager manager;
 
 	public List<Conta> listarTodos() {
-		return manager.createQuery("SELECT c FROM Conta c", Conta.class).getResultList();
+		return manager.createQuery("SELECT c FROM Conta c order by descricao ", Conta.class).getResultList();
 	}
 
 	public List<Conta> listarPorDescricao(String pesquisaDescricao) {

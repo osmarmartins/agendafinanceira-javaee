@@ -17,7 +17,7 @@ public class SetorDao implements Serializable {
 	private EntityManager manager;
 	
 	public List<Setor> listarTodos(){
-		return manager.createQuery("SELECT s FROM Setor s", Setor.class).getResultList();
+		return manager.createQuery("SELECT s FROM Setor s order by s.descricao ", Setor.class).getResultList();
 	}
 	
 	public List<Setor> listarPorDescricao(String pesquisaDescricao) {
