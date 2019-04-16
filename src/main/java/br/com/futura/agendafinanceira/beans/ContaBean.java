@@ -28,12 +28,13 @@ public class ContaBean implements Serializable {
 	@Inject
 	private ContaService contaService;
 
+	
 	private List<Conta> contasSelecionadas;
 
 	private String mensagemExclusao;
 
 	private String pesquisaFiltro;
-
+	
 	@PostConstruct
 	private void init() {
 		this.contas = contaService.listarTodos();
@@ -110,4 +111,5 @@ public class ContaBean implements Serializable {
 	public void setPesquisaFiltro(String pesquisaFiltro) {
 		this.pesquisaFiltro = pesquisaFiltro;
 	}
+	
 }

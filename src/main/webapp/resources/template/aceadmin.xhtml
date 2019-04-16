@@ -62,7 +62,10 @@
 				<a href="index.html" class="navbar-brand">
 					<small>
 						<i class="fa fa-money"></i>
-						Agenda Financeira
+						Agenda Financeira 
+						
+<h:outputText value=" - Grupo: #{sessionBean.getGrupoMenuAtivo()} - Opção: #{sessionBean.getOpcaoMenuAtiva()} " />
+
 					</small>
 				</a>
 			</div>
@@ -405,8 +408,8 @@
 				</div>
 			</div><!-- /.sidebar-shortcuts -->
 	
-			<ul class="nav nav-list">
-				<li class="">
+			<ul jsf:id="menu-lateral" class="nav nav-list">
+				<li jsf:id="dashborad" class="">
 					<a href="#{request.contextPath}/index.xhtml">
 						<i class="menu-icon fa fa-tachometer"></i>
 						<span class="menu-text"> Dashboard </span>
@@ -414,7 +417,7 @@
 					<b class="arrow"></b>
 				</li>
 	
-				<li class="">
+				<li jsf:id="menu-cadastro" class="">
 					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-pencil-square-o"></i>
 						<span class="menu-text"> Cadastros </span>
@@ -424,7 +427,8 @@
 					<b class="arrow"></b>
 	
 					<ul class="submenu">
-						<li class="">
+						<li jsf:id="setor" class="#{sessionBean.opcaoMenuAtiva('Setor')}">
+							<f:ajax event="click" render="menu-lateral" listener="#{sessionBean.mudarOpcaoMenu('Setor')}"/>
 							<a href="#{request.contextPath}/setor/setor.xhtml">
 								<i class="menu-icon fa fa-caret-right"></i>
 								Setor
@@ -432,15 +436,17 @@
 							<b class="arrow"></b>
 						</li>
 	
-						<li class="">
-							<a href="#{request.contextPath}/conta/conta.xhtml">
+						<li jsf:id="conta" class="#{sessionBean.opcaoMenuAtiva('Conta')}">
+							<f:ajax event="click" render="menu-lateral" listener="#{sessionBean.mudarOpcaoMenu('Conta')}"/>
+							<a href="#{request.contextPath}/conta/conta.xhtml" jsf:id="conta">
 								<i class="menu-icon fa fa-caret-right"></i>
 								Conta
 							</a>
 							<b class="arrow"></b>
 						</li>
 	
-						<li class="">
+						<li jsf:id="fornecedor" class="#{sessionBean.opcaoMenuAtiva('Fornecedor')}">
+							<f:ajax event="click" render="menu-lateral" listener="#{sessionBean.mudarOpcaoMenu('Fornecedor')}"/>
 							<a href="#{request.contextPath}/fornecedor/fornecedor.xhtml">
 								<i class="menu-icon fa fa-caret-right"></i>
 								Fornecedor
@@ -448,7 +454,8 @@
 							<b class="arrow"></b>
 						</li>
 	
-						<li class="">
+						<li jsf:id="usuario" class="#{sessionBean.opcaoMenuAtiva('Usuario')}">
+							<f:ajax event="click" render="menu-lateral" listener="#{sessionBean.mudarOpcaoMenu('Usuario')}"/>
 							<a href="#{request.contextPath}/usuario/usuario.xhtml">
 								<i class="menu-icon fa fa-caret-right"></i>
 								Usuário
