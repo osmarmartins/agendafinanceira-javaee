@@ -14,7 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -61,7 +61,7 @@ public class Usuario implements Serializable, UserDetails {
 	private boolean status;
 
 	
-	@OneToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "login_role_usuario", 
 		joinColumns = {@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario") }, 
 		inverseJoinColumns = {@JoinColumn(name = "id_role", referencedColumnName = "id_role") })
@@ -75,6 +75,18 @@ public class Usuario implements Serializable, UserDetails {
 		// TODO: Ordenar por classificação
 		
 		return permissoes;
+	}
+	
+	public Role addRole(Role role) {
+		this.permissoes.add(role);
+		role.getUsuarios().add(this);
+		return role;
+	}
+	
+	public Role removeRole(Role role) {
+		this.permissoes.remove(role);
+		role.getUsuarios().remove(this);
+		return role;
 	}
 	
 	public Integer getIdUsuario() {

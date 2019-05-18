@@ -1,6 +1,7 @@
 package br.com.futura.agendafinanceira.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -31,14 +33,34 @@ public class Role implements Serializable, GrantedAuthority {
 	
 	private String descricao;
 	
+	
 	@Enumerated
 	private Ativo ativo;
 
+	@ManyToMany(mappedBy = "permissoes")
+	private List<Usuario> usuarios;
+	
+	public Usuario addUsuario(Usuario usuario) {
+		this.usuarios.add(usuario);
+		usuario.getPermissoes().add(this);
+		return usuario;
+	}
+	
+	public Usuario removeUsuario(Usuario usuario) {
+		this.usuarios.remove(usuario);
+		usuario.getPermissoes().remove(this);
+		return usuario;
+	}
+	
 	@Override
 	public String getAuthority() {
 		return this.role;
 	}
-
+	
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+	
 	public Integer getIdRole() {
 		return idRole;
 	}
