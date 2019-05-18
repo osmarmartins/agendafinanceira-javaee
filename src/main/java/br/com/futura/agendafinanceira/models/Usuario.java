@@ -2,6 +2,7 @@ package br.com.futura.agendafinanceira.models;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -65,6 +66,16 @@ public class Usuario implements Serializable, UserDetails {
 		joinColumns = {@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario") }, 
 		inverseJoinColumns = {@JoinColumn(name = "id_role", referencedColumnName = "id_role") })
 	private List<Role> permissoes;
+	
+	public List<Role> getPermissoes() {
+		if (this.permissoes.size() == 0) {
+			return Collections.EMPTY_LIST;
+		}
+		
+		// TODO: Ordenar por classificação
+		
+		return permissoes;
+	}
 	
 	public Integer getIdUsuario() {
 		return this.idUsuario;

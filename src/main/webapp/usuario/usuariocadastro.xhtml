@@ -179,6 +179,67 @@
 							</div>
 						</div>
 					</div>
+					
+					<!-- GRID AUTORIZAÇÕES -->
+					<div class="widget-box widget-color-default" 
+						jsf:id="grid-autorizacoes" 
+						rendered="#{usuarioCadastroBean.usuario.permissoes.size()>0}">
+						
+						<div class="widget-header">
+							<div class="widget-main clearfix">
+								<button type="button" class="btn btn-xs btn-default pull-left">
+									<i class="ace-icon fa fa-user-plus"></i>
+									<span class="bigger-110">Incluir Permissão</span>
+								</button>
+							</div>	
+						</div>							
+
+						<div class="widget-body" jsf:id="listaAutorizacoes">
+							<div class="widget-main no-padding">
+								<table class="table table-striped table-bordered table-hover">
+									<thead class="thin-border-bottom">
+										<tr>
+											<th>
+												<i class="ace-icon fa fa-itens"></i>
+												Classificação
+											</th>
+											<th>
+												<i class="ace-icon fa fa-user-plus"></i>
+												Permissão
+											</th>
+											<th>
+												<i class="ace-icon fa fa-cog"></i>
+												Excluir
+											</th>
+										</tr>
+									</thead>
+
+									<tbody>
+										<ui:repeat value="#{usuarioCadastroBean.usuario.permissoes}" var="autorizacao">
+											<tr>
+												<td>
+													#{autorizacao.classificacao}
+												</td>
+												<td>
+													#{autorizacao.descricao}
+												</td>
+												<td>
+													<div class="btn-group">
+														<button type="button" class="btn btn-sm btn-danger btn-white btn-round" 
+															jsf:id="btnExcluirAutorizacao">
+															<i class="ace-icon fa fa-trash bigger-110 red2"></i>
+														</button>
+													</div>												
+												</td>
+											</tr>
+										</ui:repeat>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>					
+					<!-- GRID AUTORIZAÇÕES -->
+					
 				</form>
 			
 			</div>
