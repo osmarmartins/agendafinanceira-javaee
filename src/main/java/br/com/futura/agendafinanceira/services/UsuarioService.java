@@ -50,7 +50,7 @@ public class UsuarioService implements Serializable, UserDetailsService {
 		return usuarioDao.pesquisarPor(login);
 	}
 
-	public List<Autorizacao> adicionarAutorizacoes(Usuario usuario) {
+	public List<Autorizacao> listarAutorizacoesDisponiveis(Usuario usuario) {
 		List<Autorizacao> autorizacoes = autorizacaoDao.autorizacoes();
 		List<Autorizacao> novasAutorizacoes = new ArrayList<>();
 		
@@ -65,6 +65,18 @@ public class UsuarioService implements Serializable, UserDetailsService {
 		}
 		
 		return novasAutorizacoes.isEmpty() ? Collections.EMPTY_LIST : novasAutorizacoes;
+	}
+
+	public void adicionarAutorizacao(Usuario usuario, Autorizacao autorizacao) {
+		usuario.addRole(autorizacao);
+		autorizacao.addUsuario(usuario);
+		this.salvar(usuario);
+	}
+
+	public void removerAutorizacao(Usuario usuario, Autorizacao autorizacao) {
+		usuario.removeRole(autorizacao);
+		autorizacao.removeUsuario(usuario);
+		this.salvar(usuario);		
 	} 
 
 }

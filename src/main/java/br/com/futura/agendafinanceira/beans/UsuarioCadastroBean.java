@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -28,18 +27,13 @@ public class UsuarioCadastroBean implements Serializable {
 
 	private String confirmarSenha;
 	
-	private Autorizacao novaAutorizacao;
+	private Autorizacao novaAutorizacao = new Autorizacao();
 
 	@Inject
 	private UsuarioService usuarioService;
 
 	@Inject
 	private MessagesHelper messagesHelper;
-
-	@PostConstruct
-	private void init() {
-		novaAutorizacao = new Autorizacao();
-	}
 
 	public String salvar() {
 		try {
@@ -54,13 +48,12 @@ public class UsuarioCadastroBean implements Serializable {
 		return "usuario?faces-redirect";
 	}
 	
-	public void incluirAutorizacoes() {
-		System.out.println("USUÁRIO     >>>>>>>>>>>> " + this.usuario);
-		System.out.println("AUTORIZAÇÃO >>>>>>>>>>>> " + this.novaAutorizacao);
+	public void adicionarAutorizacao() {
+		usuarioService.adicionarAutorizacao(usuario, novaAutorizacao);
 	}
 	
-	public void excluir(Autorizacao autorizacao) {
-		System.out.println("AUTORIZAÇÃO >>>>>>>>>>>> " + autorizacao);
+	public void removerAutorizacao(Autorizacao autorizacao) {
+		usuarioService.removerAutorizacao(usuario, autorizacao);
 	}
 
 	public TipoUsuario[] getTiposUsuario() {
@@ -96,13 +89,13 @@ public class UsuarioCadastroBean implements Serializable {
 	}
 	
 	public List<Autorizacao> autorizacoes() {
-		return usuarioService.adicionarAutorizacoes(this.usuario);
+		return usuarioService.listarAutorizacoesDisponiveis(this.usuario);
 	}
 	
 	public void setNovaAutorizacao(Autorizacao novaAutorizacao) {
 		this.novaAutorizacao = novaAutorizacao;
 	}
-		
+	
 	public Autorizacao getNovaAutorizacao() {
 		return novaAutorizacao;
 	}

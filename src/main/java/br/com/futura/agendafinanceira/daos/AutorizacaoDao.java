@@ -17,7 +17,12 @@ public class AutorizacaoDao implements Serializable {
 	
 	public List<Autorizacao> autorizacoes(){
 		return manager.createQuery("select a from Autorizacao a order by a.classificacao ", Autorizacao.class).getResultList();
-		
+	}
+
+	public Autorizacao pesquisarPorId(Integer id) {
+		return manager.createQuery("select a from Autorizacao a where a.idRole = :pId ", Autorizacao.class)
+		.setParameter("pId", id)
+		.getSingleResult();
 	}
 
 }

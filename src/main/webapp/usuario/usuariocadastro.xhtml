@@ -182,27 +182,27 @@
 					
 					<!-- GRID AUTORIZAÇÕES -->
 					<div class="widget-box widget-color-default" 
-						jsf:id="grid-autorizacoes" 
-						rendered="#{usuarioCadastroBean.usuario.permissoes.size()>0}">
+						jsf:id="grid-autorizacoes">
 						
 						<div class="widget-header">
 							<div class="widget-main clearfix">
 								<div class="col-md-4">
 									<div>
 										<div class="input-group">
-											<h:selectOneMenu value="#{usuarioCadastroBean.novaAutorizacao}" id="novaAutorizacao" styleClass="form-control">
-												<f:selectItem itemLabel = "Selecione...." /> 
+											<h:selectOneMenu value="#{usuarioCadastroBean.novaAutorizacao}" class="form-control" id="roles">
+												<f:selectItem itemLabel="Selecione..." noSelectionOption="true"/>
 												<f:selectItems value="#{usuarioCadastroBean.autorizacoes()}" var="role"
-													itemLabel="#{role.descricao}" itemValue="#{role}"/>
+													itemLabel="#{role.descricao}" itemValue="#{role}" >
+												</f:selectItems>
 											</h:selectOneMenu>
 											<span class="input-group-btn">
 												<button type="button" class="btn btn-xs btn-default pull-left" 
-													jsf:id="btnNovaAutorizacao" jsf:action="#{usuarioCadastroBean.incluirAutorizacoes()}">
+													jsf:id="btnNovaAutorizacao" jsf:action="#{usuarioCadastroBean.adicionarAutorizacao()}">
 													<i class="ace-icon fa fa-plus"></i>
 													<span class="bigger-110">Incluir Permissão</span>
 													<f:ajax
 														render="grid-autorizacoes" 
-														execute="@this"/>
+														execute="@this roles"/>
 												</button>
 											</span>
 										</div>
@@ -212,8 +212,6 @@
 							</div>
 								
 						</div>	
-						
-<h:outputLabel value="#{usuarioCadastroBean.novaAutorizacao.descricao}" id="texto" />
 
 						<div class="widget-body" jsf:id="listaAutorizacoes">
 							<div class="widget-main no-padding">
@@ -247,7 +245,7 @@
 												<td>
 													<div class="btn-group">
 														<button type="button" class="btn btn-sm btn-danger btn-white btn-round" 
-															jsf:id="btnExcluirAutorizacao" jsf:action="#{usuarioCadastroBean.excluir(autorizacao)}">
+															jsf:id="btnExcluirAutorizacao" jsf:action="#{usuarioCadastroBean.removerAutorizacao(autorizacao)}">
 															<i class="ace-icon fa fa-trash bigger-110 red2"></i>
 															<f:ajax
 																render="grid-autorizacoes" 
