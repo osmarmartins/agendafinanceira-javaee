@@ -15,7 +15,7 @@ public class UsuarioDao implements Serializable {
 	
 	@PersistenceContext
 	private EntityManager manager;
-
+	
 	public List<Usuario> listarTodos() {
 		return manager.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
 	}

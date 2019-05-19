@@ -2,6 +2,7 @@ package br.com.futura.agendafinanceira.beans;
 
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -9,6 +10,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.futura.agendafinanceira.models.Autorizacao;
 import br.com.futura.agendafinanceira.models.Usuario;
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.models.enums.TipoUsuario;
@@ -25,6 +27,8 @@ public class UsuarioCadastroBean implements Serializable {
 	private Usuario usuario;
 
 	private String confirmarSenha;
+	
+	private Autorizacao novaAutorizacao;
 
 	@Inject
 	private UsuarioService usuarioService;
@@ -34,8 +38,7 @@ public class UsuarioCadastroBean implements Serializable {
 
 	@PostConstruct
 	private void init() {
-		this.usuario = new Usuario();
-		this.usuario.setAtivo(Ativo.ATIVO);
+		novaAutorizacao = new Autorizacao();
 	}
 
 	public String salvar() {
@@ -48,8 +51,16 @@ public class UsuarioCadastroBean implements Serializable {
 			e.printStackTrace();
 		}
 		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso!"));
-		init();
 		return "usuario?faces-redirect";
+	}
+	
+	public void incluirAutorizacoes() {
+		System.out.println("USUÁRIO     >>>>>>>>>>>> " + this.usuario);
+		System.out.println("AUTORIZAÇÃO >>>>>>>>>>>> " + this.novaAutorizacao);
+	}
+	
+	public void excluir(Autorizacao autorizacao) {
+		System.out.println("AUTORIZAÇÃO >>>>>>>>>>>> " + autorizacao);
 	}
 
 	public TipoUsuario[] getTiposUsuario() {
@@ -65,10 +76,11 @@ public class UsuarioCadastroBean implements Serializable {
 	}
 
 	public Usuario getUsuario() {
-		if (usuario == null) {
-			init();
+		if (this.usuario == null) {
+			this.usuario = new Usuario();
+			this.usuario.setAtivo(Ativo.ATIVO);
 		}
-		return usuario;
+		return this.usuario;
 	}
 
 	public void setUsuario(Usuario usuario) {
@@ -81,6 +93,18 @@ public class UsuarioCadastroBean implements Serializable {
 
 	public void setConfirmarSenha(String confirmarSenha) {
 		this.confirmarSenha = confirmarSenha;
+	}
+	
+	public List<Autorizacao> autorizacoes() {
+		return usuarioService.adicionarAutorizacoes(this.usuario);
+	}
+	
+	public void setNovaAutorizacao(Autorizacao novaAutorizacao) {
+		this.novaAutorizacao = novaAutorizacao;
+	}
+		
+	public Autorizacao getNovaAutorizacao() {
+		return novaAutorizacao;
 	}
 
 }

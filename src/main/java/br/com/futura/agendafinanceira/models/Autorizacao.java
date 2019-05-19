@@ -18,7 +18,7 @@ import br.com.futura.agendafinanceira.models.enums.Ativo;
 
 @Entity
 @Table(name="login_role")
-public class Role implements Serializable, GrantedAuthority {
+public class Autorizacao implements Serializable, GrantedAuthority {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -117,7 +117,7 @@ public class Role implements Serializable, GrantedAuthority {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Role other = (Role) obj;
+		Autorizacao other = (Autorizacao) obj;
 		if (idRole == null) {
 			if (other.idRole != null)
 				return false;
@@ -125,5 +125,12 @@ public class Role implements Serializable, GrantedAuthority {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Autorizacao [idRole=" + idRole + ", role=" + role + ", classificacao=" + classificacao + ", descricao="
+				+ descricao + ", ativo=" + ativo + "]";
+	}
+
 
 }

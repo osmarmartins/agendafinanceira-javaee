@@ -65,9 +65,9 @@ public class Usuario implements Serializable, UserDetails {
 	@JoinTable(name = "login_role_usuario", 
 		joinColumns = {@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario") }, 
 		inverseJoinColumns = {@JoinColumn(name = "id_role", referencedColumnName = "id_role") })
-	private List<Role> permissoes;
+	private List<Autorizacao> permissoes;
 	
-	public List<Role> getPermissoes() {
+	public List<Autorizacao> getPermissoes() {
 		if (this.permissoes.size() == 0) {
 			return Collections.EMPTY_LIST;
 		}
@@ -77,13 +77,13 @@ public class Usuario implements Serializable, UserDetails {
 		return permissoes;
 	}
 	
-	public Role addRole(Role role) {
+	public Autorizacao addRole(Autorizacao role) {
 		this.permissoes.add(role);
 		role.getUsuarios().add(this);
 		return role;
 	}
 	
-	public Role removeRole(Role role) {
+	public Autorizacao removeRole(Autorizacao role) {
 		this.permissoes.remove(role);
 		role.getUsuarios().remove(this);
 		return role;

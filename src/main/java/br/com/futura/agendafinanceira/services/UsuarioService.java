@@ -1,6 +1,8 @@
 package br.com.futura.agendafinanceira.services;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,7 +11,9 @@ import javax.transaction.Transactional;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import br.com.futura.agendafinanceira.daos.AutorizacaoDao;
 import br.com.futura.agendafinanceira.daos.UsuarioDao;
+import br.com.futura.agendafinanceira.models.Autorizacao;
 import br.com.futura.agendafinanceira.models.Usuario;
 
 public class UsuarioService implements Serializable, UserDetailsService {
@@ -18,6 +22,9 @@ public class UsuarioService implements Serializable, UserDetailsService {
 	
 	@Inject
 	private UsuarioDao usuarioDao;
+	
+	@Inject
+	private AutorizacaoDao autorizacaoDao;
 
 	public List<Usuario> listarTodos() {
 		return usuarioDao.listarTodos();
@@ -42,5 +49,22 @@ public class UsuarioService implements Serializable, UserDetailsService {
 	public Usuario loadUserByUsername(String login) throws UsernameNotFoundException {
 		return usuarioDao.pesquisarPor(login);
 	}
+
+	public List<Autorizacao> adicionarAutorizacoes(Usuario usuario) {
+		List<Autorizacao> autorizacoes = autorizacaoDao.autorizacoes();
+		List<Autorizacao> novasAutorizacoes = new ArrayList<>();
+		
+		if (autorizacoes.isEmpty()) {
+			return Collections.EMPTY_LIST;
+		}
+		
+		for (Autorizacao autorizacao : autorizacoes) {
+			if (!usuario.getPermissoes().contains(autorizacao)) {
+				novasAutorizacoes.add(autorizacao);
+			}
+		}
+		
+		return novasAutorizacoes.isEmpty() ? Collections.EMPTY_LIST : novasAutorizacoes;
+	} 
 
 }
