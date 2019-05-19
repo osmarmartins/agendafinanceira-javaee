@@ -1,6 +1,7 @@
 package br.com.futura.agendafinanceira.services;
 
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,6 +16,7 @@ import br.com.futura.agendafinanceira.daos.AutorizacaoDao;
 import br.com.futura.agendafinanceira.daos.UsuarioDao;
 import br.com.futura.agendafinanceira.models.Autorizacao;
 import br.com.futura.agendafinanceira.models.Usuario;
+import br.com.futura.agendafinanceira.utils.HashMD5Util;
 
 public class UsuarioService implements Serializable, UserDetailsService {
 
@@ -41,7 +43,10 @@ public class UsuarioService implements Serializable, UserDetailsService {
 	}
 
 	@Transactional
-	public void salvar(Usuario usuario) {
+	public void salvar(Usuario usuario) throws NoSuchAlgorithmException {
+		if (usuario.getIdUsuario() == null) {
+			usuario.setSenha(HashMD5Util.getMD5(usuario.getSenha()));
+		}
 		usuarioDao.salvar(usuario);
 	}
 
@@ -67,16 +72,24 @@ public class UsuarioService implements Serializable, UserDetailsService {
 		return novasAutorizacoes.isEmpty() ? Collections.EMPTY_LIST : novasAutorizacoes;
 	}
 
-	public void adicionarAutorizacao(Usuario usuario, Autorizacao autorizacao) {
-		usuario.addRole(autorizacao);
-		autorizacao.addUsuario(usuario);
-		this.salvar(usuario);
+	@Transactional
+	public Usuario adicionarAutorizacao(Usuario usuario, Autorizacao autorizacao) {
+		Usuario user = usuarioDao.pesquisaPor(usuario.getIdUsuario());
+		user.addRole(autorizacao);
+		usuarioDao.salvar(user);
+		
+		return user;
 	}
 
-	public void removerAutorizacao(Usuario usuario, Autorizacao autorizacao) {
-		usuario.removeRole(autorizacao);
-		autorizacao.removeUsuario(usuario);
-		this.salvar(usuario);		
+	@Transactional
+	public Usuario removerAutorizacao(Usuario usuario, Autorizacao autorizacao) {
+		Usuario user = usuarioDao.pesquisaPor(usuario.getIdUsuario());
+		Autorizacao auth = autorizacaoDao.pesquisarPorId(autorizacao.getIdRole());
+		user.removeRole(auth);
+		auth.removeUsuario(user);
+		usuarioDao.salvar(user);
+		
+		return user;
 	} 
 
 }

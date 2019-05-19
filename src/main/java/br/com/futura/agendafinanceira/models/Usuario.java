@@ -18,7 +18,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
-import javax.validation.constraints.Min;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,16 +35,12 @@ public class Usuario implements Serializable, UserDetails {
 	@Column(name = "id_usuario")
 	private Integer idUsuario;
 
-	@Min(value=3, message="Nome não pode ser menor que três letras")
 	private String nome;
 
-//	@Email
 	private String email;
 
-	@Min(value=3, message="Login não pode ter menos que três caracteres")
 	private String login;
 
-	@Min(value=3, message="O tamanho da senha não pode ser inferior a três caracteres")
 	private String senha;
 
 	@Enumerated
@@ -71,10 +66,10 @@ public class Usuario implements Serializable, UserDetails {
 		if (this.permissoes.size() == 0) {
 			return Collections.EMPTY_LIST;
 		}
-		
-		// TODO: Ordenar por classificação
-		
-		return permissoes;
+        
+        this.permissoes.sort( (a1, a2) -> a1.getClassificacao().compareTo(a2.getClassificacao()) );
+        
+		return this.permissoes;
 	}
 	
 	public Autorizacao addRole(Autorizacao role) {
@@ -151,6 +146,10 @@ public class Usuario implements Serializable, UserDetails {
 
 	public void setVersao(Integer versao) {
 		this.versao = versao;
+	}
+	
+	public boolean isNovo() {
+		return this.idUsuario == null;  
 	}
 
 	public boolean isStatus() {

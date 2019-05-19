@@ -40,7 +40,10 @@ public class UsuarioDao implements Serializable {
 	}
 
 	public Usuario pesquisarPor(String login) {
-		return manager.createQuery("select u from Usuario u where u.login=:pLogin", Usuario.class)
+		String sql = "select u from Usuario u "
+				+ "join fetch u.permissoes p "
+				+ "where u.login=:pLogin ";
+		return manager.createQuery(sql , Usuario.class)
 				.setParameter("pLogin", login)
 				.getSingleResult();
 	}
@@ -59,5 +62,5 @@ public class UsuarioDao implements Serializable {
 			manager.merge(usuario);
 		}
 	}
-	
+		
 }

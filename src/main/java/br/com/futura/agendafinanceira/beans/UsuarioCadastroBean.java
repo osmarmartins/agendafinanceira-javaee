@@ -14,7 +14,6 @@ import br.com.futura.agendafinanceira.models.Usuario;
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.models.enums.TipoUsuario;
 import br.com.futura.agendafinanceira.services.UsuarioService;
-import br.com.futura.agendafinanceira.utils.HashMD5Util;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Named
@@ -34,40 +33,29 @@ public class UsuarioCadastroBean implements Serializable {
 
 	@Inject
 	private MessagesHelper messagesHelper;
-
-	public String salvar() {
-		try {
-			if (this.usuario.getIdUsuario() == null) {
-				this.usuario.setSenha(HashMD5Util.getMD5(this.usuario.getSenha()));
-			}
-			usuarioService.salvar(usuario);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
+	
+	public String salvar() throws NoSuchAlgorithmException {
+		usuarioService.salvar(usuario);
 		messagesHelper.addFlash(new FacesMessage("Operação concluida com sucesso!"));
 		return "usuario?faces-redirect";
 	}
 	
 	public void adicionarAutorizacao() {
-		usuarioService.adicionarAutorizacao(usuario, novaAutorizacao);
+		this.usuario = usuarioService.adicionarAutorizacao(usuario, novaAutorizacao);
 	}
 	
 	public void removerAutorizacao(Autorizacao autorizacao) {
-		usuarioService.removerAutorizacao(usuario, autorizacao);
+		this.usuario = usuarioService.removerAutorizacao(usuario, autorizacao);
 	}
 
 	public TipoUsuario[] getTiposUsuario() {
 		return TipoUsuario.values();
 	}
 	
-	public boolean getHasError() {
-		return false;
+	public List<Autorizacao> autorizacoes() {
+		return usuarioService.listarAutorizacoesDisponiveis(this.usuario);
 	}
 	
-	public boolean isNovoUsuario() {
-		return this.usuario.getIdUsuario()==null;
-	}
-
 	public Usuario getUsuario() {
 		if (this.usuario == null) {
 			this.usuario = new Usuario();
@@ -86,10 +74,6 @@ public class UsuarioCadastroBean implements Serializable {
 
 	public void setConfirmarSenha(String confirmarSenha) {
 		this.confirmarSenha = confirmarSenha;
-	}
-	
-	public List<Autorizacao> autorizacoes() {
-		return usuarioService.listarAutorizacoesDisponiveis(this.usuario);
 	}
 	
 	public void setNovaAutorizacao(Autorizacao novaAutorizacao) {

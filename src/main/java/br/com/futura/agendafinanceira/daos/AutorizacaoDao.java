@@ -20,9 +20,20 @@ public class AutorizacaoDao implements Serializable {
 	}
 
 	public Autorizacao pesquisarPorId(Integer id) {
-		return manager.createQuery("select a from Autorizacao a where a.idRole = :pId ", Autorizacao.class)
+		String sql = "select a from Autorizacao a "
+				+ "join fetch a.usuarios "
+				+ "where a.idRole = :pId ";
+		return manager.createQuery(sql, Autorizacao.class)
 		.setParameter("pId", id)
 		.getSingleResult();
+	}
+
+	public void salvar(Autorizacao autorizacao) {
+		if (autorizacao.getIdRole() == null) {
+			manager.persist(autorizacao);
+		} else {
+			manager.merge(autorizacao);
+		}		
 	}
 
 }
