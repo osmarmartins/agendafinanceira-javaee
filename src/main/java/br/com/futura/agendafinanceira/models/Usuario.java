@@ -54,6 +54,9 @@ public class Usuario implements Serializable, UserDetails {
 
 	@Transient
 	private boolean status;
+	
+	@Transient
+	private String confirmarSenha;
 
 	
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -163,6 +166,14 @@ public class Usuario implements Serializable, UserDetails {
 		this.setAtivo(status ? Ativo.ATIVO : Ativo.INATIVO);
 		this.status = status;
 	}
+	
+	public void setConfirmarSenha(String confirmarSenha) {
+		this.confirmarSenha = confirmarSenha;
+	}
+	
+	public String getConfirmarSenha() {
+		return confirmarSenha;
+	}
 
 	@Override
 	public int hashCode() {
@@ -188,8 +199,9 @@ public class Usuario implements Serializable, UserDetails {
 
 	@Override
 	public String toString() {
-		return "Usuario [idUsuario=" + idUsuario + ", administrador=" + administrador + ", ativo=" + ativo + ", email="
-				+ email + ", login=" + login + ", nome=" + nome + ", senha=" + senha + ", versao=" + versao + "]";
+		return "Usuario [idUsuario=" + idUsuario + ", nome=" + nome + ", email=" + email + ", login=" + login
+				+ ", senha=" + senha + ", administrador=" + administrador + ", ativo=" + ativo + ", versao=" + versao
+				+ ", status=" + status + ", confirmarSenha=" + confirmarSenha + "]";
 	}
 
 	@Override

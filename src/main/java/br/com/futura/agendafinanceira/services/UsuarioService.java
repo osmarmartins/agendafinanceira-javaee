@@ -1,7 +1,6 @@
 package br.com.futura.agendafinanceira.services;
 
 import java.io.Serializable;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,12 +10,13 @@ import javax.transaction.Transactional;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import br.com.futura.agendafinanceira.daos.AutorizacaoDao;
 import br.com.futura.agendafinanceira.daos.UsuarioDao;
+import br.com.futura.agendafinanceira.exceptions.ConfirmarSenhaException;
 import br.com.futura.agendafinanceira.models.Autorizacao;
 import br.com.futura.agendafinanceira.models.Usuario;
-import br.com.futura.agendafinanceira.utils.HashMD5Util;
 
 public class UsuarioService implements Serializable, UserDetailsService {
 
@@ -27,9 +27,14 @@ public class UsuarioService implements Serializable, UserDetailsService {
 	
 	@Inject
 	private AutorizacaoDao autorizacaoDao;
-
+	
 	public List<Usuario> listarTodos() {
 		return usuarioDao.listarTodos();
+	}
+
+	@Override
+	public Usuario loadUserByUsername(String login) throws UsernameNotFoundException {
+		return usuarioDao.pesquisarPor(login);
 	}
 
 	@Transactional
@@ -43,17 +48,23 @@ public class UsuarioService implements Serializable, UserDetailsService {
 	}
 
 	@Transactional
-	public void salvar(Usuario usuario) throws NoSuchAlgorithmException {
+	public void salvar(Usuario usuario) {
 		if (usuario.getIdUsuario() == null) {
-			usuario.setSenha(HashMD5Util.getMD5(usuario.getSenha()));
+			usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
 		}
 		usuarioDao.salvar(usuario);
 	}
 
-	@Override
-	public Usuario loadUserByUsername(String login) throws UsernameNotFoundException {
-		return usuarioDao.pesquisarPor(login);
-	}
+	@Transactional
+	public void redefinirSenha(Usuario usuario) throws ConfirmarSenhaException {
+		if (!usuario.getSenha().equals(usuario.getConfirmarSenha())) {
+			throw new ConfirmarSenhaException("As senhas não conferem! Repita a operação");
+		}
+		
+		usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
+		usuarioDao.salvar(usuario);
+		
+	} 
 
 	public List<Autorizacao> listarAutorizacoesDisponiveis(Usuario usuario) {
 		List<Autorizacao> autorizacoes = autorizacaoDao.autorizacoes();
@@ -90,6 +101,6 @@ public class UsuarioService implements Serializable, UserDetailsService {
 		usuarioDao.salvar(user);
 		
 		return user;
-	} 
+	}
 
 }

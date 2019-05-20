@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/usuario/**").hasRole("USUARIO")
 			.antMatchers("/pagamento/**").hasRole("PAGAMENTO")
 			.antMatchers("/baixa/**").hasRole("BAIXA_PAGAMENTO")
-			.antMatchers("/relatorio/**").hasRole("RELATORIOS")
+			.antMatchers("/relatorios/**").hasRole("RELATORIOS")
 			
 			.antMatchers("/javax.faces.resource/**").permitAll()
 			.anyRequest().authenticated()

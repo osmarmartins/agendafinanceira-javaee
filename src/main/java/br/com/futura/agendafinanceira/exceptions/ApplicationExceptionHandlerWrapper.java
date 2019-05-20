@@ -38,7 +38,7 @@ public class ApplicationExceptionHandlerWrapper extends ExceptionHandlerWrapper 
 			Throwable exception = context.getException();
 			NegocioException negocioException = getNegocioException(exception);
 			NenhumResultadoException nenhumResultadoException = getNenhumResultadoException(exception);
-
+			
 			boolean handled = false;
 
 			try {
@@ -58,6 +58,9 @@ public class ApplicationExceptionHandlerWrapper extends ExceptionHandlerWrapper 
 				} else if (isException(exception, "org.hibernate.StaleObjectStateExcetion")) {
 					handled = true;
 					FacesUtil.addSeverityError("Registro alterado por outro usuário! Atualize os dados e repita a operação.");
+				} else if (isException(exception, "br.com.futura.agendafinanceira.exceptions.ConfirmarSenhaException")) {
+					handled = true;
+					FacesUtil.addSeverityError("Senhas não conferem! Repita a operação.");
 				} else {
 					handled = true;
 					redirect("/erro.xhtml");
