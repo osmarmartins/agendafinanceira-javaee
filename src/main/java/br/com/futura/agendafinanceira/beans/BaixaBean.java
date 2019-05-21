@@ -2,8 +2,8 @@ package br.com.futura.agendafinanceira.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -43,6 +43,7 @@ public class BaixaBean implements Serializable {
 	
 	@PostConstruct
 	private void init() {
+		this.dataBaixa = new Date();
 		this.filtro = new BaixaFiltroDto();
 		this.total = BigDecimal.ZERO;
 		this.parcelas = new ArrayList<>();

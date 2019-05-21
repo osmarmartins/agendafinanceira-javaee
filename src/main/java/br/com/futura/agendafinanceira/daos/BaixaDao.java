@@ -39,7 +39,7 @@ public class BaixaDao implements Serializable {
 						+ "join fetch pg.setor "
 						+ "join fetch pg.conta "
 						+ "left join fetch p.quitacoes q "
-						+ "WHERE 1 = 1  ";
+						+ "WHERE p.situacao in (0, 1, 2) ";
 		
 		if (filtro.getDataInicial() != null) {
 			sql += " and p.vencimento between :pDataInicial and :pDataFinal ";

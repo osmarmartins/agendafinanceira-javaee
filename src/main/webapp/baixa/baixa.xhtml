@@ -100,10 +100,10 @@
 							</div>
 							
 							<div class="col-md-6">
-								<div class="input-group" jsf:id="dataBaixa" jsf:rendered="#{baixaBean.isExisteSelecao()}">
+								<div class="input-group" jsf:id="divDataBaixa" jsf:rendered="#{baixaBean.isExisteSelecao()}">
 									<span class="input-group-btn">
 										<button class="btn btn-sm btn-success" type="button"
-											jsf:action="#{baixaBean.baixarSelecionadas()}" 
+											jsf:action="#{baixaBean.baixarSelecionadas()}"
 											jsf:id="btnBaixarSelecao">
 											<i class="ace-icon fa fa-check-square-o bigger-110"></i>
 											Baixar na Data
@@ -112,7 +112,11 @@
 												render="@form"/>
 										</button>
 									</span>
-									<input class="form-control date-picker" jsf:id="dataBaixa" jsf:value="#{baixaBean.dataBaixa}" type="date" data-date-format="dd/mm/yyyy"/>
+									<input class="form-control date-picker" 
+										jsf:id="dataBaixa" 
+										jsf:value="#{baixaBean.dataBaixa}" type="date" data-date-format="dd/mm/yyyy">
+										<f:convertDateTime pattern="yyyy-MM-dd"/>
+									</input>
 									<span class="input-group-addon">
 										<i class="fa fa-calendar bigger-110"></i>
 									</span>								
