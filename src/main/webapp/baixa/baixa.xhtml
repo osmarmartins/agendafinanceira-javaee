@@ -31,48 +31,100 @@
 				<h:form id="form" prependId="false">
 
 					<div class="clearfix form-actions ui-widget-header" style="margin-bottom: 0;" jsf:id="comandoGrid">
-						<div class="col-md-6">
-	
-							<button class="btn btn-white btn-primary" type="button" jsf:id="btnNovo" jsf:outcome="/baixa/baixacadastro.xhtml">
-								<i class="fa fa-plus"></i> 
-								Baixar
-							</button>
+					
+						<div class="row">
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="periodo">Data Inicial</label>
+									<div class="input-group">
+										<input class="form-control date-picker" 
+											jsf:id="dataInicial" type="date" 
+											jsf:value="#{baixaBean.filtro.dataInicial}" data-date-format="dd/mm/yyyy">
+											<f:convertDateTime pattern="yyyy-MM-dd"/>
+										</input>
+										<span class="input-group-addon">
+											<i class="fa fa-calendar bigger-110"></i>
+										</span>
+									</div>									
+								</div>
+							</div>
 							
-							<p:spacer width="10"/>
-							
-							<button class="btn btn-white btn-danger" type="button" 
-								data-toggle="modal" 
-								data-target="#modalExclusao" 
-								jsf:id="btnExcluirSelecao" 
-								jsf:rendered="#{baixaBean.isExisteSelecao()}">
-								<i class="fa fa-trash"></i> Excluir Seleção
-								<f:ajax
-									listener="#{baixaBean.mensagemExclusaoBuilder()}"
-									execute="@this"
-									render="btnConfirmaExclucao mensagem"/>
-							</button>
-							
-						</div>
-						
-						<div class="col-md-offset-1 col-md-5 align-right">
-						
-							<div class="input-group">
-								<input class="form-control input-mask-date" type="text" 
-									placeholder="Pesquisa por..."
-									jsf:value="#{baixaBean.pesquisaFiltro}" />
-								<span class="input-group-btn">
-									<button class="btn btn-inverse btn-white" type="submit" jsf:action="#{baixaBean.pesquisar()}" jsf:update="@form">
-										<i class="ace-icon fa fa-search bigger-110"></i>
-									</button>
-								</span>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="periodo">Data Final</label>
+									<div class="input-group">
+										<input class="form-control date-picker" 
+											jsf:id="dataFinal" type="date" 
+											jsf:value="#{baixaBean.filtro.dataFinal}" data-date-format="dd/mm/yyyy">
+											<f:convertDateTime pattern="yyyy-MM-dd"/>
+										</input>
+										<span class="input-group-addon">
+											<i class="fa fa-calendar bigger-110"></i>
+										</span>
+									</div>									
+								</div>
 							</div>
 
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="control-label" jsf:for="fornecedor">Fornecedor</label>
+									<h:selectOneMenu value="#{baixaBean.filtro.fornecedor}" id="fornecedor" styleClass="form-control">
+										<f:selectItem itemLabel = "Selecione...." /> 
+										<f:selectItems var="fornecedor" value="#{baixaBean.fornecedores}"
+											itemLabel="#{fornecedor.nomeFantasia}" itemValue="#{fornecedor}"/>
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</div>
+					
+						<div class="row">
+							<div class="col-md-3">
+								<button class="btn btn-white btn-primary" type="button" jsf:id="btnFiltrar" jsf:action="#{baixaBean.filtrar()}">
+									<i class="fa fa-filter"></i> 
+									Filtrar
+									<f:ajax execute="@this dataInicial dataFinal fornecedor" render="@form"/>
+								</button>
+							</div>
+							
+							<div class="col-md-3">
+								<div class="input-group" jsf:id="total" jsf:rendered="#{baixaBean.isExisteSelecao()}" >
+									<span class="input-group-addon"> 
+										<i class="ace-icon fa fa-usd"></i>
+									</span> 
+									<input class="form-control input-mask-phone" type="text" 
+										jsf:value="#{baixaBean.total}"
+										jsf:id="totalSelecionado">
+										<f:convertNumber type="currency"/>
+									</input>
+								</div>
+							</div>
+							
+							<div class="col-md-6">
+								<div class="input-group" jsf:id="dataBaixa" jsf:rendered="#{baixaBean.isExisteSelecao()}">
+									<span class="input-group-btn">
+										<button class="btn btn-sm btn-success" type="button"
+											jsf:action="#{baixaBean.baixarSelecionadas()}" 
+											jsf:id="btnBaixarSelecao">
+											<i class="ace-icon fa fa-check-square-o bigger-110"></i>
+											Baixar na Data
+											<f:ajax
+												execute="@this"
+												render="@form"/>
+										</button>
+									</span>
+									<input class="form-control date-picker" jsf:id="dataBaixa" jsf:value="#{baixaBean.dataBaixa}" type="date" data-date-format="dd/mm/yyyy"/>
+									<span class="input-group-addon">
+										<i class="fa fa-calendar bigger-110"></i>
+									</span>								
+								</div>									
+							</div>
+							
 						</div>
 					</div>
 
 
 					<p:dataTable id="tabela"
-						emptyMessage="Nenhum registro encontrado"
+						emptyMessage="Nenhum registro encontrado para o filtro selecionado"
 						value="#{baixaBean.parcelas}" var="parcela" rowKey="#{parcela.idPagamentoParcela}"
 						selection="#{baixaBean.parcelasSelecionadas}"
 						 
@@ -85,10 +137,10 @@
 							<p:inputText value="#{sessionBean.itensPorPagina}" process="@this" update="@form" style="width: 50px; margin-right: 10px; margin-left: 5px;"/>
 						</f:facet> 
 						
-						<p:ajax event="rowSelect" process="@this" update="@form"/>
-						<p:ajax event="toggleSelect" process="@this" update="@form"/>
-						<p:ajax event="rowUnselectCheckbox" process="@this" update="@form"/>
-						<p:ajax event="rowSelectCheckbox" process="@this" update="@form"/>
+						<p:ajax event="rowSelect" process="@this" update="@form" listener="#{baixaBean.calcularTotal()}"/>
+						<p:ajax event="toggleSelect" process="@this" update="@form" listener="#{baixaBean.calcularTotal()}"/>
+						<p:ajax event="rowUnselectCheckbox" process="@this" update="@form" listener="#{baixaBean.calcularTotal()}"/>
+						<p:ajax event="rowSelectCheckbox" process="@this" update="@form" listener="#{baixaBean.calcularTotal()}"/>
 						
 						<p:column selectionMode="multiple" width="5%" styleClass="align-center">
 						</p:column>
@@ -149,26 +201,12 @@
 								<i class="ace-icon fa fa-pencil bigger-110 green"></i>
 							</button>
 							
-							<button type="button" class="btn btn-sm btn-danger btn-white btn-round" 
-								data-toggle="modal" 
-								data-target="#modalExclusao" 
-								jsf:id="btnExcluir"
-								jsf:rendered="#{!baixaBean.isExisteSelecao()}">							
-								<i class="ace-icon fa fa-trash bigger-110 danger"></i>
-								<f:ajax
-									execute="@this"
-									render="btnConfirmaExclucao mensagem"
-									listener="#{baixaBean.selecionaParcela(parcela)}"/>
-							</button>
 						</p:column>
 
 					</p:dataTable>	
 				</h:form>
 			</div>
 		</div>
-	
-		<!-- Modal Exclusão -->
-		<ui:include src="baixaexclusaodialog.xhtml"/>
 			
 	</ui:define>
 

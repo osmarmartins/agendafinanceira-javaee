@@ -7,7 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 
+import br.com.futura.agendafinanceira.dto.BaixaFiltroDto;
 import br.com.futura.agendafinanceira.dto.RelatorioFiltroDto;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.models.PagamentoQuitacao;
@@ -30,22 +32,37 @@ public class BaixaDao implements Serializable {
 				PagamentoParcela.class).getResultList();
 	}
 
-	public List<PagamentoParcela> listarPor(String pesquisa) {
-		return manager
-				.createQuery("select p from PagamentoParcela p "
+	public List<PagamentoParcela> listarPor(BaixaFiltroDto filtro) {
+		String sql = "select p from PagamentoParcela p "
 						+ "join fetch p.pagamento pg "
 						+ "join fetch pg.fornecedor "
 						+ "join fetch pg.setor "
 						+ "join fetch pg.conta "
-						+ "WHERE pg.historico LIKE :pHistorico "
-						+ "OR pg.fornecedor.nomeFantasia LIKE :pNomeFantasia "
-						+ "OR pg.fornecedor.razaoSocial LIKE :pRazaoSocial "
-						+ "order by p.vencimento ", 
-						PagamentoParcela.class)
-				.setParameter("pHistorico", "%" + pesquisa + "%")
-				.setParameter("pNomeFantasia", "%" + pesquisa + "%")
-				.setParameter("pRazaoSocial", "%" + pesquisa + "%")
-				.getResultList();
+						+ "left join fetch p.quitacoes q "
+						+ "WHERE 1 = 1  ";
+		
+		if (filtro.getDataInicial() != null) {
+			sql += " and p.vencimento between :pDataInicial and :pDataFinal ";
+		}
+		
+		if (filtro.getFornecedor() != null) {
+			sql += " and pg.fornecedor.idFornecedor = :pFornecedor ";
+		}
+		
+		sql += " order by p.vencimento, pg.fornecedor.razaoSocial ";
+		
+		TypedQuery<PagamentoParcela> query = manager.createQuery(sql, PagamentoParcela.class);
+		
+		if (filtro.getDataInicial() != null) {
+			query.setParameter("pDataInicial", filtro.getDataInicial());
+			query.setParameter("pDataFinal", filtro.getDataFinal());
+		}
+		
+		if (filtro.getFornecedor() != null) {
+			query.setParameter("pFornecedor", filtro.getFornecedor().getIdFornecedor());
+		}
+				
+		return query.getResultList();
 		}
 	
 	

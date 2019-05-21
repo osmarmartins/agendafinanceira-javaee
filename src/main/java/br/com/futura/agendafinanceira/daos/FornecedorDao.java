@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import br.com.futura.agendafinanceira.models.Fornecedor;
+import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.utils.NumberConversionUtil;
 
 public class FornecedorDao implements Serializable {
@@ -19,6 +20,13 @@ public class FornecedorDao implements Serializable {
 	public List<Fornecedor> listarTodos() {
 		return manager
 				.createQuery("SELECT f FROM Fornecedor f order by f.nomeFantasia ", Fornecedor.class)
+				.getResultList();
+	}
+
+	public List<Fornecedor> listarAtivos() {
+		return manager
+				.createQuery("SELECT f FROM Fornecedor f where f.ativo = :pAtivo order by f.nomeFantasia ", Fornecedor.class)
+				.setParameter("pAtivo", Ativo.ATIVO)
 				.getResultList();
 	}
 

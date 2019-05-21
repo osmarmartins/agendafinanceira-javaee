@@ -43,8 +43,8 @@ public class BaixaCadastroBean implements Serializable {
 	}
 	
 	public String salvar() {
+		// TODO >>>>>>>>>>> CORRIGIR <<<<<<<<<<< Método deve estar no service
 		Float novoSaldoDevedor = parcela.saldoDevedor().subtract(quitacao.getValor()).floatValue();
-		// TODO Chamada Ajax para atualizar grid de quitações após salvar
 		parcela.addQuitacao(quitacao);
 		quitacao.setParcela(parcela);
 		baixaParcelaService.salvar(quitacao);

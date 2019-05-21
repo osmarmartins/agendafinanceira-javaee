@@ -1,6 +1,8 @@
 package br.com.futura.agendafinanceira.beans;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +11,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.futura.agendafinanceira.dto.BaixaFiltroDto;
+import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.services.BaixaService;
+import br.com.futura.agendafinanceira.services.FornecedorService;
 
 @Named
 @ViewScoped
@@ -18,70 +23,57 @@ public class BaixaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String pesquisaFiltro;
+	private BaixaFiltroDto filtro;
+	
+	private Date dataBaixa;
+	
+	private BigDecimal total;
 	
 	private List<PagamentoParcela> parcelas;
+	
+	private List<PagamentoParcela> parcelasSelecionadas;
+	
+	private List<Fornecedor> fornecedores;
 	
 	@Inject
 	private BaixaService baixaService;
 	
-	private List<PagamentoParcela> parcelasSelecionadas;
-	
-	private String mensagemExclusao;
+	@Inject
+	private FornecedorService fornecedorService;
 	
 	@PostConstruct
 	private void init() {
-		this.parcelas = baixaService.listarTodos();
+		this.filtro = new BaixaFiltroDto();
+		this.total = BigDecimal.ZERO;
+		this.parcelas = new ArrayList<>();
 		this.parcelasSelecionadas = new ArrayList<>();
-		this.mensagemExclusao = new String();
+		this.fornecedores = fornecedorService.listarAtivos(); 
 	}
 	
-	public String alterar(PagamentoParcela parcela) {
+	public void filtrar() {
+		this.parcelasSelecionadas = new ArrayList<>();
+		this.parcelas = baixaService.listarPor(filtro);
+	}
+	
+	public String baixar(PagamentoParcela parcela) {
 		return "baixacadastro?faces-redirect=true&parcela=" + parcela.getIdPagamentoParcela();
 	}
 	
+	public void baixarSelecionadas() {
+		System.out.println("DATA >>>>>>>>>>>> " + this.dataBaixa);
+		baixaService.baixarParcelas(parcelasSelecionadas);
+		filtrar();
+	}
 	
 	public Boolean isExisteSelecao() {
 		return !parcelasSelecionadas.isEmpty();
 	}
 	
-	public void selecionaParcela(PagamentoParcela parcela) {
-		parcelasSelecionadas.add(parcela);
-		mensagemExclusaoBuilder();
-	}
-	
-	public void mensagemExclusaoBuilder() {
-		StringBuilder msg = new StringBuilder();
-
-		if (this.getParcelas()!=null && !this.getParcelasSelecionadas().isEmpty()) {
-			msg.append("Excluir permanentemente ");
-			if (this.getParcelasSelecionadas().size()>1) {
-				msg.append("os pagamentos selecionados?");
-			}else {
-				msg.append("o pagamento ");
-				msg.append(parcelasSelecionadas.get(0).getPagamento().getHistorico() + 
-						" parcela " + 
-						parcelasSelecionadas.get(0).getParcela());
-			}
+	public void calcularTotal() {
+		this.total = BigDecimal.ZERO;
+		for (PagamentoParcela parcela : this.parcelasSelecionadas) {
+			this.total = this.total.add(parcela.saldoDevedor());
 		}
-		this.mensagemExclusao = msg.toString();
-	}
-
-	
-	public void excluir() {
-		//TODO excluir baixa 
-	}
-	
-	public void pesquisar(){
-		this.parcelas = baixaService.listarPor(this.pesquisaFiltro);
-	}
-
-	public void setPesquisaFiltro(String pesquisaFiltro) {
-		this.pesquisaFiltro = pesquisaFiltro;
-	}
-	
-	public String getPesquisaFiltro() {
-		return pesquisaFiltro;
 	}
 	
 	public List<PagamentoParcela> getParcelas() {
@@ -96,12 +88,28 @@ public class BaixaBean implements Serializable {
 		return parcelasSelecionadas;
 	}
 	
-	public void setMensagemExclusao(String mensagemExclusao) {
-		this.mensagemExclusao = mensagemExclusao;
+	public BigDecimal getTotal() {
+		return total;
 	}
 	
-	public String getMensagemExclusao() {
-		return mensagemExclusao;
+	public void setFiltro(BaixaFiltroDto filtro) {
+		this.filtro = filtro;
 	}
-
+	
+	public BaixaFiltroDto getFiltro() {
+		return filtro;
+	}
+	
+	public void setDataBaixa(Date dataBaixa) {
+		this.dataBaixa = dataBaixa;
+	}
+	
+	public Date getDataBaixa() {
+		return dataBaixa;
+	}
+	
+	public List<Fornecedor> getFornecedores(){
+		return this.fornecedores;
+	}
+	
 }

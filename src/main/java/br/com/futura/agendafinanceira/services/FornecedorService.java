@@ -24,6 +24,10 @@ public class FornecedorService implements Serializable {
 		return fornecedorDao.listarTodos();
 	}
 
+	public List<Fornecedor> listarAtivos() {
+		return fornecedorDao.listarAtivos();
+	}
+
 	@Transactional
 	public void excluir(List<Fornecedor> fornecedores) {
 		// TODO Validar exclusão de fornecedores 
