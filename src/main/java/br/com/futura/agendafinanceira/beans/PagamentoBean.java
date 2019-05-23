@@ -10,7 +10,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.futura.agendafinanceira.dto.PagamentoFiltroDto;
+import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.Pagamento;
+import br.com.futura.agendafinanceira.models.enums.SituacaoParcela;
+import br.com.futura.agendafinanceira.services.FornecedorService;
 import br.com.futura.agendafinanceira.services.PagamentoService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
@@ -19,36 +23,44 @@ import br.com.futura.agendafinanceira.utils.MessagesHelper;
 public class PagamentoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	private List<Pagamento> pagamentos;
 
-	private String pesquisaFiltro;
-
+	private List<Pagamento> pagamentosSelecionados;
+	
+	private List<Fornecedor> fornecedores;
+	
+	private SituacaoParcela[] situacao;
+	
+	private String mensagemExclusao;
+	
+	private PagamentoFiltroDto filtro;
+	
 	@Inject
 	private PagamentoService pagamentoService;
+	
+	@Inject
+	private FornecedorService fornecedorService;
 
 	@Inject
 	private MessagesHelper messagesHelper;
 	
-	private List<Pagamento> pagamentosSelecionados;
-	
-	private String mensagemExclusao;
-
 	@PostConstruct
 	private void init() {
-		this.pagamentos = pagamentoService.listarTodos();
-		this.pagamentosSelecionados = new ArrayList<>();
-		this.mensagemExclusao = new String();
-	}
+		this.fornecedores = fornecedorService.listarTodos();
+		this.situacao = SituacaoParcela.values();
 
-	public void pesquisar() {
-		this.pagamentos = pagamentoService.listarPor(this.pesquisaFiltro);
+		this.filtro = new PagamentoFiltroDto();
+		
+		this.pagamentos = new ArrayList<>();
+		this.pagamentosSelecionados = new ArrayList<>();
+		
+		this.mensagemExclusao = new String();
 	}
 
 	public String alterar(Pagamento pagamento) {
 		return "/pagamento/pagamentocadastro?faces-redirect=true&pagamento=" + pagamento.getIdPagamento();
 	}
-	
 	
 	public Boolean isExisteSelecao() {
 		return !pagamentosSelecionados.isEmpty();
@@ -79,19 +91,17 @@ public class PagamentoBean implements Serializable {
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		init();
 	}
+	
+	public void filtrar() {
+		System.out.println("FILTRO >>>>>>>>>>>>>> " + filtro);
+//		this.pagamentos = pagamentoService.listarTodos(filtro);
+		
+	}
 
 	public List<Pagamento> getPagamentos() {
 		return pagamentos;
 	}
 	
-	public void setPesquisaFiltro(String pesquisaFiltro) {
-		this.pesquisaFiltro = pesquisaFiltro;
-	}
-	
-	public String getPesquisaFiltro() {
-		return pesquisaFiltro;
-	}
-
 	public List<Pagamento> getPagamentosSelecionados() {
 		return pagamentosSelecionados;
 	}
@@ -102,6 +112,30 @@ public class PagamentoBean implements Serializable {
 
 	public String getMensagemExclusao() {
 		return mensagemExclusao;
+	}
+	
+	public void setFiltro(PagamentoFiltroDto filtro) {
+		this.filtro = filtro;
+	}
+	
+	public PagamentoFiltroDto getFiltro() {
+		return filtro;
+	}
+	
+	public void setFornecedores(List<Fornecedor> fornecedores) {
+		this.fornecedores = fornecedores;
+	}
+	
+	public List<Fornecedor> getFornecedores() {
+		return fornecedores;
+	}
+	
+	public void setSituacao(SituacaoParcela[] situacao) {
+		this.situacao = situacao;
+	}
+	
+	public SituacaoParcela[] getSituacao() {
+		return situacao;
 	}
 	
 }

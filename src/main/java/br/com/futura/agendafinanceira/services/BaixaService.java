@@ -1,6 +1,7 @@
 package br.com.futura.agendafinanceira.services;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -11,6 +12,7 @@ import br.com.futura.agendafinanceira.dto.RelatorioFiltroDto;
 import br.com.futura.agendafinanceira.exceptions.NenhumResultadoException;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.models.PagamentoQuitacao;
+import br.com.futura.agendafinanceira.models.enums.FormaPagamento;
 
 public class BaixaService implements Serializable {
 
@@ -18,6 +20,9 @@ public class BaixaService implements Serializable {
 
 	@Inject
 	private BaixaDao baixaDao;
+	
+	@Inject
+	private BaixaParcelaService baixaParcelaService;
 	
 	public List<PagamentoParcela> listarPor(BaixaFiltroDto filtro) {
 		return baixaDao.listarPor(filtro);
@@ -32,11 +37,12 @@ public class BaixaService implements Serializable {
 		}
 	}
 
-	public void baixarParcelas(List<PagamentoParcela> parcelas) {
+	public void baixarParcelas(List<PagamentoParcela> parcelas, Date data) {
+		PagamentoQuitacao quitacao;
 		for (PagamentoParcela parcela : parcelas) {
-			// TODO Usar o método baixa (VERIFICAR RESPONSABILIDADES DE CADA CLASSE)
+			quitacao = new PagamentoQuitacao(parcela.saldoDevedor(), data, FormaPagamento.OUTROS);
+			baixaParcelaService.salvar(parcela, quitacao);
 		}
-		
 	}
 
 }

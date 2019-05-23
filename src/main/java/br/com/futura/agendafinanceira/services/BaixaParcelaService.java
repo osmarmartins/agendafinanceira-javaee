@@ -9,6 +9,7 @@ import br.com.futura.agendafinanceira.daos.BaixaParcelaDao;
 import br.com.futura.agendafinanceira.daos.PagamentoDao;
 import br.com.futura.agendafinanceira.daos.PagamentoParcelaDao;
 import br.com.futura.agendafinanceira.models.Pagamento;
+import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.models.PagamentoQuitacao;
 import br.com.futura.agendafinanceira.models.enums.SituacaoPagamento;
 import br.com.futura.agendafinanceira.models.enums.SituacaoParcela;
@@ -31,20 +32,6 @@ public class BaixaParcelaService implements Serializable {
 	@Transactional
 	public void salvar(PagamentoQuitacao quitacao) {
 		
-		Float saldoDevedorParcela = quitacao.getParcela().saldoDevedor().subtract(quitacao.getValor()).floatValue(); 
-		if (saldoDevedorParcela == 0){
-			quitacao.getParcela().setSituacao(SituacaoParcela.LIQUIDADO);
-			parcelaDao.salvar(quitacao.getParcela());
-		}
-		
-		baixaParcelaDao.salvar(quitacao);
-		
-		pagamento = pagamentoDao.pesquisarPorId(quitacao.getParcela().getPagamento().getIdPagamento());
-		Float saldoDevedorPagamento = pagamento.saldoDevedor().subtract(quitacao.getValor()).floatValue();
-		if (saldoDevedorPagamento == 0){
-			pagamento.setSituacao(SituacaoPagamento.FINALIZADO);
-			pagamentoDao.salvar(pagamento);
-		}
 		
 	}
 
@@ -66,6 +53,29 @@ public class BaixaParcelaService implements Serializable {
 			pagamento.setSituacao(SituacaoPagamento.EMABERTO);
 			pagamentoDao.salvar(pagamento);
 		}
+		
+	}
+
+	@Transactional
+	public void salvar(PagamentoParcela parcela, PagamentoQuitacao quitacao) {
+		parcela.addQuitacao(quitacao);
+		quitacao.setParcela(parcela);
+
+		Float saldoDevedorParcela = quitacao.getParcela().saldoDevedor().subtract(quitacao.getValor()).floatValue(); 
+		if (saldoDevedorParcela == 0){
+			quitacao.getParcela().setSituacao(SituacaoParcela.LIQUIDADO);
+			parcelaDao.salvar(quitacao.getParcela());
+		}
+		
+		baixaParcelaDao.salvar(quitacao);
+		
+		pagamento = pagamentoDao.pesquisarPorId(quitacao.getParcela().getPagamento().getIdPagamento());
+		Float saldoDevedorPagamento = pagamento.saldoDevedor().subtract(quitacao.getValor()).floatValue();
+		if (saldoDevedorPagamento == 0){
+			pagamento.setSituacao(SituacaoPagamento.FINALIZADO);
+			pagamentoDao.salvar(pagamento);
+		}
+		
 		
 	}
 

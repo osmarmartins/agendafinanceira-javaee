@@ -31,47 +31,85 @@
 				<h:form id="form" prependId="false">
 
 					<div class="clearfix form-actions ui-widget-header" style="margin-bottom: 0;" jsf:id="comandoGrid">
-						<div class="col-md-6">
-
-							<button class="btn btn-white btn-primary" type="button" jsf:id="btnNovo" jsf:outcome="/pagamento/pagamentocadastro.xhtml">
-								<i class="fa fa-plus"></i> 
-								Novo
-							</button>
-							
-							<p:spacer width="10"/>
-							
-							<button class="btn btn-white btn-danger" type="button" 
-								data-toggle="modal" 
-								data-target="#modalExclusao" 
-								jsf:id="btnExcluirSelecao" 
-								jsf:rendered="#{pagamentoBean.isExisteSelecao()}">
-								<i class="fa fa-trash"></i> Excluir Seleção
-								<f:ajax
-									listener="#{pagamentoBean.mensagemExclusaoBuilder()}"
-									execute="@this"
-									render="btnConfirmaExclucao mensagem"/>
-							</button>
-							
-						</div>
-						
-						<div class="col-md-offset-1 col-md-5 align-right">
-						
-							<div class="input-group">
-								<input class="form-control input-mask-date" type="text" 
-									placeholder="Pesquisa por..."
-									jsf:value="#{pagamentoBean.pesquisaFiltro}" />
-								<span class="input-group-btn">
-									<button class="btn btn-inverse btn-white" type="submit" jsf:action="#{pagamentoBean.pesquisar()}" jsf:update="@form">
-										<i class="ace-icon fa fa-search bigger-110"></i>
-									</button>
-								</span>
+					
+						<div class="row"> <!-- Filtros -->
+							<div class="col-md-2">
+								<div class="form-group">
+									<label class="control-label" jsf:for="situacao">Situação</label>
+									<h:selectOneMenu value="#{pagamentoBean.filtro.situacao}" id="situacao" styleClass="form-control">
+										<f:selectItem itemLabel = "Selecione...." /> 
+										<f:selectItems var="item" value="#{pagamentoBean.situacao}"
+											itemLabel="#{item.descricao}" itemValue="#{item}"/>
+									</h:selectOneMenu>
+								</div>
 							</div>
 
-						</div>
+							<div class="col-md-5">
+								<div class="form-group">
+									<label class="control-label" jsf:for="fornecedor">Fornecedor</label>
+									<h:selectOneMenu value="#{pagamentoBean.filtro.fornecedor}" id="fornecedor" styleClass="form-control">
+										<f:selectItem itemLabel = "Selecione...." /> 
+										<f:selectItems var="item" value="#{pagamentoBean.fornecedores}"
+											itemLabel="#{item.nomeFantasia}" itemValue="#{item}"/>
+									</h:selectOneMenu>
+								</div>
+							</div>
+							
+							<div class="col-md-5">
+								<div class="form-group">
+									<label class="control-label" jsf:for="historico">Histórico</label>
+									<input type="text" jsf:id="historico" jsf:value="#{pagamentoBean.filtro.historico}" styleClass="form-control" />
+								</div>
+							</div>
+						</div> <!-- Filtros -->
+					
+						<div class="row"> <!-- Botões --> 
+							<div class="col-md-6">
+								<button class="btn btn-white btn-primary" type="button" jsf:id="btnNovo" jsf:outcome="/pagamento/pagamentocadastro.xhtml">
+									<i class="fa fa-plus"></i> 
+									Novo
+								</button>
+								
+								<p:spacer width="10"/>
+								
+								<button class="btn btn-white btn-primary" type="button" jsf:id="btnFiltrar" jsf:action="#{pagamentoBean.filtrar()}">
+									<i class="fa fa-filter"></i> 
+									Filtrar
+									<f:ajax execute="@this" render="@form"/>
+								</button>
+								
+								<p:spacer width="10"/>
+								
+								<button class="btn btn-white btn-danger" type="button" 
+									data-toggle="modal" 
+									data-target="#modalExclusao" 
+									jsf:id="btnExcluirSelecao" 
+									jsf:rendered="#{pagamentoBean.isExisteSelecao()}">
+									<i class="fa fa-trash"></i> Excluir Seleção
+									<f:ajax
+										listener="#{pagamentoBean.mensagemExclusaoBuilder()}"
+										execute="@this"
+										render="btnConfirmaExclucao mensagem"/>
+								</button>
+							</div>
+						
+							<div class="col-md-offset-1 col-md-5 align-right">
+								<div class="input-group">
+									<input class="form-control input-mask-date" type="text" 
+										placeholder="Pesquisa por..."/>
+									<span class="input-group-btn">
+										<button class="btn btn-inverse btn-white" type="button" jsf:update="@form">
+											<i class="ace-icon fa fa-search bigger-110"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>  <!-- Botões -->
+						
 					</div>
 
 					<p:dataTable id="tabela"
-						emptyMessage="Nenhum registro encontrado"
+						emptyMessage="Nenhum registro encontrado para o filtro selecionado"
 						value="#{pagamentoBean.pagamentos}" var="pagamento" rowKey="#{pagamento.idPagamento}"
 						selection="#{pagamentoBean.pagamentosSelecionados}"
 						 

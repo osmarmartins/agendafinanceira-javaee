@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,6 +17,7 @@ import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.services.BaixaService;
 import br.com.futura.agendafinanceira.services.FornecedorService;
+import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Named
 @ViewScoped
@@ -34,6 +36,9 @@ public class BaixaBean implements Serializable {
 	private List<PagamentoParcela> parcelasSelecionadas;
 	
 	private List<Fornecedor> fornecedores;
+	
+	@Inject
+	private MessagesHelper messagesHelper;
 	
 	@Inject
 	private BaixaService baixaService;
@@ -61,9 +66,10 @@ public class BaixaBean implements Serializable {
 	}
 	
 	public void baixarSelecionadas() {
-		System.out.println("DATA >>>>>>>>>>>> " + this.dataBaixa);
-		baixaService.baixarParcelas(parcelasSelecionadas);
+		baixaService.baixarParcelas(parcelasSelecionadas, dataBaixa);
 		filtrar();
+		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
+		
 	}
 	
 	public Boolean isExisteSelecao() {
