@@ -33,25 +33,25 @@ public class BaixaDao implements Serializable {
 	}
 
 	public List<PagamentoParcela> listarPor(BaixaFiltroDto filtro) {
-		String sql = "select p from PagamentoParcela p "
-						+ "join fetch p.pagamento pg "
-						+ "join fetch pg.fornecedor "
-						+ "join fetch pg.setor "
-						+ "join fetch pg.conta "
-						+ "left join fetch p.quitacoes q "
-						+ "WHERE p.situacao in (0, 1, 2) ";
+		StringBuilder sql = new StringBuilder("select p from PagamentoParcela p ");
+			sql.append(" join fetch p.pagamento pg ");
+			sql.append(" join fetch pg.fornecedor ");
+			sql.append(" join fetch pg.setor ");
+			sql.append(" join fetch pg.conta ");
+			sql.append(" left join fetch p.quitacoes q ");
+			sql.append(" WHERE p.situacao in (0, 1, 2) ");
 		
 		if (filtro.getDataInicial() != null) {
-			sql += " and p.vencimento between :pDataInicial and :pDataFinal ";
+			sql.append(" and p.vencimento between :pDataInicial and :pDataFinal ");
 		}
 		
 		if (filtro.getFornecedor() != null) {
-			sql += " and pg.fornecedor.idFornecedor = :pFornecedor ";
+			sql.append(" and pg.fornecedor = :pFornecedor ");
 		}
 		
-		sql += " order by p.vencimento, pg.fornecedor.razaoSocial ";
+		sql.append(" order by p.vencimento, pg.fornecedor.razaoSocial ");
 		
-		TypedQuery<PagamentoParcela> query = manager.createQuery(sql, PagamentoParcela.class);
+		TypedQuery<PagamentoParcela> query = manager.createQuery(sql.toString(), PagamentoParcela.class);
 		
 		if (filtro.getDataInicial() != null) {
 			query.setParameter("pDataInicial", filtro.getDataInicial());
@@ -59,12 +59,11 @@ public class BaixaDao implements Serializable {
 		}
 		
 		if (filtro.getFornecedor() != null) {
-			query.setParameter("pFornecedor", filtro.getFornecedor().getIdFornecedor());
+			query.setParameter("pFornecedor", filtro.getFornecedor());
 		}
 				
 		return query.getResultList();
-		}
-	
+	}
 	
 
 	public List<PagamentoQuitacao> listarPor(RelatorioFiltroDto filtro){

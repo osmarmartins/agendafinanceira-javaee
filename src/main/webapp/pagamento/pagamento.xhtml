@@ -75,7 +75,7 @@
 								<button class="btn btn-white btn-primary" type="button" jsf:id="btnFiltrar" jsf:action="#{pagamentoBean.filtrar()}">
 									<i class="fa fa-filter"></i> 
 									Filtrar
-									<f:ajax execute="@this" render="@form"/>
+									<f:ajax execute="@this historico fornecedor situacao" render="@form"/>
 								</button>
 								
 								<p:spacer width="10"/>
@@ -92,26 +92,14 @@
 										render="btnConfirmaExclucao mensagem"/>
 								</button>
 							</div>
-						
-							<div class="col-md-offset-1 col-md-5 align-right">
-								<div class="input-group">
-									<input class="form-control input-mask-date" type="text" 
-										placeholder="Pesquisa por..."/>
-									<span class="input-group-btn">
-										<button class="btn btn-inverse btn-white" type="button" jsf:update="@form">
-											<i class="ace-icon fa fa-search bigger-110"></i>
-										</button>
-									</span>
-								</div>
-							</div>
 						</div>  <!-- Botões -->
 						
 					</div>
 
 					<p:dataTable id="tabela"
 						emptyMessage="Nenhum registro encontrado para o filtro selecionado"
-						value="#{pagamentoBean.pagamentos}" var="pagamento" rowKey="#{pagamento.idPagamento}"
-						selection="#{pagamentoBean.pagamentosSelecionados}"
+						value="#{pagamentoBean.parcelas}" var="parcela" rowKey="#{parcela.idPagamentoParcela}"
+						selection="#{pagamentoBean.parcelasSelecionadas}"
 						 
 						rows="#{sessionBean.itensPorPagina}"
 						rowsPerPageTemplate="3 8 10 20"
@@ -130,42 +118,42 @@
 						<p:column selectionMode="multiple" width="5%" styleClass="align-center">
 						</p:column>
 						
-						<p:column sortBy="#{pagamento.emissao}" width="15%">
+						<p:column sortBy="#{parcela.vencimento}" width="15%">
 							<f:facet name="header">
 								<i class="ace-icon fa fa-calendar"></i>							
-								Emissão
+								Vencimento
 							</f:facet>
-							<h:outputText value="#{pagamento.emissao}">
+							<h:outputText value="#{parcela.vencimento}">
 								<f:convertDateTime pattern="dd/MM/yyyy"/>							
 							</h:outputText>
 						</p:column>
 						
-						<p:column sortBy="#{pagamento.fornecedor.razaoSocial}">
+						<p:column sortBy="#{parcela.pagamento.fornecedor.razaoSocial}">
 							<f:facet name="header">
 								<i class="ace-icon fa fa-eye"></i>							
 								Razão Social
 							</f:facet>
-							<h:outputText value="#{pagamento.fornecedor.razaoSocial}"/>
+							<h:outputText value="#{parcela.pagamento.fornecedor.razaoSocial}"/>
 						</p:column>
 						
-						<p:column sortBy="#{pagamento.historico}">
+						<p:column sortBy="#{parcela.pagamento.historico}">
 							<f:facet name="header">
 								<i class="ace-icon fa fa-eye"></i>							
 								Histórico
 							</f:facet>
-							<h:outputText value="#{pagamento.historico}"/>
+							<h:outputText value="#{parcela.pagamento.historico}"/>
 						</p:column>
-						
-						<p:column sortBy="#{pagamento.saldoDevedor()}" width="15%">
+
+						<p:column sortBy="#{parcela.pagamento.saldoDevedor()}" width="15%">
 							<f:facet name="header">
 								<i class="ace-icon fa fa-usd"></i>							
 								Saldo Devedor
 							</f:facet>
-							<h:outputText value="#{pagamento.saldoDevedor()}">
+							<h:outputText value="#{parcela.saldoDevedor()}">
 								<f:convertNumber type="currency"/>
 							</h:outputText>
 						</p:column>
-						
+
 						<p:column class="text-center" width="12%">
 							<f:facet name="header">
 								<i class="ace-icon fa fa-gear"></i>							
@@ -174,7 +162,7 @@
 							
 							<button type="button" class="btn btn-sm btn-success btn-white btn-round" 
 								jsf:id="btnAlterar" jsf:outcome="pagamentocadastro">
-								<f:param name="pagamento" value="#{pagamento.idPagamento}"/>
+								<f:param name="pagamento" value="#{parcela.pagamento.idPagamento}"/>
 								<i class="ace-icon fa fa-pencil bigger-110 green"></i>
 							</button>
 							

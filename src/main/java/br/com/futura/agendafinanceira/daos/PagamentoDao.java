@@ -5,8 +5,11 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
+import br.com.futura.agendafinanceira.dto.PagamentoFiltroDto;
 import br.com.futura.agendafinanceira.models.Pagamento;
+import br.com.futura.agendafinanceira.models.PagamentoParcela;
 
 public class PagamentoDao implements Serializable {
 
@@ -28,30 +31,50 @@ public class PagamentoDao implements Serializable {
 		return pagamento;
 	}
 	
-	public List<Pagamento> listarTodos() {
-		return manager.createQuery("select distinct pg from Pagamento pg "
-				+ "join fetch pg.fornecedor f "
-				+ "left join fetch pg.parcelas p "
-				+ "left join fetch p.quitacoes q "
-				+ "join fetch pg.conta c ", Pagamento.class)
-					.getResultList();
+
+	public List<PagamentoParcela> listarPor(PagamentoFiltroDto filtro) {
+		StringBuilder sql = new StringBuilder("select p from PagamentoParcela p ");
+			sql.append(" join fetch p.pagamento pg ");
+			sql.append(" join fetch pg.fornecedor ");
+			sql.append(" join fetch pg.setor ");
+			sql.append(" join fetch pg.conta ");
+			sql.append(" left join fetch p.quitacoes q ");
+			sql.append( " where 1=1 ");
+				
+		if (filtro.getHistorico()!=null) {
+			sql.append(" and pg.historico like :pHistorico ");
+		}
+		
+		if (filtro.getFornecedor()!=null) {
+			sql.append(" and pg.fornecedor = :pFornecedor ");
+		}
+		
+		if (filtro.getSituacao()!=null) {
+			sql.append(" and p.situacao = :pSituacao ");
+		}
+		
+		sql.append( " order by p.vencimento ");
+		
+		TypedQuery<PagamentoParcela> query =  manager.createQuery(sql.toString(), PagamentoParcela.class);
+		
+		if (filtro.getHistorico()!=null) {
+			query.setParameter("pHistorico", "%" + filtro.getHistorico() + "%");
+		}
+		
+		if (filtro.getFornecedor()!=null) {
+			query.setParameter("pFornecedor", filtro.getFornecedor());
+		}
+		
+		if (filtro.getSituacao()!=null) {
+			query.setParameter("pSituacao", filtro.getSituacao());
+		}
+					
+		return query.getResultList();
 	}
 
-	public List<Pagamento> listarPor(String filtro) {
-		return manager.createQuery("select pg from Pagamento pg "
-				+ "join fetch pg.fornecedor "
-				+ "WHERE pg.historico LIKE :pHistorico "
-				+ "OR pg.fornecedor.nomeFantasia LIKE :pNomeFantasia "
-				+ "OR pg.fornecedor.razaoSocial LIKE :pRazaoSocial ",Pagamento.class)
-					.setParameter("pHistorico", "%" + filtro + "%")
-					.setParameter("pNomeFantasia", "%" + filtro + "%")
-					.setParameter("pRazaoSocial", "%" + filtro + "%")
-					.getResultList();
-	}
-
-	public void excluir(List<Pagamento> pagamentos) {
-		for (Pagamento pagamento : pagamentos) {
-			manager.remove(manager.getReference(Pagamento.class, pagamento.getIdPagamento()));
+	public void excluir(List<PagamentoParcela> parcelas) {
+		for (PagamentoParcela parcela : parcelas) {
+			manager.remove(manager.getReference(Pagamento.class, parcela.getPagamento().getIdPagamento()));
 		}
 	}
 

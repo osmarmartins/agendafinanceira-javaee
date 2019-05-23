@@ -13,6 +13,7 @@ import javax.inject.Named;
 import br.com.futura.agendafinanceira.dto.PagamentoFiltroDto;
 import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.Pagamento;
+import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.models.enums.SituacaoParcela;
 import br.com.futura.agendafinanceira.services.FornecedorService;
 import br.com.futura.agendafinanceira.services.PagamentoService;
@@ -24,9 +25,9 @@ public class PagamentoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private List<Pagamento> pagamentos;
+	private List<PagamentoParcela> parcelas;
 
-	private List<Pagamento> pagamentosSelecionados;
+	private List<PagamentoParcela> parcelasSelecionadas;
 	
 	private List<Fornecedor> fornecedores;
 	
@@ -52,8 +53,8 @@ public class PagamentoBean implements Serializable {
 
 		this.filtro = new PagamentoFiltroDto();
 		
-		this.pagamentos = new ArrayList<>();
-		this.pagamentosSelecionados = new ArrayList<>();
+		this.parcelas = new ArrayList<>();
+		this.parcelasSelecionadas = new ArrayList<>();
 		
 		this.mensagemExclusao = new String();
 	}
@@ -63,51 +64,49 @@ public class PagamentoBean implements Serializable {
 	}
 	
 	public Boolean isExisteSelecao() {
-		return !pagamentosSelecionados.isEmpty();
+		return !parcelasSelecionadas.isEmpty();
 	}
 	
-	public void selecionaPagamento(Pagamento pagamento) {
-		pagamentosSelecionados.add(pagamento);
+	public void selecionarParcela(PagamentoParcela parcela) {
+		parcelasSelecionadas.add(parcela);
 		mensagemExclusaoBuilder();
 	}
 	
 	public void mensagemExclusaoBuilder() {
 		StringBuilder msg = new StringBuilder();
 
-		if (this.getPagamentosSelecionados()!=null && !this.getPagamentosSelecionados().isEmpty()) {
+		if (this.getParcelasSelecionadas()!=null && !this.getParcelasSelecionadas().isEmpty()) {
 			msg.append("Excluir permanentemente ");
-			if (this.getPagamentosSelecionados().size()>1) {
+			if (this.getParcelasSelecionadas().size()>1) {
 				msg.append("os pagamentos selecionados?");
 			}else {
 				msg.append("o pagamento ");
-				msg.append(pagamentosSelecionados.get(0).getHistorico());
+				msg.append(parcelasSelecionadas.get(0).getPagamento().getHistorico());
 			}
 		}
 		this.mensagemExclusao = msg.toString();
 	}
 
 	public void excluir() {
-		pagamentoService.excluir(pagamentosSelecionados);
+		pagamentoService.excluir(parcelasSelecionadas);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		init();
 	}
 	
 	public void filtrar() {
-		System.out.println("FILTRO >>>>>>>>>>>>>> " + filtro);
-//		this.pagamentos = pagamentoService.listarTodos(filtro);
-		
+		this.parcelas = pagamentoService.listarPor(filtro);
 	}
 
-	public List<Pagamento> getPagamentos() {
-		return pagamentos;
+	public List<PagamentoParcela> getParcelas() {
+		return parcelas;
 	}
 	
-	public List<Pagamento> getPagamentosSelecionados() {
-		return pagamentosSelecionados;
+	public List<PagamentoParcela> getParcelasSelecionadas() {
+		return parcelasSelecionadas;
 	}
 
-	public void setPagamentosSelecionados(List<Pagamento> pagamentosSelecionados) {
-		this.pagamentosSelecionados = pagamentosSelecionados;
+	public void setParcelasSelecionadas(List<PagamentoParcela> parcelasSelecionadas) {
+		this.parcelasSelecionadas = parcelasSelecionadas;
 	}
 
 	public String getMensagemExclusao() {
