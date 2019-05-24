@@ -38,8 +38,8 @@
 									<label class="control-label" jsf:for="situacao">Situação</label>
 									<h:selectOneMenu value="#{pagamentoBean.filtro.situacao}" id="situacao" styleClass="form-control">
 										<f:selectItem itemLabel = "Selecione...." /> 
-										<f:selectItems var="item" value="#{pagamentoBean.situacao}"
-											itemLabel="#{item.descricao}" itemValue="#{item}"/>
+										<f:selectItems var="item-situacao" value="#{pagamentoBean.situacao}"
+											itemLabel="#{item-situacao.descricao}" itemValue="#{item-situacao}"/>
 									</h:selectOneMenu>
 								</div>
 							</div>
@@ -49,8 +49,8 @@
 									<label class="control-label" jsf:for="fornecedor">Fornecedor</label>
 									<h:selectOneMenu value="#{pagamentoBean.filtro.fornecedor}" id="fornecedor" styleClass="form-control">
 										<f:selectItem itemLabel = "Selecione...." /> 
-										<f:selectItems var="item" value="#{pagamentoBean.fornecedores}"
-											itemLabel="#{item.nomeFantasia}" itemValue="#{item}"/>
+										<f:selectItems var="item-fornecedor" value="#{pagamentoBean.fornecedores}"
+											itemLabel="#{item-fornecedor.nomeFantasia}" itemValue="#{item-fornecedor}"/>
 									</h:selectOneMenu>
 								</div>
 							</div>
@@ -58,9 +58,10 @@
 							<div class="col-md-5">
 								<div class="form-group">
 									<label class="control-label" jsf:for="historico">Histórico</label>
-									<input type="text" jsf:id="historico" jsf:value="#{pagamentoBean.filtro.historico}" styleClass="form-control" />
+									<input type="submit" jsf:value="#{pagamentoBean.filtro.historico}" jsf:id="historico" styleClass="form-control"/>
 								</div>
 							</div>
+							
 						</div> <!-- Filtros -->
 					
 						<div class="row"> <!-- Botões --> 
@@ -107,8 +108,8 @@
 						paginatorTemplate="{ItensPorPagina} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
 						<f:facet name="{ItensPorPagina}">
 							<p:outputLabel value="Itens por Página: " />
-							<p:inputText value="#{sessionBean.itensPorPagina}" process="@this" update="@form" style="width: 50px; margin-right: 10px; margin-left: 5px;"/>
-						</f:facet> 
+							<p:inputText value="#{sessionBean.itensPorPagina}" process="@form" update="@form" style="width: 50px; margin-right: 10px; margin-left: 5px;"/>
+						</f:facet>  
 						
 						<p:ajax event="rowSelect" process="@this" update="@form"/>
 						<p:ajax event="toggleSelect" process="@this" update="@form"/>
@@ -166,6 +167,8 @@
 								<i class="ace-icon fa fa-pencil bigger-110 green"></i>
 							</button>
 							
+							<p:spacer width="5"/>
+
 							<button type="button" class="btn btn-sm btn-danger btn-white btn-round" 
 								data-toggle="modal" 
 								data-target="#modalExclusao" 
