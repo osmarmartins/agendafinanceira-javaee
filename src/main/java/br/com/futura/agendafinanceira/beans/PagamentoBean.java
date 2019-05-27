@@ -2,6 +2,7 @@ package br.com.futura.agendafinanceira.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -37,6 +38,8 @@ public class PagamentoBean implements Serializable {
 	
 	private PagamentoFiltroDto filtro;
 	
+	private Date dataProgramacao;
+	
 	@Inject
 	private PagamentoService pagamentoService;
 	
@@ -57,6 +60,14 @@ public class PagamentoBean implements Serializable {
 		this.parcelasSelecionadas = new ArrayList<>();
 		
 		this.mensagemExclusao = new String();
+	}
+	
+	public void aplicarDataProgramacao() {
+		pagamentoService.aplicarDataProgramacao(parcelasSelecionadas, dataProgramacao);
+	}
+
+	public void agendarPagamento() {
+		pagamentoService.agendarPagamento(parcelasSelecionadas);
 	}
 
 	public String alterar(Pagamento pagamento) {
@@ -135,6 +146,14 @@ public class PagamentoBean implements Serializable {
 	
 	public SituacaoParcela[] getSituacao() {
 		return situacao;
+	}
+	
+	public void setDataProgramacao(Date dataProgramacao) {
+		this.dataProgramacao = dataProgramacao;
+	}
+	
+	public Date getDataProgramacao() {
+		return dataProgramacao;
 	}
 	
 }

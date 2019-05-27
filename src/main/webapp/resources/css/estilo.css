@@ -5,6 +5,14 @@
 	text-align: center;
 }
 
+.btn {
+	margin-bottom: 10px;
+}
+
+.input-group {
+	margin-bottom: 10px;
+}
+
 .ui-paginator .ui-paginator-page, .ui-paginator .ui-paginator-pages, 
 .ui-paginator .ui-paginator-next, .ui-paginator .ui-paginator-last, 
 .ui-paginator .ui-paginator-first, .ui-paginator .ui-paginator-prev, 

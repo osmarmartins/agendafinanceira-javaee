@@ -87,6 +87,4 @@ public class PagamentoDao implements Serializable {
 		
 	}
 
-
-
 }

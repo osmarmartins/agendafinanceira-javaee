@@ -65,14 +65,14 @@
 						</div> <!-- Filtros -->
 					
 						<div class="row"> <!-- Botões --> 
-							<div class="col-md-6">
+							<div class="col-md-2">
 								<button class="btn btn-white btn-primary" type="button" jsf:id="btnNovo" jsf:outcome="/pagamento/pagamentocadastro.xhtml">
 									<i class="fa fa-plus"></i> 
 									Novo
 								</button>
-								
-								<p:spacer width="10"/>
-								
+							</div>
+														
+							<div class="col-md-5">
 								<button class="btn btn-white btn-primary" type="submit" jsf:id="btnFiltrar" jsf:action="#{pagamentoBean.filtrar()}">
 									<i class="fa fa-filter"></i> 
 									Filtrar
@@ -92,6 +92,39 @@
 										execute="@this"
 										render="btnConfirmaExclucao mensagem"/>
 								</button>
+								
+								<p:spacer width="10"/>
+								
+								<button class="btn btn-white btn-success" type="button" 
+									jsf:id="btnAgendamento" 
+									jsf:rendered="#{pagamentoBean.isExisteSelecao()}">
+									<i class="fa fa-trash"></i> Agendar Pagamento
+									<f:ajax
+										listener="#{pagamentoBean.agendarPagamento()}"
+										execute="@this"
+										render="@form"/>
+								</button>
+							</div>
+							
+							<div class="col-md-5">
+								<div class="input-group" jsf:id="divProgramacao" jsf:rendered="#{pagamentoBean.isExisteSelecao()}">
+									<span class="input-group-btn">
+										<button class="btn btn-sm btn-success" type="button"
+											jsf:action="#{pagamentoBean.aplicarDataProgramacao()}"
+											jsf:id="btnProgramacao">
+											<i class="ace-icon fa fa-check-square-o bigger-110"></i>
+											Programar na Data
+											<f:ajax
+												execute="@this dataProgramacao"
+												render="@form"/>
+										</button>
+									</span>
+									<input class="form-control date-picker" 
+										jsf:id="dataProgramacao" 
+										jsf:value="#{pagamentoBean.dataProgramacao}" type="date" data-date-format="dd/mm/yyyy">
+										<f:convertDateTime pattern="yyyy-MM-dd"/>
+									</input>
+								</div>									
 							</div>
 						</div>  <!-- Botões -->
 						
