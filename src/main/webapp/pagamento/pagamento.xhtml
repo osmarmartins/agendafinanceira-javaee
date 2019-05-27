@@ -38,8 +38,8 @@
 									<label class="control-label" jsf:for="situacao">Situação</label>
 									<h:selectOneMenu value="#{pagamentoBean.filtro.situacao}" id="situacao" styleClass="form-control">
 										<f:selectItem itemLabel = "Selecione...." /> 
-										<f:selectItems var="item-situacao" value="#{pagamentoBean.situacao}"
-											itemLabel="#{item-situacao.descricao}" itemValue="#{item-situacao}"/>
+										<f:selectItems var="item" value="#{pagamentoBean.situacao}"
+											itemLabel="#{item.descricao}" itemValue="#{item}"/>
 									</h:selectOneMenu>
 								</div>
 							</div>
@@ -49,8 +49,8 @@
 									<label class="control-label" jsf:for="fornecedor">Fornecedor</label>
 									<h:selectOneMenu value="#{pagamentoBean.filtro.fornecedor}" id="fornecedor" styleClass="form-control">
 										<f:selectItem itemLabel = "Selecione...." /> 
-										<f:selectItems var="item-fornecedor" value="#{pagamentoBean.fornecedores}"
-											itemLabel="#{item-fornecedor.nomeFantasia}" itemValue="#{item-fornecedor}"/>
+										<f:selectItems var="item" value="#{pagamentoBean.fornecedores}"
+											itemLabel="#{item.nomeFantasia}" itemValue="#{item}"/>
 									</h:selectOneMenu>
 								</div>
 							</div>
@@ -58,7 +58,7 @@
 							<div class="col-md-5">
 								<div class="form-group">
 									<label class="control-label" jsf:for="historico">Histórico</label>
-									<input type="submit" jsf:value="#{pagamentoBean.filtro.historico}" jsf:id="historico" styleClass="form-control"/>
+									<input type="text" jsf:value="#{pagamentoBean.filtro.historico}" jsf:id="historico" styleClass="form-control"/>
 								</div>
 							</div>
 							
@@ -73,10 +73,10 @@
 								
 								<p:spacer width="10"/>
 								
-								<button class="btn btn-white btn-primary" type="button" jsf:id="btnFiltrar" jsf:action="#{pagamentoBean.filtrar()}">
+								<button class="btn btn-white btn-primary" type="submit" jsf:id="btnFiltrar" jsf:action="#{pagamentoBean.filtrar()}">
 									<i class="fa fa-filter"></i> 
 									Filtrar
-									<f:ajax execute="@this historico fornecedor situacao" render="@form"/>
+									<f:ajax execute="@this historico fornecedor situacao tabela" render="@form"/>
 								</button>
 								
 								<p:spacer width="10"/>
@@ -108,7 +108,7 @@
 						paginatorTemplate="{ItensPorPagina} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
 						<f:facet name="{ItensPorPagina}">
 							<p:outputLabel value="Itens por Página: " />
-							<p:inputText value="#{sessionBean.itensPorPagina}" process="@form" update="@form" style="width: 50px; margin-right: 10px; margin-left: 5px;"/>
+							<p:inputText id="paginacao" value="#{sessionBean.itensPorPagina}" process="@form" update="@form" style="width: 50px; margin-right: 10px; margin-left: 5px;"/>
 						</f:facet>  
 						
 						<p:ajax event="rowSelect" process="@this" update="@form"/>
