@@ -53,7 +53,7 @@ public class BaixaBean implements Serializable {
 		this.total = BigDecimal.ZERO;
 		this.parcelas = new ArrayList<>();
 		this.parcelasSelecionadas = new ArrayList<>();
-		this.fornecedores = fornecedorService.listarAtivos(); 
+		this.fornecedores = fornecedorService.listarTodos();
 	}
 	
 	public void filtrar() {

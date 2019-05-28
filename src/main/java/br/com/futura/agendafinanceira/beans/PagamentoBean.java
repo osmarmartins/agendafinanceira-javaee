@@ -64,10 +64,14 @@ public class PagamentoBean implements Serializable {
 	
 	public void aplicarDataProgramacao() {
 		pagamentoService.aplicarDataProgramacao(parcelasSelecionadas, dataProgramacao);
+		filtrar();
+		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 	}
 
 	public void agendarPagamento() {
 		pagamentoService.agendarPagamento(parcelasSelecionadas);
+		filtrar();
+		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 	}
 
 	public String alterar(Pagamento pagamento) {
@@ -105,6 +109,7 @@ public class PagamentoBean implements Serializable {
 	}
 	
 	public void filtrar() {
+		this.parcelasSelecionadas = new ArrayList<>();		
 		this.parcelas = pagamentoService.listarPor(filtro);
 	}
 
