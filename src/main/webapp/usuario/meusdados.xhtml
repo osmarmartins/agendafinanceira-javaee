@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head/>
+
+<ui:composition template="/resources/template/aceadmin.xhtml">
+
+	<ui:define name="navegacao">
+		<li class="active">Meus Dados</li>
+	</ui:define>
+	
+	<ui:define name="titulo">
+		Dados do Usuário
+	</ui:define>
+
+	<ui:define name="subtitulo">
+		Informações para acesso e contato do usuário
+	</ui:define>
+
+	<ui:define name="conteudo">
+    	
+		<div class="ui-g">	
+			<div class="ui-g-12">
+			
+				<form jsf:id="formularioSenha" jsf:prependId="false">
+					
+					<div class="widget-box">
+						<div class="widget-header">
+							<div class="widget-main">
+								<button class="btn btn-lg btn-purple" type="button" jsf:outcome="/index.xhtml">	
+									<i class="ace-icon fa fa-arrow-left"></i>
+									Voltar
+								</button>	
+								
+								<span/>					
+		
+								<button class="btn btn-lg btn-info" type="submit" jsf:action="#{redefinirSenhaBean.salvar()}">	
+									<i class="ace-icon fa fa-check"></i>
+									Salvar
+								</button>						
+							</div>
+						</div>
+	
+						<div class="widget-body">
+							<div class="container-fluid">
+								
+								<!--  TODO Migrar métodos da classe redefinirSenhaBean para a classe usuarioCadastroBean -->
+								
+								
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" jsf:for="idUsuario">ID</label>
+											<input type="text" class="form-control" readonly="readonly" 
+												jsf:id="idUsuario"
+												jsf:binding="#{idUsuario}" 
+												jsf:value="#{redefinirSenhaBean.usuarioLogado.idUsuario}"/>
+										</div>
+									</div>
+									
+									<div class="col-sm-10">
+										<div class="form-group">
+											<label class="control-label" jsf:for="nome">Nome</label>
+											<input type="text" class="form-control" readonly="readonly"  
+												jsf:id="nome"
+												jsf:binding="#{nome}" 
+												jsf:value="#{redefinirSenhaBean.usuarioLogado.nome}"/>
+										</div>
+									</div>
+								</div>
+								
+								
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group #{!email.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="email">Email</label>
+											<input type="text" class="form-control" 
+												jsf:id="email"
+												jsf:binding="#{email}" 
+												jsf:value="#{usuarioCadastroBean.usuario.email}"
+												placeholder="seuemail@seudominio.com"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="email"/> 
+											</div>
+										</div>
+									</div>
+									
+									<div class="col-sm-6">
+										<div class="form-group #{!login.valid ? 'has-error' : ''}">
+											<label class="control-label" jsf:for="login">Login</label>
+											<input type="text" class="form-control" 
+												jsf:id="login"
+												jsf:binding="#{login}" 
+												jsf:value="#{usuarioCadastroBean.usuario.login}"
+												placeholder="Login para acesso ao sistema"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="login"/> 
+											</div>
+										</div>
+									</div>
+								</div>
+
+	
+								<div class="row" jsf:rendered="#{usuarioCadastroBean.usuario.novo}">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="control-label" jsf:for="senha">Senha</label>
+											<input type="password" class="form-control" 
+												jsf:id="senha"
+												jsf:binding="#{senha}" 
+												jsf:value="#{usuarioCadastroBean.usuario.senha}"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="senha"/> 
+											</div>
+										</div>
+									</div>
+									
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="control-label" jsf:for="confirmarSenha">Confirmar Senha</label>
+											<input type="password" class="form-control" 
+												jsf:id="confirmarSenha"
+												jsf:binding="#{confirmarSenha}" 
+												jsf:value="#{usuarioCadastroBean.confirmarSenha}"/>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="confirmarSenha"/> 
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+								
+							</div>
+						</div>
+
+				</form>
+			
+			</div>
+		</div>
+
+	</ui:define>
+
+	<ui:define name="pagina">Cadastro de Usuários</ui:define>
+</ui:composition>
+
+</html>

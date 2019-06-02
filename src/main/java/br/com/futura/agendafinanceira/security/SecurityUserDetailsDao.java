@@ -13,17 +13,16 @@ import br.com.futura.agendafinanceira.models.Usuario;
 public class SecurityUserDetailsDao {
 
 	private EntityManager em;
-
-	private SecurityUserDetailsDao() {
-		criaEntityManager();
-	}
+	private EntityManagerFactory emf;
 
 	private void criaEntityManager() {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("agendafinanceiraPU");
+		emf = Persistence.createEntityManagerFactory("agendafinanceiraPU");
 		em = emf.createEntityManager();
 	}
 
 	public Usuario pesquisarPor(String login) {
+		criaEntityManager();
+		
 		Usuario usuarioLogado = new Usuario();
 		try {
 			usuarioLogado = em.createQuery("select u from Usuario u where u.ativo=1 and u.login = :pLogin ", Usuario.class)
@@ -32,7 +31,10 @@ public class SecurityUserDetailsDao {
 		} catch (Exception e) {
 			throw new UsernameNotFoundException("Usuário não localizado!");
 		}
-
+		
+		em.close();
+		emf.close();
+		
 		return usuarioLogado;
 	}
 
