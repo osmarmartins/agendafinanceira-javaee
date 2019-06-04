@@ -41,7 +41,7 @@
 								
 								<span/>					
 		
-								<button class="btn btn-lg btn-info" type="submit" jsf:action="#{redefinirSenhaBean.salvar()}">	
+								<button class="btn btn-lg btn-info" type="submit" jsf:action="#{usuarioCadastroBean.alterarMeusDados()}">	
 									<i class="ace-icon fa fa-check"></i>
 									Salvar
 								</button>						
@@ -58,7 +58,7 @@
 											<input type="text" class="form-control" readonly="readonly" 
 												jsf:id="idUsuario"
 												jsf:binding="#{idUsuario}" 
-												jsf:value="#{redefinirSenhaBean.usuarioLogado.idUsuario}"/>
+												jsf:value="#{usuarioCadastroBean.usuarioLogado.idUsuario}"/>
 										</div>
 									</div>
 									
@@ -68,7 +68,7 @@
 											<input type="text" class="form-control" readonly="readonly"  
 												jsf:id="nome"
 												jsf:binding="#{nome}" 
-												jsf:value="#{redefinirSenhaBean.usuarioLogado.nome}"/>
+												jsf:value="#{usuarioCadastroBean.usuarioLogado.nome}"/>
 										</div>
 									</div>
 								</div>
@@ -80,7 +80,7 @@
 											<input type="password" class="form-control" autofocus="autofocus"
 												jsf:id="senha"
 												jsf:binding="#{senha}" 
-												jsf:value="#{redefinirSenhaBean.usuarioLogado.senha}"/>
+												jsf:value="#{usuarioCadastroBean.usuarioLogado.senha}"/>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="senha"/> 
 											</div>
@@ -92,8 +92,8 @@
 											<label class="control-label" jsf:for="novaSenha">Confirmar a senha</label>
 											<input type="password" class="form-control" 
 												jsf:id="novaSenha"
-												jsf:binding="#{login}" 
-												jsf:value="#{redefinirSenhaBean.usuarioLogado.confirmarSenha}"
+												jsf:binding="#{novaSenha}" 
+												jsf:value="#{usuarioCadastroBean.usuarioLogado.confirmarSenha}"
 												placeholder="Login para acesso ao sistema"/>
 											<div class="help-block col-xs-12 col-sm-reset inline"/> 
 												<h:message for="novaSenha"/> 

@@ -1,6 +1,7 @@
 package br.com.futura.agendafinanceira.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -63,7 +64,7 @@ public class Usuario implements Serializable, UserDetails {
 	@JoinTable(name = "login_role_usuario", 
 		joinColumns = {@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario") }, 
 		inverseJoinColumns = {@JoinColumn(name = "id_role", referencedColumnName = "id_role") })
-	private List<Autorizacao> permissoes;
+	private List<Autorizacao> permissoes = new ArrayList<>();
 	
 	public List<Autorizacao> getPermissoes() {
 		if (this.permissoes.size() == 0) {

@@ -56,14 +56,17 @@ public class UsuarioService implements Serializable, UserDetailsService {
 	}
 
 	@Transactional
-	public void redefinirSenha(Usuario usuario) throws ConfirmarSenhaException {
+	public void salvarMeusDados(Usuario usuario) throws ConfirmarSenhaException {
+		if (usuario.getSenha() == null) {
+			throw new ConfirmarSenhaException("Senha não informada ou inválida! Repita a operação");
+		}
+		
 		if (!usuario.getSenha().equals(usuario.getConfirmarSenha())) {
 			throw new ConfirmarSenhaException("As senhas não conferem! Repita a operação");
 		}
 		
 		usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
 		usuarioDao.salvar(usuario);
-		
 	} 
 
 	public List<Autorizacao> listarAutorizacoesDisponiveis(Usuario usuario) {

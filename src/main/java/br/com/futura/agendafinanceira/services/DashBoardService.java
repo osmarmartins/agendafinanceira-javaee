@@ -1,7 +1,6 @@
 package br.com.futura.agendafinanceira.services;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -28,7 +27,7 @@ public class DashBoardService implements Serializable {
 	Date dataFinal = new Date();
 	
 	@PostConstruct
-	private void init() throws ParseException {
+	private void init() {
 		calcularUltimosDozeMeses();
 	}
 	

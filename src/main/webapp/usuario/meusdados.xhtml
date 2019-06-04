@@ -41,7 +41,7 @@
 								
 								<span/>					
 		
-								<button class="btn btn-lg btn-info" type="submit" jsf:action="#{redefinirSenhaBean.salvar()}">	
+								<button class="btn btn-lg btn-info" type="submit" jsf:action="#{usuarioCadastroBean.alterarMeusDados()}">	
 									<i class="ace-icon fa fa-check"></i>
 									Salvar
 								</button>						
@@ -50,10 +50,6 @@
 	
 						<div class="widget-body">
 							<div class="container-fluid">
-								
-								<!--  TODO Migrar métodos da classe redefinirSenhaBean para a classe usuarioCadastroBean -->
-								
-								
 								<div class="row">
 									<div class="col-sm-2">
 										<div class="form-group">
@@ -61,7 +57,7 @@
 											<input type="text" class="form-control" readonly="readonly" 
 												jsf:id="idUsuario"
 												jsf:binding="#{idUsuario}" 
-												jsf:value="#{redefinirSenhaBean.usuarioLogado.idUsuario}"/>
+												jsf:value="#{usuarioCadastroBean.usuarioLogado.idUsuario}"/>
 										</div>
 									</div>
 									
@@ -71,7 +67,7 @@
 											<input type="text" class="form-control" readonly="readonly"  
 												jsf:id="nome"
 												jsf:binding="#{nome}" 
-												jsf:value="#{redefinirSenhaBean.usuarioLogado.nome}"/>
+												jsf:value="#{usuarioCadastroBean.usuarioLogado.nome}"/>
 										</div>
 									</div>
 								</div>
@@ -84,8 +80,7 @@
 											<input type="text" class="form-control" 
 												jsf:id="email"
 												jsf:binding="#{email}" 
-												jsf:value="#{usuarioCadastroBean.usuario.email}"
-												placeholder="seuemail@seudominio.com"/>
+												jsf:value="#{usuarioCadastroBean.usuarioLogado.email}"/>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="email"/> 
 											</div>
@@ -98,8 +93,7 @@
 											<input type="text" class="form-control" 
 												jsf:id="login"
 												jsf:binding="#{login}" 
-												jsf:value="#{usuarioCadastroBean.usuario.login}"
-												placeholder="Login para acesso ao sistema"/>
+												jsf:value="#{usuarioCadastroBean.usuarioLogado.login}"/>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="login"/> 
 											</div>
@@ -115,7 +109,7 @@
 											<input type="password" class="form-control" 
 												jsf:id="senha"
 												jsf:binding="#{senha}" 
-												jsf:value="#{usuarioCadastroBean.usuario.senha}"/>
+												jsf:value="#{usuarioCadastroBean.usuarioLogado.senha}"/>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="senha"/> 
 											</div>
@@ -128,7 +122,7 @@
 											<input type="password" class="form-control" 
 												jsf:id="confirmarSenha"
 												jsf:binding="#{confirmarSenha}" 
-												jsf:value="#{usuarioCadastroBean.confirmarSenha}"/>
+												jsf:value="#{usuarioCadastroBean.usuarioLogado.confirmarSenha}"/>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="confirmarSenha"/> 
 											</div>
