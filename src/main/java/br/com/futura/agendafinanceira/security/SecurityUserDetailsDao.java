@@ -15,25 +15,29 @@ public class SecurityUserDetailsDao {
 	private EntityManager em;
 	private EntityManagerFactory emf;
 
-	private void criaEntityManager() {
+	private void createEntityManager() {
 		emf = Persistence.createEntityManagerFactory("agendafinanceiraPU");
 		em = emf.createEntityManager();
 	}
 
+	private void destroyEntityManager() {
+		em.close();
+		emf.close();
+	}
+
 	public Usuario pesquisarPor(String login) {
-		criaEntityManager();
+		createEntityManager();
 		
 		Usuario usuarioLogado = new Usuario();
 		try {
 			usuarioLogado = em.createQuery("select u from Usuario u where u.ativo=1 and u.login = :pLogin ", Usuario.class)
 					.setParameter("pLogin", login)
 					.getSingleResult();
+			destroyEntityManager();
 		} catch (Exception e) {
+			destroyEntityManager();
 			throw new UsernameNotFoundException("Usuário não localizado!");
 		}
-		
-		em.close();
-		emf.close();
 		
 		return usuarioLogado;
 	}

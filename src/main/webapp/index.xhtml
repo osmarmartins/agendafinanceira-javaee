@@ -5,8 +5,11 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+<h:head/>	
 
 <ui:composition template="resources/template/aceadmin.xhtml">
+
 	<ui:define name="navegacao"></ui:define>
 
 	<ui:define name="titulo">
@@ -14,19 +17,13 @@
 	</ui:define>
 
 	<ui:define name="subtitulo">
-		Resumo da situação financeira
+		Análise financeira
 	</ui:define>
 
 	<ui:define name="conteudo">
-		<p:panel class="grafico">
-			<h3>GRÁFICO DE PREVISÃO DE PAGAMENTOS</h3>
-		</p:panel>
-		
+		<p:chart type="line" model="#{dashBoardBean.graficoDespesas}" style="height: 300px;"/>
 		<br/>
-		
-		<p:panel class="grafico">
-			<h3>GRÁFICO DE PAGAMENTOS EFETUADOS</h3>
-		</p:panel>
+		<ui:include src="graficos/contas.xhtml"/>
 	</ui:define>
 
 	<ui:define name="pagina">Dashboard</ui:define>

@@ -40,6 +40,8 @@ public class DataUtil {
 	}
 	
 	public static void main(String[] args) {
+
+		
 		System.out.println("HOJE >>>>>>>>>>>>>>>>>> " + hoje());
 		System.out.println("AMANHÃ >>>>>>>>>>>>>>>> " + adicionaDias(hoje(), 1));
 		System.out.println("ONTEM >>>>>>>>>>>>>>>>> " + adicionaDias(hoje(), -1));
