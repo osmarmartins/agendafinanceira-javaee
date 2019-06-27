@@ -74,7 +74,7 @@ public class UsuarioService implements Serializable, UserDetailsService {
 		List<Autorizacao> novasAutorizacoes = new ArrayList<>();
 		
 		if (autorizacoes.isEmpty()) {
-			return Collections.EMPTY_LIST;
+			return Collections.emptyList();
 		}
 		
 		for (Autorizacao autorizacao : autorizacoes) {
@@ -83,7 +83,7 @@ public class UsuarioService implements Serializable, UserDetailsService {
 			}
 		}
 		
-		return novasAutorizacoes.isEmpty() ? Collections.EMPTY_LIST : novasAutorizacoes;
+		return novasAutorizacoes.isEmpty() ? Collections.emptyList() : novasAutorizacoes;
 	}
 
 	@Transactional

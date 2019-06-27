@@ -68,7 +68,7 @@ public class Usuario implements Serializable, UserDetails {
 	
 	public List<Autorizacao> getPermissoes() {
 		if (this.permissoes.size() == 0) {
-			return Collections.EMPTY_LIST;
+			return Collections.emptyList();
 		}
         
         this.permissoes.sort( (a1, a2) -> a1.getClassificacao().compareTo(a2.getClassificacao()) );

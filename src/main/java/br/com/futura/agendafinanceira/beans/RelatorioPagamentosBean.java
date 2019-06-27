@@ -86,7 +86,7 @@ public class RelatorioPagamentosBean implements Serializable {
 	
 	public void gerarRelatorioContasAPagar() throws JRException, IOException {
 		
-		HashMap<String, String> parametros = new HashMap<>();
+		HashMap<String, Object> parametros = new HashMap<>();
 		List<PagamentoParcela> dados = new ArrayList<>();
 
 		dados = parcelaService.listarPor(filtro);
@@ -99,7 +99,7 @@ public class RelatorioPagamentosBean implements Serializable {
 	
 	public void gerarRelatorioPagamentosEfetuados() throws JRException, IOException {
 		
-		HashMap<String, String> parametros = new HashMap<>();
+		HashMap<String, Object> parametros = new HashMap<>();
 		List<PagamentoQuitacao> dados = new ArrayList<>();
 		
 		dados = baixaService.listarPor(filtro);

@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
@@ -68,12 +67,12 @@ public class BaixaDao implements Serializable {
 
 	public List<PagamentoQuitacao> listarPor(RelatorioFiltroDto filtro){
 		String sql = preparaSql(filtro);
-		Query query = preparaParametros(filtro, sql);
+		TypedQuery<PagamentoQuitacao> query = preparaParametros(filtro, sql);
 		return query.getResultList();
 	}
 
-	private Query preparaParametros(RelatorioFiltroDto filtro, String sql) {
-		Query query = manager.createQuery(sql, PagamentoQuitacao.class);
+	private TypedQuery<PagamentoQuitacao> preparaParametros(RelatorioFiltroDto filtro, String sql) {
+		TypedQuery<PagamentoQuitacao> query = manager.createQuery(sql, PagamentoQuitacao.class);
 		query.setParameter("dataI", filtro.getDataInicial(), TemporalType.DATE);
 		query.setParameter("dataF", filtro.getDataFinal(), TemporalType.DATE);
 

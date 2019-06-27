@@ -137,16 +137,8 @@ public class PagamentoBean implements Serializable {
 		return filtro;
 	}
 	
-	public void setFornecedores(List<Fornecedor> fornecedores) {
-		this.fornecedores = fornecedores;
-	}
-	
 	public List<Fornecedor> getFornecedores() {
 		return fornecedores;
-	}
-	
-	public void setSituacao(SituacaoParcela[] situacao) {
-		this.situacao = situacao;
 	}
 	
 	public SituacaoParcela[] getSituacao() {

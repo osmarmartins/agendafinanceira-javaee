@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 
 import br.com.futura.agendafinanceira.dto.RelatorioFiltroDto;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
@@ -32,12 +32,12 @@ public class PagamentoParcelaDao implements Serializable {
 	
 	public List<PagamentoParcela> listarPor(RelatorioFiltroDto filtro){
 		String sql = preparaSql(filtro);
-		Query query = preparaParametros(filtro, sql);
+		TypedQuery<PagamentoParcela> query = preparaParametros(filtro, sql);
 		return query.getResultList();
 	}
 
-	private Query preparaParametros(RelatorioFiltroDto filtro, String sql) {
-		Query query = manager.createQuery(sql, PagamentoParcela.class);
+	private TypedQuery<PagamentoParcela> preparaParametros(RelatorioFiltroDto filtro, String sql) {
+		TypedQuery<PagamentoParcela> query = manager.createQuery(sql, PagamentoParcela.class);
 		query.setParameter("dataI", filtro.getDataInicial(), TemporalType.DATE);
 		query.setParameter("dataF", filtro.getDataFinal(), TemporalType.DATE);
 

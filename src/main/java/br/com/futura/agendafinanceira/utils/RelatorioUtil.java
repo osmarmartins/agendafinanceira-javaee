@@ -18,7 +18,8 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 public class RelatorioUtil {
-	public static void imprimeRelatorio(String nomeRelatorio, HashMap parametros, List<?> dados) throws JRException, IOException {
+
+	public static void imprimeRelatorio(String nomeRelatorio, HashMap<String, Object> parametros, List<?> dados) throws JRException, IOException {
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
