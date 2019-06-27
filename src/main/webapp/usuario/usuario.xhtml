@@ -68,7 +68,7 @@
 						</div>
 					</div>
 
-					<p:dataTable id="tabela"
+					<p:dataTable id="tabela" reflow="true"
 						emptyMessage="Nenhum registro encontrado"
 						value="#{usuarioBean.usuarios}" var="usuario" rowKey="#{usuario.idUsuario}"
 						selection="#{usuarioBean.usuariosSelecionados}"
