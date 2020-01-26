@@ -43,7 +43,7 @@ public class BaixaCadastroBean implements Serializable {
 	}
 	
 	public String salvar() {
-		baixaParcelaService.salvar(parcela, quitacao);
+		baixaParcelaService.salvarParcelaUnica(parcela, quitacao);
 		Float novoSaldoDevedor = parcela.saldoDevedor().subtract(quitacao.getValor()).floatValue();
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		

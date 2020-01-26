@@ -18,17 +18,36 @@ public class SessionBean implements Serializable{
 	
 	private Usuario usuarioLogado;
 	
-	private String opcaoMenuAtiva;
+	private String estilo;
 	
-	private String grupoMenuAtivo;
+	private String tema;
+	
+	private String margens;
+	
+	private String submenuFlutuante;
+	
+	private String menuCompacto;
+	
+	private String opcaoSelecionada;
 	
 	@PostConstruct
 	private void init() {
+		this.setTema("bootstrap");
 		this.itensPorPagina = 8;
-		this.opcaoMenuAtiva = "";
-		this.grupoMenuAtivo = "";
+		this.estilo="no-skin";
+		this.margens="";
+		this.submenuFlutuante="";
 	}
 	
+	public String[] getTemas() {
+		return new String[] {"admin", "afterdark", "afternoon", "afterwork", "aristo", "black-tie", "blitzer", "bluesky",
+				"bootstrap", "casablanca", "cupertino", "cruze", "dark-hive", "delta", "dot-luv", "eggplant",
+				"excite-bike", "flick", "glass-x", "home", "hot-sneaks", "humanity", "le-frog", "midnight", "mint-choc",
+				"overcast", "pepper-grinder", "redmond", "rocket", "sam", "smoothness", "south-street", "start",
+				"sunny", "swanky-purse", "trontastic", "ui-darkness", "ui-lightness", "vader" };
+	}
+	
+
 	public void setItensPorPagina(Integer itensPorPagina) {
 		this.itensPorPagina = itensPorPagina;
 	}
@@ -52,35 +71,66 @@ public class SessionBean implements Serializable{
 		this.usuarioLogado = usuarioLogado;
 	}
 
-	
-	public String getGrupoMenuAtivo() {
-		return grupoMenuAtivo;
+	public void setEstilo(String estilo) {
+		this.estilo = estilo;
 	}
 	
-	public String getOpcaoMenuAtiva() {
-		return opcaoMenuAtiva;
-	}
-	
-	public String opcaoMenuAtiva(String opcao) {
-		if (opcao.equals(this.opcaoMenuAtiva)) {
-			return "active";
-		}
-		return "";
+	public String getEstilo() {
+		return estilo;
 	}
 
-	public String grupoMenuAtivo(String grupo) {
-		if (grupo.equals(this.grupoMenuAtivo)) {
-			return "active open";
-		}
-		return "";
+	public String getTema() {
+		return tema;
 	}
-		
-	public void mudarOpcaoMenu(String opcao) {
-		this.opcaoMenuAtiva = opcao;
+
+	public void setTema(String tema) {
+		this.tema = tema;
+	}
+
+	public String getMargens() {
+		return margens;
+	}
+
+	public void setMargens(String margens) {
+		if (this.margens.equals("")) {
+			this.margens = "container";
+		} else {
+			this.margens = "";
+		}
+	}
+
+	public String getSubmenuFlutuante() {
+		return submenuFlutuante;
+	}
+
+	public void setSubmenuFlutuante(String submenuFlutuante) {
+		if (this.submenuFlutuante.equals("")) { 
+			this.submenuFlutuante = "hover";
+		} else {
+			this.submenuFlutuante = "";
+		}
+	}
+
+	public String getMenuCompacto() {
+		return menuCompacto;
+	}
+
+	public void setMenuCompacto(String menuCompacto) {
+		if (this.menuCompacto.equals("")) {
+			this.menuCompacto = "compact";
+		} else {
+			this.menuCompacto = "";
+		}
+	}
+
+	public String getOpcaoSelecionada() {
+		return opcaoSelecionada;
+	}
+
+	public void setOpcaoSelecionada(String opcaoSelecionada) {
+		this.opcaoSelecionada = opcaoSelecionada;
 	}
 	
-	public void mudarGrupoMenu(String grupo ) {
-		this.grupoMenuAtivo = grupo;
-	}
+	
 	
 }

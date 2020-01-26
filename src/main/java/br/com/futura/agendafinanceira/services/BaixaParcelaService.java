@@ -30,12 +30,6 @@ public class BaixaParcelaService implements Serializable {
 	private Pagamento pagamento;
 	
 	@Transactional
-	public void salvar(PagamentoQuitacao quitacao) {
-		
-		
-	}
-
-	@Transactional
 	public void excluir(PagamentoQuitacao quitacao) {
 		//TODO Realizar as validações para exclusão da quitação
 
@@ -55,11 +49,15 @@ public class BaixaParcelaService implements Serializable {
 		}
 		
 	}
-
+	
 	@Transactional
+	public void salvarParcelaUnica(PagamentoParcela parcela, PagamentoQuitacao quitacao) {
+		salvar(parcela, quitacao);
+	}
+
 	public void salvar(PagamentoParcela parcela, PagamentoQuitacao quitacao) {
 		parcela.addQuitacao(quitacao);
-		quitacao.setParcela(parcela);
+//		quitacao.setParcela(parcela);
 
 		Float saldoDevedorParcela = quitacao.getParcela().saldoDevedor().subtract(quitacao.getValor()).floatValue(); 
 		if (saldoDevedorParcela == 0){
@@ -70,8 +68,9 @@ public class BaixaParcelaService implements Serializable {
 		baixaParcelaDao.salvar(quitacao);
 		
 		pagamento = pagamentoDao.pesquisarPorId(quitacao.getParcela().getPagamento().getIdPagamento());
-		Float saldoDevedorPagamento = pagamento.saldoDevedor().subtract(quitacao.getValor()).floatValue();
-		if (saldoDevedorPagamento == 0){
+//		Float saldoDevedorPagamento = pagamento.saldoDevedor().subtract(quitacao.getValor()).floatValue();
+		Float saldoDevedorPagamento = pagamento.saldoDevedor().floatValue();
+		if (saldoDevedorPagamento <= 0){
 			pagamento.setSituacao(SituacaoPagamento.FINALIZADO);
 			pagamentoDao.salvar(pagamento);
 		}

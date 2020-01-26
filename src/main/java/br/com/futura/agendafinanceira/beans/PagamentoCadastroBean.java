@@ -55,9 +55,9 @@ public class PagamentoCadastroBean implements Serializable{
 
 	@PostConstruct
 	private void init() {
-		this.setores = setorService.listarTodos();
-		this.contas = contaService.listarTodos();
-		this.fornecedores = fornecedorService.listarTodos();
+		this.setores = setorService.listarAtivo();
+		this.contas = contaService.listarAtivos();
+		this.fornecedores = fornecedorService.listarAtivos();
 	}
 	
 	public String salvar() {

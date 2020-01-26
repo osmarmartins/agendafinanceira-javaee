@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.daos.BaixaDao;
 import br.com.futura.agendafinanceira.dto.BaixaFiltroDto;
@@ -37,6 +38,7 @@ public class BaixaService implements Serializable {
 		}
 	}
 
+	@Transactional
 	public void baixarParcelas(List<PagamentoParcela> parcelas, Date data) {
 		PagamentoQuitacao quitacao;
 		for (PagamentoParcela parcela : parcelas) {

@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.models.Setor;
+import br.com.futura.agendafinanceira.models.enums.Ativo;
 
 public class SetorDao implements Serializable {
 	
@@ -18,6 +18,14 @@ public class SetorDao implements Serializable {
 	
 	public List<Setor> listarTodos(){
 		return manager.createQuery("SELECT s FROM Setor s order by s.descricao ", Setor.class).getResultList();
+	}
+
+	public List<Setor> listarAtivos() {
+		return manager
+				.createQuery("SELECT s FROM Setor s where s.ativo = :pAtivo order by s.descricao ", Setor.class)
+				.setParameter("pAtivo", Ativo.ATIVO)
+				.getResultList();
+				
 	}
 	
 	public List<Setor> listarPorDescricao(String pesquisaDescricao) {
@@ -32,7 +40,6 @@ public class SetorDao implements Serializable {
 				.getSingleResult();
 	}
 
-	@Transactional
 	public void salvar(Setor setor) {
 		if (setor.getIdSetor() != null){
 			manager.merge(setor);
@@ -41,7 +48,6 @@ public class SetorDao implements Serializable {
 		}
 	}
 	
-	@Transactional
 	public void excluir(List<Setor> setores){
 		for (Setor setor : setores) {
 			manager.remove(manager.getReference(Setor.class, setor.getIdSetor()));

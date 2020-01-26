@@ -44,10 +44,10 @@
 	
 </h:head>
 
-<h:body class="no-skin">
+<h:body class="#{sessionBean.estilo}">
 
 	<div id="navbar" class="navbar navbar-default ace-save-state">
-		<div class="navbar-container ace-save-state" id="navbar-container">
+		<div class="navbar-container ace-save-state #{sessionBean.menuCompacto}" id="navbar-container">
  			<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
 				<span class="sr-only">Toggle sidebar</span>
 	
@@ -66,9 +66,12 @@
 					</small>
 				</a>
 			</div>
-	
+
+
 			<div class="navbar-buttons navbar-header pull-right" role="navigation">
 				<ul class="nav ace-nav">
+            
+<!--             
 					<li class="purple dropdown-modal">
 						<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 							<i class="ace-icon fa fa-bell icon-animated-bell"></i>
@@ -136,7 +139,9 @@
 							</li>
 						</ul>
 					</li>
+-->               
 	
+<!--    
 					<li class="green dropdown-modal">
 						<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 							<i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
@@ -246,10 +251,11 @@
 							</li>
 						</ul>
 					</li>
+-->               
 	
 					<li class="light-blue dropdown-modal">
 						<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-							<h:graphicImage library="aceAdmin" name="images/avatars/user.jpg" styleClass="nav-user-photo" alt="Jason's Photo"/>
+							<h:graphicImage library="img" name="/user36x36.jpg" styleClass="nav-user-photo" alt="Foto Usuario"/>
 							<span class="user-info">
 								<small>Bem Vindo,</small>
 								#{request.remoteUser}
@@ -288,7 +294,7 @@
 		</div><!-- /.navbar-container -->
 	</div>
 	
-	<div class="main-container ace-save-state" id="main-container">
+	<div class="main-container ace-save-state #{sessionBean.margens}" id="main-container">
 		<script type="text/javascript">
 			try{ace.settings.loadState('main-container')}catch(e){}
 		</script>
@@ -329,7 +335,7 @@
 			</div><!-- /.sidebar-shortcuts -->
 	
 			<ul class="nav nav-list">
-				<li class="">
+				<li class="#{sessionBean.submenuFlutuante}">
 					<a href="#{request.contextPath}/index.xhtml">
 						<i class="menu-icon fa fa-tachometer"></i>
 						<span class="menu-text"> Dashboard </span>
@@ -337,7 +343,7 @@
 					<b class="arrow"></b>
 				</li>
 	
-				<li class="">
+				<li class="#{sessionBean.submenuFlutuante}">
 					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-pencil-square-o"></i>
 						<span class="menu-text"> Cadastros </span>
@@ -381,7 +387,7 @@
 					</ul>
 				</li>
 	
-				<li class="">
+				<li class="#{sessionBean.submenuFlutuante}">
 					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-dollar"></i>
 						<span class="menu-text"> 
@@ -411,7 +417,7 @@
 					</ul>
 				</li>
 	
-				<li class="">
+				<li class="#{sessionBean.submenuFlutuante}">
 					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-print"></i>
 						<span class="menu-text"> Relatórios </span>
@@ -439,7 +445,7 @@
 					</ul>
 				</li>
 	
-				<li class="">
+				<li class="#{sessionBean.submenuFlutuante}">
 					<a href="#{request.contextPath}/redefinirsenha.xhtml">
 						<i class="menu-icon fa fa-key"></i>
 						<span class="menu-text"> Alterar Senha </span>
@@ -447,7 +453,7 @@
 					<b class="arrow"></b>
 				</li>
 	
-				<li class="">
+				<li class="#{sessionBean.submenuFlutuante}">
 					<a href="#{facesContext.externalContext.requestContextPath}/logout">
 						<i class="menu-icon fa fa-user-times"></i>
 	
@@ -493,65 +499,75 @@
 						</div>
 	
 						<div class="ace-settings-box clearfix" id="ace-settings-box">
-							<div class="pull-left width-50">
-								
-								<div class="ace-settings-item">
-									<div class="pull-left">
-										<select id="skin-colorpicker" class="hide">
-											<option data-skin="no-skin" value="#438EB9">#438EB9</option>
-											<option data-skin="skin-1" value="#222A2D">#222A2D</option>
-											<option data-skin="skin-2" value="#C6487E">#C6487E</option>
-											<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
-										</select>
-									</div>
-									<span> Estilo </span>
-								</div>
-	
-								<div class="ace-settings-item">
-									<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-add-container" autocomplete="off" />
-									<label class="lbl" for="ace-settings-add-container"> Ativa Margens </label>
-								</div>
 
-								<div class="ace-settings-item">
-									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover" autocomplete="off" />
-									<label class="lbl" for="ace-settings-hover"> Submenu Flutuante</label>
-								</div>
-	
-								<div class="ace-settings-item">
-									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-compact" autocomplete="off" />
-									<label class="lbl" for="ace-settings-compact"> Menu Compacto </label>
-								</div>
-	
-								<div class="ace-settings-item">
-									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight" autocomplete="off" />
-									<label class="lbl" for="ace-settings-highlight"> Destacar Opção Selecionada </label>
-								</div>
-							</div><!-- /.pull-left -->
-	
-							<div class="pull-left width-50">
-								
-								<div class="ace-settings-item">
-									<div class="widget-box">
-										<div class="widget-header">
-											<h4 class="widget-title">
-												<i class="ace-icon fa fa-sliders"/>
-												Tema
-											</h4>
-										</div>
-										<div class="widget-body">
-											<h:form>
-										        <h:selectOneMenu id="selecao-tema" 
-										        	value="#{temaBean.temaSessao.tema}" styleClass="form-control"
-										        	onchange="submit()">
-										            <f:selectItems value="#{temaBean.temaSessao.temas}"
-										                var="tema" itemValue="#{tema}" itemLabel="#{tema}" />
-										        </h:selectOneMenu>
-											</h:form>
-										</div>
-									</div>
-								</div>
-									
-							</div><!-- /.pull-left -->
+                           <!-- ESTILO -->
+                           <div class="pull-left width-50" style="padding-right: 5px;">
+                              <div class="ace-settings-item" style="padding-bottom: 80px;">
+                                 <div class="widget-box">
+                                    <div class="widget-header">
+                                       <h4 class="widget-title">
+                                          <i class="ace-icon fa fa-sliders"/>
+                                          Estilo
+                                       </h4>
+                                    </div>
+                                    <div class="widget-body">
+                                       <h:form>
+                                         <h:selectOneMenu id="selecao-tema" value="#{sessionBean.estilo}" styleClass="form-control" onchange="submit()">
+                                             <f:selectItem itemValue="no-skin" itemLabel="Blue"/>
+                                             <f:selectItem itemValue="skin-1"  itemLabel="Dark"/>
+                                             <f:selectItem itemValue="skin-2"  itemLabel="Purple"/>
+                                             <f:selectItem itemValue="skin-3"  itemLabel="Gray"/>
+                                         </h:selectOneMenu>
+                                       </h:form>
+                                    </div>
+                                 </div>
+                              </div>
+                              
+                              <div class="ace-settings-item">
+                                 <h:inputText value="#{sessionBean.margens}" pt:type="checkbox" styleClass="ace ace-checkbox-2 ace-save-state" id="ace-settings-add-container" pt:autocomplete="off" />
+                                 <label class="lbl" for="ace-settings-add-container"> Ativa Margens JSF</label>
+                              </div>
+      
+                              <div class="ace-settings-item">
+                                 <h:inputText value="#{sessionBean.submenuFlutuante}" pt:type="checkbox" styleClass="ace ace-checkbox-2" id="ace-settings-hover" pt:autocomplete="off" />
+                                 <label class="lbl" for="ace-settings-hover"> Submenu Flutuante</label>
+                              </div>
+         
+                              <div class="ace-settings-item">
+                                 <h:inputText value="#{sessionBean.menuCompacto}" pt:type="checkbox" styleClass="ace ace-checkbox-2" id="ace-settings-compact" pt:autocomplete="off" />
+                                 <label class="lbl" for="ace-settings-compact"> Menu Compacto </label>
+                              </div>
+         
+                              <div class="ace-settings-item">
+                                 <h:inputText value="#{sessionBean.opcaoSelecionada}" pt:type="checkbox" styleClass="ace ace-checkbox-2" id="ace-settings-highlight" pt:autocomplete="off" />
+                                 <label class="lbl" for="ace-settings-highlight"> Destacar Opção Selecionada </label>
+                              </div>                              
+                              
+                           </div><!-- /.pull-left -->
+
+                           <!-- TEMA -->
+                           <div class="pull-left width-50" style="padding-left: 5px;">
+                              <div class="ace-settings-item">
+                                 <div class="widget-box">
+                                    <div class="widget-header">
+                                       <h4 class="widget-title">
+                                          <i class="ace-icon fa fa-sliders"/>
+                                          Tema
+                                       </h4>
+                                    </div>
+                                    <div class="widget-body">
+                                       <h:form>
+                                            <h:selectOneMenu id="selecao-tema" 
+                                             value="#{sessionBean.tema}" styleClass="form-control"
+                                             onchange="submit()">
+                                                <f:selectItems value="#{sessionBean.temas}"
+                                                    var="tema" itemValue="#{tema}" itemLabel="#{tema}" />
+                                            </h:selectOneMenu>
+                                       </h:form>
+                                    </div>
+                                 </div>                           
+                              </div>
+                           </div><!-- /.pull-left -->
 						</div><!-- /.ace-settings-box -->
 					</div><!-- /.ace-settings-container -->
 	
@@ -647,6 +663,13 @@
 					$("div.ace-settings-box").toggleClass( "open" );
 				}
 			</script>
+         
+			<script>
+				function skin(estilo){
+					console.log('>>>>>>>>>>. ESTILO ', estilo);
+				}
+			</script>
+         
 		</ui:insert>
 	</h:body>
 </html>
