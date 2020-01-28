@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import br.com.futura.agendafinanceira.dto.PagamentoDto;
 import br.com.futura.agendafinanceira.dto.PagamentoFiltroDto;
 import br.com.futura.agendafinanceira.models.Pagamento;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
@@ -32,14 +33,21 @@ public class PagamentoDao implements Serializable {
 	}
 	
 
-	public List<PagamentoParcela> listarPor(PagamentoFiltroDto filtro) {
-		StringBuilder sql = new StringBuilder("select p from PagamentoParcela p ");
-			sql.append(" join fetch p.pagamento pg ");
-			sql.append(" join fetch pg.fornecedor ");
-			sql.append(" join fetch pg.setor ");
-			sql.append(" join fetch pg.conta ");
-			sql.append(" left join fetch p.quitacoes q ");
-			sql.append( " where 1=1 ");
+	public List<PagamentoDto> listarPor(PagamentoFiltroDto filtro) {
+		StringBuilder sql = new StringBuilder("select new br.com.futura.agendafinanceira.dto.PagamentoDto( " );
+				sql.append(" pg.idPagamento, ");
+				sql.append(" p.idPagamentoParcela, ");
+				sql.append(" p.vencimento, ");
+				sql.append(" pg.fornecedor.razaoSocial, ");
+				sql.append(" pg.historico, ");
+				sql.append(" (p.valor - p.desconto + p.juros + p.mora + p.outros ) - coalesce(sum(q.valor), 0) )  ");
+				sql.append(" from PagamentoParcela p ");
+				sql.append(" join p.pagamento pg ");
+				sql.append(" join pg.fornecedor ");
+				sql.append(" join pg.setor ");
+				sql.append(" join pg.conta ");
+				sql.append(" left join p.quitacoes q ");
+				sql.append( " where 1=1 ");
 				
 		if (filtro.getHistorico()!=null) {
 			sql.append(" and pg.historico like :pHistorico ");
@@ -53,9 +61,10 @@ public class PagamentoDao implements Serializable {
 			sql.append(" and p.situacao = :pSituacao ");
 		}
 		
+		sql.append( " group by p.idPagamentoParcela ");
 		sql.append( " order by p.vencimento ");
 		
-		TypedQuery<PagamentoParcela> query =  manager.createQuery(sql.toString(), PagamentoParcela.class);
+		TypedQuery<PagamentoDto> query =  manager.createQuery(sql.toString(), PagamentoDto.class);
 		
 		if (filtro.getHistorico()!=null) {
 			query.setParameter("pHistorico", "%" + filtro.getHistorico() + "%");

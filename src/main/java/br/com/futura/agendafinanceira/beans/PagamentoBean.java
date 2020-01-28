@@ -11,6 +11,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.futura.agendafinanceira.dto.PagamentoDto;
 import br.com.futura.agendafinanceira.dto.PagamentoFiltroDto;
 import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.Pagamento;
@@ -26,7 +27,7 @@ public class PagamentoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private List<PagamentoParcela> parcelas;
+	private List<PagamentoDto> parcelas;
 
 	private List<PagamentoParcela> parcelasSelecionadas;
 	
@@ -113,7 +114,7 @@ public class PagamentoBean implements Serializable {
 		this.parcelas = pagamentoService.listarPor(filtro);
 	}
 
-	public List<PagamentoParcela> getParcelas() {
+	public List<PagamentoDto> getParcelas() {
 		return parcelas;
 	}
 	

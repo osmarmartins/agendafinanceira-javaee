@@ -132,7 +132,7 @@
 
 					<p:dataTable id="tabela" reflow="true"
 						emptyMessage="Nenhum registro encontrado para o filtro selecionado"
-						value="#{pagamentoBean.parcelas}" var="parcela" rowKey="#{parcela.idPagamentoParcela}"
+						value="#{pagamentoBean.parcelas}" var="parcela" rowKey="#{parcela.parcela}"
 						selection="#{pagamentoBean.parcelasSelecionadas}"
 						 
 						rows="#{sessionBean.itensPorPagina}"
@@ -162,28 +162,28 @@
 							</h:outputText>
 						</p:column>
 						
-						<p:column sortBy="#{parcela.pagamento.fornecedor.razaoSocial}">
+						<p:column sortBy="#{parcela.fornecedor}">
 							<f:facet name="header">
 								<i class="ace-icon fa fa-eye"></i>							
 								Razão Social
 							</f:facet>
-							<h:outputText value="#{parcela.pagamento.fornecedor.razaoSocial}"/>
+							<h:outputText value="#{parcela.fornecedor}"/>
 						</p:column>
 						
-						<p:column sortBy="#{parcela.pagamento.historico}">
+						<p:column sortBy="#{parcela.historico}">
 							<f:facet name="header">
 								<i class="ace-icon fa fa-eye"></i>							
 								Histórico
 							</f:facet>
-							<h:outputText value="#{parcela.pagamento.historico}"/>
+							<h:outputText value="#{parcela.historico}"/>
 						</p:column>
 
-						<p:column sortBy="#{parcela.pagamento.saldoDevedor()}" width="15%">
+						<p:column sortBy="#{parcela.saldoDevedor}" width="15%">
 							<f:facet name="header">
 								<i class="ace-icon fa fa-usd"></i>							
 								Saldo Devedor
 							</f:facet>
-							<h:outputText value="#{parcela.saldoDevedor()}">
+							<h:outputText value="#{parcela.saldoDevedor}">
 								<f:convertNumber type="currency"/>
 							</h:outputText>
 						</p:column>
@@ -196,7 +196,7 @@
 							
 							<button type="button" class="btn btn-sm btn-success btn-white btn-round" 
 								jsf:id="btnAlterar" jsf:outcome="pagamentocadastro">
-								<f:param name="pagamento" value="#{parcela.pagamento.idPagamento}"/>
+								<f:param name="pagamento" value="#{parcela.pagamento}"/>
 								<i class="ace-icon fa fa-pencil bigger-110 green"></i>
 							</button>
 							

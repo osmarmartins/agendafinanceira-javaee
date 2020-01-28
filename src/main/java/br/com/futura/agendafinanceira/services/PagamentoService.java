@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.daos.PagamentoDao;
 import br.com.futura.agendafinanceira.daos.PagamentoParcelaDao;
+import br.com.futura.agendafinanceira.dto.PagamentoDto;
 import br.com.futura.agendafinanceira.dto.PagamentoFiltroDto;
 import br.com.futura.agendafinanceira.models.Pagamento;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
@@ -30,7 +31,7 @@ public class PagamentoService implements Serializable {
 		return pagamentoDao.pesquisarPorId(idPagamento);
 	}
 
-	public List<PagamentoParcela> listarPor(PagamentoFiltroDto filtro) {
+	public List<PagamentoDto> listarPor(PagamentoFiltroDto filtro) {
 		return pagamentoDao.listarPor(filtro);
 	}
 
