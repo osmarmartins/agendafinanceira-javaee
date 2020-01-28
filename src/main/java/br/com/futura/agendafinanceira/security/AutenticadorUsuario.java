@@ -36,7 +36,7 @@ public class AutenticadorUsuario implements AuthenticationProvider {
 		}
 
 	    Collection<? extends GrantedAuthority> authorities = usuario.getAuthorities();
-		        
+	    
 	    return new UsernamePasswordAuthenticationToken(login, senha, authorities);		
 	}
 

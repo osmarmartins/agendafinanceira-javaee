@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -16,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -35,14 +37,13 @@ public class Usuario implements Serializable, UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_usuario")
 	private Integer idUsuario;
-
 	private String nome;
-
 	private String email;
-
 	private String login;
-
 	private String senha;
+	
+	@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+	private UsuarioPreferencias preferencias;
 
 	@Enumerated
 	private TipoUsuario administrador;
@@ -175,6 +176,14 @@ public class Usuario implements Serializable, UserDetails {
 	public String getConfirmarSenha() {
 		return confirmarSenha;
 	}
+	
+	public UsuarioPreferencias getPreferencias() {
+		return preferencias;
+	}
+
+	public void setPreferencias(UsuarioPreferencias preferencias) {
+		this.preferencias = preferencias;
+	}
 
 	@Override
 	public int hashCode() {
@@ -183,7 +192,7 @@ public class Usuario implements Serializable, UserDetails {
 		result = prime * result + idUsuario;
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

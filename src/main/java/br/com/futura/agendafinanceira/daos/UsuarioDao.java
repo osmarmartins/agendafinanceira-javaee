@@ -17,7 +17,7 @@ public class UsuarioDao implements Serializable {
 	private EntityManager manager;
 	
 	public List<Usuario> listarTodos() {
-		return manager.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
+		return manager.createQuery("SELECT u FROM Usuario u ", Usuario.class).getResultList();
 	}
 
 	public List<Usuario> listarPor(String filtro) {
