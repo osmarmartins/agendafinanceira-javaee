@@ -33,49 +33,49 @@
 					<div class="clearfix form-actions ui-widget-header" style="margin-bottom: 0;" jsf:id="comandoGrid">
 					
                         <!-- Filtros -->
-                        <div class="row">
-							<div class="col-md-2">
-								<div class="form-group">
-									<label class="control-label" jsf:for="situacao">Situação</label>
-									<h:selectOneMenu value="#{pagamentoBean.filtro.situacao}" id="situacao" styleClass="form-control">
-										<f:selectItem itemLabel = "Selecione...." /> 
-										<f:selectItems var="item" value="#{pagamentoBean.situacao}"
-											itemLabel="#{item.descricao}" itemValue="#{item}"/>
-									</h:selectOneMenu>
-								</div>
-							</div>
-                     
-                           <div class="col-md-2">
-                              <div class="form-group">
-                                 <label for="periodo">Vencimento Inicial</label>
-                                 <div class="input-group">
-                                    <input class="form-control date-picker" 
-                                       jsf:id="dataInicial" type="date" 
-                                       jsf:value="#{pagamentoBean.filtro.dataInicial}" data-date-format="dd/mm/yyyy">
-                                       <f:convertDateTime pattern="yyyy-MM-dd"/>
-                                    </input>
-                                    <span class="input-group-addon">
-                                       <i class="fa fa-calendar bigger-110"></i>
-                                    </span>
-                                 </div>                           
+                           <div class="row">
+                              <div class="col-md-2">
+                                 <div class="form-group">
+                                    <label for="periodo">Vencimento Inicial</label>
+                                    <div class="input-group">
+                                       <input class="form-control date-picker" autofocus="autofocus" 
+                                          jsf:id="dataInicial" type="date" 
+                                          jsf:value="#{pagamentoBean.filtro.dataInicial}" data-date-format="dd/mm/yyyy">
+                                          <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                       </input>
+                                       <span class="input-group-addon">
+                                          <i class="fa fa-calendar bigger-110"></i>
+                                       </span>
+                                    </div>                           
+                                 </div>
                               </div>
-                           </div>
-                           
-                           <div class="col-md-2">
-                              <div class="form-group">
-                                 <label for="periodo">Vencimento Final</label>
-                                 <div class="input-group">
-                                    <input class="form-control date-picker" 
-                                       jsf:id="dataFinal" type="date" 
-                                       jsf:value="#{pagamentoBean.filtro.dataFinal}" data-date-format="dd/mm/yyyy">
-                                       <f:convertDateTime pattern="yyyy-MM-dd"/>
-                                    </input>
-                                    <span class="input-group-addon">
-                                       <i class="fa fa-calendar bigger-110"></i>
-                                    </span>
-                                 </div>                           
+                              
+                              <div class="col-md-2">
+                                 <div class="form-group">
+                                    <label for="periodo">Vencimento Final</label>
+                                    <div class="input-group">
+                                       <input class="form-control date-picker" 
+                                          jsf:id="dataFinal" type="date" 
+                                          jsf:value="#{pagamentoBean.filtro.dataFinal}" data-date-format="dd/mm/yyyy">
+                                          <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                       </input>
+                                       <span class="input-group-addon">
+                                          <i class="fa fa-calendar bigger-110"></i>
+                                       </span>
+                                    </div>                           
+                                 </div>
                               </div>
-                           </div>
+                        
+                              <div class="col-md-2">
+                              	<div class="form-group">
+                              		<label class="control-label" jsf:for="situacao">Situação</label>
+                              		<h:selectOneMenu value="#{pagamentoBean.filtro.situacao}" id="situacao" styleClass="form-control">
+                              			<f:selectItem itemLabel = "Selecione...." /> 
+                              			<f:selectItems var="item" value="#{pagamentoBean.situacao}"
+                              				itemLabel="#{item.descricao}" itemValue="#{item}"/>
+                              		</h:selectOneMenu>
+                              	</div>
+                              </div>
                         </div>
 
 						<div class="row"> 

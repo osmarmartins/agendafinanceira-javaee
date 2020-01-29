@@ -14,6 +14,8 @@ import br.com.futura.agendafinanceira.exceptions.ApplicationException;
 import br.com.futura.agendafinanceira.exceptions.NenhumResultadoException;
 import br.com.futura.agendafinanceira.models.Pagamento;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
+import br.com.futura.agendafinanceira.models.PagamentoQuitacao;
+import br.com.futura.agendafinanceira.models.enums.FormaPagamento;
 import br.com.futura.agendafinanceira.models.enums.TipoLancamento;
 
 public class PagamentoParcelaService implements Serializable {
@@ -25,6 +27,9 @@ public class PagamentoParcelaService implements Serializable {
 	
 	@Inject
 	private PagamentoDao pagamentoDao;
+	
+	@Inject
+	private BaixaParcelaService baixaService;
 
 	public PagamentoParcela pesquisaPorId(Integer idParcela) {
 		return parcelaDao.pesquisaPorId(idParcela);
@@ -115,6 +120,13 @@ public class PagamentoParcelaService implements Serializable {
 		// TODO validar exclusão (não permitir excluir parcela com registro de quitação)
 		parcelaDao.excluir(parcela);
 		parcela.getPagamento().removeParcela(parcela);
+	}
+
+	@Transactional
+	public PagamentoParcela liquidar(PagamentoParcela parcela) {
+		PagamentoQuitacao quitacao = new PagamentoQuitacao(parcela.getValor(), parcela.getVencimento(), FormaPagamento.DINHEIRO);
+		baixaService.salvar(parcela, quitacao);
+		return parcela;
 	}
 
 }

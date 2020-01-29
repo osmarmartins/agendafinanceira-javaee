@@ -65,6 +65,7 @@ public class PagamentoQuitacao implements Serializable {
 		this.valor = valor;
 		this.dtPgto = dataPgto;
 		this.formaPagamento = formaPagamento;
+		this.versao = 0;
 	}
 
 	public Integer getIdPgtoQuitacao() {

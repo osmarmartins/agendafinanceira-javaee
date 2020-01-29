@@ -81,12 +81,13 @@ public class PagamentoParcelaDao implements Serializable {
 		return sql;
 	}
 	
-	public void salvar(PagamentoParcela parcela) {
+	public PagamentoParcela salvar(PagamentoParcela parcela) {
 		if (parcela.getIdPagamentoParcela() != null) {
 			manager.merge(parcela);
 		} else {
 			manager.persist(parcela);
 		}
+		return parcela;
 	}
 
 	public void excluir(PagamentoParcela parcela) {

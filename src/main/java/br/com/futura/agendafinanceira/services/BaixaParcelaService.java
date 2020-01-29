@@ -57,7 +57,6 @@ public class BaixaParcelaService implements Serializable {
 
 	public void salvar(PagamentoParcela parcela, PagamentoQuitacao quitacao) {
 		parcela.addQuitacao(quitacao);
-//		quitacao.setParcela(parcela);
 
 		Float saldoDevedorParcela = quitacao.getParcela().saldoDevedor().subtract(quitacao.getValor()).floatValue(); 
 		if (saldoDevedorParcela == 0){
@@ -68,13 +67,11 @@ public class BaixaParcelaService implements Serializable {
 		baixaParcelaDao.salvar(quitacao);
 		
 		pagamento = pagamentoDao.pesquisarPorId(quitacao.getParcela().getPagamento().getIdPagamento());
-//		Float saldoDevedorPagamento = pagamento.saldoDevedor().subtract(quitacao.getValor()).floatValue();
 		Float saldoDevedorPagamento = pagamento.saldoDevedor().floatValue();
 		if (saldoDevedorPagamento <= 0){
 			pagamento.setSituacao(SituacaoPagamento.FINALIZADO);
 			pagamentoDao.salvar(pagamento);
 		}
-		
 		
 	}
 

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
@@ -24,7 +25,8 @@ public class PagamentoParcelaBean implements Serializable{
 	
 	private Pagamento pagamento;
 	private PagamentoParcela parcela;
-	
+	private Date dataLiquidacao;
+
 	@Inject
 	private PagamentoParcelaService parcelaService;
 	
@@ -43,6 +45,19 @@ public class PagamentoParcelaBean implements Serializable{
 		parcelaService.excluir(parcela);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		return "/pagamento/pagamentocadastro?faces-redirect=true&pagamento=" + pagamento;
+	}
+	
+	public String liquidar() {
+		this.parcela = parcelaService.liquidar(this.parcela);
+		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
+		return "/pagamento/pagamentocadastro?faces-redirect=true" + 
+				"&pagamento=" + parcela.getPagamento().getIdPagamento();
+	}
+	
+	public boolean isPermiteAlterar() {
+		return this.parcela.getSituacao() != SituacaoParcela.LIQUIDADO &&
+			this.parcela.getSituacao() != SituacaoParcela.BAIXADO &&
+			this.parcela.getSituacao() != SituacaoParcela.CANCELADO;
 	}
 	
 	public Pagamento getPagamento() {
@@ -72,4 +87,16 @@ public class PagamentoParcelaBean implements Serializable{
 	public void setParcela(PagamentoParcela parcela) {
 		this.parcela = parcela;
 	}
+	
+	public Date getDataLiquidacao() {
+		if (this.dataLiquidacao == null) {
+			this.dataLiquidacao = new Date();
+		}
+		return dataLiquidacao;
+	}
+	
+	public void setDataLiquidacao(Date dataLiquidacao) {
+		this.dataLiquidacao = dataLiquidacao;
+	}
+	
 }
