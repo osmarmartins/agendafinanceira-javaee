@@ -340,12 +340,18 @@
 												<td>
 													<div class="btn-group">
 
-														<button class="btn btn-sm btn-success btn-white btn-round" 
+														<button class="btn btn-sm btn-success btn-white btn-round" style="margin-right: 5px;"
 															jsf:outcome="pagamentocadastroparcela.xhtml">
 															<f:param name="pagamento" value="#{pagamentoCadastroBean.pagamento.idPagamento}"/>
 															<f:param name="parcela" value="#{parcela.idPagamentoParcela}"/>
 															<i class="ace-icon fa fa-pencil bigger-110 green"></i>
 														</button>
+                                          
+                                                        <button class="btn btn-sm btn-info btn-white btn-round" style="margin-right: 5px;"
+                                                           jsf:outcome="/baixa/baixacadastro.xhtml">
+                                                           <f:param name="parcela" value="#{parcela.idPagamentoParcela}"/>
+                                                           <i class="ace-icon fa fa-check-square-o bigger-110 blue"></i>
+                                                        </button>
 
 														<button class="btn btn-sm btn-danger btn-white btn-round" 
 															jsf:action="#{pagamentoParcelaBean.excluir(parcela)}">

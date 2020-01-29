@@ -309,11 +309,11 @@
 												<td>
 													<div class="btn-group">
 
-														<button class="btn btn-sm btn-success btn-white btn-round" jsf:action="#{baixaCadastroBean.alterar(quitacao)}">
+														<button class="btn btn-sm btn-success btn-white btn-round" jsf:action="#{baixaCadastroBean.alterar(quitacao)}" style="margin-right: 5px;">
 															<i class="ace-icon fa fa-pencil bigger-110 green"></i>
 															<f:param name="parcela" value="#{quitacao.parcela.idPagamentoParcela}"/>
 														</button>
-
+                                                        
 														<button class="btn btn-sm btn-danger btn-white btn-round" jsf:action="#{baixaCadastroBean.excluir(quitacao)}">
 															<i class="ace-icon fa fa-trash bigger-110 red2"></i>
 														</button>

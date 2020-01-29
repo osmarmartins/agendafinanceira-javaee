@@ -1,5 +1,13 @@
 @CHARSET "UTF-8";
 
+.mr-5 {
+	margin-right: 5px;
+}
+
+.mb-5 {
+	margin-bottom: 5px;
+}
+
 .grafico {
 	height: 200px;
 	text-align: center;
