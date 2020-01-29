@@ -37,6 +37,7 @@ public class PagamentoDao implements Serializable {
 		StringBuilder sql = new StringBuilder("select new br.com.futura.agendafinanceira.dto.PagamentoDto( " );
 				sql.append(" pg.idPagamento, ");
 				sql.append(" p.idPagamentoParcela, ");
+				sql.append(" p.parcela, ");
 				sql.append(" p.vencimento, ");
 				sql.append(" pg.fornecedor.razaoSocial, ");
 				sql.append(" pg.historico, ");

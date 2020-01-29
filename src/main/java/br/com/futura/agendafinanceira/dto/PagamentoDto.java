@@ -6,15 +6,17 @@ import java.util.Date;
 public class PagamentoDto {
 
 	private Integer pagamento;
-	private Integer parcela;
+	private Integer idParcela;
+	private String parcela;
 	private Date vencimento;
 	private String fornecedor;
 	private String historico;
 	private BigDecimal saldoDevedor;
 
-	public PagamentoDto(Integer pagamento, Integer parcela, Date vencimento, String fornecedor, String historico,
+	public PagamentoDto(Integer pagamento, Integer idParcela, String parcela, Date vencimento, String fornecedor, String historico,
 			BigDecimal saldoDevedor) {
 		this.pagamento = pagamento;
+		this.idParcela = idParcela;
 		this.parcela = parcela;
 		this.vencimento = vencimento;
 		this.fornecedor = fornecedor;
@@ -26,7 +28,11 @@ public class PagamentoDto {
 		return pagamento;
 	}
 
-	public Integer getParcela() {
+	public Integer getIdParcela() {
+		return idParcela;
+	}
+	
+	public String getParcela() {
 		return parcela;
 	}
 

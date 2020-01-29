@@ -1,6 +1,7 @@
 package br.com.futura.agendafinanceira.daos;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,9 +10,11 @@ import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
 import br.com.futura.agendafinanceira.dto.BaixaFiltroDto;
+import br.com.futura.agendafinanceira.dto.PagamentoDto;
 import br.com.futura.agendafinanceira.dto.RelatorioFiltroDto;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.models.PagamentoQuitacao;
+import br.com.futura.agendafinanceira.models.enums.SituacaoParcela;
 
 public class BaixaDao implements Serializable {
 
@@ -31,14 +34,22 @@ public class BaixaDao implements Serializable {
 				PagamentoParcela.class).getResultList();
 	}
 
-	public List<PagamentoParcela> listarPor(BaixaFiltroDto filtro) {
-		StringBuilder sql = new StringBuilder("select p from PagamentoParcela p ");
-			sql.append(" join fetch p.pagamento pg ");
-			sql.append(" join fetch pg.fornecedor ");
-			sql.append(" join fetch pg.setor ");
-			sql.append(" join fetch pg.conta ");
-			sql.append(" left join fetch p.quitacoes q ");
-			sql.append(" WHERE p.situacao in (0, 1, 2) ");
+	public List<PagamentoDto> listarPor(BaixaFiltroDto filtro) {
+		StringBuilder sql = new StringBuilder("select new br.com.futura.agendafinanceira.dto.PagamentoDto( " );
+		sql.append(" pg.idPagamento, ");
+		sql.append(" p.idPagamentoParcela, ");
+		sql.append(" p.parcela, ");
+		sql.append(" p.vencimento, ");
+		sql.append(" pg.fornecedor.razaoSocial, ");
+		sql.append(" pg.historico, ");
+		sql.append(" (p.valor - p.desconto + p.juros + p.mora + p.outros ) - coalesce(sum(q.valor), 0) )  ");
+		sql.append(" from PagamentoParcela p ");
+		sql.append(" join p.pagamento pg ");
+		sql.append(" join pg.fornecedor ");
+		sql.append(" join pg.setor ");
+		sql.append(" join pg.conta ");
+		sql.append(" left join p.quitacoes q ");
+		sql.append(" WHERE p.situacao in (:pSituacaoParcelas) ");
 		
 		if (filtro.getDataInicial() != null) {
 			sql.append(" and p.vencimento between :pDataInicial and :pDataFinal ");
@@ -48,9 +59,12 @@ public class BaixaDao implements Serializable {
 			sql.append(" and pg.fornecedor = :pFornecedor ");
 		}
 		
+		sql.append( " group by p.idPagamentoParcela ");
 		sql.append(" order by p.vencimento, pg.fornecedor.razaoSocial ");
 		
-		TypedQuery<PagamentoParcela> query = manager.createQuery(sql.toString(), PagamentoParcela.class);
+		TypedQuery<PagamentoDto> query = manager.createQuery(sql.toString(), PagamentoDto.class);
+		
+		query.setParameter("pSituacaoParcelas", Arrays.asList(SituacaoParcela.NOVO, SituacaoParcela.AGENDADO, SituacaoParcela.PROGRAMADO));
 		
 		if (filtro.getDataInicial() != null) {
 			query.setParameter("pDataInicial", filtro.getDataInicial());

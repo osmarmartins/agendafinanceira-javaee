@@ -197,14 +197,22 @@
 							</h:outputText>
 						</p:column>
 						
-						<p:column sortBy="#{parcela.fornecedor}">
+						<p:column sortBy="#{parcela.parcela}" width="10%">
 							<f:facet name="header">
-								<i class="ace-icon fa fa-eye"></i>							
-								Razão Social
+								<i class="ace-icon fa fa fa-list"></i>							
+								Parcela
 							</f:facet>
-							<h:outputText value="#{parcela.fornecedor}"/>
+							<h:outputText value="#{parcela.parcela}"/>
 						</p:column>
 						
+                        <p:column sortBy="#{parcela.fornecedor}">
+                           <f:facet name="header">
+                              <i class="ace-icon fa fa-eye"></i>                    
+                              Razão Social
+                           </f:facet>
+                           <h:outputText value="#{parcela.fornecedor}"/>
+                        </p:column>
+                        
 						<p:column sortBy="#{parcela.historico}">
 							<f:facet name="header">
 								<i class="ace-icon fa fa-eye"></i>							

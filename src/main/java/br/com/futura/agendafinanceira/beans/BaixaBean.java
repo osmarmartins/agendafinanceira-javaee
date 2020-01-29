@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.futura.agendafinanceira.dto.BaixaFiltroDto;
+import br.com.futura.agendafinanceira.dto.PagamentoDto;
 import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.services.BaixaService;
@@ -31,7 +32,7 @@ public class BaixaBean implements Serializable {
 	
 	private BigDecimal total;
 	
-	private List<PagamentoParcela> parcelas;
+	private List<PagamentoDto> parcelas;
 	
 	private List<PagamentoParcela> parcelasSelecionadas;
 	
@@ -83,7 +84,7 @@ public class BaixaBean implements Serializable {
 		}
 	}
 	
-	public List<PagamentoParcela> getParcelas() {
+	public List<PagamentoDto> getParcelas() {
 		return parcelas;
 	}
 	

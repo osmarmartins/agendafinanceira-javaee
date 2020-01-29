@@ -35,7 +35,7 @@
 						<div class="row">
 							<div class="col-md-3">
 								<div class="form-group">
-									<label for="periodo">Data Inicial</label>
+									<label for="periodo">Vencimento Inicial</label>
 									<div class="input-group">
 										<input class="form-control date-picker" 
 											jsf:id="dataInicial" type="date" 
@@ -51,7 +51,7 @@
 							
 							<div class="col-md-3">
 								<div class="form-group">
-									<label for="periodo">Data Final</label>
+									<label for="periodo">Vencimento Final</label>
 									<div class="input-group">
 										<input class="form-control date-picker" 
 											jsf:id="dataFinal" type="date" 
@@ -126,7 +126,7 @@
 
 					<p:dataTable id="tabela" reflow="true"
 						emptyMessage="Nenhum registro encontrado para o filtro selecionado"
-						value="#{baixaBean.parcelas}" var="parcela" rowKey="#{parcela.idPagamentoParcela}"
+						value="#{baixaBean.parcelas}" var="parcela" rowKey="#{parcela.idParcela}"
 						selection="#{baixaBean.parcelasSelecionadas}"
 						 
 						rows="#{sessionBean.itensPorPagina}"
@@ -156,7 +156,7 @@
 							</h:outputText>
 						</p:column>
 						
-						<p:column sortBy="#{parcela.parcela}" width="12%">
+						<p:column sortBy="#{parcela.parcela}" width="10%">
 							<f:facet name="header">
 								<i class="ace-icon fa fa-list"></i>							
 								Parcela
@@ -164,28 +164,28 @@
 							<h:outputText value="#{parcela.parcela}"/>
 						</p:column>
 						
-						<p:column sortBy="#{parcela.pagamento.fornecedor.razaoSocial}">
+						<p:column sortBy="#{parcela.fornecedor}">
 							<f:facet name="header">
 								<i class="ace-icon fa fa-eye"></i>							
 								Razão Social
 							</f:facet>
-							<h:outputText value="#{parcela.pagamento.fornecedor.razaoSocial}"/>
+							<h:outputText value="#{parcela.fornecedor}"/>
 						</p:column>
 						
-						<p:column sortBy="#{parcela.pagamento.historico}">
+						<p:column sortBy="#{parcela.historico}">
 							<f:facet name="header">
 								<i class="ace-icon fa fa-eye"></i>							
 								Histórico
 							</f:facet>
-							<h:outputText value="#{parcela.pagamento.historico}"/>
+							<h:outputText value="#{parcela.historico}"/>
 						</p:column>
 						
-						<p:column sortBy="#{parcela.saldoDevedor()}" width="15%">
+						<p:column sortBy="#{parcela.saldoDevedor}" width="15%">
 							<f:facet name="header">
 								<i class="ace-icon fa fa-usd"></i>							
 								Saldo Devedor
 							</f:facet>
-							<h:outputText value="#{parcela.saldoDevedor()}">
+							<h:outputText value="#{parcela.saldoDevedor}">
 								<f:convertNumber type="currency"/>
 							</h:outputText>
 						</p:column>
@@ -198,7 +198,7 @@
 							
 							<button type="button" class="btn btn-sm btn-success btn-white btn-round" 
 								jsf:id="btnAlterar" jsf:outcome="baixacadastro">
-								<f:param name="parcela" value="#{parcela.idPagamentoParcela}"/>
+								<f:param name="parcela" value="#{parcela.idParcela}"/>
 								<i class="ace-icon fa fa-pencil bigger-110 green"></i>
 							</button>
 							

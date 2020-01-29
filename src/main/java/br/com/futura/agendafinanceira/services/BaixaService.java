@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.daos.BaixaDao;
 import br.com.futura.agendafinanceira.dto.BaixaFiltroDto;
+import br.com.futura.agendafinanceira.dto.PagamentoDto;
 import br.com.futura.agendafinanceira.dto.RelatorioFiltroDto;
 import br.com.futura.agendafinanceira.exceptions.NenhumResultadoException;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
@@ -25,7 +26,7 @@ public class BaixaService implements Serializable {
 	@Inject
 	private BaixaParcelaService baixaParcelaService;
 	
-	public List<PagamentoParcela> listarPor(BaixaFiltroDto filtro) {
+	public List<PagamentoDto> listarPor(BaixaFiltroDto filtro) {
 		return baixaDao.listarPor(filtro);
 	}	
 	
