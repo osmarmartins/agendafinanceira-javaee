@@ -61,6 +61,10 @@ public class PagamentoDao implements Serializable {
 			sql.append(" and p.situacao = :pSituacao ");
 		}
 		
+		if (filtro.getDataInicial()!=null) {
+			sql.append(" and p.vencimento between :pDataInicial and :pDataFinal ");
+		}
+		
 		sql.append( " group by p.idPagamentoParcela ");
 		sql.append( " order by p.vencimento ");
 		
@@ -76,6 +80,11 @@ public class PagamentoDao implements Serializable {
 		
 		if (filtro.getSituacao()!=null) {
 			query.setParameter("pSituacao", filtro.getSituacao());
+		}
+
+		if (filtro.getDataInicial()!=null) {
+			query.setParameter("pDataInicial", filtro.getDataInicial());
+			query.setParameter("pDataFinal", filtro.getDataFinal());
 		}
 					
 		return query.getResultList();

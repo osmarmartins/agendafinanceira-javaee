@@ -32,7 +32,8 @@
 
 					<div class="clearfix form-actions ui-widget-header" style="margin-bottom: 0;" jsf:id="comandoGrid">
 					
-						<div class="row"> <!-- Filtros -->
+                        <!-- Filtros -->
+                        <div class="row">
 							<div class="col-md-2">
 								<div class="form-group">
 									<label class="control-label" jsf:for="situacao">Situação</label>
@@ -43,8 +44,42 @@
 									</h:selectOneMenu>
 								</div>
 							</div>
+                     
+                           <div class="col-md-2">
+                              <div class="form-group">
+                                 <label for="periodo">Vencimento Inicial</label>
+                                 <div class="input-group">
+                                    <input class="form-control date-picker" 
+                                       jsf:id="dataInicial" type="date" 
+                                       jsf:value="#{pagamentoBean.filtro.dataInicial}" data-date-format="dd/mm/yyyy">
+                                       <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                    </input>
+                                    <span class="input-group-addon">
+                                       <i class="fa fa-calendar bigger-110"></i>
+                                    </span>
+                                 </div>                           
+                              </div>
+                           </div>
+                           
+                           <div class="col-md-2">
+                              <div class="form-group">
+                                 <label for="periodo">Vencimento Final</label>
+                                 <div class="input-group">
+                                    <input class="form-control date-picker" 
+                                       jsf:id="dataFinal" type="date" 
+                                       jsf:value="#{pagamentoBean.filtro.dataFinal}" data-date-format="dd/mm/yyyy">
+                                       <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                    </input>
+                                    <span class="input-group-addon">
+                                       <i class="fa fa-calendar bigger-110"></i>
+                                    </span>
+                                 </div>                           
+                              </div>
+                           </div>
+                        </div>
 
-							<div class="col-md-5">
+						<div class="row"> 
+							<div class="col-md-6">
 								<div class="form-group">
 									<label class="control-label" jsf:for="fornecedor">Fornecedor</label>
 									<h:selectOneMenu value="#{pagamentoBean.filtro.fornecedor}" id="fornecedor" styleClass="form-control">
@@ -55,32 +90,32 @@
 								</div>
 							</div>
 							
-							<div class="col-md-5">
+							<div class="col-md-6">
 								<div class="form-group">
 									<label class="control-label" jsf:for="historico">Histórico</label>
 									<input type="text" jsf:value="#{pagamentoBean.filtro.historico}" jsf:id="historico" styleClass="form-control"/>
 								</div>
 							</div>
-							
-						</div> <!-- Filtros -->
+						</div> 
+                        <!-- Filtros -->
 					
 						<div class="row"> <!-- Botões --> 
-							<div class="col-md-2">
+							<div class="col-md-6">
+								<button class="btn btn-white btn-primary" type="submit" jsf:id="btnFiltrar" jsf:action="#{pagamentoBean.filtrar()}">
+									<i class="fa fa-filter"></i> 
+									Filtrar
+									<f:ajax execute="@this historico fornecedor situacao dataInicial dataFinal tabela" render="@form"/>
+								</button>
+								
+								<p:spacer width="10"/>
+
 								<button class="btn btn-white btn-primary" type="button" jsf:id="btnNovo" jsf:outcome="/pagamento/pagamentocadastro.xhtml">
 									<i class="fa fa-plus"></i> 
 									Novo
 								</button>
-							</div>
-														
-							<div class="col-md-5">
-								<button class="btn btn-white btn-primary" type="submit" jsf:id="btnFiltrar" jsf:action="#{pagamentoBean.filtrar()}">
-									<i class="fa fa-filter"></i> 
-									Filtrar
-									<f:ajax execute="@this historico fornecedor situacao tabela" render="@form"/>
-								</button>
-								
-								<p:spacer width="10"/>
-								
+                        
+                                <p:spacer width="10"/>
+
 								<button class="btn btn-white btn-danger" type="button" 
 									data-toggle="modal" 
 									data-target="#modalExclusao" 
@@ -105,8 +140,8 @@
 										render="@form"/>
 								</button>
 							</div>
-							
-							<div class="col-md-5">
+														
+							<div class="col-md-6">
 								<div class="input-group" jsf:id="divProgramacao" jsf:rendered="#{pagamentoBean.isExisteSelecao()}">
 									<span class="input-group-btn">
 										<button class="btn btn-sm btn-success" type="button"
