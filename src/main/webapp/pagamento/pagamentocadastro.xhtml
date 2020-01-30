@@ -348,6 +348,7 @@
 														</button>
                                           
                                                         <button class="btn btn-sm btn-info btn-white btn-round" style="margin-right: 5px;"
+                                                           jsf:rendered="#{facesContext.externalContext.isUserInRole('BAIXA_PAGAMENTO')}"
                                                            jsf:outcome="/baixa/baixacadastro.xhtml">
                                                            <f:param name="parcela" value="#{parcela.idPagamentoParcela}"/>
                                                            <i class="ace-icon fa fa-check-square-o bigger-110 blue"></i>

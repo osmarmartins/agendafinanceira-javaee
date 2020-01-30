@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"> 
 
 <h:head/>
 
@@ -213,8 +213,9 @@
 										</div>
 									</div>
                            
-                                    <div class="col-md-4" jsf:id="liquidar" jsf:rendered="#{pagamentoParcelaBean.permiteAlterar}">
-                                       <label class="control-label" jsf:for="data-liquidacao">Pagamento à vista </label>
+                                    
+                                    <div class="col-md-4" jsf:id="liquidar" jsf:rendered="#{facesContext.externalContext.isUserInRole('BAIXA_PAGAMENTO') and pagamentoParcelaBean.permiteAlterar}">
+                                       <label class="control-label" jsf:for="data-liquidacao">Pagamento à vista (dinheiro) </label>
                                        <div class="input-group" jsf:id="pagamento-avista">
                                           <span class="input-group-btn">
                                              <button class="btn btn-sm btn-success" type="submit"
