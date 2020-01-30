@@ -55,9 +55,10 @@ public class PagamentoParcelaBean implements Serializable{
 	}
 	
 	public boolean isPermiteAlterar() {
-		return this.parcela.getSituacao() != SituacaoParcela.LIQUIDADO &&
-			this.parcela.getSituacao() != SituacaoParcela.BAIXADO &&
-			this.parcela.getSituacao() != SituacaoParcela.CANCELADO;
+		PagamentoParcela p = getParcela();
+		return p.getSituacao() != SituacaoParcela.LIQUIDADO &&
+			p.getSituacao() != SituacaoParcela.BAIXADO &&
+			p.getSituacao() != SituacaoParcela.CANCELADO;
 	}
 	
 	public Pagamento getPagamento() {
@@ -71,6 +72,7 @@ public class PagamentoParcelaBean implements Serializable{
 	public PagamentoParcela getParcela() {
 		if (parcela == null) {
 			parcela = new PagamentoParcela(
+					"1/1",
 					SituacaoParcela.NOVO,
 					Calendar.getInstance().getTime(),
 					Collections.emptySet(),

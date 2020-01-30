@@ -36,8 +36,9 @@ public class PagamentoParcelasMultiplasBean implements Serializable {
 	@PostConstruct
 	private void init() {
 		this.parcelamento = new ParcelamentoDto(this.pagamento);
+		this.parcelamento.setParcelaInicial(1);
+		this.parcelamento.setTipoLancamento(TipoLancamento.MENSAL_LANCAMENTO_VARIAS_PARCELAS);
 		this.tiposLancamentos = TipoLancamento.values();
-		
 	}
 
 	public String gerarParcelas() {

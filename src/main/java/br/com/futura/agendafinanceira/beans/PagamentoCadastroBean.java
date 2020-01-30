@@ -79,6 +79,9 @@ public class PagamentoCadastroBean implements Serializable{
 	public Pagamento getPagamento() {
 		if (this.pagamento == null) {
 			this.pagamento = new Pagamento(new Date(), SituacaoPagamento.EMABERTO);
+			if (this.setores.size() == 1) {
+				this.pagamento.setSetor(this.setores.get(0));
+			}
 
 		}
 		return this.pagamento;

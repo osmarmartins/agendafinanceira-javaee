@@ -43,7 +43,7 @@ public class PagamentoService implements Serializable {
 
 	@Transactional
 	public void excluir(List<PagamentoDto> parcelasDto) {
-		// TODO: Validar exclusão dos pagamentos 
+		// TODO: Validar exclusão dos pagamentos a cada iteração
 		List<PagamentoParcela> parcelas = new ArrayList<>();
 		for (PagamentoDto parcelaDto : parcelasDto) {
 			PagamentoParcela parcela = new PagamentoParcela();
@@ -53,6 +53,7 @@ public class PagamentoService implements Serializable {
 		pagamentoDao.excluir(parcelas);
 	}
 
+	// TODO Refatorar para agendar com um único UPDATE com a lista de id's
 	@Transactional
 	public void agendarPagamento(List<PagamentoDto> parcelasSelecionadas) {
 		for (PagamentoDto parcelaDto : parcelasSelecionadas) {
@@ -62,6 +63,7 @@ public class PagamentoService implements Serializable {
 		}
 	}
 
+	// TODO Refatorar para programar pagamento com um único UPDATE com a lista de id's 
 	@Transactional
 	public void aplicarDataProgramacao(List<PagamentoDto> parcelasSelecionadas, Date dataProgramacao) {
 		for (PagamentoDto parcelaDto : parcelasSelecionadas) {

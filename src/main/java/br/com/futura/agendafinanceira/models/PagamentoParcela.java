@@ -93,6 +93,7 @@ public class PagamentoParcela implements Serializable {
 	}
 
 	public PagamentoParcela(
+			String parcela,
 			SituacaoParcela situacao,
 			Date vencimento,
 			Set<PagamentoQuitacao> quitacoes,
@@ -101,6 +102,7 @@ public class PagamentoParcela implements Serializable {
 			BigDecimal juros,
 			BigDecimal mora,
 			BigDecimal outros ) {
+		this.parcela = parcela;
 		this.situacao = situacao;
 		this.vencimento = vencimento;
 		this.quitacoes = quitacoes;
