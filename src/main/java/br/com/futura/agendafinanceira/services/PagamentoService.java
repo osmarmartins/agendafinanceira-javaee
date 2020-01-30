@@ -1,6 +1,7 @@
 package br.com.futura.agendafinanceira.services;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,22 +42,30 @@ public class PagamentoService implements Serializable {
 	}
 
 	@Transactional
-	public void excluir(List<PagamentoParcela> parcelas) {
+	public void excluir(List<PagamentoDto> parcelasDto) {
 		// TODO: Validar exclusão dos pagamentos 
+		List<PagamentoParcela> parcelas = new ArrayList<>();
+		for (PagamentoDto parcelaDto : parcelasDto) {
+			PagamentoParcela parcela = new PagamentoParcela();
+			parcela.setIdPagamentoParcela(parcelaDto.getIdParcela());
+			parcelas.add(parcela);
+		}
 		pagamentoDao.excluir(parcelas);
 	}
 
 	@Transactional
-	public void agendarPagamento(List<PagamentoParcela> parcelasSelecionadas) {
-		for (PagamentoParcela parcela : parcelasSelecionadas) {
+	public void agendarPagamento(List<PagamentoDto> parcelasSelecionadas) {
+		for (PagamentoDto parcelaDto : parcelasSelecionadas) {
+			PagamentoParcela parcela = parcelaDao.pesquisaPorId(parcelaDto.getIdParcela());
 			parcela.setSituacao(SituacaoParcela.AGENDADO);
 			parcelaDao.salvar(parcela);
 		}
 	}
 
 	@Transactional
-	public void aplicarDataProgramacao(List<PagamentoParcela> parcelasSelecionadas, Date dataProgramacao) {
-		for (PagamentoParcela parcela : parcelasSelecionadas) {
+	public void aplicarDataProgramacao(List<PagamentoDto> parcelasSelecionadas, Date dataProgramacao) {
+		for (PagamentoDto parcelaDto : parcelasSelecionadas) {
+			PagamentoParcela parcela = parcelaDao.pesquisaPorId(parcelaDto.getIdParcela());
 			parcela.setVencimento(dataProgramacao);
 			parcela.setSituacao(SituacaoParcela.PROGRAMADO);
 			parcelaDao.salvar(parcela);

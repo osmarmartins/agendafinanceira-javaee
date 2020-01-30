@@ -64,7 +64,9 @@
 									</div>									
 								</div>
 							</div>
-
+                        </div>
+                        
+                        <div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
 									<label class="control-label" jsf:for="fornecedor">Fornecedor</label>
@@ -74,31 +76,38 @@
 											itemLabel="#{fornecedor.nomeFantasia}" itemValue="#{fornecedor}"/>
 									</h:selectOneMenu>
 								</div>
-							</div>
+                           </div>
+
+                           <div class="col-md-6">
+                                   <div class="form-group">
+                                      <label class="control-label" jsf:for="historico">Histórico</label>
+                                      <input type="text" jsf:value="#{baixaBean.filtro.historico}" jsf:id="historico" styleClass="form-control"/>
+                                   </div>
+                           </div>
 						</div>
 					
 						<div class="row">
-							<div class="col-md-3">
+							<div class="col-md-2">
 								<button class="btn btn-white btn-primary" type="button" jsf:id="btnFiltrar" jsf:action="#{baixaBean.filtrar()}">
 									<i class="fa fa-filter"></i> 
 									Filtrar
-									<f:ajax execute="@this dataInicial dataFinal fornecedor" render="@form"/>
+									<f:ajax execute="@this dataInicial dataFinal fornecedor historico" render="@form"/>
 								</button>
-							</div>
-							
-							<div class="col-md-3">
+                           </div>
+
+                           <div class="col-md-4">
 								<div class="input-group" jsf:id="total" jsf:rendered="#{baixaBean.isExisteSelecao()}" >
 									<span class="input-group-addon"> 
 										<i class="ace-icon fa fa-usd"></i>
 									</span> 
-									<input class="form-control input-mask-phone" type="text"
+									<input class="form-control input-mask-phone" type="text" readonly="readonly"
 										jsf:value="#{baixaBean.total}"
 										jsf:id="totalSelecionado">
 										<f:convertNumber type="currency"/>
 									</input>
 								</div>
-							</div>
-							
+                            </div>
+
 							<div class="col-md-6">
 								<div class="input-group" jsf:id="divDataBaixa" jsf:rendered="#{baixaBean.isExisteSelecao()}">
 									<span class="input-group-btn">
@@ -119,7 +128,6 @@
 									</input>
 								</div>									
 							</div>
-							
 						</div>
 					</div>
 
@@ -208,6 +216,9 @@
 				</h:form>
 			</div>
 		</div>
+
+      <!-- Modal Exclusão -->
+      <ui:include src="baixaexclusaodialog.xhtml"/>
 			
 	</ui:define>
 

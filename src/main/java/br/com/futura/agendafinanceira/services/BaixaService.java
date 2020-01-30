@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.daos.BaixaDao;
+import br.com.futura.agendafinanceira.daos.PagamentoParcelaDao;
 import br.com.futura.agendafinanceira.dto.BaixaFiltroDto;
 import br.com.futura.agendafinanceira.dto.PagamentoDto;
 import br.com.futura.agendafinanceira.dto.RelatorioFiltroDto;
@@ -26,6 +27,9 @@ public class BaixaService implements Serializable {
 	@Inject
 	private BaixaParcelaService baixaParcelaService;
 	
+	@Inject
+	private PagamentoParcelaDao parcelaDao;
+	
 	public List<PagamentoDto> listarPor(BaixaFiltroDto filtro) {
 		return baixaDao.listarPor(filtro);
 	}	
@@ -40,9 +44,10 @@ public class BaixaService implements Serializable {
 	}
 
 	@Transactional
-	public void baixarParcelas(List<PagamentoParcela> parcelas, Date data) {
+	public void baixarParcelas(List<PagamentoDto> parcelas, Date data) {
 		PagamentoQuitacao quitacao;
-		for (PagamentoParcela parcela : parcelas) {
+		for (PagamentoDto parcelaDto : parcelas) {
+			PagamentoParcela parcela = parcelaDao.pesquisaPorId(parcelaDto.getIdParcela()); 
 			quitacao = new PagamentoQuitacao(parcela.saldoDevedor(), data, FormaPagamento.OUTROS);
 			baixaParcelaService.salvar(parcela, quitacao);
 		}

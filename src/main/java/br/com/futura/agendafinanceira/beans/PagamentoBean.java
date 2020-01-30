@@ -15,7 +15,6 @@ import br.com.futura.agendafinanceira.dto.PagamentoDto;
 import br.com.futura.agendafinanceira.dto.PagamentoFiltroDto;
 import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.Pagamento;
-import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.models.enums.SituacaoParcela;
 import br.com.futura.agendafinanceira.services.FornecedorService;
 import br.com.futura.agendafinanceira.services.PagamentoService;
@@ -29,7 +28,7 @@ public class PagamentoBean implements Serializable {
 	
 	private List<PagamentoDto> parcelas;
 
-	private List<PagamentoParcela> parcelasSelecionadas;
+	private List<PagamentoDto> parcelasSelecionadas;
 	
 	private List<Fornecedor> fornecedores;
 	
@@ -83,7 +82,7 @@ public class PagamentoBean implements Serializable {
 		return !parcelasSelecionadas.isEmpty();
 	}
 	
-	public void selecionarParcela(PagamentoParcela parcela) {
+	public void selecionarParcela(PagamentoDto parcela) {
 		parcelasSelecionadas.add(parcela);
 		mensagemExclusaoBuilder();
 	}
@@ -97,7 +96,7 @@ public class PagamentoBean implements Serializable {
 				msg.append("os pagamentos selecionados?");
 			}else {
 				msg.append("o pagamento ");
-				msg.append(parcelasSelecionadas.get(0).getPagamento().getHistorico());
+				msg.append(parcelasSelecionadas.get(0).getHistorico());
 			}
 		}
 		this.mensagemExclusao = msg.toString();
@@ -118,11 +117,11 @@ public class PagamentoBean implements Serializable {
 		return parcelas;
 	}
 	
-	public List<PagamentoParcela> getParcelasSelecionadas() {
+	public List<PagamentoDto> getParcelasSelecionadas() {
 		return parcelasSelecionadas;
 	}
 
-	public void setParcelasSelecionadas(List<PagamentoParcela> parcelasSelecionadas) {
+	public void setParcelasSelecionadas(List<PagamentoDto> parcelasSelecionadas) {
 		this.parcelasSelecionadas = parcelasSelecionadas;
 	}
 

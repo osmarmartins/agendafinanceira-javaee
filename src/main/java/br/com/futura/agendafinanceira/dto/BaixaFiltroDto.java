@@ -9,6 +9,7 @@ public class BaixaFiltroDto {
 	private Date dataInicial;
 	private Date dataFinal;
 	private Fornecedor fornecedor;
+	private String historico;
 
 	public Date getDataInicial() {
 		return dataInicial;
@@ -33,11 +34,19 @@ public class BaixaFiltroDto {
 	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
 	}
+	
+	public String getHistorico() {
+		return historico;
+	}
+	
+	public void setHistorico(String historico) {
+		this.historico = historico;
+	}
 
 	@Override
 	public String toString() {
 		return "BaixaFiltroDto [dataInicial=" + dataInicial + ", dataFinal=" + dataFinal + ", fornecedor=" + fornecedor
-				+ "]";
+				+ ", historico=" + historico + "]";
 	}
-	
+
 }

@@ -34,7 +34,7 @@ public class BaixaBean implements Serializable {
 	
 	private List<PagamentoDto> parcelas;
 	
-	private List<PagamentoParcela> parcelasSelecionadas;
+	private List<PagamentoDto> parcelasSelecionadas;
 	
 	private List<Fornecedor> fornecedores;
 	
@@ -79,8 +79,8 @@ public class BaixaBean implements Serializable {
 	
 	public void calcularTotal() {
 		this.total = BigDecimal.ZERO;
-		for (PagamentoParcela parcela : this.parcelasSelecionadas) {
-			this.total = this.total.add(parcela.saldoDevedor());
+		for (PagamentoDto parcela : this.parcelasSelecionadas) {
+			this.total = this.total.add(parcela.getSaldoDevedor());
 		}
 	}
 	
@@ -88,11 +88,11 @@ public class BaixaBean implements Serializable {
 		return parcelas;
 	}
 	
-	public void setParcelasSelecionadas(List<PagamentoParcela> parcelasSelecionadas) {
+	public void setParcelasSelecionadas(List<PagamentoDto> parcelasSelecionadas) {
 		this.parcelasSelecionadas = parcelasSelecionadas;
 	}
 	
-	public List<PagamentoParcela> getParcelasSelecionadas() {
+	public List<PagamentoDto> getParcelasSelecionadas() {
 		return parcelasSelecionadas;
 	}
 	

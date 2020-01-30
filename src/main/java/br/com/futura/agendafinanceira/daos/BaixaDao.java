@@ -59,6 +59,10 @@ public class BaixaDao implements Serializable {
 			sql.append(" and pg.fornecedor = :pFornecedor ");
 		}
 		
+		if (filtro.getHistorico() != null) {
+			sql.append(" and pg.historico like :pHistorico ");
+		}
+		
 		sql.append( " group by p.idPagamentoParcela ");
 		sql.append(" order by p.vencimento, pg.fornecedor.razaoSocial ");
 		
@@ -73,6 +77,10 @@ public class BaixaDao implements Serializable {
 		
 		if (filtro.getFornecedor() != null) {
 			query.setParameter("pFornecedor", filtro.getFornecedor());
+		}
+		
+		if (filtro.getHistorico() != null) {
+			query.setParameter("pHistorico", "%" + filtro.getHistorico() + "%");
 		}
 				
 		return query.getResultList();
