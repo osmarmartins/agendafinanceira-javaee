@@ -258,11 +258,11 @@ public class PagamentoParcela implements Serializable {
 	public BigDecimal totalPago() {
 		BigDecimal pagamentos = BigDecimal.ZERO;
 
-		if (this.quitacoes == null || this.quitacoes.size() == 0) {
+		if (getQuitacoes() == null || getQuitacoes().size() == 0) {
 			return pagamentos;
 		}
 
-		for (PagamentoQuitacao quitacao : this.quitacoes) {
+		for (PagamentoQuitacao quitacao : getQuitacoes()) {
 			pagamentos = pagamentos.add(quitacao.getValor());
 		}
 		return pagamentos;

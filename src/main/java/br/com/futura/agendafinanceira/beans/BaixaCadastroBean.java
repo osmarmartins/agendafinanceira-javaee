@@ -13,6 +13,7 @@ import javax.inject.Named;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.models.PagamentoQuitacao;
 import br.com.futura.agendafinanceira.models.enums.FormaPagamento;
+import br.com.futura.agendafinanceira.models.enums.SituacaoParcela;
 import br.com.futura.agendafinanceira.services.BaixaParcelaService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
@@ -44,10 +45,9 @@ public class BaixaCadastroBean implements Serializable {
 	
 	public String salvar() {
 		baixaParcelaService.salvarParcelaUnica(parcela, quitacao);
-		Float novoSaldoDevedor = parcela.saldoDevedor().subtract(quitacao.getValor()).floatValue();
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		
-		if (novoSaldoDevedor == 0 ) {
+		if (parcela.getSituacao().equals(SituacaoParcela.LIQUIDADO)) {
 			return "baixa?faces-redirect=true";
 		}
 

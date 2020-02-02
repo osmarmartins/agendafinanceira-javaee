@@ -14,12 +14,13 @@ public class BaixaParcelaDao implements Serializable{
 	@PersistenceContext
 	private EntityManager manager;
 	
-	public void salvar(PagamentoQuitacao quitacao) {
+	public PagamentoQuitacao salvar(PagamentoQuitacao quitacao) {
 		if (quitacao.getIdPgtoQuitacao() == null) {
 			manager.persist(quitacao);
 		}else {
 			manager.merge(quitacao);
 		}
+		return quitacao;
 	}
 	
 	public void excluir(PagamentoQuitacao quitacao) {

@@ -97,12 +97,13 @@ public class PagamentoDao implements Serializable {
 		}
 	}
 
-	public void salvar(Pagamento pagamento) {
+	public Pagamento salvar(Pagamento pagamento) {
 		if (pagamento.getIdPagamento() != null){
 			manager.merge(pagamento);
 		}else{
 			manager.persist(pagamento);
 		}
+		return pagamento;
 		
 	}
 

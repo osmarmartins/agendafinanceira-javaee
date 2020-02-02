@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import br.com.futura.agendafinanceira.daos.BaixaParcelaDao;
 import br.com.futura.agendafinanceira.daos.PagamentoDao;
 import br.com.futura.agendafinanceira.daos.PagamentoParcelaDao;
+import br.com.futura.agendafinanceira.exceptions.ApplicationException;
 import br.com.futura.agendafinanceira.models.Pagamento;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.models.PagamentoQuitacao;
@@ -51,27 +52,36 @@ public class BaixaParcelaService implements Serializable {
 	}
 	
 	@Transactional
-	public void salvarParcelaUnica(PagamentoParcela parcela, PagamentoQuitacao quitacao) {
-		salvar(parcela, quitacao);
+	public PagamentoParcela salvarParcelaUnica(PagamentoParcela parcela, PagamentoQuitacao quitacao) {
+		return salvar(parcela, quitacao);
+		
 	}
 
-	public void salvar(PagamentoParcela parcela, PagamentoQuitacao quitacao) {
-		parcela.addQuitacao(quitacao);
-
-		Float saldoDevedorParcela = quitacao.getParcela().saldoDevedor().subtract(quitacao.getValor()).floatValue(); 
-		if (saldoDevedorParcela == 0){
-			quitacao.getParcela().setSituacao(SituacaoParcela.LIQUIDADO);
-			parcelaDao.salvar(quitacao.getParcela());
+	public PagamentoParcela salvar(PagamentoParcela parcela, PagamentoQuitacao quitacao) {
+		
+		if (quitacao.getValor().floatValue() > parcela.saldoDevedor().floatValue()) {
+			throw new ApplicationException("Valor pago acima do saldo devedor!");
 		}
 		
+		pagamento = pagamentoDao.pesquisarPorId(parcela.getPagamento().getIdPagamento());
+		
+		float saldoPagamento = pagamento.saldoDevedor().floatValue() - quitacao.getValor().floatValue();
+		float saldoParcela = parcela.saldoDevedor().floatValue() - quitacao.getValor().floatValue();
+		
+		parcela.addQuitacao(quitacao);
 		baixaParcelaDao.salvar(quitacao);
 		
-		pagamento = pagamentoDao.pesquisarPorId(quitacao.getParcela().getPagamento().getIdPagamento());
-		Float saldoDevedorPagamento = pagamento.saldoDevedor().floatValue();
-		if (saldoDevedorPagamento <= 0){
-			pagamento.setSituacao(SituacaoPagamento.FINALIZADO);
-			pagamentoDao.salvar(pagamento);
+		if (saldoParcela <= 0){
+			parcela.setSituacao(SituacaoParcela.LIQUIDADO);
 		}
+		parcelaDao.salvar(quitacao.getParcela());
+		
+		if (saldoPagamento <= 0) {
+			pagamento.setSituacao(SituacaoPagamento.FINALIZADO);
+		}
+		pagamentoDao.salvar(pagamento);
+		
+		return parcela;
 		
 	}
 
