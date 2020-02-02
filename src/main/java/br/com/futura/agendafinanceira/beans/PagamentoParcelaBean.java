@@ -61,6 +61,10 @@ public class PagamentoParcelaBean implements Serializable{
 			p.getSituacao() != SituacaoParcela.CANCELADO;
 	}
 	
+	public void definirPagamentoAVista() {
+		this.dataLiquidacao = this.parcela.getVencimento();
+	}
+	
 	public Pagamento getPagamento() {
 		return pagamento;
 	}

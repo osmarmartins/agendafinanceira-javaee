@@ -108,6 +108,7 @@
 													jsf:binding="#{vencimento}" 
 													jsf:value="#{pagamentoParcelaBean.parcela.vencimento}">
 													<f:convertDateTime pattern="yyyy-MM-dd"/>
+                                                    <f:ajax event="blur" execute="@this" render="data-liquidacao" listener="#{pagamentoParcelaBean.definirPagamentoAVista()}"/>
 												</input>
 												<span class="input-group-addon">
 													<i class="fa fa-calendar bigger-110"></i>
