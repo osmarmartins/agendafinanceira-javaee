@@ -10,6 +10,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.futura.agendafinanceira.exceptions.ApplicationException;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.models.PagamentoQuitacao;
 import br.com.futura.agendafinanceira.models.enums.FormaPagamento;
@@ -44,8 +45,14 @@ public class BaixaCadastroBean implements Serializable {
 	}
 	
 	public String salvar() {
-		baixaParcelaService.salvarParcelaUnica(parcela, quitacao);
-		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
+		try {
+			baixaParcelaService.salvarParcelaUnica(parcela, quitacao);
+			messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
+		} catch (ApplicationException e) {
+			messagesHelper.addFlash(new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "")); 
+		} catch (Exception e) {
+			messagesHelper.addFlash(new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "")); 
+		}
 		
 		if (parcela.getSituacao().equals(SituacaoParcela.LIQUIDADO)) {
 			return "baixa?faces-redirect=true";
@@ -53,6 +60,7 @@ public class BaixaCadastroBean implements Serializable {
 
 		return "baixacadastro?faces-redirect=true&parcela=" + parcela.getIdPagamentoParcela();
 	}
+		
 	
 	public String excluir(PagamentoQuitacao quitacao) {
 		// TODO Chamada Ajax para atualizar grid de quitações após excluir

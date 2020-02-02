@@ -52,12 +52,12 @@ public class BaixaParcelaService implements Serializable {
 	}
 	
 	@Transactional
-	public PagamentoParcela salvarParcelaUnica(PagamentoParcela parcela, PagamentoQuitacao quitacao) {
+	public PagamentoParcela salvarParcelaUnica(PagamentoParcela parcela, PagamentoQuitacao quitacao) throws ApplicationException {
 		return salvar(parcela, quitacao);
 		
 	}
 
-	public PagamentoParcela salvar(PagamentoParcela parcela, PagamentoQuitacao quitacao) {
+	public PagamentoParcela salvar(PagamentoParcela parcela, PagamentoQuitacao quitacao) throws ApplicationException {
 		
 		if (quitacao.getValor().floatValue() > parcela.saldoDevedor().floatValue()) {
 			throw new ApplicationException("Valor pago acima do saldo devedor!");
