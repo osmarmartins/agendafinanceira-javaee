@@ -48,7 +48,7 @@ public class PagamentoParcelaBean implements Serializable{
 	}
 	
 	public String liquidar() {
-		this.parcela = parcelaService.liquidar(this.parcela);
+		this.parcela = parcelaService.liquidar(this.pagamento, this.parcela);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
 		return "/pagamento/pagamentocadastro?faces-redirect=true" + 
 				"&pagamento=" + parcela.getPagamento().getIdPagamento();

@@ -123,7 +123,10 @@ public class PagamentoParcelaService implements Serializable {
 	}
 
 	@Transactional
-	public PagamentoParcela liquidar(PagamentoParcela parcela) {
+	public PagamentoParcela liquidar(Pagamento pagamento, PagamentoParcela parcela) {
+		if (parcela.getIdPagamentoParcela() == null) {
+			salvar(pagamento, parcela);
+		}
 		PagamentoQuitacao quitacao = new PagamentoQuitacao(parcela.getValor(), parcela.getVencimento(), FormaPagamento.DINHEIRO);
 		baixaService.salvar(parcela, quitacao);
 		return parcela;
