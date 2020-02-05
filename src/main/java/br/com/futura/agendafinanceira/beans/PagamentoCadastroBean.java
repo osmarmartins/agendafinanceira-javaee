@@ -20,6 +20,7 @@ import br.com.futura.agendafinanceira.services.ContaService;
 import br.com.futura.agendafinanceira.services.FornecedorService;
 import br.com.futura.agendafinanceira.services.PagamentoService;
 import br.com.futura.agendafinanceira.services.SetorService;
+import br.com.futura.agendafinanceira.utils.DataUtil;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Named
@@ -78,7 +79,9 @@ public class PagamentoCadastroBean implements Serializable{
 	
 	public Pagamento getPagamento() {
 		if (this.pagamento == null) {
-			this.pagamento = new Pagamento(new Date(), SituacaoPagamento.EMABERTO);
+			this.pagamento = new Pagamento(new Date(), 
+										SituacaoPagamento.EMABERTO, 
+										DataUtil.dataAMD(new Date()).replace("-", ""));
 			if (this.setores.size() == 1) {
 				this.pagamento.setSetor(this.setores.get(0));
 			}

@@ -13,6 +13,10 @@ public class DataUtil {
 		return new SimpleDateFormat("dd/MM/yyyy").format(data);
 	}
 	
+	public static String dataAMD(Date data) {
+		return new SimpleDateFormat("yyyy-MM-dd").format(data);
+	}
+
 	public static String dataHoraSegundo(Date data) {
 		return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(data);
 	}

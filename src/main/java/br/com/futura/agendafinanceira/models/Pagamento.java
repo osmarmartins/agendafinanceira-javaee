@@ -71,9 +71,11 @@ public class Pagamento implements Serializable {
 	public Pagamento() {
 	}
 	
-	public Pagamento(Date emissao, SituacaoPagamento situacao){
+	public Pagamento(Date emissao, SituacaoPagamento situacao, String documento){
 		this.emissao = emissao;
 		this.situacao = situacao;
+		this.documento = documento;
+
 	}
 
 	public Pagamento(Pagamento pagamento) {

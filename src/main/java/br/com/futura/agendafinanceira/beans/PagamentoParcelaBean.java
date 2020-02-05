@@ -32,7 +32,7 @@ public class PagamentoParcelaBean implements Serializable{
 	
 	@Inject
 	private MessagesHelper messagesHelper;
-
+	
 	public String salvar() {
 		parcelaService.salvar(pagamento, parcela);
 		messagesHelper.addFlash(new FacesMessage("Operação realizada com sucesso!"));
@@ -74,11 +74,17 @@ public class PagamentoParcelaBean implements Serializable{
 	}
 	
 	public PagamentoParcela getParcela() {
+		Date vencimento;
+		if (pagamento != null) {
+			vencimento = pagamento.getEmissao();
+		}else {
+			vencimento = Calendar.getInstance().getTime();
+		}
 		if (parcela == null) {
 			parcela = new PagamentoParcela(
 					"1/1",
 					SituacaoParcela.NOVO,
-					Calendar.getInstance().getTime(),
+					vencimento,
 					Collections.emptySet(),
 					BigDecimal.ZERO,
 					BigDecimal.ZERO,
@@ -87,6 +93,8 @@ public class PagamentoParcelaBean implements Serializable{
 					BigDecimal.ZERO
 					);
 		}
+		dataLiquidacao = parcela.getVencimento();
+		
 		return parcela;
 	}
 
@@ -96,7 +104,7 @@ public class PagamentoParcelaBean implements Serializable{
 	
 	public Date getDataLiquidacao() {
 		if (this.dataLiquidacao == null) {
-			this.dataLiquidacao = new Date();
+			this.parcela.getVencimento();
 		}
 		return dataLiquidacao;
 	}
