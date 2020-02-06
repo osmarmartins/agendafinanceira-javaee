@@ -221,6 +221,16 @@
 							<h:outputText value="#{parcela.historico}"/>
 						</p:column>
 
+                        <p:column sortBy="#{parcela.valor}" width="15%">
+                           <f:facet name="header">
+                              <i class="ace-icon fa fa-usd"></i>                    
+                              Valor
+                           </f:facet>
+                           <h:outputText value="#{parcela.valor}">
+                              <f:convertNumber type="currency"/>
+                           </h:outputText>
+                        </p:column>
+
 						<p:column sortBy="#{parcela.saldoDevedor}" width="15%">
 							<f:facet name="header">
 								<i class="ace-icon fa fa-usd"></i>							

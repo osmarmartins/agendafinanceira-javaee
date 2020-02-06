@@ -34,13 +34,14 @@ public class PagamentoDao implements Serializable {
 	
 
 	public List<PagamentoDto> listarPor(PagamentoFiltroDto filtro) {
-		StringBuilder sql = new StringBuilder("select new br.com.futura.agendafinanceira.dto.PagamentoDto( " );
+		StringBuilder sql = new StringBuilder("select new " + PagamentoDto.class.getName() + "( " );
 				sql.append(" pg.idPagamento, ");
 				sql.append(" p.idPagamentoParcela, ");
 				sql.append(" p.parcela, ");
 				sql.append(" p.vencimento, ");
 				sql.append(" pg.fornecedor.razaoSocial, ");
 				sql.append(" pg.historico, ");
+				sql.append(" (p.valor - p.desconto + p.juros + p.mora + p.outros ), ");
 				sql.append(" (p.valor - p.desconto + p.juros + p.mora + p.outros ) - coalesce(sum(q.valor), 0) )  ");
 				sql.append(" from PagamentoParcela p ");
 				sql.append(" join p.pagamento pg ");
