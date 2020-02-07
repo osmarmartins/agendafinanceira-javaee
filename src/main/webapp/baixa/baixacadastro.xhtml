@@ -153,6 +153,7 @@
 												jsf:binding="#{desconto}" 
 												jsf:value="#{baixaCadastroBean.parcela.desconto}">
 												<f:convertNumber type="currency"/>
+                                                <f:ajax execute="@this" render="valor" listener="#{baixaCadastroBean.autalizarValorQuitacao()}"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="desconto"/> 
@@ -170,6 +171,7 @@
 												jsf:binding="#{juros}" 
 												jsf:value="#{baixaCadastroBean.parcela.juros}">
 												<f:convertNumber type="currency"/>
+                                                <f:ajax execute="@this" render="valor" listener="#{baixaCadastroBean.autalizarValorQuitacao()}"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="juros"/> 
@@ -185,6 +187,7 @@
 												jsf:binding="#{mora}" 
 												jsf:value="#{baixaCadastroBean.parcela.mora}">
 												<f:convertNumber type="currency"/>
+                                                <f:ajax execute="@this" render="valor" listener="#{baixaCadastroBean.autalizarValorQuitacao()}"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="mora"/> 
@@ -200,6 +203,7 @@
 												jsf:binding="#{outros}" 
 												jsf:value="#{baixaCadastroBean.parcela.outros}">
 												<f:convertNumber type="currency"/>
+                                                <f:ajax execute="@this" render="valor" listener="#{baixaCadastroBean.autalizarValorQuitacao()}"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="outros"/> 

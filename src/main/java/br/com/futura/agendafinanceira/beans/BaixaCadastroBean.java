@@ -1,6 +1,7 @@
 package br.com.futura.agendafinanceira.beans;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -39,9 +40,13 @@ public class BaixaCadastroBean implements Serializable {
 		quitacao.setDtPgto(new Date());
 	}
 	
-	
-	public FormaPagamento[] getFormasDePagamento() {
-		return FormaPagamento.values();
+	public void autalizarValorQuitacao() {
+		BigDecimal saldo = parcela.getValor()
+				.subtract(parcela.getDesconto()
+				.add(parcela.getJuros()
+				.add(parcela.getMora()
+				.add(parcela.getOutros()))));
+		this.quitacao.setValor(saldo);
 	}
 	
 	public String salvar() {
@@ -106,6 +111,10 @@ public class BaixaCadastroBean implements Serializable {
 	
 	public List<PagamentoQuitacao> getQuitacoes() {
 		return this.parcela.getQuitacoes();
+	}
+	
+	public FormaPagamento[] getFormasDePagamento() {
+		return FormaPagamento.values();
 	}
 
 }
