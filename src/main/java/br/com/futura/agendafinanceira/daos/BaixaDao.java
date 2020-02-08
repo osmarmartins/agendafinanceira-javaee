@@ -34,6 +34,20 @@ public class BaixaDao implements Serializable {
 				PagamentoParcela.class).getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
+	public Integer contarRegistros(BaixaFiltroDto filtro) {
+		StringBuilder sql = new StringBuilder("select count(p) from PagamentoParcela p ");
+		sql.append(" join p.pagamento pg ");
+		sql.append(" join pg.fornecedor ");
+		sql.append(" join pg.setor ");
+		sql.append(" join pg.conta ");
+		sql.append(" left join p.quitacoes q ");
+		sql.append(" WHERE p.situacao in (:pSituacaoParcelas) ");
+		TypedQuery<Long> query = (TypedQuery<Long>) aplicarFiltro(filtro, sql, Long.class);
+		return query.getSingleResult().intValue();		
+	}
+
+	@SuppressWarnings("unchecked")
 	public List<PagamentoDto> listarPor(BaixaFiltroDto filtro) {
 		StringBuilder sql = new StringBuilder("select new " + PagamentoDto.class.getName() + "( " );
 		sql.append(" pg.idPagamento, ");
@@ -51,7 +65,17 @@ public class BaixaDao implements Serializable {
 		sql.append(" join pg.conta ");
 		sql.append(" left join p.quitacoes q ");
 		sql.append(" WHERE p.situacao in (:pSituacaoParcelas) ");
+
+		TypedQuery<PagamentoDto> query = (TypedQuery<PagamentoDto>) aplicarFiltro(filtro, sql, PagamentoDto.class);
+
+		query.setFirstResult(filtro.getPaginacao().getPagina());
+		query.setMaxResults(filtro.getPaginacao().getRegistrosPorPagina());
 		
+		return query.getResultList();		
+		
+	}
+	
+	private TypedQuery<?> aplicarFiltro(BaixaFiltroDto filtro, StringBuilder sql, Class<?> classe) {
 		if (filtro.getDataInicial() != null) {
 			sql.append(" and p.vencimento between :pDataInicial and :pDataFinal ");
 		}
@@ -65,9 +89,17 @@ public class BaixaDao implements Serializable {
 		}
 		
 		sql.append( " group by p.idPagamentoParcela ");
-		sql.append(" order by p.vencimento, pg.fornecedor.razaoSocial ");
 		
-		TypedQuery<PagamentoDto> query = manager.createQuery(sql.toString(), PagamentoDto.class);
+		if (filtro.getPaginacao().getOrdenacao() != null) {
+			sql.append(" order by p." + filtro.getPaginacao().getOrdenacao());
+			if (!filtro.getPaginacao().isAscendente()) {
+				sql.append(" desc "); 
+			}
+		}else {		
+			sql.append(" order by p.vencimento, pg.fornecedor.razaoSocial ");
+		}
+		
+		TypedQuery<?> query = manager.createQuery(sql.toString(), classe);
 		
 		query.setParameter("pSituacaoParcelas", Arrays.asList(SituacaoParcela.NOVO, SituacaoParcela.AGENDADO, SituacaoParcela.PROGRAMADO));
 		
@@ -84,7 +116,8 @@ public class BaixaDao implements Serializable {
 			query.setParameter("pHistorico", "%" + filtro.getHistorico() + "%");
 		}
 				
-		return query.getResultList();
+		return query;
+		
 	}
 	
 
@@ -139,6 +172,5 @@ public class BaixaDao implements Serializable {
 		
 		return sql;
 	}
-	
 
 }

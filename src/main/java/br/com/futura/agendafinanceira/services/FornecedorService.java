@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import br.com.futura.agendafinanceira.daos.FornecedorDao;
+import br.com.futura.agendafinanceira.dto.FornecedorFiltroDto;
 import br.com.futura.agendafinanceira.models.Fornecedor;
 
 public class FornecedorService implements Serializable {
@@ -16,7 +17,7 @@ public class FornecedorService implements Serializable {
 	@Inject
 	private FornecedorDao fornecedorDao;
 
-	public List<Fornecedor> listarPor(String filtro) {
+	public List<Fornecedor> listarPor(FornecedorFiltroDto filtro) {
 		return fornecedorDao.listarPor(filtro);
 	}
 
@@ -37,6 +38,10 @@ public class FornecedorService implements Serializable {
 	@Transactional
 	public void salvar(Fornecedor fornecedor) {
 		fornecedorDao.salvar(fornecedor);
+	}
+
+	public Integer contarRegistros(FornecedorFiltroDto filtro) {
+		return fornecedorDao.contarRegistros(filtro);
 	}
 	
 

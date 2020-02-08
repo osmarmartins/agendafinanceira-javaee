@@ -10,6 +10,8 @@ public class BaixaFiltroDto {
 	private Date dataFinal;
 	private Fornecedor fornecedor;
 	private String historico;
+	
+	private PaginacaoDto paginacao = new PaginacaoDto();
 
 	public Date getDataInicial() {
 		return dataInicial;
@@ -41,6 +43,14 @@ public class BaixaFiltroDto {
 	
 	public void setHistorico(String historico) {
 		this.historico = historico;
+	}
+	
+	public PaginacaoDto getPaginacao() {
+		return paginacao;
+	}
+	
+	public void setPaginacao(PaginacaoDto paginacao) {
+		this.paginacao = paginacao;
 	}
 
 	@Override

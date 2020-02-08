@@ -53,4 +53,8 @@ public class BaixaService implements Serializable {
 		}
 	}
 
+	public Integer contarRegistros(BaixaFiltroDto filtro) {
+		return baixaDao.contarRegistros(filtro);
+	}
+
 }

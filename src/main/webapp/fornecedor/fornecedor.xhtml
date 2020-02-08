@@ -58,7 +58,7 @@
 							<div class="input-group">
 								<input class="form-control input-mask-date" type="text" 
 									placeholder="Pesquisa por..."
-									jsf:value="#{fornecedorBean.pesquisaFiltro}" />
+									jsf:value="#{fornecedorBean.filtro.descricao}" />
 								<span class="input-group-btn">
 									<button class="btn btn-inverse btn-white" type="submit" jsf:action="#{fornecedorBean.pesquisar()}" jsf:update="@form">
 										<i class="ace-icon fa fa-search bigger-110"></i>
@@ -73,8 +73,7 @@
 					<p:dataTable id="tabela" reflow="true"
 						emptyMessage="Nenhum registro encontrado"
 						value="#{fornecedorBean.fornecedores}" var="fornecedor" rowKey="#{fornecedor.idFornecedor}"
-						selection="#{fornecedorBean.fornecedoresSelecionados}"
-						 
+						selection="#{fornecedorBean.fornecedoresSelecionados}" lazy="true" 
 						rows="#{sessionBean.itensPorPagina}"
 						rowsPerPageTemplate="3 8 10 20"
 						paginator="true" paginatorPosition="bottom"
@@ -141,7 +140,7 @@
 							</f:facet>
 							
 							<button type="button" class="btn btn-sm btn-success btn-white btn-round" 
-								jsf:id="btnAlterar" jsf:outcome="fornecedorcadastro">
+								jsf:id="btnAlterar" jsf:outcome="fornecedorcadastro" style="margin-right: 5px;">
 								<f:param name="fornecedor" value="#{fornecedor.idFornecedor}"/>
 								<i class="ace-icon fa fa-pencil bigger-110 green"></i>
 							</button>

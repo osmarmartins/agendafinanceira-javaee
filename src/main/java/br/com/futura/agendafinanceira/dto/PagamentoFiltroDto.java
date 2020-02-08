@@ -12,6 +12,16 @@ public class PagamentoFiltroDto {
 	private SituacaoParcela situacao;
 	private Date dataInicial;
 	private Date dataFinal;
+	
+	private PaginacaoDto paginacao= new PaginacaoDto();
+	
+	public PaginacaoDto getPaginacao() {
+		return paginacao;
+	}
+	
+	public void setPaginacao(PaginacaoDto paginacao) {
+		this.paginacao = paginacao;
+	}
 
 	public Fornecedor getFornecedor() {
 		return fornecedor;

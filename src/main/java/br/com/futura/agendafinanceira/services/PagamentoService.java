@@ -74,4 +74,8 @@ public class PagamentoService implements Serializable {
 		}
 	}
 
+	public Integer contarRegistros(PagamentoFiltroDto filtro) {
+		return pagamentoDao.contarRegistros(filtro);
+	}
+
 }

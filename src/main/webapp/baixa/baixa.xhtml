@@ -88,7 +88,7 @@
 					
 						<div class="row">
 							<div class="col-md-2">
-								<button class="btn btn-white btn-primary" type="button" jsf:id="btnFiltrar" jsf:action="#{baixaBean.filtrar()}">
+								<button class="btn btn-white btn-primary" type="submit" jsf:id="btnFiltrar" jsf:action="#{baixaBean.filtrar()}">
 									<i class="fa fa-filter"></i> 
 									Filtrar
 									<f:ajax execute="@this dataInicial dataFinal fornecedor historico" render="@form"/>
@@ -135,7 +135,7 @@
 					<p:dataTable id="tabela" reflow="true"
 						emptyMessage="Nenhum registro encontrado para o filtro selecionado"
 						value="#{baixaBean.parcelas}" var="parcela" rowKey="#{parcela.idParcela}"
-						selection="#{baixaBean.parcelasSelecionadas}"
+						selection="#{baixaBean.parcelasSelecionadas}" lazy="true"
 						 
 						rows="#{sessionBean.itensPorPagina}"
 						rowsPerPageTemplate="3 8 10 20"

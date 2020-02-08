@@ -3,6 +3,7 @@ package br.com.futura.agendafinanceira.beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -10,6 +11,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
+
+import br.com.futura.agendafinanceira.dto.FornecedorFiltroDto;
+import br.com.futura.agendafinanceira.dto.PaginacaoDto;
 import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.services.FornecedorService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
@@ -20,7 +26,7 @@ public class FornecedorBean implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	private List<Fornecedor> fornecedores;
+	private LazyDataModel<Fornecedor> fornecedores;
 	
 	@Inject
 	private FornecedorService fornecedorService;
@@ -32,21 +38,40 @@ public class FornecedorBean implements Serializable {
 	
 	private String mensagemExclusao;
 	
-	private String pesquisaFiltro;
+	private FornecedorFiltroDto filtro = new FornecedorFiltroDto();
+	
+	private Integer qtdRegistros;
 	
 	@PostConstruct
 	private void init(){
-		this.fornecedores = fornecedorService.listarTodos();
 		this.fornecedoresSelecionados = new ArrayList<>();
 		this.mensagemExclusao = new String();
+		pesquisar();
 	}
 	
 	public void pesquisar(){
-		if (this.pesquisaFiltro != null && !this.pesquisaFiltro.isEmpty()) {
-			this.fornecedores = fornecedorService.listarPor(this.pesquisaFiltro);
-		} else {
-			init();
-		}	}
+		this.qtdRegistros = fornecedorService.contarRegistros(filtro);
+		this.fornecedores = new LazyDataModel<Fornecedor>() {
+			
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public List<Fornecedor> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+				
+				PaginacaoDto paginacao = filtro.getPaginacao();
+							
+				paginacao.setPagina(first);
+				paginacao.setRegistrosPorPagina(pageSize);
+				paginacao.setOrdenacao(sortField);
+				paginacao.setAscendente(SortOrder.ASCENDING.equals(sortOrder));
+				
+				setRowCount(qtdRegistros);
+				
+				return fornecedorService.listarPor(filtro);
+			}			
+		};
+	}		
+		
 
 	public void excluir(){
 		fornecedorService.excluir(fornecedoresSelecionados);
@@ -94,20 +119,19 @@ public class FornecedorBean implements Serializable {
 		this.mensagemExclusao = mensagemExclusao;
 	}
 	
-	public String getPesquisaFiltro() {
-		return pesquisaFiltro;
+	public FornecedorFiltroDto getFiltro() {
+		return filtro;
 	}
 	
-	public void setPesquisaFiltro(String pesquisaFiltro) {
-		this.pesquisaFiltro = pesquisaFiltro;
+	public void setFiltro(FornecedorFiltroDto filtro) {
+		this.filtro = filtro;
 	}
 	
-	public List<Fornecedor> getFornecedores() {
+	public LazyDataModel<Fornecedor> getFornecedores() {
 		return fornecedores;
 	}
 	
-	public void setFornecedores(List<Fornecedor> fornecedores) {
+	public void setFornecedores(LazyDataModel<Fornecedor> fornecedores) {
 		this.fornecedores = fornecedores;
 	}
-
 }

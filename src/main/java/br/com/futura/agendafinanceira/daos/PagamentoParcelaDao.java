@@ -35,12 +35,12 @@ public class PagamentoParcelaDao implements Serializable {
 		TypedQuery<PagamentoParcela> query = preparaParametros(filtro, sql);
 		return query.getResultList();
 	}
-
+	
 	private TypedQuery<PagamentoParcela> preparaParametros(RelatorioFiltroDto filtro, String sql) {
 		TypedQuery<PagamentoParcela> query = manager.createQuery(sql, PagamentoParcela.class);
 		query.setParameter("dataI", filtro.getDataInicial(), TemporalType.DATE);
 		query.setParameter("dataF", filtro.getDataFinal(), TemporalType.DATE);
-
+		
 		if (filtro.getSetor() != null) {
 			query.setParameter("setor", filtro.getSetor());
 		}

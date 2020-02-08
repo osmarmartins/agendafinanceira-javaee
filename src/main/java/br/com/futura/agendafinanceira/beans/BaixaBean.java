@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -12,8 +13,12 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
+
 import br.com.futura.agendafinanceira.dto.BaixaFiltroDto;
 import br.com.futura.agendafinanceira.dto.PagamentoDto;
+import br.com.futura.agendafinanceira.dto.PaginacaoDto;
 import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.PagamentoParcela;
 import br.com.futura.agendafinanceira.services.BaixaService;
@@ -26,17 +31,19 @@ public class BaixaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private BaixaFiltroDto filtro;
+	private BaixaFiltroDto filtro = new BaixaFiltroDto();
 	
 	private Date dataBaixa;
 	
 	private BigDecimal total;
 	
-	private List<PagamentoDto> parcelas;
+	private LazyDataModel<PagamentoDto> parcelas;
 	
 	private List<PagamentoDto> parcelasSelecionadas;
 	
 	private List<Fornecedor> fornecedores;
+	
+	private Integer qtdRegistros;
 	
 	@Inject
 	private MessagesHelper messagesHelper;
@@ -52,14 +59,34 @@ public class BaixaBean implements Serializable {
 		this.dataBaixa = new Date();
 		this.filtro = new BaixaFiltroDto();
 		this.total = BigDecimal.ZERO;
-		this.parcelas = new ArrayList<>();
 		this.parcelasSelecionadas = new ArrayList<>();
-		this.fornecedores = fornecedorService.listarTodos();
+		this.fornecedores = fornecedorService.listarAtivos();
+		filtrar();
 	}
 	
 	public void filtrar() {
 		this.parcelasSelecionadas = new ArrayList<>();
-		this.parcelas = baixaService.listarPor(filtro);
+		this.qtdRegistros = baixaService.contarRegistros(filtro);
+		this.parcelas = new LazyDataModel<PagamentoDto>() {
+			
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public List<PagamentoDto> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+				
+				PaginacaoDto paginacao = filtro.getPaginacao();
+							
+				paginacao.setPagina(first);
+				paginacao.setRegistrosPorPagina(pageSize);
+				paginacao.setOrdenacao(sortField);
+				paginacao.setAscendente(SortOrder.ASCENDING.equals(sortOrder));
+				
+				setRowCount(qtdRegistros);
+				
+				return baixaService.listarPor(filtro);
+			}			
+		};
+		
 	}
 	
 	public String baixar(PagamentoParcela parcela) {
@@ -84,7 +111,7 @@ public class BaixaBean implements Serializable {
 		}
 	}
 	
-	public List<PagamentoDto> getParcelas() {
+	public LazyDataModel<PagamentoDto> getParcelas() {
 		return parcelas;
 	}
 	

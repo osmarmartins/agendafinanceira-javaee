@@ -32,7 +32,15 @@ public class PagamentoDao implements Serializable {
 		return pagamento;
 	}
 	
+	
+	@SuppressWarnings("unchecked")
+	public Integer contarRegistros(PagamentoFiltroDto filtro) {
+		StringBuilder sql = new StringBuilder("select count(p) from PagamentoParcela p ");
+		TypedQuery<Long> query = (TypedQuery<Long>) aplicarFiltro(filtro, sql, Long.class);
+		return query.getSingleResult().intValue();		
+	}	
 
+	@SuppressWarnings("unchecked")
 	public List<PagamentoDto> listarPor(PagamentoFiltroDto filtro) {
 		StringBuilder sql = new StringBuilder("select new " + PagamentoDto.class.getName() + "( " );
 				sql.append(" pg.idPagamento, ");
@@ -44,13 +52,23 @@ public class PagamentoDao implements Serializable {
 				sql.append(" (p.valor - p.desconto + p.juros + p.mora + p.outros ), ");
 				sql.append(" (p.valor - p.desconto + p.juros + p.mora + p.outros ) - coalesce(sum(q.valor), 0) )  ");
 				sql.append(" from PagamentoParcela p ");
-				sql.append(" join p.pagamento pg ");
-				sql.append(" join pg.fornecedor ");
-				sql.append(" join pg.setor ");
-				sql.append(" join pg.conta ");
-				sql.append(" left join p.quitacoes q ");
-				sql.append( " where 1=1 ");
-				
+
+
+		TypedQuery<PagamentoDto> query = (TypedQuery<PagamentoDto>) aplicarFiltro(filtro, sql, PagamentoDto.class);
+		query.setFirstResult(filtro.getPaginacao().getPagina());
+		query.setMaxResults(filtro.getPaginacao().getRegistrosPorPagina());
+		
+		return query.getResultList();	
+	}
+
+	private TypedQuery<?> aplicarFiltro(PagamentoFiltroDto filtro, StringBuilder sql, Class<?> classe) {
+		sql.append(" join p.pagamento pg ");
+		sql.append(" join pg.fornecedor ");
+		sql.append(" join pg.setor ");
+		sql.append(" join pg.conta ");
+		sql.append(" left join p.quitacoes q ");
+		sql.append(" where 1=1 ");
+		
 		if (filtro.getHistorico()!=null) {
 			sql.append(" and pg.historico like :pHistorico ");
 		}
@@ -67,10 +85,20 @@ public class PagamentoDao implements Serializable {
 			sql.append(" and p.vencimento between :pDataInicial and :pDataFinal ");
 		}
 		
-		sql.append( " group by p.idPagamentoParcela ");
-		sql.append( " order by p.vencimento ");
+		if (classe.getTypeName() == PagamentoDto.class.getTypeName()) {
+			sql.append( " group by p.idPagamentoParcela ");
+		}
 		
-		TypedQuery<PagamentoDto> query =  manager.createQuery(sql.toString(), PagamentoDto.class);
+		if (filtro.getPaginacao().getOrdenacao() != null) {
+			sql.append(" order by p." + filtro.getPaginacao().getOrdenacao());
+			if (!filtro.getPaginacao().isAscendente()) {
+				sql.append(" desc "); 
+			}
+		}else {
+			sql.append( " order by p.vencimento ");
+		}
+		
+		TypedQuery<?> query =  manager.createQuery(sql.toString(), classe);
 		
 		if (filtro.getHistorico()!=null) {
 			query.setParameter("pHistorico", "%" + filtro.getHistorico() + "%");
@@ -83,13 +111,14 @@ public class PagamentoDao implements Serializable {
 		if (filtro.getSituacao()!=null) {
 			query.setParameter("pSituacao", filtro.getSituacao());
 		}
-
+		
 		if (filtro.getDataInicial()!=null) {
 			query.setParameter("pDataInicial", filtro.getDataInicial());
 			query.setParameter("pDataFinal", filtro.getDataFinal());
 		}
+		
+		return query;
 					
-		return query.getResultList();
 	}
 
 	public void excluir(List<PagamentoParcela> parcelas) {
