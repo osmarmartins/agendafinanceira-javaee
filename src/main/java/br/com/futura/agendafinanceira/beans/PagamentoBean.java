@@ -27,7 +27,7 @@ import br.com.futura.agendafinanceira.utils.MessagesHelper;
 
 @Named
 @ViewScoped
-public class PagamentoBean implements Serializable {
+public class PagamentoBean extends LazyDataModel<PagamentoDto> implements Serializable {	
 
 	private static final long serialVersionUID = 1L;
 	
@@ -86,9 +86,26 @@ public class PagamentoBean implements Serializable {
 				
 				return pagamentoService.listarPor(filtro);
 			}			
+			
+			@Override
+			public Object getRowKey(PagamentoDto parcela) {
+				return parcela.getIdParcela();
+			}
+			
+			@Override
+			public PagamentoDto getRowData(String rowKey) {
+				for (PagamentoDto parcela : parcelas) {
+					if (Integer.toString(parcela.getIdParcela()).equals(rowKey)) {
+						return parcela;
+					}
+				}
+				return null;
+			}
+			
+			
 		}; 
 	}
-
+		
 	public void aplicarDataProgramacao() {
 		pagamentoService.aplicarDataProgramacao(parcelasSelecionadas, dataProgramacao);
 		filtrar();

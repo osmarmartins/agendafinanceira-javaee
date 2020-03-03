@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 		.and()		
 	 		
  		.logout()
+ 			.deleteCookies("JSESSIONID")
  			.logoutSuccessUrl("/login.xhtml?logout")
  			.permitAll()
  			.and()
@@ -57,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  		.formLogin()
  			.loginPage("/login.xhtml")
  			.failureUrl("/login.xhtml?erro")
- 			.defaultSuccessUrl("/", true)
+ 			.defaultSuccessUrl("/index.xhtml", true)
  			.permitAll();
 
 	}	

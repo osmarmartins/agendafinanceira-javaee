@@ -14,8 +14,8 @@ public class PagamentoDto {
 	private BigDecimal valor;
 	private BigDecimal saldoDevedor;
 
-	public PagamentoDto(Integer pagamento, Integer idParcela, String parcela, Date vencimento, String fornecedor, String historico,
-			BigDecimal valor, BigDecimal saldoDevedor) {
+	public PagamentoDto(Integer pagamento, Integer idParcela, String parcela, Date vencimento, String fornecedor,
+			String historico, BigDecimal valor, BigDecimal saldoDevedor) {
 		this.pagamento = pagamento;
 		this.idParcela = idParcela;
 		this.parcela = parcela;
@@ -33,7 +33,7 @@ public class PagamentoDto {
 	public Integer getIdParcela() {
 		return idParcela;
 	}
-	
+
 	public String getParcela() {
 		return parcela;
 	}
@@ -49,7 +49,7 @@ public class PagamentoDto {
 	public String getHistorico() {
 		return historico;
 	}
-	
+
 	public BigDecimal getValor() {
 		return valor;
 	}

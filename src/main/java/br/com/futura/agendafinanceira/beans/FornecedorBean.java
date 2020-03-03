@@ -68,7 +68,22 @@ public class FornecedorBean implements Serializable {
 				setRowCount(qtdRegistros);
 				
 				return fornecedorService.listarPor(filtro);
-			}			
+			}	
+			
+			@Override
+			public Object getRowKey(Fornecedor fornecedor) {
+				return fornecedor.getIdFornecedor();
+			}
+			
+			@Override
+			public Fornecedor getRowData(String rowKey) {
+				for (Fornecedor fornecedor : fornecedores) {
+					if (Integer.toString(fornecedor.getIdFornecedor()).equals(rowKey)) {
+						return fornecedor;
+					}
+				}
+				return null;
+			}
 		};
 	}		
 		

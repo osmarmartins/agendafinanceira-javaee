@@ -84,7 +84,22 @@ public class BaixaBean implements Serializable {
 				setRowCount(qtdRegistros);
 				
 				return baixaService.listarPor(filtro);
-			}			
+			}
+			
+			@Override
+			public Object getRowKey(PagamentoDto parcela) {
+				return parcela.getIdParcela();
+			}
+			
+			@Override
+			public PagamentoDto getRowData(String rowKey) {
+				for (PagamentoDto parcela : parcelas) {
+					if (Integer.toString(parcela.getIdParcela()).equals(rowKey)) {
+						return parcela;
+					}
+				}
+				return null;
+			}
 		};
 		
 	}
