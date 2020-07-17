@@ -35,7 +35,7 @@ public class BaixaDao implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Integer contarRegistros(BaixaFiltroDto filtro) {
+	public int contarRegistros(BaixaFiltroDto filtro) {
 		StringBuilder sql = new StringBuilder("select count(p) from PagamentoParcela p ");
 		sql.append(" join p.pagamento pg ");
 		sql.append(" join pg.fornecedor ");
@@ -44,7 +44,11 @@ public class BaixaDao implements Serializable {
 		sql.append(" left join p.quitacoes q ");
 		sql.append(" WHERE p.situacao in (:pSituacaoParcelas) ");
 		TypedQuery<Long> query = (TypedQuery<Long>) aplicarFiltro(filtro, sql, Long.class);
-		return query.getSingleResult().intValue();		
+		try {
+			return query.getSingleResult().intValue();		
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 
 	@SuppressWarnings("unchecked")

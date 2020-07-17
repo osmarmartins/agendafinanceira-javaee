@@ -39,9 +39,9 @@ public class BaixaBean implements Serializable {
 	
 	private LazyDataModel<PagamentoDto> parcelas;
 	
-	private List<PagamentoDto> parcelasSelecionadas;
+	private List<PagamentoDto> parcelasSelecionadas = new ArrayList<>();
 	
-	private List<Fornecedor> fornecedores;
+	private List<Fornecedor> fornecedores = new ArrayList<>();
 	
 	private Integer qtdRegistros;
 	
