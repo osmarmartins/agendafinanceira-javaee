@@ -48,23 +48,19 @@ public class Pagamento implements Serializable {
 	@Version
 	private Integer versao;
 
-	// bi-directional many-to-one association to Conta
 	@ManyToOne
 	@JoinColumn(name = "id_conta")
 	private Conta conta;
 
-	// bi-directional many-to-one association to Fornecedor
 	@ManyToOne
 	@JoinColumn(name = "id_fornecedor")
 	private Fornecedor fornecedor;
 	
 
-	// bi-directional many-to-one association to Setor
 	@ManyToOne
 	@JoinColumn(name = "id_setor")
 	private Setor setor;
 
-	// bi-directional many-to-one association to PgtoParcela
 	@OneToMany(mappedBy = "pagamento")
 	private Set<PagamentoParcela> parcelas;
 	

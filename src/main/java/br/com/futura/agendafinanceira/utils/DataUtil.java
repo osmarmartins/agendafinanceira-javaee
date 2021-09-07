@@ -2,10 +2,9 @@ package br.com.futura.agendafinanceira.utils;
 
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
-
-import com.ibm.icu.util.Calendar;
-import com.ibm.icu.util.GregorianCalendar;
+import java.util.GregorianCalendar;
 
 public class DataUtil {
 	
