@@ -94,6 +94,19 @@ public class PagamentoCadastroBean implements Serializable{
 		this.pagamento = pagamento;
 	}
 	
+	public void selecionarConta() {
+		if (pagamento == null) {
+			return;
+		}
+		
+		Fornecedor fornecedor = pagamento.getFornecedor();
+		
+		if (fornecedor != null && fornecedor.getConta() != null) {
+			pagamento.setConta(fornecedor.getConta());
+		}
+		
+	}
+	
 	public List<PagamentoParcela> getParcelas() {
 		return parcelas;
 	}

@@ -27,7 +27,7 @@ public class FornecedorDao implements Serializable {
 
 	public List<Fornecedor> listarAtivos() {
 		return em
-				.createQuery("SELECT f FROM Fornecedor f where f.ativo = :pAtivo order by f.nomeFantasia ", Fornecedor.class)
+				.createQuery("SELECT f FROM Fornecedor f join fetch f.conta where f.ativo = :pAtivo order by f.nomeFantasia ", Fornecedor.class)
 				.setParameter("pAtivo", Ativo.ATIVO)
 				.getResultList();
 	}

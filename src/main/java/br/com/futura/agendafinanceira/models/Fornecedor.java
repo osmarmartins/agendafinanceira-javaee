@@ -10,6 +10,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -28,6 +30,10 @@ public class Fornecedor implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_fornecedor")
 	private Integer idFornecedor;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_conta")
+	private Conta conta;
 
 	@Enumerated
 	private Ativo ativo;
@@ -113,6 +119,14 @@ public class Fornecedor implements Serializable {
 
 	public int getVersao() {
 		return this.versao;
+	}
+	
+	public Conta getConta() {
+		return conta;
+	}
+	
+	public void setConta(Conta conta) {
+		this.conta = conta;
 	}
 
 	public void setVersao(int versao) {

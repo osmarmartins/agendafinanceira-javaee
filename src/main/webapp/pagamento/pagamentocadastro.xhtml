@@ -93,10 +93,24 @@
 											</div>
 										</div>
 									</div>
+									
+									<div class="col-sm-8">
+										<div class="form-group">
+											<label class="control-label" jsf:for="fornecedor">Fornecedor</label>
+											<h:selectOneMenu value="#{pagamentoCadastroBean.pagamento.fornecedor}" id="fornecedor" styleClass="form-control">
+												<f:selectItem itemLabel = "Selecione...." /> 
+												<f:selectItems var="fornecedor" value="#{pagamentoCadastroBean.fornecedores}" itemLabel="#{fornecedor.nomeFantasia}" itemValue="#{fornecedor}"/>
+												<f:ajax render="conta" execute="@this" listener="#{pagamentoCadastroBean.selecionarConta}"/>
+											</h:selectOneMenu>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="fornecedor"/> 
+											</div>
+										</div>
+									</div>
 								</div>
 								
 								<div class="row">
-									<div class="col-sm-6">
+									<div class="col-sm-4">
 										<div class="form-group">
 											<label class="control-label" jsf:for="setor">Setor</label>
 											<h:selectOneMenu value="#{pagamentoCadastroBean.pagamento.setor}" id="setor" styleClass="form-control">
@@ -110,7 +124,7 @@
 										</div>
 									</div>
 									
-									<div class="col-sm-6">
+									<div class="col-sm-5">
 										<div class="form-group">
 											<label class="control-label" jsf:for="conta">Conta</label>
 											<h:selectOneMenu value="#{pagamentoCadastroBean.pagamento.conta}" id="conta" styleClass="form-control">
@@ -123,24 +137,8 @@
 											</div>
 										</div>
 									</div>
-								</div>
-							
-								<div class="row">
-									<div class="col-sm-8">
-										<div class="form-group">
-											<label class="control-label" jsf:for="fornecedor">Fornecedor</label>
-											<h:selectOneMenu value="#{pagamentoCadastroBean.pagamento.fornecedor}" id="fornecedor" styleClass="form-control">
-												<f:selectItem itemLabel = "Selecione...." /> 
-												<f:selectItems var="fornecedor" value="#{pagamentoCadastroBean.fornecedores}"
-													itemLabel="#{fornecedor.nomeFantasia}" itemValue="#{fornecedor}"/>
-											</h:selectOneMenu>
-											<div class="help-block col-xs-12 col-sm-reset inline"> 
-												<h:message for="fornecedor"/> 
-											</div>
-										</div>
-									</div>
 									
-									<div class="col-sm-4">
+									<div class="col-sm-3">
 										<div class="form-group">
 											<label class="control-label" jsf:for="documento">Documento</label>
 											<input type="text" class="form-control" 
@@ -152,7 +150,11 @@
 												<h:message for="documento"/> 
 											</div>
 										</div>
-									</div>
+									</div>									
+								</div>
+							
+								<div class="row">
+
 								</div>
 								
 								<div class="row">
