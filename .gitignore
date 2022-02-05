@@ -26,3 +26,4 @@ target/*
 src/main/resources/rebel.xml
 
 /target/
+/.metadata/

@@ -37,6 +37,10 @@ public class DashBoardService implements Serializable {
 		int mes = hoje.getMonthValue();
 		int ultimoDiaDoMes = hoje.getMonth().maxLength();
 		
+		if (mes == 2) {
+			ultimoDiaDoMes = ano % 4 == 0 ? 29 : 28;
+		}
+		
 		LocalDate inicio = LocalDate.of(ano-1, mes, 1);
 		LocalDate fim = LocalDate.of(ano, mes, ultimoDiaDoMes);
 		
