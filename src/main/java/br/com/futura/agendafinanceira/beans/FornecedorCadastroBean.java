@@ -1,6 +1,7 @@
 package br.com.futura.agendafinanceira.beans;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -8,10 +9,12 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.futura.agendafinanceira.models.Conta;
 import br.com.futura.agendafinanceira.models.Contato;
 import br.com.futura.agendafinanceira.models.Fornecedor;
 import br.com.futura.agendafinanceira.models.enums.Ativo;
 import br.com.futura.agendafinanceira.models.enums.TipoPessoa;
+import br.com.futura.agendafinanceira.services.ContaService;
 import br.com.futura.agendafinanceira.services.ContatoService;
 import br.com.futura.agendafinanceira.services.FornecedorService;
 import br.com.futura.agendafinanceira.utils.MessagesHelper;
@@ -36,12 +39,18 @@ public class FornecedorCadastroBean implements Serializable {
 
 	@Inject
 	private MessagesHelper messagesHelper;
+	
+	@Inject
+	private ContaService contaService;
+
+	private List<Conta> contas;
 
 	@PostConstruct
 	private void init() {
 		this.fornecedor = new Fornecedor();
 		this.fornecedor.setAtivo(Ativo.ATIVO);
 		this.fornecedor.setPfPj(TipoPessoa.PJ);
+		this.contas = contaService.listarAtivos();
 	}
 	
 	public boolean isCadastrarContatos() {
@@ -94,6 +103,10 @@ public class FornecedorCadastroBean implements Serializable {
 	
 	public boolean isPermiteCadastrarContato(){
 		return (this.fornecedor.getIdFornecedor()!=null); 
+	}
+	
+	public List<Conta> getContas() {
+		return contas;
 	}
 
 }

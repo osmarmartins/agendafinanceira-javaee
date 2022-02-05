@@ -79,7 +79,7 @@
 										</div>
 									</div>
 
-									<div class="col-sm-5">
+									<div class="col-sm-4">
 										<div class="form-group">
 											<input type="hidden" id="valorTipoPessoa" name="valor-tp" value="#{fornecedorCadastroBean.fornecedor.pfPj}"/>
 											<label class="control-label">Tipo Pessoa</label>
@@ -106,7 +106,7 @@
 										</div>									
 									</div>
 
-									<div class="col-sm-5">
+									<div class="col-sm-3">
 										<div class="form-group #{!cpfCnpj.valid ? 'has-error' : ''}">
 											<label class="control-label" jsf:for="cpfCnpj">#{fornecedorCadastroBean.documentoRotulo}</label>
 											<input type="text" class="form-control" autofocus="autofocus" 
@@ -119,6 +119,20 @@
 											</div>
 										</div>
 									</div>
+									
+									<div class="col-sm-3">
+										<div class="form-group">
+											<label class="control-label" jsf:for="conta">Conta</label>
+											<h:selectOneMenu value="#{fornecedorCadastroBean.fornecedor.conta}" id="conta" styleClass="form-control">
+												<f:selectItem itemLabel = "Selecione...." /> 
+												<f:selectItems var="conta" value="#{fornecedorCadastroBean.contas}"
+													itemLabel="#{conta.descricao}" itemValue="#{conta}"/>
+											</h:selectOneMenu>
+											<div class="help-block col-xs-12 col-sm-reset inline"> 
+												<h:message for="conta"/> 
+											</div>
+										</div>
+									</div>									
 								</div>
 								
 								
