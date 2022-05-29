@@ -126,9 +126,9 @@
 											<label class="control-label" jsf:for="valor">Valor</label>
 											<input type="text" class="form-control currency"
 												jsf:id="valor"
+												jsf:converter="moedaConverter"
 												jsf:binding="#{valor}" 
 												jsf:value="#{pagamentoParcelaBean.parcela.valor}">
-												<f:convertNumber type="currency" currencySymbol="R$"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="valor"/> 
@@ -141,9 +141,9 @@
 											<label class="control-label" jsf:for="desconto">Desconto</label>
 											<input type="text" class="form-control currency"  
 												jsf:id="desconto"
+												jsf:converter="moedaConverter"
 												jsf:binding="#{desconto}" 
 												jsf:value="#{pagamentoParcelaBean.parcela.desconto}">
-												<f:convertNumber type="currency" currencySymbol="R$"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="desconto"/> 
@@ -158,9 +158,9 @@
 											<label class="control-label" jsf:for="juros">Juros</label>
 											<input type="text" class="form-control currency"  
 												jsf:id="juros"
+												jsf:converter="moedaConverter"
 												jsf:binding="#{juros}" 
 												jsf:value="#{pagamentoParcelaBean.parcela.juros}">
-												<f:convertNumber type="currency" currencySymbol="R$"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="juros"/> 
@@ -173,9 +173,9 @@
 											<label class="control-label" jsf:for="mora">Mora</label>
 											<input type="text" class="form-control currency"  
 												jsf:id="mora"
+												jsf:converter="moedaConverter"
 												jsf:binding="#{mora}" 
 												jsf:value="#{pagamentoParcelaBean.parcela.mora}">
-												<f:convertNumber type="currency" currencySymbol="R$"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="mora"/> 
@@ -188,9 +188,9 @@
 											<label class="control-label" jsf:for="outros">Outros</label>
 											<input type="text" class="form-control currency"  
 												jsf:id="outros"
+												jsf:converter="moedaConverter"
 												jsf:binding="#{outros}" 
 												jsf:value="#{pagamentoParcelaBean.parcela.outros}">
-												<f:convertNumber type="currency" currencySymbol="R$"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="outros"/> 
