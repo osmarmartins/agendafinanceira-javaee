@@ -103,7 +103,7 @@
 									<input class="form-control input-mask-phone" type="text" readonly="readonly"
 										jsf:value="#{baixaBean.total}"
 										jsf:id="totalSelecionado">
-										<f:convertNumber type="currency"/>
+										<f:convertNumber type="currency" currencySymbol="R$"/>
 									</input>
 								</div>
                             </div>
@@ -194,7 +194,7 @@
                               Valor
                            </f:facet>
                            <h:outputText value="#{parcela.valor}">
-                              <f:convertNumber type="currency"/>
+                              <f:convertNumber type="currency" currencySymbol="R$"/>
                            </h:outputText>
                         </p:column>
                   
@@ -204,7 +204,7 @@
 								Saldo Devedor
 							</f:facet>
 							<h:outputText value="#{parcela.saldoDevedor}">
-								<f:convertNumber type="currency"/>
+								<f:convertNumber type="currency" currencySymbol="R$"/>
 							</h:outputText>
 						</p:column>
 						

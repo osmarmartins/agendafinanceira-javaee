@@ -137,7 +137,7 @@
 												jsf:id="valorParcela"
 												jsf:binding="#{valorParcela}" 
 												jsf:value="#{baixaCadastroBean.parcela.valor}">
-												<f:convertNumber type="currency"/>
+												<f:convertNumber type="currency" currencySymbol="R$"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="valorParcela"/> 
@@ -152,7 +152,7 @@
 												jsf:id="desconto"
 												jsf:binding="#{desconto}" 
 												jsf:value="#{baixaCadastroBean.parcela.desconto}">
-												<f:convertNumber type="currency"/>
+												<f:convertNumber type="currency" currencySymbol="R$"/>
                                                 <f:ajax execute="@this" render="valor" listener="#{baixaCadastroBean.autalizarValorQuitacao()}"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
@@ -170,7 +170,7 @@
 												jsf:id="juros"
 												jsf:binding="#{juros}" 
 												jsf:value="#{baixaCadastroBean.parcela.juros}">
-												<f:convertNumber type="currency"/>
+												<f:convertNumber type="currency" currencySymbol="R$"/>
                                                 <f:ajax execute="@this" render="valor" listener="#{baixaCadastroBean.autalizarValorQuitacao()}"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
@@ -186,7 +186,7 @@
 												jsf:id="mora"
 												jsf:binding="#{mora}" 
 												jsf:value="#{baixaCadastroBean.parcela.mora}">
-												<f:convertNumber type="currency"/>
+												<f:convertNumber type="currency" currencySymbol="R$"/>
                                                 <f:ajax execute="@this" render="valor" listener="#{baixaCadastroBean.autalizarValorQuitacao()}"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
@@ -202,7 +202,7 @@
 												jsf:id="outros"
 												jsf:binding="#{outros}" 
 												jsf:value="#{baixaCadastroBean.parcela.outros}">
-												<f:convertNumber type="currency"/>
+												<f:convertNumber type="currency" currencySymbol="R$"/>
                                                 <f:ajax execute="@this" render="valor" listener="#{baixaCadastroBean.autalizarValorQuitacao()}"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
@@ -250,7 +250,7 @@
 												jsf:id="valor"
 												jsf:binding="#{valor}" 
 												jsf:value="#{baixaCadastroBean.quitacao.valor}">
-												<f:convertNumber type="currency"/>
+												<f:convertNumber type="currency" currencySymbol="R$"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="valor"/> 
@@ -307,7 +307,7 @@
 												</td>
 												<td>
 													<h:outputText value="#{quitacao.valor}" >
-														<f:convertNumber type="currency"/>
+														<f:convertNumber type="currency" currencySymbol="R$"/>
 													</h:outputText>
 												</td>
 												<td>

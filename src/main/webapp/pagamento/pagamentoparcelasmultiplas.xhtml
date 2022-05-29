@@ -96,7 +96,7 @@
 												jsf:id="valorParcela"
 												jsf:binding="#{valorParcela}" 
 												jsf:value="#{pagamentoParcelasMultiplasBean.parcelamento.valorParcela}">
-												<f:convertNumber type="currency"/>
+												<f:convertNumber type="currency" currencySymbol="R$"/>
 												<f:ajax execute="@this"/>
 											</input>
 										</div>

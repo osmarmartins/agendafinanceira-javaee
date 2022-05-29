@@ -128,7 +128,7 @@
 												jsf:id="valor"
 												jsf:binding="#{valor}" 
 												jsf:value="#{pagamentoParcelaBean.parcela.valor}">
-												<f:convertNumber type="currency"/>
+												<f:convertNumber type="currency" currencySymbol="R$"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="valor"/> 
@@ -143,7 +143,7 @@
 												jsf:id="desconto"
 												jsf:binding="#{desconto}" 
 												jsf:value="#{pagamentoParcelaBean.parcela.desconto}">
-												<f:convertNumber type="currency"/>
+												<f:convertNumber type="currency" currencySymbol="R$"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="desconto"/> 
@@ -160,7 +160,7 @@
 												jsf:id="juros"
 												jsf:binding="#{juros}" 
 												jsf:value="#{pagamentoParcelaBean.parcela.juros}">
-												<f:convertNumber type="currency"/>
+												<f:convertNumber type="currency" currencySymbol="R$"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="juros"/> 
@@ -175,7 +175,7 @@
 												jsf:id="mora"
 												jsf:binding="#{mora}" 
 												jsf:value="#{pagamentoParcelaBean.parcela.mora}">
-												<f:convertNumber type="currency"/>
+												<f:convertNumber type="currency" currencySymbol="R$"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="mora"/> 
@@ -190,7 +190,7 @@
 												jsf:id="outros"
 												jsf:binding="#{outros}" 
 												jsf:value="#{pagamentoParcelaBean.parcela.outros}">
-												<f:convertNumber type="currency"/>
+												<f:convertNumber type="currency" currencySymbol="R$"/>
 											</input>
 											<div class="help-block col-xs-12 col-sm-reset inline"> 
 												<h:message for="outros"/> 

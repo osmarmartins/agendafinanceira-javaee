@@ -189,7 +189,7 @@
 											<label class="control-label">Total</label>
 											<p class="alert alert-info" jsf:id="label-total">
 												<h:outputText value="#{pagamentoCadastroBean.pagamento.totalParcelas()}">
-													<f:convertNumber type="currency"/>
+													<f:convertNumber type="currency" currencySymbol="R$"/>
 												</h:outputText>
 											</p>
 										</div>
@@ -200,7 +200,7 @@
 											<label class="control-label">Total Pago</label>
 											<p class="alert alert-success" jsf:id="label-pago">
 												<h:outputText value="#{pagamentoCadastroBean.pagamento.totalPago()}">
-													<f:convertNumber type="currency"/>
+													<f:convertNumber type="currency" currencySymbol="R$"/>
 												</h:outputText>
 											</p>
 										</div>
@@ -211,7 +211,7 @@
 											<label class="control-label">Saldo em Aberto</label>
 											<p class="alert alert-danger" jsf:id="label-emAberto">
 												<h:outputText value="#{pagamentoCadastroBean.pagamento.saldoDevedor()}">
-													<f:convertNumber type="currency"/>
+													<f:convertNumber type="currency" currencySymbol="R$"/>
 												</h:outputText>
 											</p>
 										</div>
@@ -308,32 +308,32 @@
 												</td>
 												<td>
 													<h:outputText value="#{parcela.valor}" >
-														<f:convertNumber type="currency"/>
+														<f:convertNumber type="currency" currencySymbol="R$"/>
 													</h:outputText>
 												</td>
 												<td>
 													<h:outputText value="#{parcela.desconto}" >
-														<f:convertNumber type="currency"/>
+														<f:convertNumber type="currency" currencySymbol="R$"/>
 													</h:outputText>
 												</td>
 												<td>
 													<h:outputText value="#{parcela.juros}" >
-														<f:convertNumber type="currency"/>
+														<f:convertNumber type="currency" currencySymbol="R$"/>
 													</h:outputText>
 												</td>
 												<td>
 													<h:outputText value="#{parcela.mora}" >
-														<f:convertNumber type="currency"/>
+														<f:convertNumber type="currency" currencySymbol="R$"/>
 													</h:outputText>
 												</td>
 												<td>
 													<h:outputText value="#{parcela.outros}" >
-														<f:convertNumber type="currency"/>
+														<f:convertNumber type="currency" currencySymbol="R$"/>
 													</h:outputText>
 												</td>
 												<td>
 													<h:outputText value="#{parcela.totalParcela()}" >
-														<f:convertNumber type="currency"/>
+														<f:convertNumber type="currency" currencySymbol="R$"/>
 													</h:outputText>
 												</td>
 												<td>
