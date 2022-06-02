@@ -94,9 +94,9 @@
 											<label class="control-label" jsf:for="valorParcela">Valor da Parcela</label>
 											<input type="text" class="form-control currency"
 												jsf:id="valorParcela"
+												jsf:converter="moedaConverter"
 												jsf:binding="#{valorParcela}" 
 												jsf:value="#{pagamentoParcelasMultiplasBean.parcelamento.valorParcela}">
-												<f:convertNumber type="currency" currencySymbol="R$"/>
 												<f:ajax execute="@this"/>
 											</input>
 										</div>
