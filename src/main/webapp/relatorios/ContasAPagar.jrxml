@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ContasAPagar" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7bf458c4-3d05-426a-b32a-aa7add85e51f">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySQL Futura UOL"/>
@@ -194,7 +194,7 @@ order by pp.dt_vcto, f.razao_social]]>
 	<columnHeader>
 		<band height="25" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="5" width="160" height="10" uuid="bc321617-b239-4def-9aa9-edd568706a80">
+				<reportElement x="0" y="5" width="110" height="10" uuid="bc321617-b239-4def-9aa9-edd568706a80">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="686c0bb4-4dc8-4f5b-b0ca-9472356e68d9"/>
 				</reportElement>
 				<textElement>
@@ -203,7 +203,7 @@ order by pp.dt_vcto, f.razao_social]]>
 				<text><![CDATA[Fornecedor]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="190" y="5" width="30" height="10" uuid="c4480bd8-04bf-4b42-ab65-eaaedadef3ad">
+				<reportElement x="179" y="5" width="40" height="10" uuid="c4480bd8-04bf-4b42-ab65-eaaedadef3ad">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fd4fcf22-6db2-422b-85ee-d04522dd7b60"/>
 				</reportElement>
 				<textElement>
@@ -212,7 +212,7 @@ order by pp.dt_vcto, f.razao_social]]>
 				<text><![CDATA[doc.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="224" y="5" width="26" height="10" uuid="49c93b4f-dfa3-47df-922e-4d699e32ca5c">
+				<reportElement x="230" y="5" width="20" height="10" uuid="49c93b4f-dfa3-47df-922e-4d699e32ca5c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ec4a979f-9a37-43cb-af6d-3978cb0317b3"/>
 				</reportElement>
 				<textElement>
@@ -244,12 +244,21 @@ order by pp.dt_vcto, f.razao_social]]>
 			<line>
 				<reportElement x="-10" y="0" width="579" height="1" uuid="e7640547-2a33-42fa-8246-16de66c7aade"/>
 			</line>
+			<staticText>
+				<reportElement x="119" y="5" width="58" height="10" uuid="235cac17-3cf8-4e8e-aca1-e27a3582d0dd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fd4fcf22-6db2-422b-85ee-d04522dd7b60"/>
+				</reportElement>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Emissão]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="12" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="0" width="182" height="10" uuid="acf75b19-2cee-4c5b-99c9-04a52e21f7a4">
+		<band height="14" splitType="Stretch">
+			<textField textAdjust="StretchHeight">
+				<reportElement x="0" y="0" width="110" height="10" uuid="acf75b19-2cee-4c5b-99c9-04a52e21f7a4">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="686c0bb4-4dc8-4f5b-b0ca-9472356e68d9"/>
 				</reportElement>
 				<textElement>
@@ -258,7 +267,7 @@ order by pp.dt_vcto, f.razao_social]]>
 				<textFieldExpression><![CDATA[$F{razao_social}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="190" y="0" width="30" height="10" uuid="0e2af3d9-bd32-4e95-9116-ba3f5cb3a00e">
+				<reportElement x="179" y="0" width="50" height="10" uuid="0e2af3d9-bd32-4e95-9116-ba3f5cb3a00e">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fd4fcf22-6db2-422b-85ee-d04522dd7b60"/>
 				</reportElement>
 				<textElement>
@@ -267,15 +276,15 @@ order by pp.dt_vcto, f.razao_social]]>
 				<textFieldExpression><![CDATA[$F{documento}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="224" y="0" width="26" height="10" uuid="ee6032e8-4c24-4f7d-8cf4-293e17bfb7ec">
+				<reportElement x="230" y="0" width="26" height="10" uuid="ee6032e8-4c24-4f7d-8cf4-293e17bfb7ec">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ec4a979f-9a37-43cb-af6d-3978cb0317b3"/>
 				</reportElement>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{parcela}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField textAdjust="StretchHeight">
 				<reportElement x="256" y="0" width="229" height="10" uuid="0187a04f-3894-4a3b-b62a-12015e632bb1">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="72bb43a4-8793-491c-95e8-f1417b075626"/>
 				</reportElement>
@@ -292,6 +301,15 @@ order by pp.dt_vcto, f.razao_social]]>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="119" y="0" width="60" height="10" uuid="e6e2cd8a-4c49-4446-878b-426066bd785e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fd4fcf22-6db2-422b-85ee-d04522dd7b60"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emissao}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

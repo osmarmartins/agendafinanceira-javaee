@@ -76,7 +76,7 @@ public class PagamentoParcelaDao implements Serializable {
 			sql += "and pg.fornecedor = :fornecedor ";
 		}
 		
-		sql += " order by p.vencimento, f.razaoSocial ";
+		sql += " order by p.vencimento, pg.emissao, f.razaoSocial ";
 		
 		return sql;
 	}
