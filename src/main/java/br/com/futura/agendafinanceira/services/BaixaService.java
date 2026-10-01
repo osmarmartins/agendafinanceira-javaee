@@ -32,7 +32,11 @@ public class BaixaService implements Serializable {
 	
 	public List<PagamentoDto> listarPor(BaixaFiltroDto filtro) {
 		return baixaDao.listarPor(filtro);
-	}	
+	}
+
+	public boolean existeParcela(Integer idParcela) {
+		return parcelaDao.existe(idParcela);
+	}
 	
 	public List<PagamentoQuitacao> listarPor(RelatorioFiltroDto filtro){
 		List<PagamentoQuitacao> lista = baixaDao.listarPor(filtro);

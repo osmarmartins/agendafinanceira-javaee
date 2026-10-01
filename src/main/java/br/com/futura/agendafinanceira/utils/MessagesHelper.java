@@ -18,4 +18,8 @@ public class MessagesHelper implements Serializable {
 		facesContext.addMessage(null, facesMessage);
 	}
 
+	public void add(FacesMessage facesMessage){
+		facesContext.addMessage(null, facesMessage);
+	}
+
 }
