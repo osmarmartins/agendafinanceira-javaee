@@ -54,14 +54,36 @@
 									<label for="periodo">Vencimento Final</label>
 									<div class="input-group">
 										<input class="form-control date-picker" 
-											jsf:id="dataFinal" type="date" 
+											jsf:id="dataFinal" type="date"
 											jsf:value="#{baixaBean.filtro.dataFinal}" data-date-format="dd/mm/yyyy">
 											<f:convertDateTime pattern="yyyy-MM-dd"/>
 										</input>
 										<span class="input-group-addon">
 											<i class="fa fa-calendar bigger-110"></i>
 										</span>
-									</div>									
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="idParcela">ID</label>
+									<!-- Enter ou a lupa validam o ID no servidor e abrem a baixa da parcela, sem submeter o filtro -->
+									<div class="input-group">
+										<input class="form-control" jsf:id="idParcela" type="text"
+											inputmode="numeric" pattern="[0-9]*" maxlength="9" autocomplete="off" autofocus="autofocus"
+											placeholder="ID da parcela" jsf:value="#{baixaBean.idParcela}"
+											oninput="this.value = this.value.replace(/\D/g, '');"
+											onkeydown="if (event.keyCode == 13) { event.preventDefault(); document.getElementById('btnAbrirParcela').click(); return false; }"/>
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-sm btn-default" title="Abrir parcela" aria-label="Abrir parcela"
+												jsf:id="btnAbrirParcela" jsf:action="#{baixaBean.abrirParcela()}">
+												<i class="ace-icon fa fa-search"></i>
+												<f:ajax execute="@this idParcela" render="idParcela"
+													onevent="function(data) { if (data.status === 'success') { var campo = document.getElementById('idParcela'); campo.focus(); campo.select(); } }"/>
+											</button>
+										</span>
+									</div>
 								</div>
 							</div>
                         </div>

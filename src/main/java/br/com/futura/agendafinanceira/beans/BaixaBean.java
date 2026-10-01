@@ -44,7 +44,9 @@ public class BaixaBean implements Serializable {
 	private List<Fornecedor> fornecedores = new ArrayList<>();
 	
 	private Integer qtdRegistros;
-	
+
+	private Integer idParcela;
+
 	@Inject
 	private MessagesHelper messagesHelper;
 	
@@ -108,6 +110,18 @@ public class BaixaBean implements Serializable {
 		return "baixacadastro?faces-redirect=true&parcela=" + parcela.getIdPagamentoParcela();
 	}
 	
+	public String abrirParcela() {
+		if (idParcela == null) {
+			messagesHelper.add(new FacesMessage(FacesMessage.SEVERITY_WARN, "Informe o ID da parcela.", null));
+			return null;
+		}
+		if (!baixaService.existeParcela(idParcela)) {
+			messagesHelper.add(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Parcela com ID " + idParcela + " não localizada.", null));
+			return null;
+		}
+		return "baixacadastro?faces-redirect=true&parcela=" + idParcela;
+	}
+
 	public void baixarSelecionadas() {
 		baixaService.baixarParcelas(parcelasSelecionadas, dataBaixa);
 		filtrar();
@@ -160,6 +174,14 @@ public class BaixaBean implements Serializable {
 	
 	public List<Fornecedor> getFornecedores(){
 		return this.fornecedores;
+	}
+
+	public Integer getIdParcela() {
+		return idParcela;
+	}
+
+	public void setIdParcela(Integer idParcela) {
+		this.idParcela = idParcela;
 	}
 	
 }

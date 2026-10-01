@@ -30,6 +30,13 @@ public class PagamentoParcelaDao implements Serializable {
 					.getSingleResult();
 	}
 	
+	public boolean existe(Integer id) {
+		return manager.createQuery("select count(p) from PagamentoParcela p "
+				+ "where p.idPagamentoParcela = :pParcela ", Long.class)
+					.setParameter("pParcela", id)
+					.getSingleResult() > 0;
+	}
+
 	public List<PagamentoParcela> listarPor(RelatorioFiltroDto filtro){
 		String sql = preparaSql(filtro);
 		TypedQuery<PagamentoParcela> query = preparaParametros(filtro, sql);
