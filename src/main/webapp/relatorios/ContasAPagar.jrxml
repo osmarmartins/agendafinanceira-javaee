@@ -55,6 +55,9 @@
 		<variableExpression><![CDATA[$F{total}]]></variableExpression>
 		<initialValueExpression><![CDATA[BigDecimal.valueOf (0)]]></initialValueExpression>
 	</variable>
+	<variable name="PAGINA_ATUAL" class="java.lang.Integer" resetType="Page">
+		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
+	</variable>
 	<group name="VencimentoGRP">
 		<groupExpression><![CDATA[$F{dt_vcto}]]></groupExpression>
 		<groupHeader>
@@ -160,12 +163,12 @@
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report">
+			<textField evaluationTime="Auto">
 				<reportElement x="380" y="33" width="175" height="10" uuid="2c9b08cc-d3b0-4690-90f1-c05a723ca492"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER} + " de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Página " + $V{PAGINA_ATUAL} + " de " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
