@@ -41,6 +41,27 @@ public class DataUtil {
 	public static Date hoje() {
 		return new Date();
 	}
+
+	public static Date primeiroDiaDoMes() {
+		Calendar cal = inicioDoDia();
+		cal.set(Calendar.DAY_OF_MONTH, 1);
+		return cal.getTime();
+	}
+
+	public static Date ultimoDiaDoMes() {
+		Calendar cal = inicioDoDia();
+		cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+		return cal.getTime();
+	}
+
+	private static Calendar inicioDoDia() {
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		return cal;
+	}
 	
 	public static void main(String[] args) {
 

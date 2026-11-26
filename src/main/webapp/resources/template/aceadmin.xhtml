@@ -46,6 +46,18 @@
 
 <h:body class="#{sessionBean.estilo}">
 
+	<!-- O jQuery 2.1.4 do Ace (carregado no fim do body) sobrescreve o jQuery do PrimeFaces e quebra
+		os componentes dele (ex.: o painel do p:selectCheckboxMenu fica sem posição). Bootstrap e Ace já
+		guardaram a instância 2.1.4 ao carregar; aqui o $ global volta a ser o do PrimeFaces.
+		Precisa ser o primeiro script inline do body: com primefaces.MOVE_SCRIPTS_TO_BOTTOM os scripts
+		inline são reunidos, nesta ordem, num bloco executado depois de todos os .js, e os widgets
+		do PrimeFaces são criados nesse bloco. -->
+	<script>
+		if (window.PrimeFaces &amp;&amp; window.jQuery &amp;&amp; jQuery.fn.jquery === '2.1.4') {
+			window.jQueryAce = jQuery.noConflict(true);
+		}
+	</script>
+
 	<div id="navbar" class="navbar navbar-default ace-save-state">
 		<div class="navbar-container ace-save-state" id="navbar-container">
  			<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
