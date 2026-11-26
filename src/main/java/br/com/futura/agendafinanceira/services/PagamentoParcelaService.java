@@ -40,7 +40,7 @@ public class PagamentoParcelaService implements Serializable {
 		if (lista.isEmpty()) {
 			throw new NenhumResultadoException("Nenhum registro encontrado!");
 		} else {
-			return parcelaDao.listarPor(filtro);
+			return lista;
 		}
 	}
 

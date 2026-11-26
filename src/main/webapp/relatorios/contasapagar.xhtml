@@ -81,11 +81,11 @@
 											<div class="col-sm-12">
 												<div class="form-group">
 													<label class="control-label" jsf:for="setor">Setor</label>
-													<h:selectOneMenu value="#{relatorioPagamentosBean.filtro.setor}" id="setor" styleClass="form-control">
-														<f:selectItem itemLabel="Todos"/>
+													<p:selectCheckboxMenu value="#{relatorioPagamentosBean.filtro.setores}" id="setor" converter="omnifaces.SelectItemsIndexConverter" label="Todos" updateLabel="true"
+														filter="true" filterMatchMode="contains" style="width: 100%;">
 														<f:selectItems var="setor" value="#{relatorioPagamentosBean.setores}"
 															itemLabel="#{setor.descricao}" itemValue="#{setor}"/>
-													</h:selectOneMenu>
+													</p:selectCheckboxMenu>
 												</div>
 											</div>
 										</div>
@@ -94,11 +94,11 @@
 											<div class="col-sm-12">
 												<div class="form-group">
 													<label class="control-label" jsf:for="conta">Conta</label>
-													<h:selectOneMenu value="#{relatorioPagamentosBean.filtro.conta}" id="conta" styleClass="form-control">
-														<f:selectItem itemLabel="Todos"/>
+													<p:selectCheckboxMenu value="#{relatorioPagamentosBean.filtro.contas}" id="conta" converter="omnifaces.SelectItemsIndexConverter" label="Todos" updateLabel="true"
+														filter="true" filterMatchMode="contains" style="width: 100%;">
 														<f:selectItems var="conta" value="#{relatorioPagamentosBean.contas}"
 															itemLabel="#{conta.descricao}" itemValue="#{conta}"/>
-													</h:selectOneMenu>
+													</p:selectCheckboxMenu>
 												</div>
 											</div>
 										</div>
@@ -107,11 +107,11 @@
 											<div class="col-sm-12">
 												<div class="form-group">
 													<label class="control-label" jsf:for="fornecedor">Fornecedor</label>
-													<h:selectOneMenu value="#{relatorioPagamentosBean.filtro.fornecedor}" id="fornecedor" styleClass="form-control">
-														<f:selectItem itemLabel="Todos"/>
+													<p:selectCheckboxMenu value="#{relatorioPagamentosBean.filtro.fornecedores}" id="fornecedor" converter="omnifaces.SelectItemsIndexConverter" label="Todos" updateLabel="true"
+														filter="true" filterMatchMode="contains" style="width: 100%;">
 														<f:selectItems var="fornecedor" value="#{relatorioPagamentosBean.fornecedores}"
 															itemLabel="#{fornecedor.nomeFantasia}" itemValue="#{fornecedor}"/>
-													</h:selectOneMenu>
+													</p:selectCheckboxMenu>
 												</div>
 											</div>
 										</div>								
@@ -125,13 +125,29 @@
 										<span class="bigger-110">Dashborad</span>
 									</button>
 								
-									<button class="btn btn-xs btn-success pull-right"
-										jsf:id="btnImprimir" 
-										jsf:onclick="this.form.target='_blank'"
-										jsf:action="#{relatorioPagamentosBean.gerarRelatorioContasAPagar()}">
+									<!-- Valida por ajax; sem registros mostra a mensagem aqui, senão aciona o btnGerarPdf (PDF em nova aba) -->
+									<button class="btn btn-xs btn-success pull-right" type="button"
+										jsf:id="btnImprimir"
+										jsf:action="#{relatorioPagamentosBean.validarRelatorioContasAPagar()}">
 										<span class="bigger-110">Gerar Relatório</span>
 										<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+										<f:ajax execute="@form" render="@none"/>
 									</button>
+
+									<button type="submit" style="display: none;"
+										jsf:id="btnGerarPdf"
+										jsf:onclick="this.form.target='_blank'"
+										jsf:action="#{relatorioPagamentosBean.gerarRelatorioContasAPagar()}"/>
+
+									<!-- Volta os filtros ao padrão: mês atual e nenhum setor/conta/fornecedor (o mesmo de quando a tela abre) -->
+									<button class="btn btn-xs btn-warning pull-right" type="button" style="margin-right: 5px;"
+										jsf:id="btnLimpar"
+										jsf:action="#{relatorioPagamentosBean.limparFiltros()}">
+										<i class="ace-icon fa fa-eraser"></i>
+										<span class="bigger-110">Limpar Filtros</span>
+										<f:ajax execute="@this" render="@form"/>
+									</button>
+
 								</div>
 															
 							</div>

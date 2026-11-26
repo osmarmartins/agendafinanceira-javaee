@@ -136,16 +136,16 @@ public class BaixaDao implements Serializable {
 		query.setParameter("dataI", filtro.getDataInicial(), TemporalType.DATE);
 		query.setParameter("dataF", filtro.getDataFinal(), TemporalType.DATE);
 
-		if (filtro.getSetor() != null) {
-			query.setParameter("setor", filtro.getSetor());
+		if (!filtro.listaSetores().isEmpty()) {
+			query.setParameter("setores", filtro.listaSetores());
 		}
-		
-		if (filtro.getConta() != null) {
-			query.setParameter("conta", filtro.getConta());
+
+		if (!filtro.listaContas().isEmpty()) {
+			query.setParameter("contas", filtro.listaContas());
 		}
-		
-		if (filtro.getFornecedor() != null) {
-			query.setParameter("fornecedor", filtro.getFornecedor());
+
+		if (!filtro.listaFornecedores().isEmpty()) {
+			query.setParameter("fornecedores", filtro.listaFornecedores());
 		}
 		return query;
 	}
@@ -160,16 +160,16 @@ public class BaixaDao implements Serializable {
 				+ "where q.dtPgto between :dataI and :dataF "
 				+ "  and q.parcela.situacao = 3 ";
 
-		if (filtro.getSetor() != null) {
-			sql += "and q.parcela.pagamento.setor = :setor ";
+		if (!filtro.listaSetores().isEmpty()) {
+			sql += "and q.parcela.pagamento.setor in (:setores) ";
 		}
-		
-		if (filtro.getConta() != null) {
-			sql += "and q.parcela.pagamento.conta = :conta ";
+
+		if (!filtro.listaContas().isEmpty()) {
+			sql += "and q.parcela.pagamento.conta in (:contas) ";
 		}
-		
-		if (filtro.getFornecedor() != null) {
-			sql += "and q.parcela.pagamento.fornecedor = :fornecedor ";
+
+		if (!filtro.listaFornecedores().isEmpty()) {
+			sql += "and q.parcela.pagamento.fornecedor in (:fornecedores) ";
 		}
 		
 		sql += " order by q.dtPgto, q.parcela.pagamento.fornecedor.razaoSocial ";
